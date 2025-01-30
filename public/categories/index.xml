@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Categories on Zhixia&#39;s Blog</title>
+        <link>https://hizhixia.site/categories/</link>
+        <description>Recent content in Categories on Zhixia&#39;s Blog</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-cn</language>
+        <lastBuildDate>Thu, 30 Jan 2025 13:30:00 +0800</lastBuildDate><atom:link href="https://hizhixia.site/categories/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Daily</title>
+        <link>https://hizhixia.site/categories/daily/</link>
+        <pubDate>Thu, 30 Jan 2025 13:30:00 +0800</pubDate>
+        
+        <guid>https://hizhixia.site/categories/daily/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Code</title>
+        <link>https://hizhixia.site/categories/code/</link>
+        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+        
+        <guid>https://hizhixia.site/categories/code/</guid>
+        <description></description>
+        </item>
+        
+    </channel>
+</rss>

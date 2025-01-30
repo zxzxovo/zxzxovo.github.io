@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Zhixia&#39;s Blog</title>
+        <link>https://hizhixia.site/</link>
+        <description>Recent content on Zhixia&#39;s Blog</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-cn</language>
+        <lastBuildDate>Thu, 30 Jan 2025 13:30:00 +0800</lastBuildDate><atom:link href="https://hizhixia.site/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Hello Wrold</title>
+        <link>https://hizhixia.site/post/hello-world/</link>
+        <pubDate>Thu, 30 Jan 2025 13:30:00 +0800</pubDate>
+        
+        <guid>https://hizhixia.site/post/hello-world/</guid>
+        <description>&lt;img src="https://hizhixia.site/post/hello-world/cover.jpg" alt="Featured image of post Hello Wrold" /&gt;&lt;h1 id=&#34;hello-world&#34;&gt;Hello World
+&lt;/h1&gt;&lt;p&gt;Welcome to my &lt;strong&gt;Blog&lt;/strong&gt; !!!&lt;/p&gt;
+&lt;p&gt;It was built with &lt;strong&gt;Hugo&lt;/strong&gt; and the theme &amp;ldquo;Stack&amp;rdquo;.&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>Archives</title>
+        <link>https://hizhixia.site/pages/archives/</link>
+        <pubDate>Thu, 30 Jan 2025 00:00:00 +0000</pubDate>
+        
+        <guid>https://hizhixia.site/pages/archives/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Links</title>
+        <link>https://hizhixia.site/pages/links/</link>
+        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+        
+        <guid>https://hizhixia.site/pages/links/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Search</title>
+        <link>https://hizhixia.site/pages/search/</link>
+        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+        
+        <guid>https://hizhixia.site/pages/search/</guid>
+        <description></description>
+        </item>
+        
+    </channel>
+</rss>

@@ -1,0 +1,84 @@
+# base config
+baseURL = 'https://hizhixia.site'
+title = "Zhixia's Blog"
+theme = "stack"
+
+languageCode = 'zh-cn'
+defaultContentLanguage = "zh-cn"
+hasCJKLanguage = true
+# disqusShortname = "hugo-theme-stack"
+
+[pagination]
+pagerSize = 5
+
+
+# [menu]
+[menu]
+social = [
+    { identifier = "github", "name" = "Github", url = "https://github.com/zxzxovo", params = { icon = "brand-github" } },
+    { identifier = "X", "name" = "X", url = "https://x.com/zxzxovo", params = { icon = "brand-twitter" } },
+]
+
+
+# [params]
+[params]
+# favicon = "/favicon.png"
+mainSections = [ "post" ]
+featuredImageField = "image"
+rssFullContentrss = true
+
+[params.sidebar]
+subtitle = "Hi! 这里是我的小空间，欢迎常来做客！"
+compact = false
+emoji = "😌"
+
+[params.sidebar.avatar]
+enable = true
+local = true
+src = "img/avatar.jpg"
+
+[params.footer]
+since = 2025
+customText = "\"一天云破碎，两树玉扶疏\""
+
+[params.article]
+math = true
+toc = true
+readingTime = true
+
+[params.widgets]
+page = [
+    {type = "search"},
+    {type = "toc"},
+]
+homepage = [
+    {type = "search"},
+    {type = "archives"},
+    {type = "categories"},
+    {type = "tag-cloud"},
+]
+
+[params.colorScheme]
+toggle = true
+default = "auto"
+
+[params.imageProcessing.cover]
+enabled = true
+
+[params.imageProcessing.content]
+enabled = true
+
+
+# [related]
+[related]
+includeNewer = true
+threshold = 60
+toLower = false
+
+[[related.indices]]
+name = "tags"
+weight = 100
+
+[[related.indices]]
+name = "categories"
+weight = 200
