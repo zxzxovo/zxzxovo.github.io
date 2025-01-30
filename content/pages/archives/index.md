@@ -5,6 +5,7 @@ layout = "archives"
 slug = "archives"
 
 [menu.main]
+name = "Archives"
 weight = 2
 
 [menu.main.params]
