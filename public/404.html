@@ -70,7 +70,7 @@
                     
                     
                         
-                        <img src="/img/avatar2_hu_c54c4dc6b1d6a3e2.jpg" width="300"
+                        <img src="/img/avatar2_hu17491579054232343368.jpg" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
@@ -413,7 +413,7 @@
     <section class="copyright">
         &copy; 
         
-        2025 Zhixia&#39;s Blog
+        2025 zhixia
     </section>
     
     <section class="powerby">
@@ -442,6 +442,61 @@
 
         document.head.appendChild(customFont);
     }());
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+    
+    document.addEventListener('DOMContentLoaded', function () {
+        const path = window.location.pathname;
+        const footer = document.querySelector('main footer.site-footer');
+        console.log("WTF hugo.toml doesnt work");
+
+        const ComPaths = [
+            '/pages/post/',
+
+            '/pages/links/',
+        ];
+        if (ComPaths.some(p => path.startsWith(p))) {
+
+            if (footer) {
+                const script = document.createElement('script');
+                script.src = 'https://giscus.app/client.js';
+                script.async = true;
+                script.setAttribute('data-repo', 'zxzxovo/zxzxovo.github.io');
+                script.setAttribute('data-repo-id', 'R_kgDONxTewg');
+                script.setAttribute('data-category', 'General');
+                script.setAttribute('data-category-id', 'DIC_kwDONxTews4CmeWY');
+                script.setAttribute('data-mapping', 'pathname');
+                script.setAttribute('data-strict', '0');
+                script.setAttribute('data-reactions-enabled', '1');
+                script.setAttribute('data-emit-metadata', '0');
+                script.setAttribute('data-input-position', 'bottom');
+                script.setAttribute('data-theme', 'preferred_color_scheme');
+                script.setAttribute('data-lang', 'zh-CN');
+                script.setAttribute('data-loading', 'lazy');
+                script.setAttribute('crossorigin', 'anonymous');
+
+                footer.parentNode.insertBefore(script, footer);
+            }
+        }
+    });
+
 </script>
 
     </body>

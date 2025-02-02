@@ -5,6 +5,7 @@
         <link>https://hizhixia.site/categories/code/</link>
         <description>Recent content in Code on Zhixia&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator>
-        <language>zh-cn</language><atom:link href="https://hizhixia.site/categories/code/index.xml" rel="self" type="application/rss+xml" />
+        <language>zh-cn</language>
+        <copyright>zhixia</copyright><atom:link href="https://hizhixia.site/categories/code/index.xml" rel="self" type="application/rss+xml" />
     </channel>
 </rss>

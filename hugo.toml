@@ -1,7 +1,8 @@
 # base config
-baseURL = 'https://hizhixia.site'
+baseURL = 'https://hizhixia.site/'
 title = "Zhixia's Blog"
 theme = "stack"
+copyright = "zhixia"
 
 languageCode = 'zh-cn'
 defaultContentLanguage = "zh-cn"

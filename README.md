@@ -1,2 +1,8 @@
+
 # zxzxovo.github.io
-My Github Page
+
+Hello! It's my **Blog** Here!
+
+It was built with *Hugo* .
+
+Thanks for coming!
