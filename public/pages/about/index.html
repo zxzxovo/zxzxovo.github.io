@@ -73,7 +73,7 @@
                     
                     
                         
-                        <img src="/img/avatar2_hu17491579054232343368.jpg" width="300"
+                        <img src="/img/avatar2_hu_c54c4dc6b1d6a3e2.jpg" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
@@ -434,8 +434,8 @@
     <header class="article-header">
         <div class="article-image">
             <a href="/pages/about/">
-                <img src="/pages/about/about_hu9644536631656021993.jpg"
-                        srcset="/pages/about/about_hu9644536631656021993.jpg 800w, /pages/about/about_hu3155594570512044859.jpg 1600w"
+                <img src="/pages/about/about_hu_5e55a0aab21e076c.jpg"
+                        srcset="/pages/about/about_hu_5e55a0aab21e076c.jpg 800w, /pages/about/about_hu_405546e3e29e2a6d.jpg 1600w"
                         width="800" 
                         height="450" 
                         loading="lazy"
@@ -699,20 +699,20 @@
 
 
 
-
 <script>
     
     document.addEventListener('DOMContentLoaded', function () {
         const path = window.location.pathname;
-        const footer = document.querySelector('main footer.site-footer');
+        const footer = document.querySelector('footer.site-footer');
         console.log("WTF hugo.toml doesnt work");
+        
+        const comPaths = [];
+        comPaths.push("/post/");
+        comPaths.push("/pages/links/");
+        console.log(comPaths);
+        console.log(comPaths);
 
-        const ComPaths = [
-            '/pages/post/',
-
-            '/pages/links/',
-        ];
-        if (ComPaths.some(p => path.startsWith(p))) {
+        if (comPaths.some(p => path.startsWith(p))) {
 
             if (footer) {
                 const script = document.createElement('script');
