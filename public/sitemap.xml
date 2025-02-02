@@ -2,40 +2,40 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://hizhixia.site/post/</loc>
+    <loc>http://localhost:1313/post/</loc>
     <lastmod>2025-01-30T13:30:00+08:00</lastmod>
   </url><url>
-    <loc>https://hizhixia.site/categories/</loc>
+    <loc>http://localhost:1313/categories/</loc>
     <lastmod>2025-01-30T13:30:00+08:00</lastmod>
   </url><url>
-    <loc>https://hizhixia.site/tags/daily/</loc>
+    <loc>http://localhost:1313/tags/daily/</loc>
     <lastmod>2025-01-30T13:30:00+08:00</lastmod>
   </url><url>
-    <loc>https://hizhixia.site/categories/daily/</loc>
+    <loc>http://localhost:1313/categories/daily/</loc>
     <lastmod>2025-01-30T13:30:00+08:00</lastmod>
   </url><url>
-    <loc>https://hizhixia.site/post/hello-world/</loc>
+    <loc>http://localhost:1313/post/hello-world/</loc>
     <lastmod>2025-01-30T13:30:00+08:00</lastmod>
   </url><url>
-    <loc>https://hizhixia.site/tags/</loc>
+    <loc>http://localhost:1313/tags/</loc>
     <lastmod>2025-01-30T13:30:00+08:00</lastmod>
   </url><url>
-    <loc>https://hizhixia.site/</loc>
+    <loc>http://localhost:1313/</loc>
     <lastmod>2025-01-30T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://hizhixia.site/pages/about/</loc>
+    <loc>http://localhost:1313/pages/about/</loc>
     <lastmod>2025-01-30T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://hizhixia.site/pages/archives/</loc>
+    <loc>http://localhost:1313/pages/archives/</loc>
     <lastmod>2025-01-30T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://hizhixia.site/pages/</loc>
+    <loc>http://localhost:1313/pages/</loc>
     <lastmod>2025-01-30T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://hizhixia.site/categories/code/</loc>
+    <loc>http://localhost:1313/categories/code/</loc>
   </url><url>
-    <loc>https://hizhixia.site/pages/links/</loc>
+    <loc>http://localhost:1313/pages/links/</loc>
   </url><url>
-    <loc>https://hizhixia.site/pages/search/</loc>
+    <loc>http://localhost:1313/pages/search/</loc>
   </url>
 </urlset>

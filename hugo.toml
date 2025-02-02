@@ -16,15 +16,17 @@ ID = 'G-470W7HLJ27'
 [pagination]
 pagerSize = 5
 
-
 # [menu]
 [menu]
 social = [
-    { identifier = "github", "name" = "Github", url = "https://github.com/zxzxovo", params = { icon = "brand-github" } },
-    { identifier = "X", "name" = "X", url = "https://x.com/zxzxovo", params = { icon = "brand-twitter" } },
-    { identifier = "mail", "name" = "Gmail", url = "mailto:zhixiaovo@gmail.com", params = { icon = "gmail" } },
+    { identifier = "github", name = "Github", url = "https://github.com/zxzxovo", params = { icon = "brand-github" } },
+    { identifier = "X", name = "X", url = "https://x.com/zxzxovo", params = { icon = "brand-twitter" } },
+    { identifier = "mail", name = "Gmail", url = "mailto:zhixiaovo@gmail.com", params = { icon = "gmail" } },
 ]
 
+# [markup]
+[markup.goldmark.renderer]
+unsafe = true
 
 # [params]
 [params]
@@ -32,7 +34,7 @@ favicon = "/favicon.ico"
 faviconSVG = "/favicon.svg"
 mainSections = [ "post" ]
 featuredImageField = "image"
-rssFullContentrss = true
+rssFullContent = true
 
 [params.sidebar]
 subtitle = "Hi! 这里是我的小空间，欢迎常来做客！"
@@ -55,14 +57,14 @@ readingTime = true
 
 [params.widgets]
 page = [
-    {type = "search"},
-    {type = "toc"},
+    { type = "search" },
+    { type = "toc" },
 ]
 homepage = [
-    {type = "search"},
-    {type = "archives"},
-    {type = "categories"},
-    {type = "tag-cloud"},
+    { type = "search" },
+    { type = "archives" },
+    { type = "categories" },
+    { type = "tag-cloud" },
 ]
 
 [params.colorScheme]
@@ -75,27 +77,25 @@ enabled = true
 [params.imageProcessing.content]
 enabled = true
 
+# # [comments system]
+# [params.comments]
+# enable = true
+# provider = "giscus"
 
-# [comments system]
-[params.comments]
-enable = true
-provider = "giscus"
-
-[params.comments.giscus]
-repo = "zxzxovo/zxzxovo.github.io"
-repo-id = "R_kgDONxTewg"
-category = "General"
-category-id = "DIC_kwDONxTews4CmeWY"
-mapping = "pathname"
-strict = 0
-reactions-enabled = 1
-emit-metadata = 0
-input-position = "bottom"
-theme = "preferred_color_scheme"
-lang = "zh-CN"
-loading = "lazy"
-crossorigin = "anonymous"
-
+# [params.comments.giscus]
+# data-repo = "zxzxovo/zxzxovo.github.io"
+# data-repo-id = "R_kgDONxTewg"
+# data-category = "General"
+# data-category-id = "DIC_kwDONxTews4CmeWY"
+# data-mapping = "pathname"
+# data-strict = 0
+# data-reactions-enabled = 1
+# data-emit-metadata = 0
+# data-input-position = "bottom"
+# # theme = "preferred_color_scheme"
+# data-lang = "zh-CN"
+# data-loading = "lazy"
+# data-crossorigin = "anonymous"
 
 # [related]
 [related]
@@ -110,4 +110,3 @@ weight = 100
 [[related.indices]]
 name = "categories"
 weight = 200
-

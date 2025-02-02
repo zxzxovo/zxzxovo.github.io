@@ -1,6 +1,5 @@
 +++
 date = 2025-01-30
-comments = true
 [menu.main]
 name = "Home"
 weight = 1
@@ -12,5 +11,4 @@ icon = "home"
 list = 'always'
 publishResources = true
 render = 'always'
-
 +++
