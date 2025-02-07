@@ -5,7 +5,7 @@ layout = "search"
 outputs = ["html"]
 
 [menu.main]
-weight = 3
+weight = 30
 
 [menu.main.params]
 icon = "search"

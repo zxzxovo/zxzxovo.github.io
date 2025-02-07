@@ -19,9 +19,9 @@ pagerSize = 5
 # [menu]
 [menu]
 social = [
-    { identifier = "github", name = "Github", url = "https://github.com/zxzxovo", params = { icon = "brand-github" } },
-    { identifier = "X", name = "X", url = "https://x.com/zxzxovo", params = { icon = "brand-twitter" } },
-    { identifier = "mail", name = "Gmail", url = "mailto:zhixiaovo@gmail.com", params = { icon = "gmail" } },
+    { identifier = "github", name = "Github", url = "https://github.com/zxzxovo", params = { icon = "github" } },
+    { identifier = "X", name = "X", url = "https://x.com/zxzxovo", params = { icon = "x-twitter" } },
+    { identifier = "mail", name = "Gmail", url = "mailto:zhixiaovo@gmail.com", params = { icon = "envelope" } },
 ]
 
 # [markup]

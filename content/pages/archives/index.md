@@ -6,7 +6,7 @@ slug = "archives"
 
 [menu.main]
 name = "Archives"
-weight = 2
+weight = 20
 
 [menu.main.params]
 icon = "archives"

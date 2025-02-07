@@ -6,7 +6,7 @@ image = "about.jpg"
 
 [menu.main]
 name = "About"
-weight = 5
+weight = 50
 
 [menu.main.params]
 icon = "user"

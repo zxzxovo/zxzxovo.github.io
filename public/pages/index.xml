@@ -7,7 +7,34 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
         <copyright>zhixia</copyright>
-        <lastBuildDate>Thu, 30 Jan 2025 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/pages/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Thu, 06 Feb 2025 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/pages/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Navigation</title>
+        <link>http://localhost:1313/pages/navigation/</link>
+        <pubDate>Thu, 06 Feb 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/pages/navigation/</guid>
+        <description>&lt;img src="http://localhost:1313/pages/navigation/navigation.jpg" alt="Featured image of post Navigation" /&gt;&lt;h2 id=&#34;项目主页-nbsp--w-&#34;&gt;项目主页   -w-
+&lt;/h2&gt;&lt;div class=&#34;menav-navp-card&#34;&gt;
+  &lt;img src=&#34;your-project-image.jpg&#34; alt=&#34;项目图片&#34;&gt;
+  &lt;h2&gt;项目名称&lt;/h2&gt;
+  &lt;p&gt;TODOOOO&lt;/p&gt;
+&lt;/div&gt;
+&lt;h2 id=&#34;有趣的小玩意-w&#34;&gt;有趣的小玩意 ~w~
+&lt;/h2&gt;&lt;div class=&#34;menav-navp-card&#34;&gt;
+  &lt;img src=&#34;your-project-image.jpg&#34; alt=&#34;项目图片&#34;&gt;
+  &lt;h2&gt;项目名称&lt;/h2&gt;
+  &lt;p&gt;TODOOOO&lt;/p&gt;
+&lt;/div&gt;
+&lt;br/&gt;
+&lt;h2 id=&#34;others-todo&#34;&gt;Others TODO
+&lt;/h2&gt;&lt;div class=&#34;menav-navp-card&#34;&gt;
+  &lt;img src=&#34;your-project-image.jpg&#34; alt=&#34;项目图片&#34;&gt;
+  &lt;h2&gt;项目名称&lt;/h2&gt;
+  &lt;p&gt;TODOOOO&lt;/p&gt;
+&lt;/div&gt;
+</description>
+        </item>
+        <item>
         <title>About</title>
         <link>http://localhost:1313/pages/about/</link>
         <pubDate>Thu, 30 Jan 2025 00:00:00 +0000</pubDate>

@@ -3,13 +3,11 @@
     document.addEventListener('DOMContentLoaded', function () {
         const path = window.location.pathname;
         const footer = document.querySelector('footer.site-footer');
-        console.log("WTF hugo.toml doesnt work");
+        // console.log("WTF hugo.toml doesnt work");
         
         const comPaths = [];
         comPaths.push("/post/");
         comPaths.push("/pages/links/");
-        console.log(comPaths);
-        console.log(comPaths);
 
         if (comPaths.some(p => path.startsWith(p))) {
 

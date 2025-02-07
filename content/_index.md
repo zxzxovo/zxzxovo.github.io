@@ -2,7 +2,7 @@
 date = 2025-01-30
 [menu.main]
 name = "Home"
-weight = 1
+weight = 10
 
 [menu.main.params]
 icon = "home"
