@@ -1,5 +1,6 @@
 +++
 title = "About"
+comments = false
 date = 2025-01-30
 slug = "About"
 image = "about.jpg"

@@ -35,10 +35,10 @@
     <loc>http://localhost:1313/post/%E8%AE%B8%E5%A4%9A%E6%97%A5%E5%89%8D%E7%9A%84%E6%99%9A%E5%AE%89/</loc>
     <lastmod>2025-02-08T01:13:35+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/pages/navigation/</loc>
+    <loc>http://localhost:1313/page/navigation/</loc>
     <lastmod>2025-02-06T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/pages/</loc>
+    <loc>http://localhost:1313/page/</loc>
     <lastmod>2025-02-06T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/post/hello-world/</loc>
@@ -47,16 +47,16 @@
     <loc>http://localhost:1313/</loc>
     <lastmod>2025-01-30T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/pages/about/</loc>
+    <loc>http://localhost:1313/page/about/</loc>
     <lastmod>2025-01-30T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/pages/archives/</loc>
+    <loc>http://localhost:1313/page/archives/</loc>
     <lastmod>2025-01-30T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/categories/code/</loc>
   </url><url>
-    <loc>http://localhost:1313/pages/links/</loc>
+    <loc>http://localhost:1313/page/links/</loc>
   </url><url>
-    <loc>http://localhost:1313/pages/search/</loc>
+    <loc>http://localhost:1313/page/search/</loc>
   </url>
 </urlset>

@@ -48,11 +48,11 @@
         </item>
         <item>
         <title>Navigation</title>
-        <link>http://localhost:1313/pages/navigation/</link>
+        <link>http://localhost:1313/page/navigation/</link>
         <pubDate>Thu, 06 Feb 2025 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/pages/navigation/</guid>
-        <description>&lt;img src="http://localhost:1313/pages/navigation/navigation.jpg" alt="Featured image of post Navigation" /&gt;&lt;h2 id=&#34;项目主页-nbsp--w-&#34;&gt;项目主页   -w-
+        <guid>http://localhost:1313/page/navigation/</guid>
+        <description>&lt;img src="http://localhost:1313/page/navigation/navigation.jpg" alt="Featured image of post Navigation" /&gt;&lt;h2 id=&#34;项目主页-nbsp--w-&#34;&gt;项目主页   -w-
 &lt;/h2&gt;&lt;div class=&#34;menav-navp-card&#34;&gt;
   &lt;img src=&#34;your-project-image.jpg&#34; alt=&#34;项目图片&#34;&gt;
   &lt;h2&gt;项目名称&lt;/h2&gt;
@@ -86,11 +86,11 @@
         </item>
         <item>
         <title>About</title>
-        <link>http://localhost:1313/pages/about/</link>
+        <link>http://localhost:1313/page/about/</link>
         <pubDate>Thu, 30 Jan 2025 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/pages/about/</guid>
-        <description>&lt;img src="http://localhost:1313/pages/about/about.jpg" alt="Featured image of post About" /&gt;&lt;h2 id=&#34;hi&#34;&gt;Hi
+        <guid>http://localhost:1313/page/about/</guid>
+        <description>&lt;img src="http://localhost:1313/page/about/about.jpg" alt="Featured image of post About" /&gt;&lt;h2 id=&#34;hi&#34;&gt;Hi
 &lt;/h2&gt;&lt;p&gt;这里是 &lt;strong&gt;芷夏&lt;/strong&gt; 的赛博小站！&lt;/p&gt;
 &lt;p&gt;我要用这个 &lt;em&gt;blog&lt;/em&gt; ：学习记录，乱七八糟的文章，技术交流 ^w^ 。&lt;/p&gt;
 &lt;p&gt;管它的，好玩就行了，✌！&lt;/p&gt;
@@ -115,18 +115,18 @@
         </item>
         <item>
         <title>Archives</title>
-        <link>http://localhost:1313/pages/archives/</link>
+        <link>http://localhost:1313/page/archives/</link>
         <pubDate>Thu, 30 Jan 2025 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/pages/archives/</guid>
+        <guid>http://localhost:1313/page/archives/</guid>
         <description></description>
         </item>
         <item>
         <title>Links</title>
-        <link>http://localhost:1313/pages/links/</link>
+        <link>http://localhost:1313/page/links/</link>
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/pages/links/</guid>
+        <guid>http://localhost:1313/page/links/</guid>
         <description>&lt;h2 id=&#34;links-here&#34;&gt;Links Here!
 &lt;/h2&gt;&lt;p&gt;欢迎联系我添加 &lt;em&gt;友链&lt;/em&gt; 喵 OvO ！&lt;/p&gt;
 &lt;p&gt;或者直接 &lt;em&gt;Pull Request&lt;/em&gt; 或 &lt;em&gt;Issue&lt;/em&gt; ！&lt;/p&gt;
@@ -134,10 +134,10 @@
         </item>
         <item>
         <title>Search</title>
-        <link>http://localhost:1313/pages/search/</link>
+        <link>http://localhost:1313/page/search/</link>
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/pages/search/</guid>
+        <guid>http://localhost:1313/page/search/</guid>
         <description></description>
         </item>
         
