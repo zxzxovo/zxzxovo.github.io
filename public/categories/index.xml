@@ -2,25 +2,25 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>Categories on Zhixia&#39;s Blog</title>
-        <link>http://localhost:1313/categories/</link>
+        <link>https://hizhixia.site/categories/</link>
         <description>Recent content in Categories on Zhixia&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
         <copyright>zhixia</copyright>
-        <lastBuildDate>Sat, 08 Feb 2025 20:25:00 +0800</lastBuildDate><atom:link href="http://localhost:1313/categories/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sat, 08 Feb 2025 20:25:00 +0800</lastBuildDate><atom:link href="https://hizhixia.site/categories/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>Code</title>
-        <link>http://localhost:1313/categories/code/</link>
+        <link>https://hizhixia.site/categories/code/</link>
         <pubDate>Sat, 08 Feb 2025 20:25:00 +0800</pubDate>
         
-        <guid>http://localhost:1313/categories/code/</guid>
+        <guid>https://hizhixia.site/categories/code/</guid>
         <description></description>
         </item>
         <item>
         <title>Daily</title>
-        <link>http://localhost:1313/categories/daily/</link>
+        <link>https://hizhixia.site/categories/daily/</link>
         <pubDate>Sat, 08 Feb 2025 02:18:14 +0800</pubDate>
         
-        <guid>http://localhost:1313/categories/daily/</guid>
+        <guid>https://hizhixia.site/categories/daily/</guid>
         <description></description>
         </item>
         

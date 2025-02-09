@@ -3,7 +3,7 @@ date = '2025-02-08T20:25:00+08:00'
 draft = false
 title = '再学一遍Git'
 slug = "再学一遍Git"
-description = ""
+description = "Git命令快查册或备忘录或半个指南"
 categories = ["Code"]
 tags = ["Git", "Code", "Tools", "学习"]
 +++

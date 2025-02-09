@@ -2,77 +2,77 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://localhost:1313/post/</loc>
+    <loc>https://hizhixia.site/post/</loc>
     <lastmod>2025-02-08T20:25:00+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/categories/</loc>
+    <loc>https://hizhixia.site/categories/</loc>
     <lastmod>2025-02-08T20:25:00+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/code/</loc>
+    <loc>https://hizhixia.site/tags/code/</loc>
     <lastmod>2025-02-08T20:25:00+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/categories/code/</loc>
+    <loc>https://hizhixia.site/categories/code/</loc>
     <lastmod>2025-02-08T20:25:00+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/git/</loc>
+    <loc>https://hizhixia.site/tags/git/</loc>
     <lastmod>2025-02-08T20:25:00+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/</loc>
+    <loc>https://hizhixia.site/tags/</loc>
     <lastmod>2025-02-08T20:25:00+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/tools/</loc>
+    <loc>https://hizhixia.site/tags/tools/</loc>
     <lastmod>2025-02-08T20:25:00+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/%E5%AD%A6%E4%B9%A0/</loc>
+    <loc>https://hizhixia.site/tags/%E5%AD%A6%E4%B9%A0/</loc>
     <lastmod>2025-02-08T20:25:00+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/post/%E5%86%8D%E5%AD%A6%E4%B8%80%E9%81%8Dgit/</loc>
+    <loc>https://hizhixia.site/post/%E5%86%8D%E5%AD%A6%E4%B8%80%E9%81%8Dgit/</loc>
     <lastmod>2025-02-08T20:25:00+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/daily/</loc>
+    <loc>https://hizhixia.site/tags/daily/</loc>
     <lastmod>2025-02-08T02:18:14+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/categories/daily/</loc>
+    <loc>https://hizhixia.site/categories/daily/</loc>
     <lastmod>2025-02-08T02:18:14+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/%E9%9D%92%E6%98%A5/</loc>
+    <loc>https://hizhixia.site/tags/%E9%9D%92%E6%98%A5/</loc>
     <lastmod>2025-02-08T02:18:14+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/post/%E8%AE%B8%E5%A4%9A%E6%97%A5%E5%89%8D%E7%9A%84%E8%87%AA%E7%94%B1/</loc>
+    <loc>https://hizhixia.site/post/%E8%AE%B8%E5%A4%9A%E6%97%A5%E5%89%8D%E7%9A%84%E8%87%AA%E7%94%B1/</loc>
     <lastmod>2025-02-08T02:18:14+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/%E5%91%93%E8%AF%AD/</loc>
+    <loc>https://hizhixia.site/tags/%E5%91%93%E8%AF%AD/</loc>
     <lastmod>2025-02-08T02:18:14+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/%E8%87%AA%E7%94%B1/</loc>
+    <loc>https://hizhixia.site/tags/%E8%87%AA%E7%94%B1/</loc>
     <lastmod>2025-02-08T02:18:14+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/%E6%95%A3%E6%96%87%E8%AF%97%E7%B1%BB%E4%BC%BC%E4%BD%93/</loc>
+    <loc>https://hizhixia.site/tags/%E6%95%A3%E6%96%87%E8%AF%97%E7%B1%BB%E4%BC%BC%E4%BD%93/</loc>
     <lastmod>2025-02-08T01:13:35+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/post/%E8%AE%B8%E5%A4%9A%E6%97%A5%E5%89%8D%E7%9A%84%E6%99%9A%E5%AE%89/</loc>
+    <loc>https://hizhixia.site/post/%E8%AE%B8%E5%A4%9A%E6%97%A5%E5%89%8D%E7%9A%84%E6%99%9A%E5%AE%89/</loc>
     <lastmod>2025-02-08T01:13:35+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/page/navigation/</loc>
+    <loc>https://hizhixia.site/page/navigation/</loc>
     <lastmod>2025-02-06T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/page/</loc>
+    <loc>https://hizhixia.site/page/</loc>
     <lastmod>2025-02-06T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/post/hello-world/</loc>
+    <loc>https://hizhixia.site/post/hello-world/</loc>
     <lastmod>2025-01-30T13:30:00+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/</loc>
+    <loc>https://hizhixia.site/</loc>
     <lastmod>2025-01-30T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/page/about/</loc>
+    <loc>https://hizhixia.site/page/about/</loc>
     <lastmod>2025-01-30T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/page/archives/</loc>
+    <loc>https://hizhixia.site/page/archives/</loc>
     <lastmod>2025-01-30T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/page/links/</loc>
+    <loc>https://hizhixia.site/page/links/</loc>
   </url><url>
-    <loc>http://localhost:1313/page/search/</loc>
+    <loc>https://hizhixia.site/page/search/</loc>
   </url>
 </urlset>

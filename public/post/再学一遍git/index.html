@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html lang="zh-cn" dir="ltr">
-    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="Git真的是非常重要了！！但我编码不多，用到Git的场景也很少，一段时间不用就会忘掉好多命令和用法QwQ。\n按照一般的工作流记录一遍使用Git的工作流（顺便水一篇blog），顺便当个备忘录或教程（？），不要再忘了！\n">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="Git命令快查册或备忘录或半个指南">
 <title>再学一遍Git</title>
 
-<link rel='canonical' href='http://localhost:1313/post/%E5%86%8D%E5%AD%A6%E4%B8%80%E9%81%8Dgit/'>
+<link rel='canonical' href='https://hizhixia.site/post/%E5%86%8D%E5%AD%A6%E4%B8%80%E9%81%8Dgit/'>
 
 <link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="再学一遍Git">
-<meta property='og:description' content="Git真的是非常重要了！！但我编码不多，用到Git的场景也很少，一段时间不用就会忘掉好多命令和用法QwQ。\n按照一般的工作流记录一遍使用Git的工作流（顺便水一篇blog），顺便当个备忘录或教程（？），不要再忘了！\n">
-<meta property='og:url' content='http://localhost:1313/post/%E5%86%8D%E5%AD%A6%E4%B8%80%E9%81%8Dgit/'>
+<meta property='og:description' content="Git命令快查册或备忘录或半个指南">
+<meta property='og:url' content='https://hizhixia.site/post/%E5%86%8D%E5%AD%A6%E4%B8%80%E9%81%8Dgit/'>
 <meta property='og:site_name' content='Zhixia&#39;s Blog'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Git' /><meta property='article:tag' content='Code' /><meta property='article:tag' content='Tools' /><meta property='article:tag' content='学习' /><meta property='article:published_time' content='2025-02-08T20:25:00&#43;08:00'/><meta property='article:modified_time' content='2025-02-08T20:25:00&#43;08:00'/>
 <meta name="twitter:site" content="@@zxzxovo">
     <meta name="twitter:creator" content="@@zxzxovo"><meta name="twitter:title" content="再学一遍Git">
-<meta name="twitter:description" content="Git真的是非常重要了！！但我编码不多，用到Git的场景也很少，一段时间不用就会忘掉好多命令和用法QwQ。\n按照一般的工作流记录一遍使用Git的工作流（顺便水一篇blog），顺便当个备忘录或教程（？），不要再忘了！\n">
+<meta name="twitter:description" content="Git命令快查册或备忘录或半个指南">
     <link rel="shortcut icon" href="/favicon.ico" />
 
       <script async src="https://www.googletagmanager.com/gtag/js?id=G-470W7HLJ27"></script>
@@ -379,12 +379,12 @@
         
         <div class="widget--toc">
             <nav id="TableOfContents">
-  <ul>
+  <ol>
     <li><a href="#配置git">配置Git</a></li>
     <li><a href="#本地操作">本地操作</a></li>
     <li><a href="#协作开发">协作开发</a></li>
     <li><a href="#patch和submodule">Patch和Submodule</a></li>
-  </ul>
+  </ol>
 </nav>
         </div>
     </section>
@@ -414,6 +414,10 @@
             <a href="/post/%E5%86%8D%E5%AD%A6%E4%B8%80%E9%81%8Dgit/">再学一遍Git</a>
         </h2>
     
+        
+        <h3 class="article-subtitle">
+            Git命令快查册或备忘录或半个指南
+        </h3>
         
     </div>
 
@@ -468,240 +472,530 @@
 <h2 id="配置git">配置Git
 </h2><hr>
 <p>安装Git后，首先需要设置是谁在这台设备上使用Git工作，给自己注册个身份证：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>git config --global user.name <span style="color:#e6db74">&#34;Name&#34;</span>
-</span></span><span style="display:flex;"><span>git config --global user.email <span style="color:#e6db74">&#34;Email@email.com&#34;</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># --global 选项为用户级配置，在当前用户目录下(~)生成 .gitconfig</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># --system --local 分别为机器级配置和仓库级配置</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 分别生成在	githome 和 repo 下</span>
-</span></span></code></pre></div><p>为了方便使用Github或其他Git服务器，我们需要配置SSH。为防止冒名顶替可以配置GPG：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>ssh-keygen -t ed25519 -C <span style="color:#e6db74">&#34;your_email@example.com&#34;</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 若不支持 ed25519 则使用如下命令</span>
-</span></span><span style="display:flex;"><span>ssh-keygen -t rsa -b <span style="color:#ae81ff">4096</span> -C <span style="color:#e6db74">&#34;your_email@example.com&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>gpg --full-generate-key
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 若版本过旧使用如下命令</span>
-</span></span><span style="display:flex;"><span>gpg --default-new-key-algo rsa4096 --gen-key
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 查看现有的GPG密钥</span>
-</span></span><span style="display:flex;"><span>gpg --list-secret-keys --keyid-format<span style="color:#f92672">=</span>long
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 在Git中设置自己的私钥ID</span>
-</span></span><span style="display:flex;"><span>git config --global user.signingkey SEC_key_id
-</span></span><span style="display:flex;"><span>git config --global commit.gpgsign true
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 导出公钥</span>
-</span></span><span style="display:flex;"><span>gpg --armor --export SEC_key_id
-</span></span></code></pre></div><p>一些方便的命令 ^w^ ：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># 更改git打开的文本编辑器</span>
-</span></span><span style="display:flex;"><span>git config -- system core.editor vim
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 长命令简写</span>
-</span></span><span style="display:flex;"><span>git config -- global alias.diy_name_here command_here
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 一条输出好看commit log的简写命令</span>
-</span></span><span style="display:flex;"><span>git config -- global alias.loog log --color --graph --pretty<span style="color:#f92672">=</span>format:<span style="color:#e6db74">&#39;%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)&lt;%an&gt;%Creset&#39;</span> --abbrev-commit
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 手动编辑config文件</span>
-</span></span><span style="display:flex;"><span>git config -- global --edit
-</span></span></code></pre></div><h2 id="本地操作">本地操作
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">git config --global user.name <span class="s2">&#34;Name&#34;</span>
+</span></span><span class="line"><span class="cl">git config --global user.email <span class="s2">&#34;Email@email.com&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># --global 选项为用户级配置，在当前用户目录下(~)生成 .gitconfig</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># --system --local 分别为机器级配置和仓库级配置</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 分别生成在	githome 和 repo 下</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>为了方便使用Github或其他Git服务器，我们需要配置SSH。为防止冒名顶替可以配置GPG：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">ssh-keygen -t ed25519 -C <span class="s2">&#34;your_email@example.com&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 若不支持 ed25519 则使用如下命令</span>
+</span></span><span class="line"><span class="cl">ssh-keygen -t rsa -b <span class="m">4096</span> -C <span class="s2">&#34;your_email@example.com&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">gpg --full-generate-key
+</span></span><span class="line"><span class="cl"><span class="c1"># 若版本过旧使用如下命令</span>
+</span></span><span class="line"><span class="cl">gpg --default-new-key-algo rsa4096 --gen-key
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 查看现有的GPG密钥</span>
+</span></span><span class="line"><span class="cl">gpg --list-secret-keys --keyid-format<span class="o">=</span>long
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 在Git中设置自己的私钥ID</span>
+</span></span><span class="line"><span class="cl">git config --global user.signingkey SEC_key_id
+</span></span><span class="line"><span class="cl">git config --global commit.gpgsign <span class="nb">true</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 导出公钥</span>
+</span></span><span class="line"><span class="cl">gpg --armor --export SEC_key_id
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>一些方便的命令 ^w^ ：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 更改git打开的文本编辑器</span>
+</span></span><span class="line"><span class="cl">git config -- system core.editor vim
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 长命令简写</span>
+</span></span><span class="line"><span class="cl">git config -- global alias.diy_name_here command_here
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 一条输出好看commit log的简写命令</span>
+</span></span><span class="line"><span class="cl">git config -- global alias.loog log --color --graph --pretty<span class="o">=</span>format:<span class="s1">&#39;%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)&lt;%an&gt;%Creset&#39;</span> --abbrev-commit
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 手动编辑config文件</span>
+</span></span><span class="line"><span class="cl">git config -- global --edit
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="本地操作">本地操作
 </h2><p>要管理我们的项目，首先得创建一个Git库：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>git init my_proj
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># or</span>
-</span></span><span style="display:flex;"><span>mkdir my_proj
-</span></span><span style="display:flex;"><span>cd my_proj
-</span></span><span style="display:flex;"><span>git init
-</span></span></code></pre></div><p>从头开始开发，先编写一些项目的配置文件，然后提交，作为最初的版本：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># 添加所有文件到Stage</span>
-</span></span><span style="display:flex;"><span>git add .
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 将内容从Stage提交</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># -m &#34;message&#34; 选项附带简短的提交消息</span>
-</span></span><span style="display:flex;"><span>git commit
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 将当前Stage的内容合并到最近一次的提交，同时修改提交的message</span>
-</span></span><span style="display:flex;"><span>git commit -m <span style="color:#e6db74">&#34;message&#34;</span> --amend
-</span></span></code></pre></div><p>之后可以新建一个分支，在该分支上继续开发任务：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># 查看当前仓库分支</span>
-</span></span><span style="display:flex;"><span>git branch
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 新建分支</span>
-</span></span><span style="display:flex;"><span>git branch dev
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 切换到新分支（两条效果相同）</span>
-</span></span><span style="display:flex;"><span>git switch dev
-</span></span><span style="display:flex;"><span>git checkout dev
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 可以用以下表示新建并切换到新分区</span>
-</span></span><span style="display:flex;"><span>git switch -c dev
-</span></span><span style="display:flex;"><span>git checkout -b dev
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 修改分支名</span>
-</span></span><span style="display:flex;"><span>git branch -M old_name new_name
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 或修改当前分支</span>
-</span></span><span style="display:flex;"><span>git branch -M new_name
-</span></span></code></pre></div><p>现在看看在开发时怎么进行版本管理（）：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># 查看commit记录</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># --pretty=oneline  选项简化输出每行显示一条commit</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># --oneline         选项简写commit id</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># -- file_here      选项显该文件相关的commit</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># --graph           选项图形化显示分支信息</span>
-</span></span><span style="display:flex;"><span>git log
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 查看当前仓库的状态</span>
-</span></span><span style="display:flex;"><span>git status
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 查看所有操作日志</span>
-</span></span><span style="display:flex;"><span>git reflog
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 若有文件被修改，查看工作区和Stage的差异</span>
-</span></span><span style="display:flex;"><span>git diff file_name_here
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 查看工作区或Stage与当前HEAD指向版本的差异</span>
-</span></span><span style="display:flex;"><span>git diff HEAD -- file
-</span></span><span style="display:flex;"><span>git diff HEAD --cached
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># revert 用于撤销指定commit的更改，并为此次撤销创建commit应用到当前分支</span>
-</span></span><span style="display:flex;"><span>git revert commit_id_here
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># reset 用于回退到之前的版本</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># HEAD^n  表示上n次提交</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># --hard 已提交状态（删除工作区修改）  --soft 未提交状态  --mixed 已添加未提交状态（）</span>
-</span></span><span style="display:flex;"><span>git reset --hard HEAD^
-</span></span><span style="display:flex;"><span>git reset --hard commit_id_here
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 撤销*Stage*中已add的文件，保留工作区中的修改（不改变工作区）</span>
-</span></span><span style="display:flex;"><span>git restore --staged file
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 与上条效果相同</span>
-</span></span><span style="display:flex;"><span>git reset HEAD file
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 撤销*Stage*中已add的文件，并撤销工作区中的修改使其与HEAD（若Stage中存在，则是Stage）一致</span>
-</span></span><span style="display:flex;"><span>git restore file
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 与上条命令效果相同</span>
-</span></span><span style="display:flex;"><span>git checkout -- file
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 删除文件</span>
-</span></span><span style="display:flex;"><span>rm file
-</span></span><span style="display:flex;"><span>git add.
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 与上条效果相同</span>
-</span></span><span style="display:flex;"><span>git rm file
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 用于选取一次commit合并到当前分支</span>
-</span></span><span style="display:flex;"><span>git cherry-pick commit_id
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># tag 用于为特定commit添加标签，可用于发布版本</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 当前命令为HEAD指向的commit添加标签</span>
-</span></span><span style="display:flex;"><span>git tag tag_here
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 为指定commit添加标签</span>
-</span></span><span style="display:flex;"><span>git tag tag_here commit_id_here
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># -a 指定标签名 -m 指定标签说明</span>
-</span></span><span style="display:flex;"><span>git tag -a tag_here -m <span style="color:#e6db74">&#34;message&#34;</span> commit_id_here
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 撤销打上的标签</span>
-</span></span><span style="display:flex;"><span>git tag -d tag_here
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 查看所有标签</span>
-</span></span><span style="display:flex;"><span>git tag
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 查看特定标签信息</span>
-</span></span><span style="display:flex;"><span>git show tag_here
-</span></span></code></pre></div><p>在该分支上完成开发任务后，可以合并到master分支：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>git switch master
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 合并分支</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 默认 Fast-forward模式 合并</span>
-</span></span><span style="display:flex;"><span>git merge dev
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 合并后可删除分支</span>
-</span></span><span style="display:flex;"><span>git branch -d dev
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 如果分支在合并时太乱，可以Rebase成一条线</span>
-</span></span><span style="display:flex;"><span>git rebase
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 显示图形化的分支信息</span>
-</span></span><span style="display:flex;"><span>git log --graph
-</span></span></code></pre></div><h2 id="协作开发">协作开发
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">git init my_proj
+</span></span><span class="line"><span class="cl"><span class="c1"># or</span>
+</span></span><span class="line"><span class="cl">mkdir my_proj
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> my_proj
+</span></span><span class="line"><span class="cl">git init
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>从头开始开发，先编写一些项目的配置文件，然后提交，作为最初的版本：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 添加所有文件到Stage</span>
+</span></span><span class="line"><span class="cl">git add .
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 将内容从Stage提交</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># -m &#34;message&#34; 选项附带简短的提交消息</span>
+</span></span><span class="line"><span class="cl">git commit
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 将当前Stage的内容合并到最近一次的提交，同时修改提交的message</span>
+</span></span><span class="line"><span class="cl">git commit -m <span class="s2">&#34;message&#34;</span> --amend
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>之后可以新建一个分支，在该分支上继续开发任务：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 查看当前仓库分支</span>
+</span></span><span class="line"><span class="cl">git branch
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 新建分支</span>
+</span></span><span class="line"><span class="cl">git branch dev
+</span></span><span class="line"><span class="cl"><span class="c1"># 切换到新分支（两条效果相同）</span>
+</span></span><span class="line"><span class="cl">git switch dev
+</span></span><span class="line"><span class="cl">git checkout dev
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 可以用以下表示新建并切换到新分区</span>
+</span></span><span class="line"><span class="cl">git switch -c dev
+</span></span><span class="line"><span class="cl">git checkout -b dev
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 修改分支名</span>
+</span></span><span class="line"><span class="cl">git branch -M old_name new_name
+</span></span><span class="line"><span class="cl"><span class="c1"># 或修改当前分支</span>
+</span></span><span class="line"><span class="cl">git branch -M new_name
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>现在看看在开发时怎么进行版本管理（）：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 查看commit记录</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># --pretty=oneline  选项简化输出每行显示一条commit</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># --oneline         选项简写commit id</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># -- file_here      选项显该文件相关的commit</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># --graph           选项图形化显示分支信息</span>
+</span></span><span class="line"><span class="cl">git log
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 查看当前仓库的状态</span>
+</span></span><span class="line"><span class="cl">git status
+</span></span><span class="line"><span class="cl"><span class="c1"># 查看所有操作日志</span>
+</span></span><span class="line"><span class="cl">git reflog
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 若有文件被修改，查看工作区和Stage的差异</span>
+</span></span><span class="line"><span class="cl">git diff file_name_here
+</span></span><span class="line"><span class="cl"><span class="c1"># 查看工作区或Stage与当前HEAD指向版本的差异</span>
+</span></span><span class="line"><span class="cl">git diff HEAD -- file
+</span></span><span class="line"><span class="cl">git diff HEAD --cached
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># revert 用于撤销指定commit的更改，并为此次撤销创建commit应用到当前分支</span>
+</span></span><span class="line"><span class="cl">git revert commit_id_here
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># reset 用于回退到之前的版本</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># HEAD^n  表示上n次提交</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># --hard 已提交状态（删除工作区修改）  --soft 未提交状态  --mixed 已添加未提交状态（）</span>
+</span></span><span class="line"><span class="cl">git reset --hard HEAD^
+</span></span><span class="line"><span class="cl">git reset --hard commit_id_here
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 撤销*Stage*中已add的文件，保留工作区中的修改（不改变工作区）</span>
+</span></span><span class="line"><span class="cl">git restore --staged file
+</span></span><span class="line"><span class="cl"><span class="c1"># 与上条效果相同</span>
+</span></span><span class="line"><span class="cl">git reset HEAD file
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 撤销*Stage*中已add的文件，并撤销工作区中的修改使其与HEAD（若Stage中存在，则是Stage）一致</span>
+</span></span><span class="line"><span class="cl">git restore file
+</span></span><span class="line"><span class="cl"><span class="c1"># 与上条命令效果相同</span>
+</span></span><span class="line"><span class="cl">git checkout -- file
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 删除文件</span>
+</span></span><span class="line"><span class="cl">rm file
+</span></span><span class="line"><span class="cl">git add.
+</span></span><span class="line"><span class="cl"><span class="c1"># 与上条效果相同</span>
+</span></span><span class="line"><span class="cl">git rm file
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 用于选取一次commit合并到当前分支</span>
+</span></span><span class="line"><span class="cl">git cherry-pick commit_id
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># tag 用于为特定commit添加标签，可用于发布版本</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 当前命令为HEAD指向的commit添加标签</span>
+</span></span><span class="line"><span class="cl">git tag tag_here
+</span></span><span class="line"><span class="cl"><span class="c1"># 为指定commit添加标签</span>
+</span></span><span class="line"><span class="cl">git tag tag_here commit_id_here
+</span></span><span class="line"><span class="cl"><span class="c1"># -a 指定标签名 -m 指定标签说明</span>
+</span></span><span class="line"><span class="cl">git tag -a tag_here -m <span class="s2">&#34;message&#34;</span> commit_id_here
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 撤销打上的标签</span>
+</span></span><span class="line"><span class="cl">git tag -d tag_here
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 查看所有标签</span>
+</span></span><span class="line"><span class="cl">git tag
+</span></span><span class="line"><span class="cl"><span class="c1"># 查看特定标签信息</span>
+</span></span><span class="line"><span class="cl">git show tag_here
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在该分支上完成开发任务后，可以合并到master分支：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">git switch master
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 合并分支</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 默认 Fast-forward模式 合并</span>
+</span></span><span class="line"><span class="cl">git merge dev
+</span></span><span class="line"><span class="cl"><span class="c1"># 合并后可删除分支</span>
+</span></span><span class="line"><span class="cl">git branch -d dev
+</span></span><span class="line"><span class="cl"><span class="c1"># 如果分支在合并时太乱，可以Rebase成一条线</span>
+</span></span><span class="line"><span class="cl">git rebase
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 显示图形化的分支信息</span>
+</span></span><span class="line"><span class="cl">git log --graph
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="协作开发">协作开发
 </h2><p>在本地使用Git进行版本管理进行得差不多了，现在看看如何使用Git借助远程仓库与别人协助工作。</p>
 <p>首先看看怎么进行远程仓库的一些相关操作：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># 查看当前仓库的远程仓库信息</span>
-</span></span><span style="display:flex;"><span>git remote -v
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 为本地仓库添加远程仓库</span>
-</span></span><span style="display:flex;"><span>git remote add remote_name remote_repo_uri
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 推送选定分支到远程仓库</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># --tags 选项推送本地所有tag</span>
-</span></span><span style="display:flex;"><span>git push remote_name branch_name
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 将远程仓库作为选定本地分支的上游，简化push</span>
-</span></span><span style="display:flex;"><span>git push -u remote_name branch_name
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 从远程仓库拉取 会merge到工作区</span>
-</span></span><span style="display:flex;"><span>git pull remote_name
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 从远程仓库拉取 只拉取仓库，不改变工作区，需要手动merge</span>
-</span></span><span style="display:flex;"><span>git ferch remote_name
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 删除当前仓库和远程仓库的绑定信息</span>
-</span></span><span style="display:flex;"><span>git remote rm remote_name
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 从已有的远程仓库开始开发</span>
-</span></span><span style="display:flex;"><span>git clone remote_name
-</span></span></code></pre></div><p>多分支下与远程仓库的操作：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># 查看远程仓库的分支</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># -a 选项查看本地和远程的所有分支</span>
-</span></span><span style="display:flex;"><span>git branch -r
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 创建分支</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 将本地分支推送到远程。远程若没有则会创建</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># -u 选项将绑定upstream，简化push</span>
-</span></span><span style="display:flex;"><span>git push remote_name branch_name
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 一次推送本地所有分支</span>
-</span></span><span style="display:flex;"><span>git push --all remote_name
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 在本地创建分支，并与已存在的远程仓库关联</span>
-</span></span><span style="display:flex;"><span>git checkout -b branch_name remote_name/remote_branch
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 删除远程分支</span>
-</span></span><span style="display:flex;"><span>git push remote_name --delete branch_name
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 删除本地分支</span>
-</span></span><span style="display:flex;"><span>git branch -d branch_name
-</span></span></code></pre></div><h2 id="patch和submodule">Patch和Submodule
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 查看当前仓库的远程仓库信息</span>
+</span></span><span class="line"><span class="cl">git remote -v
+</span></span><span class="line"><span class="cl"><span class="c1"># 为本地仓库添加远程仓库</span>
+</span></span><span class="line"><span class="cl">git remote add remote_name remote_repo_uri
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 推送选定分支到远程仓库</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># --tags 选项推送本地所有tag</span>
+</span></span><span class="line"><span class="cl">git push remote_name branch_name
+</span></span><span class="line"><span class="cl"><span class="c1"># 将远程仓库作为选定本地分支的上游，简化push</span>
+</span></span><span class="line"><span class="cl">git push -u remote_name branch_name
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 从远程仓库拉取 会merge到工作区</span>
+</span></span><span class="line"><span class="cl">git pull remote_name
+</span></span><span class="line"><span class="cl"><span class="c1"># 从远程仓库拉取 只拉取仓库，不改变工作区，需要手动merge</span>
+</span></span><span class="line"><span class="cl">git ferch remote_name
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 删除当前仓库和远程仓库的绑定信息</span>
+</span></span><span class="line"><span class="cl">git remote rm remote_name
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 从已有的远程仓库开始开发</span>
+</span></span><span class="line"><span class="cl">git clone remote_name
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>多分支下与远程仓库的操作：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 查看远程仓库的分支</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># -a 选项查看本地和远程的所有分支</span>
+</span></span><span class="line"><span class="cl">git branch -r
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 创建分支</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 将本地分支推送到远程。远程若没有则会创建</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># -u 选项将绑定upstream，简化push</span>
+</span></span><span class="line"><span class="cl">git push remote_name branch_name
+</span></span><span class="line"><span class="cl"><span class="c1"># 一次推送本地所有分支</span>
+</span></span><span class="line"><span class="cl">git push --all remote_name
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 在本地创建分支，并与已存在的远程仓库关联</span>
+</span></span><span class="line"><span class="cl">git checkout -b branch_name remote_name/remote_branch
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 删除远程分支</span>
+</span></span><span class="line"><span class="cl">git push remote_name --delete branch_name
+</span></span><span class="line"><span class="cl"><span class="c1"># 删除本地分支</span>
+</span></span><span class="line"><span class="cl">git branch -d branch_name
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="patch和submodule">Patch和Submodule
 </h2><p>Patch用于记录代码的更改及应用，可以使用它生成最近几次的commit记录的patch，也可以很方便地把patch的改动合并：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># 生成patch</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 通过最近的n次commit生成n个patch</span>
-</span></span><span style="display:flex;"><span>git format-patch -n
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 应用patch，但不会生成新的commit</span>
-</span></span><span style="display:flex;"><span>git apply patch_name.patch
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 应用patch，但会生成新的commit</span>
-</span></span><span style="display:flex;"><span>git am patch_name.patch
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 可使用send-email发送patch</span>
-</span></span><span style="display:flex;"><span>git send-email --to<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;email&#34;</span> patch_name.patch
-</span></span></code></pre></div><p>Submodule用于管理大型项目，尤其是一个项目是由多个子项目构成时。例如Rust开发中使用 workspace 与 submodule 配合进行项目管理：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># 添加submodule</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 添加本地的git仓库</span>
-</span></span><span style="display:flex;"><span>git submodule add ./submodule_name
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 添加远程仓库</span>
-</span></span><span style="display:flex;"><span>git submodule add url submodule_path
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 克隆带有 submodule 的仓库</span>
-</span></span><span style="display:flex;"><span>git clone --recurse-submodules repo_url
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 或克隆仓库后再获取submodule</span>
-</span></span><span style="display:flex;"><span>git submodule update --init --recursive
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 为子模块commit后，包含它作为submodule的仓库也需要提交commit</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># submodule的远程仓库更新后，拉取最新代码</span>
-</span></span><span style="display:flex;"><span>git submodule update --remote
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 若只需要更新某个子模块</span>
-</span></span><span style="display:flex;"><span>cd module_name
-</span></span><span style="display:flex;"><span>git pull
-</span></span><span style="display:flex;"><span>cd ..
-</span></span><span style="display:flex;"><span>git add . <span style="color:#f92672">&amp;&amp;</span> git commit -m <span style="color:#e6db74">&#34;message&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 删除submodule</span>
-</span></span><span style="display:flex;"><span>git submodule deinit -f module_name
-</span></span><span style="display:flex;"><span>git rm -f module_name
-</span></span><span style="display:flex;"><span>rm -rf .git/modules/module_name
-</span></span><span style="display:flex;"><span>git commit -m <span style="color:#e6db74">&#34;message&#34;</span>
-</span></span></code></pre></div>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 生成patch</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 通过最近的n次commit生成n个patch</span>
+</span></span><span class="line"><span class="cl">git format-patch -n
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 应用patch，但不会生成新的commit</span>
+</span></span><span class="line"><span class="cl">git apply patch_name.patch
+</span></span><span class="line"><span class="cl"><span class="c1"># 应用patch，但会生成新的commit</span>
+</span></span><span class="line"><span class="cl">git am patch_name.patch
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 可使用send-email发送patch</span>
+</span></span><span class="line"><span class="cl">git send-email --to<span class="o">=</span><span class="s2">&#34;email&#34;</span> patch_name.patch
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Submodule用于管理大型项目，尤其是一个项目是由多个子项目构成时。例如Rust开发中使用 workspace 与 submodule 配合进行项目管理：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 添加submodule</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 添加本地的git仓库</span>
+</span></span><span class="line"><span class="cl">git submodule add ./submodule_name
+</span></span><span class="line"><span class="cl"><span class="c1"># 添加远程仓库</span>
+</span></span><span class="line"><span class="cl">git submodule add url submodule_path
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 克隆带有 submodule 的仓库</span>
+</span></span><span class="line"><span class="cl">git clone --recurse-submodules repo_url
+</span></span><span class="line"><span class="cl"><span class="c1"># 或克隆仓库后再获取submodule</span>
+</span></span><span class="line"><span class="cl">git submodule update --init --recursive
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 为子模块commit后，包含它作为submodule的仓库也需要提交commit</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># submodule的远程仓库更新后，拉取最新代码</span>
+</span></span><span class="line"><span class="cl">git submodule update --remote
+</span></span><span class="line"><span class="cl"><span class="c1"># 若只需要更新某个子模块</span>
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> module_name
+</span></span><span class="line"><span class="cl">git pull
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> ..
+</span></span><span class="line"><span class="cl">git add . <span class="o">&amp;&amp;</span> git commit -m <span class="s2">&#34;message&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 删除submodule</span>
+</span></span><span class="line"><span class="cl">git submodule deinit -f module_name
+</span></span><span class="line"><span class="cl">git rm -f module_name
+</span></span><span class="line"><span class="cl">rm -rf .git/modules/module_name
+</span></span><span class="line"><span class="cl">git commit -m <span class="s2">&#34;message&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
 </section>
 
 
@@ -912,7 +1206,7 @@
                 src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
                 
                 >
-            </script><script type="text/javascript" src="/ts/main.f6a537ff04bcedf993772f36c9079fc1a41fbeff92ac8e75b3066f437137edd6.js" defer></script>
+            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
 <script>
     (function () {
         const customFont = document.createElement('link');
