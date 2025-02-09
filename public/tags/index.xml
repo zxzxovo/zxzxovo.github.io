@@ -7,7 +7,39 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
         <copyright>zhixia</copyright>
-        <lastBuildDate>Sat, 08 Feb 2025 02:18:14 +0800</lastBuildDate><atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sat, 08 Feb 2025 20:25:00 +0800</lastBuildDate><atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Code</title>
+        <link>http://localhost:1313/tags/code/</link>
+        <pubDate>Sat, 08 Feb 2025 20:25:00 +0800</pubDate>
+        
+        <guid>http://localhost:1313/tags/code/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Git</title>
+        <link>http://localhost:1313/tags/git/</link>
+        <pubDate>Sat, 08 Feb 2025 20:25:00 +0800</pubDate>
+        
+        <guid>http://localhost:1313/tags/git/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Tools</title>
+        <link>http://localhost:1313/tags/tools/</link>
+        <pubDate>Sat, 08 Feb 2025 20:25:00 +0800</pubDate>
+        
+        <guid>http://localhost:1313/tags/tools/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>学习</title>
+        <link>http://localhost:1313/tags/%E5%AD%A6%E4%B9%A0/</link>
+        <pubDate>Sat, 08 Feb 2025 20:25:00 +0800</pubDate>
+        
+        <guid>http://localhost:1313/tags/%E5%AD%A6%E4%B9%A0/</guid>
+        <description></description>
+        </item>
+        <item>
         <title>Daily</title>
         <link>http://localhost:1313/tags/daily/</link>
         <pubDate>Sat, 08 Feb 2025 02:18:14 +0800</pubDate>

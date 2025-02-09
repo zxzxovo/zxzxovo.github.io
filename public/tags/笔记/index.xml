@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
-        <title>Zhixia&#39;s Blog</title>
-        <link>http://localhost:1313/</link>
-        <description>Recent content on Zhixia&#39;s Blog</description>
+        <title>笔记 on Zhixia&#39;s Blog</title>
+        <link>http://localhost:1313/tags/%E7%AC%94%E8%AE%B0/</link>
+        <description>Recent content in 笔记 on Zhixia&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
         <copyright>zhixia</copyright>
-        <lastBuildDate>Sat, 08 Feb 2025 20:25:00 +0800</lastBuildDate><atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sun, 09 Feb 2025 20:25:00 +0800</lastBuildDate><atom:link href="http://localhost:1313/tags/%E7%AC%94%E8%AE%B0/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>再学一遍Git</title>
         <link>http://localhost:1313/post/%E5%86%8D%E5%AD%A6%E4%B8%80%E9%81%8Dgit/</link>
-        <pubDate>Sat, 08 Feb 2025 20:25:00 +0800</pubDate>
+        <pubDate>Sun, 09 Feb 2025 20:25:00 +0800</pubDate>
         
         <guid>http://localhost:1313/post/%E5%86%8D%E5%AD%A6%E4%B8%80%E9%81%8Dgit/</guid>
         <description>&lt;p&gt;Git真的是非常重要了！！但我编码不多，用到Git的场景也很少，一段时间不用就会忘掉好多命令和用法QwQ。&lt;/p&gt;
 &lt;p&gt;按照一般的工作流记录一遍使用Git的工作流（顺便水一篇blog），顺便当个备忘录或教程（？），不要再忘了！&lt;/p&gt;
+&lt;hr&gt;
 &lt;h2 id=&#34;配置git&#34;&gt;配置Git
-&lt;/h2&gt;&lt;hr&gt;
-&lt;p&gt;安装Git后，首先需要设置是谁在这台设备上使用Git工作，给自己注册个身份证：&lt;/p&gt;
+&lt;/h2&gt;&lt;p&gt;安装Git后，首先需要设置是谁在这台设备上使用Git工作，给自己注册个身份证：&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;git config --global user.name &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Name&amp;#34;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;git config --global user.email &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Email@email.com&amp;#34;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# --global 选项为用户级配置，在当前用户目录下(~)生成 .gitconfig&lt;/span&gt;
@@ -42,7 +42,10 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 导出公钥&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;gpg --armor --export SEC_key_id
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;一些方便的命令 ^w^ ：&lt;/p&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;我的GPG公钥：&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;https://keyserver.ubuntu.com/pks/lookup?search=zhixiaovo%40gmail.com&amp;amp;fingerprint=on&amp;amp;op=index
+# 0xb22de376c5f893473e1ffd32862437be1eedfb44
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;一些方便的命令 ^w^ ：&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 更改git打开的文本编辑器&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;git config -- system core.editor vim
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
@@ -54,7 +57,8 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 手动编辑config文件&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;git config -- global --edit
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;本地操作&#34;&gt;本地操作
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+&lt;h2 id=&#34;本地操作&#34;&gt;本地操作
 &lt;/h2&gt;&lt;p&gt;要管理我们的项目，首先得创建一个Git库：&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;git init my_proj
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# or&lt;/span&gt;
@@ -167,7 +171,8 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 显示图形化的分支信息&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;git log --graph
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;协作开发&#34;&gt;协作开发
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+&lt;h2 id=&#34;协作开发&#34;&gt;协作开发
 &lt;/h2&gt;&lt;p&gt;在本地使用Git进行版本管理进行得差不多了，现在看看如何使用Git借助远程仓库与别人协助工作。&lt;/p&gt;
 &lt;p&gt;首先看看怎么进行远程仓库的一些相关操作：&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 查看当前仓库的远程仓库信息&lt;/span&gt;
@@ -211,7 +216,8 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;git push remote_name --delete branch_name
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 删除本地分支&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;git branch -d branch_name
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;patch和submodule&#34;&gt;Patch和Submodule
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+&lt;h2 id=&#34;patch和submodule&#34;&gt;Patch和Submodule
 &lt;/h2&gt;&lt;p&gt;Patch用于记录代码的更改及应用，可以使用它生成最近几次的commit记录的patch，也可以很方便地把patch的改动合并：&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 生成patch&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 通过最近的n次commit生成n个patch&lt;/span&gt;
@@ -252,143 +258,6 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;rm -rf .git/modules/module_name
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;git commit -m &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;message&amp;#34;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
-        </item>
-        <item>
-        <title>许多日前的自由</title>
-        <link>http://localhost:1313/post/%E8%AE%B8%E5%A4%9A%E6%97%A5%E5%89%8D%E7%9A%84%E8%87%AA%E7%94%B1/</link>
-        <pubDate>Sat, 08 Feb 2025 02:18:14 +0800</pubDate>
-        
-        <guid>http://localhost:1313/post/%E8%AE%B8%E5%A4%9A%E6%97%A5%E5%89%8D%E7%9A%84%E8%87%AA%E7%94%B1/</guid>
-        <description>&lt;img src="http://localhost:1313/post/%E8%AE%B8%E5%A4%9A%E6%97%A5%E5%89%8D%E7%9A%84%E8%87%AA%E7%94%B1/flower1.jpg" alt="Featured image of post 许多日前的自由" /&gt;&lt;p&gt;青春对我来说是一种自由的感觉。从以前到现在，社会身份逐渐自由，思想灵魂逃离自由。&lt;/p&gt;
-&lt;p&gt;阴着却明亮的天，微凉的轻轻荡漾的风，在几棵柳树或橡树所在的地方，或跑或跳。
-以前这样的场景最能使我的情绪激荡，当时仅靠环境就可以对情绪施加各样的压力，产生各种奇妙的感觉。而现在少有这种感觉了，或许是我的情绪本身不再敏感，或许是有更大的压力使我来不及感受，或许二者都有。&lt;/p&gt;
-&lt;p&gt;最近某天我在一处公园的草地上散步，一不小心摔在了地上。
-我趴在草坪上懵逼，脑子空空的，可能是闻到了草或泥土的味道（也肯定没闻到一些脏脏的味道），我没有着急起来，而是翻了个身继续躺。
-我似乎捕捉到了以前有的某些感觉。但它来得很短暂，周围人聊天话语中一些破碎的字词让我想到一些关于生活或生存的事情，让我从地上拾起来。&lt;/p&gt;
-&lt;p&gt;我现在理应拥有使用我身体以及让它进行一切行为的自由，但我的思想却不再能支配它们的自由了。&lt;/p&gt;
-</description>
-        </item>
-        <item>
-        <title>许多日前的晚安</title>
-        <link>http://localhost:1313/post/%E8%AE%B8%E5%A4%9A%E6%97%A5%E5%89%8D%E7%9A%84%E6%99%9A%E5%AE%89/</link>
-        <pubDate>Sat, 08 Feb 2025 01:13:35 +0800</pubDate>
-        
-        <guid>http://localhost:1313/post/%E8%AE%B8%E5%A4%9A%E6%97%A5%E5%89%8D%E7%9A%84%E6%99%9A%E5%AE%89/</guid>
-        <description>&lt;img src="http://localhost:1313/post/%E8%AE%B8%E5%A4%9A%E6%97%A5%E5%89%8D%E7%9A%84%E6%99%9A%E5%AE%89/navigation.jpg" alt="Featured image of post 许多日前的晚安" /&gt;&lt;p&gt;坐在电脑前神游时无意翻到了以前不知何时写的一些文字。&lt;/p&gt;
-&lt;p&gt;今日来看往日，全是发疯，不过闲时看着倒是有些意思。随便找些搬运过来，刚好填补下空空如也的Blog。
-还有许多自己拍的觉得有些意思的图，拿来当封面，这样看起来不至于很单调 ( .&lt;/p&gt;
-&lt;h2 id=&#34;晚安&#34;&gt;晚安
-&lt;/h2&gt;&lt;hr&gt;
-&lt;p&gt;我正处在一处狭小的空间中，并不算好的环境和生活中的一些压力让我有些压抑。
-但这时是夜，声音是寂静，颜色是望不到头的黑，我的情绪便能很好地融入在夜里。
-也有不似白日里太阳的光，没有活力，冷冷地静止或移动。&lt;/p&gt;
-&lt;p&gt;夜使我的忧郁或激昂看起来像是冷静，即使我知道这只是另一种疲倦。
-我时而疲倦地叹息，时而疲倦地瘫坐，直到我忘记疲倦。
-我不能走完完整的疲倦的夜，我不愿看它变成另一种无味，于是用睡眠来跨过夜的尸体，同时也让我如它一样无味。&lt;/p&gt;
-&lt;p&gt;我记住梦前的晚安的话语，当作我梦中的幸运符，我在自己入睡前寄托所愿。
-夜如此激发人的本能，希望传承的遗产。尽管这样，它仍使我安慰，它能带来安全的，温柔的睡和梦。&lt;/p&gt;
-&lt;p&gt;今天的我还是不够好啊，所以，晚安。
-明天的另一个我会怎么样呢，所以，晚安。
-今天的自己将随夜留在今天，所以将最后的温柔带给自己，晚安！&lt;/p&gt;
-</description>
-        </item>
-        <item>
-        <title>Navigation</title>
-        <link>http://localhost:1313/page/navigation/</link>
-        <pubDate>Thu, 06 Feb 2025 00:00:00 +0000</pubDate>
-        
-        <guid>http://localhost:1313/page/navigation/</guid>
-        <description>&lt;img src="http://localhost:1313/page/navigation/navigation.jpg" alt="Featured image of post Navigation" /&gt;&lt;h2 id=&#34;项目主页-nbsp--w-&#34;&gt;项目主页   -w-
-&lt;/h2&gt;&lt;div class=&#34;menav-navp-card&#34;&gt;
-  &lt;img src=&#34;your-project-image.jpg&#34; alt=&#34;项目图片&#34;&gt;
-  &lt;h2&gt;项目名称&lt;/h2&gt;
-  &lt;p&gt;TODOOOO&lt;/p&gt;
-&lt;/div&gt;
-&lt;h2 id=&#34;有趣的小玩意-w&#34;&gt;有趣的小玩意 ~w~
-&lt;/h2&gt;&lt;div class=&#34;menav-navp-card&#34;&gt;
-  &lt;img src=&#34;your-project-image.jpg&#34; alt=&#34;项目图片&#34;&gt;
-  &lt;h2&gt;项目名称&lt;/h2&gt;
-  &lt;p&gt;TODOOOO&lt;/p&gt;
-&lt;/div&gt;
-&lt;br/&gt;
-&lt;h2 id=&#34;others-todo&#34;&gt;Others TODO
-&lt;/h2&gt;&lt;div class=&#34;menav-navp-card&#34;&gt;
-  &lt;img src=&#34;your-project-image.jpg&#34; alt=&#34;项目图片&#34;&gt;
-  &lt;h2&gt;项目名称&lt;/h2&gt;
-  &lt;p&gt;TODOOOO&lt;/p&gt;
-&lt;/div&gt;
-</description>
-        </item>
-        <item>
-        <title>Hello Wrold</title>
-        <link>http://localhost:1313/post/hello-world/</link>
-        <pubDate>Thu, 30 Jan 2025 13:30:00 +0800</pubDate>
-        
-        <guid>http://localhost:1313/post/hello-world/</guid>
-        <description>&lt;img src="http://localhost:1313/post/hello-world/cover.jpg" alt="Featured image of post Hello Wrold" /&gt;&lt;h1 id=&#34;hello-world&#34;&gt;Hello World
-&lt;/h1&gt;&lt;p&gt;Welcome to my &lt;strong&gt;Blog&lt;/strong&gt; !!!&lt;/p&gt;
-&lt;p&gt;It was built with &lt;strong&gt;Hugo&lt;/strong&gt; and the theme &amp;ldquo;Stack&amp;rdquo;.&lt;/p&gt;
-</description>
-        </item>
-        <item>
-        <title>About</title>
-        <link>http://localhost:1313/page/about/</link>
-        <pubDate>Thu, 30 Jan 2025 00:00:00 +0000</pubDate>
-        
-        <guid>http://localhost:1313/page/about/</guid>
-        <description>&lt;img src="http://localhost:1313/page/about/about.jpg" alt="Featured image of post About" /&gt;&lt;p&gt;
-点击这里访问： 
-&lt;a href=&#34;https://keyserver.ubuntu.com/pks/lookup?search=zhixiaovo%40gmail.com&amp;fingerprint=on&amp;op=index&#34; style=&#34;color: DodgerBlue;&#34;&#34;&gt; 我的GPG公钥 &lt;/a&gt;
-&lt;/p&gt;
-&lt;h2 id=&#34;hi&#34;&gt;Hi
-&lt;/h2&gt;&lt;p&gt;这里是 &lt;strong&gt;芷夏&lt;/strong&gt; 的赛博小站！&lt;/p&gt;
-&lt;p&gt;我要用这个 &lt;em&gt;blog&lt;/em&gt; ：学习记录，乱七八糟的文章，技术交流 ^w^ 。&lt;/p&gt;
-&lt;p&gt;管它的，好玩就行了，✌！&lt;/p&gt;
-&lt;h2 id=&#34;关于我&#34;&gt;关于我
-&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;MBTI: INFP 小蝴蝶&lt;/li&gt;
-&lt;li&gt;出生在： 2003年1月10日&lt;/li&gt;
-&lt;li&gt;兴趣爱好： 音乐、电子游戏、羽毛球、足球、骑行（&lt;strong&gt;还有好多想到再写&lt;/strong&gt;）&lt;/li&gt;
-&lt;li&gt;专业技能： 自学编程ing，计算机408(bushi&lt;/li&gt;
-&lt;li&gt;编程语言： 初步习得（&lt;em&gt;C,&lt;/em&gt;） ，正在学习（&lt;em&gt;Rust, Python, JS, Java, Kotlin&lt;/em&gt;）&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;联系方式&#34;&gt;联系方式
-&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;email: &lt;a class=&#34;link&#34; href=&#34;mailto:zhixiaovo@gmail.com&#34; &gt;zhixiaovo@gmail.com&lt;/a&gt;   or    &lt;a class=&#34;link&#34; href=&#34;mailto:zx@hizhixia.site&#34; &gt;zx@hizhixia.site&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;QQ: 2244697793&lt;/li&gt;
-&lt;li&gt;X: &lt;a class=&#34;link&#34; href=&#34;https://x.com/zxzxovo&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;@zxzxovo&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;Github: &lt;a class=&#34;link&#34; href=&#34;https://github.com/zxzxovo&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;@zxzxovo&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-        </item>
-        <item>
-        <title>Archives</title>
-        <link>http://localhost:1313/page/archives/</link>
-        <pubDate>Thu, 30 Jan 2025 00:00:00 +0000</pubDate>
-        
-        <guid>http://localhost:1313/page/archives/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>Links</title>
-        <link>http://localhost:1313/page/links/</link>
-        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-        
-        <guid>http://localhost:1313/page/links/</guid>
-        <description>&lt;h2 id=&#34;links-here&#34;&gt;Links Here!
-&lt;/h2&gt;&lt;p&gt;欢迎联系我添加 &lt;em&gt;友链&lt;/em&gt; 喵 OvO ！&lt;/p&gt;
-&lt;p&gt;或者直接 &lt;em&gt;Pull Request&lt;/em&gt; 或 &lt;em&gt;Issue&lt;/em&gt; ！&lt;/p&gt;
-</description>
-        </item>
-        <item>
-        <title>Search</title>
-        <link>http://localhost:1313/page/search/</link>
-        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-        
-        <guid>http://localhost:1313/page/search/</guid>
-        <description></description>
         </item>
         
     </channel>

@@ -18,6 +18,11 @@ publishResources = true
 render = 'always'
 +++
 
+<p>
+点击这里访问： 
+<a href="https://keyserver.ubuntu.com/pks/lookup?search=zhixiaovo%40gmail.com&fingerprint=on&op=index" style="color: DodgerBlue;""> 我的GPG公钥 </a>
+</p>
+
 ## Hi
 
 这里是 **芷夏** 的赛博小站！
