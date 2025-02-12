@@ -5,7 +5,7 @@ title = '再学一遍Git'
 slug = "再学一遍Git"
 description = "Git命令快查册或备忘录或半个指南"
 categories = ["Code"]
-tags = ["Git", "Code", "Tools", "学习"]
+tags = ["Git", "Code", "Tools", "学习", "笔记"]
 +++
 
 

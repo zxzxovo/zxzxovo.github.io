@@ -7,12 +7,36 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
         <copyright>zhixia</copyright>
-        <lastBuildDate>Sat, 08 Feb 2025 20:25:00 +0800</lastBuildDate><atom:link href="https://hizhixia.site/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Wed, 12 Feb 2025 20:40:22 +0800</lastBuildDate><atom:link href="https://hizhixia.site/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Clap</title>
+        <link>https://hizhixia.site/tags/clap/</link>
+        <pubDate>Wed, 12 Feb 2025 20:40:22 +0800</pubDate>
+        
+        <guid>https://hizhixia.site/tags/clap/</guid>
+        <description></description>
+        </item>
+        <item>
         <title>Code</title>
         <link>https://hizhixia.site/tags/code/</link>
-        <pubDate>Sat, 08 Feb 2025 20:25:00 +0800</pubDate>
+        <pubDate>Wed, 12 Feb 2025 20:40:22 +0800</pubDate>
         
         <guid>https://hizhixia.site/tags/code/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Rust</title>
+        <link>https://hizhixia.site/tags/rust/</link>
+        <pubDate>Wed, 12 Feb 2025 20:40:22 +0800</pubDate>
+        
+        <guid>https://hizhixia.site/tags/rust/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Tools</title>
+        <link>https://hizhixia.site/tags/tools/</link>
+        <pubDate>Wed, 12 Feb 2025 20:40:22 +0800</pubDate>
+        
+        <guid>https://hizhixia.site/tags/tools/</guid>
         <description></description>
         </item>
         <item>
@@ -24,11 +48,11 @@
         <description></description>
         </item>
         <item>
-        <title>Tools</title>
-        <link>https://hizhixia.site/tags/tools/</link>
+        <title>笔记</title>
+        <link>https://hizhixia.site/tags/%E7%AC%94%E8%AE%B0/</link>
         <pubDate>Sat, 08 Feb 2025 20:25:00 +0800</pubDate>
         
-        <guid>https://hizhixia.site/tags/tools/</guid>
+        <guid>https://hizhixia.site/tags/%E7%AC%94%E8%AE%B0/</guid>
         <description></description>
         </item>
         <item>
