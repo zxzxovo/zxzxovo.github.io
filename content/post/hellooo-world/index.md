@@ -5,8 +5,8 @@ title = 'Hello Wrold'
 slug = "hello-world"
 description = "The first blog flag"
 image = "cover.jpg"
-categories = ["daily"]
-tags = ["daily"]
+categories = ["Daily"]
+tags = ["Daily"]
 +++
 
 # Hello World
