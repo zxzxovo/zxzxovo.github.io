@@ -1,7 +1,7 @@
 +++
 title = "Daily"
 description = "My Daily Post!"
-image = ""
+image = "nav.jpg"
 
 # Badge style
 [style]

@@ -1,7 +1,7 @@
 +++
 title = "Math"
 description = "Some essays about my math!"
-image = ""
+image = "nav.webp"
 
 # Badge style
 [style]

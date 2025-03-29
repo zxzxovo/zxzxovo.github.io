@@ -1,7 +1,7 @@
 +++
 title = "Code"
-description = "Programming"
-image = ""
+description = "Talk is cheap, show me the code"
+image = "nav.jpg"
 
 # Badge style
 [style]
