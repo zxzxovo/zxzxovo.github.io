@@ -22,6 +22,7 @@ social = [
     { identifier = "github", name = "Github", url = "https://github.com/zxzxovo", params = { icon = "github" } },
     { identifier = "X", name = "X", url = "https://x.com/zxzxovo", params = { icon = "x-twitter" } },
     { identifier = "mail", name = "Gmail", url = "mailto:zhixiaovo@gmail.com", params = { icon = "envelope" } },
+    { identifier = "pixiv", name = "Pixiv", url = "https://www.pixiv.net/users/114982899", params = { icon = "pixiv" } }
 ]
 
 # [markup]
@@ -64,7 +65,7 @@ emoji = "😌"
 [params.sidebar.avatar]
 enable = true
 local = true
-src = "img/avatar2.jpg"
+src = "img/avatar3.jpg"
 
 [params.footer]
 since = 2025
