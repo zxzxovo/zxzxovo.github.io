@@ -65,7 +65,8 @@ $$&lt;/p&gt;
 &lt;/h2&gt;&lt;blockquote&gt;
 &lt;p&gt;这里首先介绍使用的是 &lt;strong&gt;通用表示法&lt;/strong&gt;，假设我们要将 &lt;strong&gt;n&lt;/strong&gt; 进制数转换 &lt;strong&gt;m&lt;/strong&gt; 进制数，为使用通用表示法，&lt;strong&gt;首先要求&lt;/strong&gt; 我们能把n进制表示法的&lt;strong&gt;n个数字以及这个n，用m进制表示&lt;/strong&gt;（比如十进制转换为二进制时，需要知道0到10的二进制表示）。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;不要问为什么十进制表示法没这个要求，因为我们已经能把二进制，八进制，十六进制以及许多其他进制用十进制数字表示了&lt;/strong&gt; 0v0 。回头看看上方通用表示法下面的 #转换为任意进制 的说明。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Tips&lt;/strong&gt;: n进制的乘法可以使用竖式计算（各位相乘，各行累加，进位）&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Tips&lt;/strong&gt;: n进制的乘法可以使用竖式计算（各位相乘，各行累加，进位）&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;以下为一个通用表示法的示例，由于要转换为m进制，就要学习n进制的乘法对于人来说比较麻烦，因此只做演示。
 但对于常用的 &lt;strong&gt;二进制和十进制的转换&lt;/strong&gt; 来说，已经足够了。&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;art-tags&#34;&gt;#十进制转换为二进制&lt;/span&gt;&lt;/p&gt;
@@ -207,7 +208,7 @@ $$&lt;/p&gt;
         <pubDate>Sat, 08 Feb 2025 20:25:00 +0800</pubDate>
         
         <guid>https://hizhixia.site/post/%E5%86%8D%E5%AD%A6%E4%B8%80%E9%81%8Dgit/</guid>
-        <description>&lt;p&gt;Git真的是非常重要了！！但我编码不多，用到Git的场景也很少，一段时间不用就会忘掉好多命令和用法QwQ。&lt;/p&gt;
+        <description>&lt;img src="https://hizhixia.site/post/%E5%86%8D%E5%AD%A6%E4%B8%80%E9%81%8Dgit/navigation.png" alt="Featured image of post 再学一遍Git" /&gt;&lt;p&gt;Git真的是非常重要了！！但我编码不多，用到Git的场景也很少，一段时间不用就会忘掉好多命令和用法QwQ。&lt;/p&gt;
 &lt;p&gt;按照一般的工作流记录一遍使用Git的工作流（顺便水一篇blog），顺便当个备忘录或教程（？），不要再忘了！&lt;/p&gt;
 &lt;h2 id=&#34;配置git&#34;&gt;配置Git
 &lt;/h2&gt;&lt;hr&gt;

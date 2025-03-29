@@ -7,7 +7,15 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
         <copyright>zhixia</copyright>
-        <lastBuildDate>Thu, 20 Feb 2025 00:40:47 +0800</lastBuildDate><atom:link href="https://hizhixia.site/categories/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sat, 29 Mar 2025 15:07:31 +0800</lastBuildDate><atom:link href="https://hizhixia.site/categories/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Daily</title>
+        <link>https://hizhixia.site/categories/daily/</link>
+        <pubDate>Sat, 29 Mar 2025 15:07:31 +0800</pubDate>
+        
+        <guid>https://hizhixia.site/categories/daily/</guid>
+        <description></description>
+        </item>
+        <item>
         <title>Code</title>
         <link>https://hizhixia.site/categories/code/</link>
         <pubDate>Thu, 20 Feb 2025 00:40:47 +0800</pubDate>
@@ -21,14 +29,6 @@
         <pubDate>Thu, 20 Feb 2025 00:40:47 +0800</pubDate>
         
         <guid>https://hizhixia.site/categories/math/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>Daily</title>
-        <link>https://hizhixia.site/categories/daily/</link>
-        <pubDate>Sat, 08 Feb 2025 02:18:14 +0800</pubDate>
-        
-        <guid>https://hizhixia.site/categories/daily/</guid>
         <description></description>
         </item>
         
