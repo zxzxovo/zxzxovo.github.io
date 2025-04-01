@@ -7,62 +7,7 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
         <copyright>zhixia</copyright>
-        <lastBuildDate>Thu, 06 Feb 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://hizhixia.site/page/index.xml" rel="self" type="application/rss+xml" /><item>
-        <title>Navigation</title>
-        <link>https://hizhixia.site/page/navigation/</link>
-        <pubDate>Thu, 06 Feb 2025 00:00:00 +0000</pubDate>
-        
-        <guid>https://hizhixia.site/page/navigation/</guid>
-        <description>&lt;img src="https://hizhixia.site/page/navigation/stp.jpg" alt="Featured image of post Navigation" /&gt;&lt;style&gt;
-      .menav-navp-card {
-        display: inline-block;
-        width: 300px;
-        text-align: center;
-        background:rgb(255, 255, 255);
-        border-radius: 12px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        padding: 16px;
-        transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
-    }
-    html[data-scheme=&#34;dark&#34;] .menav-navp-card {
-        background-color: #2a2a2a;
-        box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
-    }
-
-    .menav-navp-card img {
-        width: 100%;
-        border-radius: 8px;
-    }
-    .menav-navp-card h2 {
-        font-size: 20px;
-        margin: 12px 0 6px;
-    }
-    .menav-navp-card p {
-        font-size: 14px;
-        color: #666;
-        transition: color 0.3s;
-    }
-
-&lt;/style&gt;
-&lt;div style=&#34;margin: auto; text-align: center;&#34;&gt;
-导航到一些地方...
-&lt;/div&gt;
-&lt;h2 id=&#34;项目主页-nbsp--w-&#34;&gt;项目主页   -w-
-&lt;/h2&gt;&lt;div class=&#34;menav-navp-card&#34;&gt;
-  &lt;img src=&#34;seq-here.png&#34; alt=&#34;项目图片&#34;&gt;
-  &lt;h2 &gt;&lt;a href=&#34;https://github.com/bio-here/seq-here&#34; target=&#34;_blank&#34;&gt;Seq-Here&lt;/a&gt;&lt;/h2&gt;
-  &lt;p&gt;快速的生信序列文件处理工具&lt;/p&gt;
-&lt;/div&gt;
-&lt;h2 id=&#34;有趣的小玩意-w&#34;&gt;有趣的小玩意 ~w~
-&lt;/h2&gt;&lt;div class=&#34;menav-navp-card&#34;&gt;
-  &lt;img src=&#34;your-project-image.jpg&#34; alt=&#34;项目图片&#34;&gt;
-  &lt;h2&gt;一片空白&lt;/h2&gt;
-  &lt;p&gt;TODOOOOooooo。。。。。.....&lt;/p&gt;
-&lt;/div&gt;
-&lt;br/&gt;
-</description>
-        </item>
-        <item>
+        <lastBuildDate>Thu, 30 Jan 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://hizhixia.site/page/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>About</title>
         <link>https://hizhixia.site/page/about/</link>
         <pubDate>Thu, 30 Jan 2025 00:00:00 +0000</pubDate>

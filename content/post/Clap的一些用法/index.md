@@ -2,10 +2,11 @@
 date = '2025-02-12T20:40:22+08:00'
 draft = false
 title = 'Clap的一些用法'
+image = "navigation.svg"
 slug = "Clap的一些用法"
 description = "用Clap快速编写命令行程序"
 categories = ["Code"]
-tags = ["Clap", "Code", "Tools", "Rust", ""]
+tags = ["Clap", "Code", "Tools", "Rust"]
 +++
 
 Rust的 [Clap Crate](https://crates.io/crates/clap) 非常适用于开发命令行程序，它是一个“简单易用、高效且功能齐全的命令行参数解析器”。

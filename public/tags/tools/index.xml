@@ -13,7 +13,7 @@
         <pubDate>Wed, 12 Feb 2025 20:40:22 +0800</pubDate>
         
         <guid>https://hizhixia.site/post/clap%E7%9A%84%E4%B8%80%E4%BA%9B%E7%94%A8%E6%B3%95/</guid>
-        <description>&lt;p&gt;Rust的 &lt;a class=&#34;link&#34; href=&#34;https://crates.io/crates/clap&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+        <description>&lt;img src="https://hizhixia.site/post/clap%E7%9A%84%E4%B8%80%E4%BA%9B%E7%94%A8%E6%B3%95/navigation.svg" alt="Featured image of post Clap的一些用法" /&gt;&lt;p&gt;Rust的 &lt;a class=&#34;link&#34; href=&#34;https://crates.io/crates/clap&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;Clap Crate&lt;/a&gt; 非常适用于开发命令行程序，它是一个“简单易用、高效且功能齐全的命令行参数解析器”。&lt;/p&gt;
 &lt;p&gt;Clap的作用在于帮助我们定义命令行工具的各种指令和用法，并解析用户使用的什么指令。之后我们只需要编写对应指令的功能代码即可。&lt;/p&gt;
 &lt;p&gt;在这里简单记录一下它的一些用法。&lt;/p&gt;
