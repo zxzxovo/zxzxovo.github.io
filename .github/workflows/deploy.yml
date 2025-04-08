@@ -29,12 +29,14 @@ jobs:
         run: |
           corepack enable
           
-      - name: Install and Build 🔧
-        run: |
-          pnpm install
-          pnpm build
+      - name: Install Dependencies 📦
+        run: pnpm install
+        
+      - name: Build for GitHub Pages 🏗️
+        run: pnpm build
         env:
           NODE_ENV: production
+          BASE_URL: /${{ github.event.repository.name }}/
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
