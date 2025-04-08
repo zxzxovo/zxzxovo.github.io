@@ -1,8 +1,4 @@
 
-# zxzxovo.github.io
+## hizhixia.site
 
-Hello! It's my **Blog** Here!
-
-It was built with *Hugo* .
-
-Thanks for coming!
+built with Vue3 + Vite + TS
