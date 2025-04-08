@@ -103,7 +103,7 @@ export default defineConfig({
     }
   },
   // 设置基础路径，适合GitHub Pages部署
-  base: '/',
+  base: '/zxzxovo.github.io/',
   build: {
     // 生产环境构建配置
     minify: 'terser',
