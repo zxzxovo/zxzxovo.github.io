@@ -113,37 +113,37 @@ export default defineConfig({
         drop_debugger: true // 移除debugger
       }
     },
-    rollupOptions: {
-      output: {
-        // // 拆分代码块
-        // manualChunks: {
-        //   vendor: ['vue', 'vue-router'],
-        //   utils: ['./src/utils/index.ts']
-        // },
-        // 静态资源分类输出
-        chunkFileNames: 'assets/js/[name]-[hash].js',
-        entryFileNames: 'assets/js/[name]-[hash].js',
-        assetFileNames: (assetInfo) => {
-          if (!assetInfo.name) return 'assets/other/[name]-[hash].[ext]';
-          const info = assetInfo.name.split('.')
-          let extType = info[info.length - 1]
-          if (/\.(png|jpe?g|gif|svg|webp)(\?.*)?$/.test(assetInfo.name)) {
-            extType = 'img'
-          } else if (/\.(woff2?|eot|ttf|otf)(\?.*)?$/i.test(assetInfo.name)) {
-            extType = 'fonts'
-          } else if (/\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/.test(assetInfo.name)) {
-            extType = 'media'
-          } else if (/\.css$/.test(assetInfo.name)) {
-            extType = 'css'
-          }
-          return `assets/${extType}/[name]-[hash].[ext]`
-        }
-      }
-    }
+    // rollupOptions: {
+    //   output: {
+    //     // // 拆分代码块
+    //     // manualChunks: {
+    //     //   vendor: ['vue', 'vue-router'],
+    //     //   utils: ['./src/utils/index.ts']
+    //     // },
+    //     // 静态资源分类输出
+    //     chunkFileNames: 'assets/js/[name]-[hash].js',
+    //     entryFileNames: 'assets/js/[name]-[hash].js',
+    //     assetFileNames: (assetInfo) => {
+    //       if (!assetInfo.name) return 'assets/other/[name]-[hash].[ext]';
+    //       const info = assetInfo.name.split('.')
+    //       let extType = info[info.length - 1]
+    //       if (/\.(png|jpe?g|gif|svg|webp)(\?.*)?$/.test(assetInfo.name)) {
+    //         extType = 'img'
+    //       } else if (/\.(woff2?|eot|ttf|otf)(\?.*)?$/i.test(assetInfo.name)) {
+    //         extType = 'fonts'
+    //       } else if (/\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/.test(assetInfo.name)) {
+    //         extType = 'media'
+    //       } else if (/\.css$/.test(assetInfo.name)) {
+    //         extType = 'css'
+    //       }
+    //       return `assets/${extType}/[name]-[hash].[ext]`
+    //     }
+    //   }
+    // }
   },
-  server: {
-    port: 3000,
-    cors: true,
-    open: true
-  }
+  // server: {
+  //   port: 3000,
+  //   cors: true,
+  //   open: true
+  // }
 })
