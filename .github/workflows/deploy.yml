@@ -20,14 +20,19 @@ jobs:
         with:
           node-version: '16'
           
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v2
+        with:
+          version: 10.7.0
+          
       - name: Enable Corepack 🔧
         run: |
           corepack enable
           
       - name: Install and Build 🔧
         run: |
-          yarn install
-          yarn build
+          pnpm install
+          pnpm build
         env:
           NODE_ENV: production
 
