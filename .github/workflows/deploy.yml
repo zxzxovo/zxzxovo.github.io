@@ -15,25 +15,16 @@ jobs:
       - name: Checkout 🛎️
         uses: actions/checkout@v3
 
-      - name: Setup Node.js ⚙️
-        uses: actions/setup-node@v3
+      - name: Setup Bun ⚙️
+        uses: oven-sh/setup-bun@v1
         with:
-          node-version: '18'
-          
-      - name: Setup PNPM
-        uses: pnpm/action-setup@v2
-        with:
-          version: 10.7.0
-          
-      - name: Enable Corepack 🔧
-        run: |
-          corepack enable
+          bun-version: latest
           
       - name: Install Dependencies 📦
-        run: pnpm install
+        run: bun install
         
       - name: Build for GitHub Pages 🏗️
-        run: pnpm build
+        run: bun run build
         env:
           NODE_ENV: production
           VITE_BASE: /${{ github.repository }}/
