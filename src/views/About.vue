@@ -62,6 +62,7 @@ const recentActivities = {
         { name: '向往', artist: '李健', link: '#' },
         { name: '太史公之缢', artist: '沉默演讲', link: '#' },
         { name: '悲伤的梦', artist: '窦唯', link: '#' },
+        { name: '你的城市', artist: '声音玩具', link: '#' }
 
     ],
     tech: [

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Card from '../components/Card.vue';
-import seqHereImg from '@/assets/seq-here.svg';
+import seqHereImg from '@/assets/seq-here.png';
 import { onMounted } from 'vue';
 
 const somethingFun = [
@@ -20,7 +20,7 @@ const activeProjects = [
     {
         title: 'bio-here/seq-here',
         link: "https://bio-here.github.io/seq-here",
-        description: 'A fast tool for bio-sequence basical processing',
+        description: 'A fast tool for bio-sequence processing',
         image: seqHereImg,
         tags: ['Rust','bioinformatics', 'cli', 'linux', 'windows']
     },
