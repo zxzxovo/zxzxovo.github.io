@@ -9,6 +9,9 @@ const routes: Readonly<RouteRecordRaw[]> = [
     {
         path: '/',
         name: 'Index',
+        components: {
+            appcontent: () => import('../views/Index.vue'),
+        },
         children: [
             {
                 path: '/',
@@ -31,7 +34,7 @@ const routes: Readonly<RouteRecordRaw[]> = [
                 }
             },
             {
-                path: 'projects',
+                path: '/projects',
                 name: 'Projects',
                 components: {
                     main: Projects,
@@ -41,7 +44,7 @@ const routes: Readonly<RouteRecordRaw[]> = [
                 }
             },
             {
-                path: 'services',
+                path: '/services',
                 name: 'Services',
                 components: {
                     main: Services,
@@ -51,7 +54,7 @@ const routes: Readonly<RouteRecordRaw[]> = [
                 }
             },
             {
-                path: 'about',
+                path: '/about',
                 name: 'About',
                 components: {
                     main: About,
@@ -72,6 +75,22 @@ const routes: Readonly<RouteRecordRaw[]> = [
             }
         ]
     },
+    {
+        path: '/fun',
+        components: {
+            appcontent: () => import('../views/Fun/Index.vue'),
+        },
+        children: [
+            {
+                path: '/fun/unicode-emoji',
+                name: 'FunUnicodeEmoji',
+                components:{
+                    fun: () => import('../views/Fun/UnicodeEmoji.vue'),  
+                },
+            },
+        ]
+        
+    }
 
 ]
 

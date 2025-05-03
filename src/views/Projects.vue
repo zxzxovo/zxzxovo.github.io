@@ -9,14 +9,21 @@ const somethingFun = [
         link: 'https://hizhixia.site',
         description: '这只是一个标签喵^w^',
     },
-    // {
-    //     title: 'Project 2',
-    //     link: 'https://example.com',
-    //     description: 'Description of project 2',
-    // }
+    {
+        title: 'Unicode-Emoji Copy😼',
+        link: '/fun/unicode-emoji',
+        description: 'Unicode Emoji Chars ( AI generated )',
+    }
 ]
 
 const activeProjects = [
+    {
+        title: 'bio-here',
+        link: "https://bio-here.github.io/",
+        description: 'A series of bioinformatics tools',
+        // image: seqHereImg,
+        tags: ['Rust','bioinformatics',]
+    },
     {
         title: 'bio-here/seq-here',
         link: "https://bio-here.github.io/seq-here",
@@ -24,6 +31,14 @@ const activeProjects = [
         image: seqHereImg,
         tags: ['Rust','bioinformatics', 'cli', 'linux', 'windows']
     },
+    {
+        title: 'bio-here/placecare',
+        link: "https://bio-here.github.io/zh/project/placecare.html",
+        description: 'A tool for cis-acting regulatory elements search, based on PLACE',
+        // image: seqHereImg,
+        tags: ['Rust','bioinformatics', 'cli', 'linux', 'windows', "PLACE", "string search"]
+    },
+
     // {
     //     title: 'wipe-windows',
     //     link: 'https://example.com',
@@ -40,21 +55,21 @@ const activeProjects = [
     // },
 ]
 
-// 获取标签的颜色
+// 获取标签颜色
 const getTagColor = (tag: string) => {
     const colorMap: Record<string, string> = {
-        'Rust': '#ff5722',
-        'bioinformatics': '#4caf50',
+        'rust': '#ff5722',
+        'bioinformatics': '#26A69A',
         'cli': '#2196f3',
-        'linux': '#607d8b',
-        'windows': '#03a9f4',
+        'linux': '#455A64',
+        'windows': '#42A5F5',
         'tauri': '#9c27b0',
         'tool': '#795548',
         'installation': '#ff9800',
         'software': '#3f51b5'
     };
 
-    return colorMap[tag.toLowerCase()] || '#9e9e9e';
+    return colorMap[tag.toLowerCase()] || '#5C6BC0';
 };
 
 // 图片懒加载设置

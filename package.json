@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@types/node": "^22.14.0",
+    "element-plus": "^2.9.9",
     "hizhixia.site": "file:",
     "pinia": "^3.0.1",
     "sass-embedded": "^1.86.3",

@@ -2,10 +2,8 @@
 import Card from '../components/Card.vue';
 import { useRouter } from 'vue-router';
 
-// 用于导航的路由对象
 const router = useRouter();
 
-// 功能模块
 const features = [
     {
         title: '博客',
@@ -33,7 +31,6 @@ const features = [
     }
 ];
 
-// 处理导航
 const navigateTo = (route: any) => {
     router.push(route);
 };
