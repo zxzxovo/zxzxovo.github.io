@@ -47,7 +47,7 @@ const workContact = {
         {
             head: "邮箱",
             content: [
-                { text: "zxzxovo@gmail.com", isLink: false },
+                { text: "zhixiaovo@gmail.com", isLink: false },
                 { text: "flatig@163.com", isLink: false }
             ]
         },
