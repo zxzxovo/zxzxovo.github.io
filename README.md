@@ -1,4 +1,3 @@
+# hizhixia.site
 
-## hizhixia.site
-
-built with Vue3 + Vite + TS
+My Official Website. 
