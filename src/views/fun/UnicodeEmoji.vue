@@ -2,7 +2,6 @@
 import { ref, onMounted, computed } from "vue";
 import CardView from "@/components/CardView.vue";
 
-// 复制模式：emoji-直接复制表情，unicode-复制Unicode，bytes-复制字节码
 const copyMode = ref("emoji");
 
 // 追踪当前复制状态的emoji索引
