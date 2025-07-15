@@ -47,6 +47,22 @@ export default defineConfig({
     assetsDir: 'assets',
     // 压缩配置
     minify: 'terser',
+    // Terser 压缩选项
+    terserOptions: {
+      compress: {
+        // 移除生产环境的控制台输出
+        drop_console: true,
+        drop_debugger: true,
+        // 移除无用代码
+        dead_code: true,
+        // 移除无用的变量
+        unused: true,
+      },
+      mangle: {
+        // 混淆变量名以减小文件大小
+        safari10: true,
+      },
+    },
     // 启用代码分割
     rollupOptions: {
       output: {

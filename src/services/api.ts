@@ -1,4 +1,5 @@
 import type { PostsData, BooksData, BlogPost, Book, SearchResult } from '../types';
+import { devWarn } from '../utils/logger';
 
 // API缓存
 const apiCache = new Map<string, { data: any; timestamp: number }>();
@@ -53,7 +54,7 @@ export async function fetchPost(slug: string): Promise<BlogPost> {
           post.content = await contentResponse.text();
         }
       } catch (error) {
-        console.warn(`加载文章内容失败: ${slug}`, error);
+        devWarn(`加载文章内容失败: ${slug}`, error);
       }
     }
     

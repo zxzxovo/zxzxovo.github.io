@@ -8,6 +8,7 @@ import { fetchPosts, fetchBooks } from "@/services/api";
 import { useAsyncState } from "@/composables/useAsyncState";
 import { useSEO } from "@/composables/useSEO";
 import type { PostsData, BooksData, BlogPost, Book } from "@/types";
+import { devLog, devError } from "@/utils/logger";
 
 const router = useRouter();
 const { setMeta, setStructuredData } = useSEO();
@@ -133,7 +134,7 @@ const handleImageError = (slug: string) => {
 
 // 生命周期
 onMounted(async () => {
-  console.log("Home页面开始加载数据...");
+  devLog("Home页面开始加载数据...");
   startTypewriter();
 
   // 设置首页SEO
@@ -167,17 +168,17 @@ onMounted(async () => {
   try {
     await Promise.all([
       loadPosts(fetchPosts).catch((error) => {
-        console.error("加载文章失败:", error);
+        devError("加载文章失败:", error);
         throw error;
       }),
       loadBooks(fetchBooks).catch((error) => {
-        console.error("加载书籍失败:", error);
+        devError("加载书籍失败:", error);
         throw error;
       }),
     ]);
-    console.log("数据加载成功");
+    devLog("数据加载成功");
   } catch (error) {
-    console.error("数据加载失败:", error);
+    devError("数据加载失败:", error);
   }
 });
 </script>

@@ -5,6 +5,7 @@ import katex from 'markdown-it-katex';
 import hljs from 'highlight.js';
 import 'highlight.js/styles/github-dark.css';
 import 'katex/dist/katex.min.css';
+import { devLog, devError } from './logger';
 
 // 目录项接口
 export interface TableOfContent {
@@ -235,7 +236,7 @@ export function generateTableOfContents(htmlContent: string): TableOfContent[] {
 export function processMarkdownContent(content: string, options: { removeFirstH1?: boolean } = {}): string {
   let processedContent = content;
   
-  console.log('开始处理Markdown内容，长度:', content.length);
+  devLog('开始处理Markdown内容，长度:', content.length);
   
   // 如果需要移除首个 H1 标题
   if (options.removeFirstH1) {
@@ -246,16 +247,16 @@ export function processMarkdownContent(content: string, options: { removeFirstH1
   const md = getMarkdownInstance();
   
   if (!md) {
-    console.error('无法获取Markdown实例');
+    devError('无法获取Markdown实例');
     return '<p class="text-red-500">Markdown引擎初始化失败</p>';
   }
   
   try {
     const html = md.render(processedContent);
-    console.log('Markdown引擎渲染完成，HTML长度:', html.length);
+    devLog('Markdown引擎渲染完成，HTML长度:', html.length);
     
     if (!html || html.trim().length === 0) {
-      console.error('Markdown引擎返回空HTML');
+      devError('Markdown引擎返回空HTML');
       return '<p class="text-gray-600 dark:text-gray-400">内容为空</p>';
     }
     
@@ -281,10 +282,10 @@ export function processMarkdownContent(content: string, options: { removeFirstH1
       .replace(/<td>/g, '<td class="px-4 py-2 whitespace-nowrap text-sm text-gray-900 dark:text-gray-300 border-b border-gray-100 dark:border-gray-800">')
       .replace(/<hr>/g, '<hr class="my-8 border-gray-200 dark:border-gray-700">');
     
-    console.log('样式处理完成，最终HTML长度:', styledHtml.length);
+    devLog('样式处理完成，最终HTML长度:', styledHtml.length);
     return styledHtml;
   } catch (error) {
-    console.error('Markdown处理过程中发生错误:', error);
+    devError('Markdown处理过程中发生错误:', error);
     return `<p class="text-red-500">内容处理失败: ${error instanceof Error ? error.message : '未知错误'}</p>`;
   }
 }
@@ -369,22 +370,22 @@ export function addHeadingIds(content: string, _headings: TableOfContent[]): str
 // 完整的Markdown渲染函数（包含目录生成）- 添加缓存支持
 export function renderMarkdownWithTOC(content: string): { html: string; toc: TableOfContent[] } {
   try {
-    console.log('渲染Markdown内容，长度:', content.length);
+    devLog('渲染Markdown内容，长度:', content.length);
     
     // 提取标题
     const headings = extractHeadingsFromMarkdown(content);
-    console.log('提取到的标题数量:', headings.length);
+    devLog('提取到的标题数量:', headings.length);
     
     // 添加ID到内容
     const processedContent = addHeadingIds(content, headings);
-    console.log('处理后的内容长度:', processedContent.length);
+    devLog('处理后的内容长度:', processedContent.length);
     
     // 渲染HTML
     const html = processMarkdownContent(processedContent);
-    console.log('渲染的HTML长度:', html.length);
+    devLog('渲染的HTML长度:', html.length);
     
     if (!html || html.trim().length === 0) {
-      console.error('HTML渲染结果为空');
+      devError('HTML渲染结果为空');
       return {
         html: '<p class="text-red-500">内容渲染为空</p>',
         toc: headings
@@ -393,7 +394,7 @@ export function renderMarkdownWithTOC(content: string): { html: string; toc: Tab
     
     return { html, toc: headings };
   } catch (error) {
-    console.error('Markdown 渲染错误:', error);
+    devError('Markdown 渲染错误:', error);
     return { 
       html: `<p class="text-red-500">内容渲染失败: ${error instanceof Error ? error.message : '未知错误'}</p>`, 
       toc: [] 

@@ -370,29 +370,11 @@
       "wordCount": 92,
       "readingTime": 1,
       "lastModified": "2025-07-11T08:28:36.261Z"
-    },
-    {
-      "slug": "markdown-test",
-      "title": "Markdown代码块测试",
-      "description": "测试代码块内的#注释是否正常显示",
-      "date": "2025-01-01T00:00:00+08:00",
-      "image": null,
-      "categories": [
-        "Test"
-      ],
-      "tags": [
-        "Test",
-        "Markdown"
-      ],
-      "draft": false,
-      "wordCount": 535,
-      "readingTime": 1,
-      "lastModified": "2025-07-15T14:17:54.516Z"
     }
   ],
   "stats": {
-    "total": 19,
-    "published": 18,
+    "total": 18,
+    "published": 17,
     "draft": 1,
     "categories": [
       {
@@ -417,10 +399,6 @@
       },
       {
         "name": "Math",
-        "count": 1
-      },
-      {
-        "name": "Test",
         "count": 1
       }
     ],
@@ -540,25 +518,17 @@
       {
         "name": "青春",
         "count": 1
-      },
-      {
-        "name": "Test",
-        "count": 1
-      },
-      {
-        "name": "Markdown",
-        "count": 1
       }
     ],
     "years": [
       {
         "year": 2025,
-        "count": 19
+        "count": 18
       }
     ],
-    "totalWords": 56786,
+    "totalWords": 56251,
     "averageReadingTime": 4
   },
   "errors": [],
-  "generated": "2025-07-15T14:20:41.130Z"
+  "generated": "2025-07-15T15:01:55.336Z"
 }

@@ -776,7 +776,7 @@ onUnmounted(() => {
           title="章节目录"
         >
           <Icon
-            icon="streamline-plump-color:book-1 "
+            icon="streamline-plump-color:book-1"
             width="20"
             height="20"
           />

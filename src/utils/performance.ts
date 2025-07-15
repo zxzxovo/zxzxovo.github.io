@@ -1,6 +1,7 @@
 /**
  * 性能监控工具
  */
+import { devLog, devWarn } from './logger';
 
 interface PerformanceMetrics {
   name: string;
@@ -33,7 +34,7 @@ class PerformanceMonitor {
     
     const metric = this.metrics.get(name);
     if (!metric) {
-      console.warn(`性能测量 "${name}" 未找到开始时间`);
+      devWarn(`性能测量 "${name}" 未找到开始时间`);
       return null;
     }
 
@@ -43,7 +44,7 @@ class PerformanceMonitor {
     metric.endTime = endTime;
     metric.duration = duration;
 
-    console.log(`⏱️ ${name}: ${duration.toFixed(2)}ms`);
+    devLog(`⏱️ ${name}: ${duration.toFixed(2)}ms`);
     return duration;
   }
 
@@ -89,14 +90,13 @@ class PerformanceMonitor {
         const navigation = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming;
         
         if (navigation) {
-          console.group('📊 页面加载性能');
-          console.log(`DNS查询: ${(navigation.domainLookupEnd - navigation.domainLookupStart).toFixed(2)}ms`);
-          console.log(`TCP连接: ${(navigation.connectEnd - navigation.connectStart).toFixed(2)}ms`);
-          console.log(`请求响应: ${(navigation.responseEnd - navigation.requestStart).toFixed(2)}ms`);
-          console.log(`DOM解析: ${(navigation.domContentLoadedEventEnd - navigation.domContentLoadedEventStart).toFixed(2)}ms`);
-          console.log(`资源加载: ${(navigation.loadEventEnd - navigation.domContentLoadedEventEnd).toFixed(2)}ms`);
-          console.log(`总加载时间: ${navigation.duration.toFixed(2)}ms`);
-          console.groupEnd();
+          devLog('📊 页面加载性能');
+          devLog(`DNS查询: ${(navigation.domainLookupEnd - navigation.domainLookupStart).toFixed(2)}ms`);
+          devLog(`TCP连接: ${(navigation.connectEnd - navigation.connectStart).toFixed(2)}ms`);
+          devLog(`请求响应: ${(navigation.responseEnd - navigation.requestStart).toFixed(2)}ms`);
+          devLog(`DOM解析: ${(navigation.domContentLoadedEventEnd - navigation.domContentLoadedEventStart).toFixed(2)}ms`);
+          devLog(`资源加载: ${(navigation.loadEventEnd - navigation.domContentLoadedEventEnd).toFixed(2)}ms`);
+          devLog(`总加载时间: ${navigation.duration.toFixed(2)}ms`);
         }
       }, 100);
     });
@@ -114,11 +114,10 @@ class PerformanceMonitor {
         const largeResources = resources.filter(r => r.transferSize && r.transferSize > 100000); // 大于100KB
         
         if (largeResources.length > 0) {
-          console.group('📦 大型资源加载');
+          devLog('📦 大型资源加载');
           largeResources.forEach(resource => {
-            console.log(`${resource.name}: ${(resource.transferSize! / 1024).toFixed(2)}KB - ${resource.duration.toFixed(2)}ms`);
+            devLog(`${resource.name}: ${(resource.transferSize! / 1024).toFixed(2)}KB - ${resource.duration.toFixed(2)}ms`);
           });
-          console.groupEnd();
         }
       }, 100);
     });

@@ -6,6 +6,7 @@ import CardView from "@/components/CardView.vue";
 import { renderMarkdownWithTOC, type TableOfContent } from "@/utils/markdown";
 import { useSEO } from "@/composables/useSEO";
 import type { BlogPost } from "@/types";
+import { devLog, devError } from "@/utils/logger";
 
 // 路由和响应式数据
 const route = useRoute();
@@ -91,17 +92,17 @@ const postSlug = computed(() => route.params.slug as string);
 // 渲染的文章内容
 const renderedContent = computed(() => {
   if (!currentPost.value?.content) {
-    console.log('没有文章内容可渲染');
+    devLog('没有文章内容可渲染');
     return '<p class="text-gray-500 dark:text-gray-400">暂无内容</p>';
   }
   
-  console.log('开始渲染文章内容:', currentPost.value.title);
+  devLog('开始渲染文章内容:', currentPost.value.title);
   try {
     const { html } = renderMarkdownWithTOC(currentPost.value.content);
-    console.log('文章内容渲染完成，HTML长度:', html.length);
+    devLog('文章内容渲染完成，HTML长度:', html.length);
     return html;
   } catch (error) {
-    console.error('渲染文章内容失败:', error);
+    devError('渲染文章内容失败:', error);
     return '<p class="text-red-500">内容渲染失败</p>';
   }
 });
@@ -269,7 +270,7 @@ const loadPostData = async () => {
     isLoading.value = true;
     loadError.value = null;
 
-    console.log("正在加载文章:", postSlug.value);
+    devLog("正在加载文章:", postSlug.value);
 
     // 首先加载所有文章数据
     const response = await fetch("/posts.json");
@@ -280,7 +281,7 @@ const loadPostData = async () => {
     const postsData = await response.json();
     allPosts.value = postsData.posts;
 
-    console.log("已加载文章列表，总数:", allPosts.value.length);
+    devLog("已加载文章列表，总数:", allPosts.value.length);
 
     // 找到当前文章
     const post = allPosts.value.find((p) => p.slug === postSlug.value);
@@ -288,7 +289,7 @@ const loadPostData = async () => {
       throw new Error("文章未找到");
     }
 
-    console.log("找到文章:", post.title);
+    devLog("找到文章:", post.title);
 
     // 加载文章内容
     const contentResponse = await fetch(`/posts/${post.slug}/index.md`);
@@ -351,7 +352,7 @@ const loadPostData = async () => {
       }
     }, 500);
   } catch (error) {
-    console.error("❌ 加载文章失败:", error);
+    devError("❌ 加载文章失败:", error);
     loadError.value = error instanceof Error ? error.message : "加载失败";
   } finally {
     isLoading.value = false;
