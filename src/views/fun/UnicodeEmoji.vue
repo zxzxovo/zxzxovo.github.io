@@ -26,9 +26,10 @@ const isDarkMode = computed(() => {
 
 // 切换明暗主题
 const toggleTheme = () => {
-  const currentTheme = document.documentElement.getAttribute("data-theme") || "light";
+  const currentTheme =
+    document.documentElement.getAttribute("data-theme") || "light";
   const newTheme = currentTheme === "dark" ? "light" : "dark";
-  
+
   document.documentElement.setAttribute("data-theme", newTheme);
   localStorage.setItem("theme", newTheme);
 };
@@ -64,7 +65,11 @@ onMounted(() => {
         { emoji: "🤔", unicode: "U+1F914", bytes: "\\uD83E\\uDD14" },
         { emoji: "🤨", unicode: "U+1F928", bytes: "\\uD83E\\uDD28" },
         { emoji: "😐", unicode: "U+1F610", bytes: "\\uD83D\\uDE10" },
-        { emoji: "😶‍🌫️", unicode: "U+1F636 U+200D U+1F32B U+FE0F", bytes: "\\uD83D\\uDE36\\u200D\\uD83C\\uDF2B\\uFE0F" },
+        {
+          emoji: "😶‍🌫️",
+          unicode: "U+1F636 U+200D U+1F32B U+FE0F",
+          bytes: "\\uD83D\\uDE36\\u200D\\uD83C\\uDF2B\\uFE0F",
+        },
         { emoji: "🫥", unicode: "U+1FAE5", bytes: "\\uD83E\\uDEE5" },
         { emoji: "😬", unicode: "U+1F62C", bytes: "\\uD83D\\uDE2C" },
         { emoji: "🫠", unicode: "U+1FAE0", bytes: "\\uD83E\\uDEE0" },
@@ -79,7 +84,11 @@ onMounted(() => {
         { emoji: "😴", unicode: "U+1F634", bytes: "\\uD83D\\uDE34" },
         { emoji: "🤤", unicode: "U+1F924", bytes: "\\uD83E\\uDD24" },
         { emoji: "😪", unicode: "U+1F62A", bytes: "\\uD83D\\uDE2A" },
-        { emoji: "😵‍💫", unicode: "U+1F635 U+200D U+1F4AB", bytes: "\\uD83D\\uDE35\\u200D\\uD83D\\uDCAB" },
+        {
+          emoji: "😵‍💫",
+          unicode: "U+1F635 U+200D U+1F4AB",
+          bytes: "\\uD83D\\uDE35\\u200D\\uD83D\\uDCAB",
+        },
         { emoji: "🫨", unicode: "U+1FAE8", bytes: "\\uD83E\\uDEE8" },
         { emoji: "🤐", unicode: "U+1F910", bytes: "\\uD83E\\uDD10" },
         { emoji: "🥴", unicode: "U+1F974", bytes: "\\uD83E\\uDD74" },
@@ -471,7 +480,11 @@ const copyToClipboard = (
 };
 
 // 获取复制内容预览
-const getCopyPreview = (emoji: { emoji: string; unicode: string; bytes: string }) => {
+const getCopyPreview = (emoji: {
+  emoji: string;
+  unicode: string;
+  bytes: string;
+}) => {
   if (copyMode.value === "emoji") {
     return emoji.emoji;
   } else if (copyMode.value === "unicode") {
@@ -491,7 +504,7 @@ const isCopied = (groupIndex: number, emojiIndex: number) => {
 </script>
 
 <template>
-  <div class=" h-screen bg-gray-50 dark:bg-zinc-900 py-6 px-4">
+  <div class="h-screen bg-gray-50 dark:bg-zinc-900 py-6 px-4">
     <div class="max-w-7xl mx-auto">
       <!-- 标题和明暗模式切换按钮 -->
       <div class="flex flex-col items-center mb-8 relative">
@@ -501,17 +514,37 @@ const isCopied = (groupIndex: number, emojiIndex: number) => {
           class="absolute right-0 top-0 p-2 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline-none rounded-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-zinc-800"
           aria-label="切换主题"
         >
-          <svg v-if="isDarkMode" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+          <svg
+            v-if="isDarkMode"
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-5 w-5"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
             <!-- 太阳图标 -->
-            <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd" />
+            <path
+              fill-rule="evenodd"
+              d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+              clip-rule="evenodd"
+            />
           </svg>
-          <svg v-else xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+          <svg
+            v-else
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-5 w-5"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
             <!-- 月亮图标 -->
-            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
+            <path
+              d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+            />
           </svg>
         </button>
-        
-        <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+
+        <h1
+          class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4"
+        >
           Unicode Emoji 表情符号
         </h1>
         <p class="text-lg text-gray-600 dark:text-gray-400">
@@ -523,7 +556,9 @@ const isCopied = (groupIndex: number, emojiIndex: number) => {
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
         <!-- 复制模式选择器 -->
         <CardView>
-          <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
+          <h3
+            class="text-xl font-semibold text-gray-900 dark:text-white mb-4 flex items-center"
+          >
             <span class="mr-2">🔄</span>
             复制模式
           </h3>
@@ -534,8 +569,10 @@ const isCopied = (groupIndex: number, emojiIndex: number) => {
                 type="radio"
                 value="emoji"
                 class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+              />
+              <span
+                class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
               >
-              <span class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                 复制表情符号
               </span>
             </label>
@@ -545,8 +582,10 @@ const isCopied = (groupIndex: number, emojiIndex: number) => {
                 type="radio"
                 value="unicode"
                 class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+              />
+              <span
+                class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
               >
-              <span class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                 复制Unicode码
               </span>
             </label>
@@ -556,17 +595,23 @@ const isCopied = (groupIndex: number, emojiIndex: number) => {
                 type="radio"
                 value="bytes"
                 class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+              />
+              <span
+                class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
               >
-              <span class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                 复制字节码
               </span>
             </label>
           </div>
-          
+
           <div class="border-t border-gray-200 dark:border-zinc-700 pt-3">
             <p class="text-sm text-blue-600 dark:text-blue-400">
-              <span v-if="copyMode === 'emoji'">点击表情符号可直接复制该表情</span>
-              <span v-else-if="copyMode === 'unicode'">点击表情符号可复制其Unicode表示</span>
+              <span v-if="copyMode === 'emoji'"
+                >点击表情符号可直接复制该表情</span
+              >
+              <span v-else-if="copyMode === 'unicode'"
+                >点击表情符号可复制其Unicode表示</span
+              >
               <span v-else>点击表情符号可复制其字节码表示</span>
             </p>
           </div>
@@ -575,15 +620,14 @@ const isCopied = (groupIndex: number, emojiIndex: number) => {
 
       <!-- 表情符号分组卡片 -->
       <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-        <CardView
-          v-for="(group, groupIndex) in emojiGroups"
-          :key="groupIndex"
-        >
-          <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
+        <CardView v-for="(group, groupIndex) in emojiGroups" :key="groupIndex">
+          <h3
+            class="text-xl font-semibold text-gray-900 dark:text-white mb-4 flex items-center"
+          >
             <span class="mr-2">😀</span>
             {{ group.category }}
           </h3>
-          
+
           <div class="border-t border-gray-200 dark:border-zinc-700 pt-4">
             <div class="grid grid-cols-6 sm:grid-cols-7 md:grid-cols-8 gap-3">
               <div
@@ -595,25 +639,36 @@ const isCopied = (groupIndex: number, emojiIndex: number) => {
                   @click="copyToClipboard(emoji, groupIndex, emojiIndex)"
                   class="w-9 h-9 flex items-center justify-center text-xl bg-gray-50 dark:bg-zinc-800 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-lg border border-gray-200 dark:border-zinc-700 hover:border-blue-300 dark:hover:border-blue-600 transition-all duration-200 hover:scale-110 active:scale-95"
                   :class="{
-                    'bg-green-100 dark:bg-green-900/30 border-green-300 dark:border-green-600': isCopied(groupIndex, emojiIndex)
+                    'bg-green-100 dark:bg-green-900/30 border-green-300 dark:border-green-600':
+                      isCopied(groupIndex, emojiIndex),
                   }"
                 >
                   {{ emoji.emoji }}
                 </button>
-                
+
                 <!-- Tooltip -->
-                <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 dark:bg-gray-700 text-white text-xs rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-10"
-                     :class="{
-                       'bg-green-600 dark:bg-green-700': isCopied(groupIndex, emojiIndex)
-                     }">
-                  <span v-if="isCopied(groupIndex, emojiIndex)">复制成功！</span>
-                  <span v-else>
-                    点击复制: {{ getCopyPreview(emoji) }}
-                  </span>
-                  <div class="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-2 border-r-2 border-t-2 border-transparent border-t-gray-900 dark:border-t-gray-700"
-                       :class="{
-                         'border-t-green-600 dark:border-t-green-700': isCopied(groupIndex, emojiIndex)
-                       }"></div>
+                <div
+                  class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 dark:bg-gray-700 text-white text-xs rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-10"
+                  :class="{
+                    'bg-green-600 dark:bg-green-700': isCopied(
+                      groupIndex,
+                      emojiIndex,
+                    ),
+                  }"
+                >
+                  <span v-if="isCopied(groupIndex, emojiIndex)"
+                    >复制成功！</span
+                  >
+                  <span v-else> 点击复制: {{ getCopyPreview(emoji) }} </span>
+                  <div
+                    class="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-2 border-r-2 border-t-2 border-transparent border-t-gray-900 dark:border-t-gray-700"
+                    :class="{
+                      'border-t-green-600 dark:border-t-green-700': isCopied(
+                        groupIndex,
+                        emojiIndex,
+                      ),
+                    }"
+                  ></div>
                 </div>
               </div>
             </div>
