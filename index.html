@@ -66,6 +66,19 @@
 
     gtag("config", "G-9M0NHS6D5Y");
   </script>
+  
+  <!-- GitHub Pages SPA 重定向处理 -->
+  <script>
+    // 处理从404.html重定向过来的路径
+    (function() {
+      var redirect = sessionStorage.getItem('redirect');
+      if (redirect && redirect !== location.pathname) {
+        sessionStorage.removeItem('redirect');
+        history.replaceState(null, null, redirect);
+      }
+    })();
+  </script>
+  
   <body>
     <div id="app"></div>
     <script type="module" src="/src/main.ts"></script>

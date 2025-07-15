@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>正在跳转 - Zhixia的官方网站</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans SC', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+        }
+        .container {
+            max-width: 500px;
+            padding: 40px;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+        p {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        .spinner {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+            margin: 20px auto;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        a {
+            color: #fff;
+            text-decoration: underline;
+        }
+        a:hover {
+            text-decoration: none;
+        }
+    </style>
+    <script>
+        // GitHub Pages SPA 重定向解决方案
+        // 当GitHub Pages遇到404时，会加载这个文件
+        // 我们将路径信息保存到sessionStorage，然后重定向到首页
+        (function() {
+            var path = window.location.pathname + window.location.search + window.location.hash;
+            console.log('404页面重定向:', path);
+            
+            // 保存当前路径
+            sessionStorage.setItem('redirect', path);
+            
+            // 延迟一下再跳转，让用户看到加载动画
+            setTimeout(function() {
+                window.location.replace('/');
+            }, 1000);
+        })();
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀</h1>
+        <p>正在跳转到正确页面...</p>
+        <div class="spinner"></div>
+        <p style="font-size: 0.9rem;">
+            如果页面没有自动跳转，请 <a href="/">点击这里</a> 返回首页
+        </p>
+    </div>
+</body>
+</html>
