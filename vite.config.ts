@@ -6,10 +6,12 @@ import { booksGeneratorPlugin } from './plugins/books-generator-plugin.ts'
 import { sitemapGenerator } from './plugins/sitemap-generator.ts'
 import { sitemapHtmlGenerator } from './plugins/sitemap-html-generator.ts'
 import { githubPagesSpaPlugin } from './plugins/github-pages-spa.ts'
+import { httpsAssetsPlugin } from './plugins/https-assets.ts'
 import { resolve } from 'path'
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: '/', // 确保使用绝对路径
   plugins: [
     vue(),
     tailwindcss(),
@@ -32,6 +34,7 @@ export default defineConfig({
       siteName: 'Zhixia的官方网站'
     }),
     githubPagesSpaPlugin(),
+    httpsAssetsPlugin(),
   ],
   css: {
     postcss: './postcss.config.js'
@@ -40,6 +43,8 @@ export default defineConfig({
   
   // 性能优化配置
   build: {
+    // 确保资源使用绝对路径
+    assetsDir: 'assets',
     // 压缩配置
     minify: 'terser',
     // 启用代码分割
