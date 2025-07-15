@@ -3,12 +3,12 @@ import {
   createWebHistory,
   type RouteRecordRaw,
 } from "vue-router";
+import RootIndex from "@views/Index.vue";
+import Home  from "@views/Home.vue";
 
 // 懒加载组件
-const RootIndex = () => import("@views/Index.vue");
 const FunIndex = () => import("@views/fun/Index.vue");
 const UnicodeEmoji = () => import("@views/fun/UnicodeEmoji.vue");
-const Home = () => import("@views/Home.vue");
 const About = () => import("@views/About.vue");
 const Projects = () => import("@views/Projects.vue");
 const Services = () => import("@views/Services.vue");
