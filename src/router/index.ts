@@ -5,18 +5,18 @@ import {
 } from "vue-router";
 
 // 懒加载组件
-const RootIndex = () => import("../views/Index.vue");
-const FunIndex = () => import("../views/fun/Index.vue");
-const UnicodeEmoji = () => import("../views/fun/UnicodeEmoji.vue");
-const Home = () => import("../views/Home.vue");
-const About = () => import("../views/About.vue");
-const Projects = () => import("../views/Projects.vue");
-const Services = () => import("../views/Services.vue");
-const Book = () => import("../views/Book.vue");
-const BookContent = () => import("../views/BookContent.vue");
-const Blog = () => import("../views/Blog.vue");
-const BlogPost = () => import("../views/BlogPost.vue");
-const NotFound = () => import("../views/NotFound.vue");
+const RootIndex = () => import("@views/Index.vue");
+const FunIndex = () => import("@views/fun/Index.vue");
+const UnicodeEmoji = () => import("@views/fun/UnicodeEmoji.vue");
+const Home = () => import("@views/Home.vue");
+const About = () => import("@views/About.vue");
+const Projects = () => import("@views/Projects.vue");
+const Services = () => import("@views/Services.vue");
+const Book = () => import("@views/Book.vue");
+const BookContent = () => import("@views/BookContent.vue");
+const Blog = () => import("@views/Blog.vue");
+const BlogPost = () => import("@views/BlogPost.vue");
+const NotFound = () => import("@views/NotFound.vue");
 
 const routes: Readonly<RouteRecordRaw[]> = [
   {
