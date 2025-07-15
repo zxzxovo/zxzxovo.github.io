@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SnackText 测试</title>
+    <style>
+        .snack-text-component {
+            background-color: #fef3c7;
+            color: #92400e;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>SnackText 插件测试</h1>
+    <div id="content"></div>
+    
+    <script type="module">
+        // 导入我们的 markdown 处理函数
+        import { processMarkdownContent } from './src/utils/markdown.ts';
+        
+        const testContent = `
+## 测试 SnackText
+
+这里是普通文本。
+
+#这应该被渲染为SnackText
+
+#测试中文
+
+#testEnglish
+
+#数字123
+
+正常的标题：
+
+# 这是标题
+
+## 这也是标题
+
+行内使用：这里有一个 #inline 的SnackText。
+
+多个：#第一个 和 #第二个 在同一行。
+        `;
+        
+        try {
+            const html = processMarkdownContent(testContent);
+            document.getElementById('content').innerHTML = html;
+            console.log('生成的HTML:', html);
+        } catch (error) {
+            console.error('处理出错:', error);
+            document.getElementById('content').innerHTML = '<p style="color: red;">处理失败: ' + error.message + '</p>';
+        }
+    </script>
+</body>
+</html>

@@ -167,3 +167,35 @@ pre::-webkit-scrollbar-thumb:hover {
 [data-theme="dark"] pre::-webkit-scrollbar-thumb:hover {
   background: rgba(209, 213, 219, 0.8); /* gray-300 with opacity */
 }
+
+/* SnackText 组件样式 */
+.snack-text-component {
+  background-color: #fef3c7; /* amber-100 */
+  color: #92400e; /* amber-800 */
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  display: inline-block;
+  margin: 0 2px;
+  border: 1px solid #fbbf24; /* amber-400 */
+  transition: all 0.2s ease;
+}
+
+.snack-text-component:hover {
+  background-color: #fcd34d; /* amber-300 */
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* 暗色主题下的 SnackText 样式 */
+[data-theme="dark"] .snack-text-component {
+  background-color: #451a03; /* amber-950 */
+  color: #fbbf24; /* amber-400 */
+  border-color: #92400e; /* amber-800 */
+}
+
+[data-theme="dark"] .snack-text-component:hover {
+  background-color: #78350f; /* amber-900 */
+  color: #fde047; /* yellow-300 */
+}

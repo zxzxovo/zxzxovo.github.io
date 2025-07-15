@@ -42,7 +42,7 @@ setInterval(cleanupCache, CACHE_EXPIRY);
 // 创建自定义 SnackText 插件
 const snackTextPlugin = (md: MarkdownIt) => {
   // 创建一个规则来处理 #后直接跟文字的语法
-  md.inline.ruler.after('emphasis', 'snack_text', (state, silent) => {
+  md.inline.ruler.before('text', 'snack_text', (state, silent) => {
     const start = state.pos;
     const max = state.posMax;
     
@@ -51,16 +51,41 @@ const snackTextPlugin = (md: MarkdownIt) => {
       return false;
     }
     
-    // 检查 # 后面是否直接跟着非空格字符
-    if (start + 1 >= max || state.src.charCodeAt(start + 1) === 0x20 /* space */) {
+    // 检查是否在行首（避免与标题冲突）
+    if (start > 0) {
+      const prevChar = state.src.charCodeAt(start - 1);
+      // 如果前面是换行符，可能是标题，需要更仔细检查
+      if (prevChar === 0x0A /* \n */ || prevChar === 0x0D /* \r */) {
+        // 检查是否是标题格式（# 后面跟空格）
+        if (start + 1 < max && state.src.charCodeAt(start + 1) === 0x20 /* space */) {
+          return false; // 这是标题，不处理
+        }
+      }
+    }
+    
+    // 检查 # 后面是否直接跟着非空格、非换行字符
+    if (start + 1 >= max) {
       return false;
     }
     
-    // 寻找结束位置（遇到空格、换行或结束）
+    const nextChar = state.src.charCodeAt(start + 1);
+    if (nextChar === 0x20 /* space */ || nextChar === 0x0A /* \n */ || nextChar === 0x0D /* \r */) {
+      return false;
+    }
+    
+    // 寻找结束位置（遇到空格、换行、标点符号或结束）
     let pos = start + 1;
     while (pos < max) {
       const ch = state.src.charCodeAt(pos);
-      if (ch === 0x20 /* space */ || ch === 0x0A /* \n */ || ch === 0x0D /* \r */) {
+      if (ch === 0x20 /* space */ || 
+          ch === 0x0A /* \n */ || 
+          ch === 0x0D /* \r */ ||
+          ch === 0x2E /* . */ ||
+          ch === 0x2C /* , */ ||
+          ch === 0x21 /* ! */ ||
+          ch === 0x3F /* ? */ ||
+          ch === 0x3A /* : */ ||
+          ch === 0x3B /* ; */) {
         break;
       }
       pos++;
@@ -266,45 +291,69 @@ export function processMarkdownContent(content: string, options: { removeFirstH1
 
 // 快速标题提取（用于性能优化）
 export function extractHeadingsFromMarkdown(content: string): TableOfContent[] {
-  const headingRegex = /^(#{1,6})\s+(.+)$/gm;
-  let match;
+  const lines = content.split('\n');
   const headings: TableOfContent[] = [];
   
   // 用于跟踪各级别的编号
   const sectionNumbers: number[] = [0, 0, 0, 0, 0, 0]; // 支持6级标题
   
-  while ((match = headingRegex.exec(content)) !== null) {
-    const level = match[1].length;
-    const text = match[2].trim();
+  let inCodeBlock = false;
+  
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    const trimmedLine = line.trim();
     
-    const id = text
-      .toLowerCase()
-      .replace(/[^\w\u4e00-\u9fa5\s-]/g, '')
-      .replace(/\s+/g, '-')
-      .replace(/-+/g, '-')
-      .replace(/^-|-$/g, '');
-    
-    let uniqueId = id;
-    let counter = 1;
-    while (headings.some(h => h.id === uniqueId)) {
-      uniqueId = `${id}-${counter}`;
-      counter++;
+    // 检查是否进入或退出代码块
+    if (trimmedLine.startsWith('```') || trimmedLine.startsWith('~~~')) {
+      inCodeBlock = !inCodeBlock;
+      continue;
     }
     
-    // 生成节号
-    sectionNumbers[level - 1]++; // 当前级别+1
-    // 重置更低级别的编号
-    for (let i = level; i < 6; i++) {
-      sectionNumbers[i] = 0;
+    // 如果在代码块内，跳过这一行
+    if (inCodeBlock) {
+      continue;
     }
     
-    // 构建节号字符串，如 "1.", "1.1", "1.1.1"
-    const sectionNumber = sectionNumbers
-      .slice(0, level)
-      .filter(num => num > 0)
-      .join('.') + '.';
+    // 检查是否是缩进代码块（4个空格缩进）
+    if (/^\s{4,}/.test(line)) {
+      continue;
+    }
     
-    headings.push({ level, text, id: uniqueId, sectionNumber });
+    // 检查是否是标题
+    const headingMatch = trimmedLine.match(/^(#{1,6})\s+(.+)$/);
+    if (headingMatch) {
+      const level = headingMatch[1].length;
+      const text = headingMatch[2].trim();
+      
+      const id = text
+        .toLowerCase()
+        .replace(/[^\w\u4e00-\u9fa5\s-]/g, '')
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-')
+        .replace(/^-|-$/g, '');
+      
+      let uniqueId = id;
+      let counter = 1;
+      while (headings.some(h => h.id === uniqueId)) {
+        uniqueId = `${id}-${counter}`;
+        counter++;
+      }
+      
+      // 生成节号
+      sectionNumbers[level - 1]++; // 当前级别+1
+      // 重置更低级别的编号
+      for (let j = level; j < 6; j++) {
+        sectionNumbers[j] = 0;
+      }
+      
+      // 构建节号字符串，如 "1.", "1.1", "1.1.1"
+      const sectionNumber = sectionNumbers
+        .slice(0, level)
+        .filter(num => num > 0)
+        .join('.') + '.';
+      
+      headings.push({ level, text, id: uniqueId, sectionNumber });
+    }
   }
   
   return headings;
