@@ -4,11 +4,13 @@ import { useRoute, useRouter } from "vue-router";
 import { Icon } from "@iconify/vue";
 import CardView from "@/components/CardView.vue";
 import { renderMarkdownWithTOC, type TableOfContent } from "@/utils/markdown";
+import { useSEO } from "@/composables/useSEO";
 import type { BlogPost } from "@/types";
 
 // 路由和响应式数据
 const route = useRoute();
 const router = useRouter();
+const { setBlogPostSEO } = useSEO();
 const isLoading = ref(true);
 const loadError = ref<string | null>(null);
 const currentPost = ref<BlogPost | null>(null);
@@ -327,6 +329,17 @@ const loadPostData = async () => {
     tableOfContents.value = toc;
 
     console.log("生成目录项数:", tableOfContents.value.length);
+
+    // 设置SEO meta标签
+    setBlogPostSEO({
+      title: currentPost.value.title,
+      description: currentPost.value.description,
+      date: currentPost.value.date,
+      lastModified: currentPost.value.lastModified,
+      tags: currentPost.value.tags,
+      slug: currentPost.value.slug,
+      image: currentPost.value.image
+    });
 
     // 找到相关文章
     relatedPosts.value = findRelatedPosts(currentPost.value);

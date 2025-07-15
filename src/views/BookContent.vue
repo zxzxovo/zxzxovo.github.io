@@ -4,6 +4,7 @@ import { useRoute, useRouter } from "vue-router";
 import { Icon } from "@iconify/vue";
 import { useNavStore } from "@/stores/nav";
 import SearchFrame from "@/components/SearchFrame.vue";
+import { useSEO } from "@/composables/useSEO";
 import {
   processMarkdownContent,
   generateTableOfContents,
@@ -25,6 +26,7 @@ interface BookChapter {
 // 路由和响应式数据
 const route = useRoute();
 const router = useRouter();
+const { setBookSEO } = useSEO();
 const isLoading = ref(true);
 const isContentLoading = ref(false);
 const loadError = ref<string | null>(null);
@@ -183,6 +185,14 @@ async function loadBookData() {
 
     currentBook.value = book;
 
+    // 设置书籍SEO
+    setBookSEO({
+      title: book.title,
+      description: book.description,
+      author: book.author,
+      id: book.id
+    });
+
     // 初始化章节展开状态 - 一级章节默认展开
     initializeExpandedChapters(book.chapters || []);
 
@@ -242,6 +252,19 @@ async function loadChapterContent() {
     }
 
     currentChapter.value = chapter;
+
+    // 如果加载了章节内容，更新SEO为章节信息
+    if (currentBook.value && chapter) {
+      setBookSEO({
+        title: currentBook.value.title,
+        description: currentBook.value.description,
+        author: currentBook.value.author,
+        id: currentBook.value.id
+      }, {
+        title: chapter.title,
+        id: chapter.id
+      });
+    }
 
     // 尝试加载章节文件
     const content = await loadChapterFile(bookId.value, chapterId.value);

@@ -6,9 +6,11 @@ import LoadingState from "@/components/LoadingState.vue";
 import ErrorBoundary from "@/components/ErrorBoundary.vue";
 import { fetchPosts, fetchBooks } from "@/services/api";
 import { useAsyncState } from "@/composables/useAsyncState";
+import { useSEO } from "@/composables/useSEO";
 import type { PostsData, BooksData, BlogPost, Book } from "@/types";
 
 const router = useRouter();
+const { setMeta, setStructuredData } = useSEO();
 
 // 使用异步状态管理
 const {
@@ -133,6 +135,34 @@ const handleImageError = (slug: string) => {
 onMounted(async () => {
   console.log("Home页面开始加载数据...");
   startTypewriter();
+
+  // 设置首页SEO
+  setMeta({
+    title: 'Zhixia的官方网站 - 技术博客与项目展示',
+    description: '欢迎来到Zhixia的个人网站，这里分享技术文章、开源项目、编程经验和生活感悟。涵盖Vue、Rust、前端开发、软件工程等技术内容。',
+    keywords: 'Zhixia,个人博客,技术博客,Vue,Rust,编程,前端开发,软件工程,开源项目',
+    url: 'https://hizhixia.site',
+    type: 'website'
+  });
+
+  // 设置网站的结构化数据
+  setStructuredData({
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'Zhixia的官方网站',
+    description: '一个关于技术、生活和思考的个人网站',
+    url: 'https://hizhixia.site',
+    author: {
+      '@type': 'Person',
+      name: 'Zhixia',
+      url: 'https://hizhixia.site/about'
+    },
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: 'https://hizhixia.site/blog?search={search_term_string}',
+      'query-input': 'required name=search_term_string'
+    }
+  });
 
   try {
     await Promise.all([

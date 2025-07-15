@@ -3,6 +3,8 @@ import vue from '@vitejs/plugin-vue'
 import tailwindcss from "@tailwindcss/vite"
 import { postsGeneratorPlugin } from './plugins/posts-generator.ts'
 import { booksGeneratorPlugin } from './plugins/books-generator-plugin.ts'
+import { sitemapGenerator } from './plugins/sitemap-generator.ts'
+import { sitemapHtmlGenerator } from './plugins/sitemap-html-generator.ts'
 import { resolve } from 'path'
 
 // https://vite.dev/config/
@@ -12,6 +14,22 @@ export default defineConfig({
     tailwindcss(),
     postsGeneratorPlugin(),
     booksGeneratorPlugin(),
+    sitemapGenerator({
+      hostname: 'https://hizhixia.site',
+      staticRoutes: [
+        { path: '/', changefreq: 'daily', priority: 1.0 },
+        { path: '/about', changefreq: 'monthly', priority: 0.8 },
+        { path: '/projects', changefreq: 'weekly', priority: 0.8 },
+        { path: '/services', changefreq: 'monthly', priority: 0.7 },
+        { path: '/blog', changefreq: 'daily', priority: 0.9 },
+        { path: '/book', changefreq: 'weekly', priority: 0.8 },
+        { path: '/fun/unicode-emoji', changefreq: 'monthly', priority: 0.6 },
+      ]
+    }),
+    sitemapHtmlGenerator({
+      hostname: 'https://hizhixia.site',
+      siteName: 'Zhixia的官方网站'
+    }),
   ],
   css: {
     postcss: './postcss.config.js'
