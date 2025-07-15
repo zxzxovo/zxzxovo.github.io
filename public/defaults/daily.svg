@@ -1,0 +1,16 @@
+<svg width="400" height="200" viewBox="0 0 400 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="200" fill="#065F46"/>
+  <g transform="translate(200,100)">
+    <!-- Calendar -->
+    <rect x="-30" y="-25" width="60" height="50" rx="5" fill="#10B981"/>
+    <rect x="-30" y="-15" width="60" height="35" fill="white"/>
+    <!-- Calendar lines -->
+    <line x1="-20" y1="-5" x2="20" y2="-5" stroke="#065F46" stroke-width="2"/>
+    <line x1="-20" y1="5" x2="20" y2="5" stroke="#065F46" stroke-width="2"/>
+    <line x1="-20" y1="15" x2="20" y2="15" stroke="#065F46" stroke-width="2"/>
+    <!-- Calendar rings -->
+    <circle cx="-15" cy="-30" r="3" fill="#10B981"/>
+    <circle cx="15" cy="-30" r="3" fill="#10B981"/>
+  </g>
+  <text x="200" y="160" text-anchor="middle" fill="#D1FAE5" font-family="Arial" font-size="16">日常分享</text>
+</svg>

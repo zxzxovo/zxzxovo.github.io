@@ -1,442 +1,473 @@
 <script setup lang="ts">
-import Card from '../components/Card.vue';
-import { onMounted } from 'vue';
+import { ref, onMounted } from "vue";
+import CardView from "@/components/CardView.vue";
 
-const techStack: { head: string; content: string[]; }[] = [
-    {
-        head: "Languages",
-        content: [
-            "C", "Rust", "Java", "Kotlin", "JavaScript", 
-            "HTML", "CSS", "Python",
-        ],
-    },
-    {
-        head: "Tools&Frameworks",
-        content: [
-            "Git&GitHub", "Linux", "Tauri", "SpringBoot", 
-            "Vue3", "MySQL", "Redis"
-        ]
-    },
-    {
-        head: "AppDevelopment",
-        content: [
-            "Android", "Linux", "Windows", "Web",
-            "Desktop", "CrossPlatform"
-        ]
-    }
-]
+// 服务数据
+const services = ref([
+  {
+    id: 1,
+    title: "前端/后端开发",
+    icon: "🌐",
+    description:
+      "基于Vue的现代化前端开发，结合Rust actix-web，Java Spring等技术栈的后端开发服务",
+    features: [
+      "Vue.js/React 响应式前端界面",
+      "Java Spring Boot 后端",
+      "Rust actix-web 高性能API",
+      "数据库设计与优化",
+      "RESTful API 设计与实现",
+      "前后端分离架构",
+    ],
+    technologies: [
+      "Vue.js",
+      "TypeScript",
+      "Java",
+      "Spring",
+      "Rust",
+      "MySQL",
+      "Redis",
+    ],
+    price: "¥1000 +",
+    duration: "1-3 周",
+    gradient: "from-blue-500 to-indigo-600",
+  },
+  {
+    id: 2,
+    title: "PC端工具开发",
+    icon: "🖥️",
+    description:
+      "使用Rust、C/C++、Java等编程语言开发高性能PC端工具软件，提供原生性能和优秀用户体验",
+    features: [
+      "跨平台桌面应用开发",
+      "现代化UI设计",
+      "高性能系统工具",
+      "内存安全保证",
+      "多线程并发处理",
+    ],
+    technologies: ["Rust", "Tauri", "C/C++", "Java", "Vue.js", "Electron"],
+    price: "¥300 +",
+    duration: "1-4 周",
+    gradient: "from-purple-500 to-pink-600",
+  },
+  {
+    id: 3,
+    title: "生信软件开发",
+    icon: "🧬",
+    description:
+      "专业的生物信息学工具开发，包括基因序列处理、高通量测序数据处理、数据可视化分析等各种文件处理工具",
+    features: [
+      "基因序列分析算法",
+      "高通量测序数据处理",
+      "生物数据可视化",
+      "文件数据处理工具",
+      "FASTA/FASTQ格式支持",
+      "统计分析与报告生成",
+    ],
+    technologies: ["Rust", "Python", "BioPython", "R", "D3.js", "pandas"],
+    price: "¥400 +",
+    duration: "2-6 周",
+    gradient: "from-green-500 to-teal-600",
+  },
+  {
+    id: 4,
+    title: "作业辅导/技术培训",
+    icon: "🎓",
+    description:
+      "提供大学生软件设计作业辅导、编程技术培训、代码审查、技术咨询和项目指导服务",
+    features: [
+      "一对一编程指导",
+      "软件设计作业辅导",
+      "代码质量审查",
+      "架构设计咨询",
+      "学习路径规划",
+      "技术面试指导",
+    ],
+    technologies: ["多语言支持", "最佳实践", "设计模式", "算法与数据结构"],
+    price: "¥66+",
+    duration: "灵活安排",
+    gradient: "from-orange-500 to-red-600",
+  },
+]);
 
-const serviceSupply: { head: string; content: string; }[] = [
-    {
-        head: "软件开发",
-        content: "提供Web应用, 跨平台应用程序,桌面应用，以及基于前述技术栈的开发"
-    },
-    {
-        head: "技术咨询",
-        content: "提供应用开发咨询, 技术帮助, 作业辅导等"
-    },
-    {
-        head: "远程工作",
-        content: "接受远程工作, 提供远程协助"
-    }
-]
+// 技术栈分类
+const techStacks = ref([
+  {
+    category: "编程语言",
+    icon: "💻",
+    skills: [
+      { name: "Rust", level: 90, color: "#CE422B" },
+      { name: "Java", level: 85, color: "#ED8B00" },
+      { name: "C/C++", level: 75, color: "#00599C" },
+      { name: "JavaScript/TypeScript", level: 70, color: "#3178C6" },
+      { name: "Python", level: 75, color: "#3776AB" },
+      { name: "Kotlin", level: 70, color: "#7F52FF" },
+    ],
+  },
+  {
+    category: "框架/应用",
+    icon: "🔧",
+    skills: [
+      { name: "Vue.js", level: 85, color: "#4FC08D" },
+      { name: "Spring", level: 80, color: "#6DB33F" },
+      { name: "Tauri", level: 80, color: "#FFC131" },
+      { name: "Tokio", level: 60, color: "#CE422B" },
+      { name: "MySQL", level: 85, color: "#4479A1" },
+      { name: "Redis", level: 70, color: "#DC382D" },
+      { name: "Android", level: 80, color: "#3DDC84" },
+    ],
+  },
+  {
+    category: "工具",
+    icon: "🛠️",
+    skills: [
+      { name: "Git/GitHub", level: 90, color: "#F05032" },
+      { name: "Linux", level: 85, color: "#FCC624" },
+      { name: "Vim", level: 80, color: "#019733" },
+      { name: "VSCode", level: 92, color: "#007ACC" },
+      { name: "Docker", level: 70, color: "#2496ED" },
+      { name: "AI Vibe coding", level: 88, color: "#009639" },
+    ],
+  },
+]);
 
-const workContact = {
-    head: "联系方式",
-    content: [
-        {
-            head: "邮箱",
-            content: [
-                { text: "zhixiaovo@gmail.com", isLink: false },
-                { text: "flatig@163.com", isLink: false }
-            ]
-        },
-        {
-            head: "社交账号",
-            content: [
-                { 
-                    text: "Telegram: +44 7902 461698", 
-                    link: "https://t.me/zxzxovo", 
-                    icon: "/svg/telegram.svg" 
-                },
-                { text: "QQ: 2244697793", isLink: false },
-                { 
-                    text: "X: @zxzxovo", 
-                    link: "https://x.com/zxzxovo", 
-                    icon: "/svg/x.svg" 
-                }
-            ]   
-        },
-        {
-            head: "GitHub",
-            content: [
-                { 
-                    text: "github.com/zxzxovo", 
-                    link: "https://github.com/zxzxovo", 
-                    icon: "/svg/github.svg" 
-                }
-            ]
-        }
-    ]
-};
+// 联系方式
+const contacts = ref([
+  {
+    platform: "邮箱",
+    value: "zhixiaovo@gmail.com",
+    icon: "📧",
+    link: "mailto:zhixiaovo@gmail.com",
+    color: "text-red-600 dark:text-red-400",
+  },
+  {
+    platform: "QQ",
+    value: "2244697793",
+    icon: "💬",
+    link: "https://qm.qq.com/cgi-bin/qm/qr?k=your_qq_qr_code",
+    color: "text-blue-600 dark:text-blue-400",
+  },
+  {
+    platform: "微信",
+    value: "hizhixia",
+    icon: "💭",
+    link: "#",
+    color: "text-green-600 dark:text-green-400",
+  },
+  {
+    platform: "Telegram",
+    value: "t.me/zhixiaovo",
+    icon: "✈️",
+    link: "https://t.me/zhixiaovo",
+    color: "text-sky-600 dark:text-sky-400",
+  },
+]);
 
-const getTechLogo = (tech: string) => {
-    const logoMap: Record<string, string> = {
-        "C": "/svg/c.svg", "Rust": "/svg/rust.svg", "Java": "/svg/java.svg",
-        "Kotlin": "/svg/kotlin.svg", "JavaScript": "/svg/javascript.svg",
-        "HTML": "/svg/html.svg", "CSS": "/svg/css.svg", "Python": "/svg/python.svg",
-        "Git&GitHub": "/svg/git&github.svg", "Linux": "/svg/linux.svg",
-        "Tauri": "/svg/tauri.svg", "SpringBoot": "/svg/springboot.svg",
-        "Vue3": "/svg/vue3.svg", "MySQL": "/svg/mysql.svg", "Redis": "/svg/redis.svg",
-        "Android": "/svg/android.svg", "Windows": "/svg/windows.svg",
-        "Web": "/svg/web.svg", "Desktop": "/svg/desktop.svg",
-        "CrossPlatform": "/svg/crossplatform.svg",
-    };
+// 动画状态
+const isVisible = ref(false);
 
-    return logoMap[tech] || "/svg/code.svg";
-};
-
-// 图片懒加载设置
-const setupLazyLoading = () => {
-    if ('IntersectionObserver' in window) {
-        const imageObserver = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const img = entry.target as HTMLImageElement;
-                    const src = img.dataset.src;
-                    if (src) {
-                        img.src = src;
-                        img.removeAttribute('data-src');
-                    }
-                    observer.unobserve(img);
-                }
-            });
-        });
-
-        // 延迟执行以确保DOM已更新
-        setTimeout(() => {
-            document.querySelectorAll('.tech-logo img').forEach(img => {
-                imageObserver.observe(img);
-            });
-        }, 300);
-    }
+// 复制联系方式
+const copyToClipboard = async (text: string, platform: string) => {
+  try {
+    await navigator.clipboard.writeText(text);
+    // 这里可以添加提示消息
+    console.log(`${platform} 已复制到剪贴板`);
+  } catch (err) {
+    console.error("复制失败:", err);
+  }
 };
 
 onMounted(() => {
-    setupLazyLoading();
+  // 延迟加载动画
+  setTimeout(() => {
+    isVisible.value = true;
+  }, 100);
 });
 </script>
 
 <template>
-    <div class="se-container">
-        <!-- 技术栈部分 -->
-        <div class="section tech-stack">
-            <h2 class="title">Tech Stack</h2>
-            <div class="stack-container">
-                <Card v-for="category in techStack" :key="category.head" class="stack-card">
-                    <template #header>
-                        <div class="card-header">
-                            <h3>{{ category.head }}</h3>
-                        </div>
-                    </template>
-                    <template #content>
-                        <div class="tech-grid">
-                            <div v-for="tech in category.content" :key="tech" class="tech-item">
-                                <div class="tech-logo">
-                                    <img 
-                                        :data-src="getTechLogo(tech)" 
-                                        :alt="tech" 
-                                        src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-                                    />
-                                </div>
-                                <div class="tech-name">{{ tech }}</div>
-                            </div>
-                        </div>
-                    </template>
-                </Card>
-            </div>
-        </div>
+  <div class="bg-gray-50 dark:bg-zinc-900 py-8 px-4">
+    <div class="max-w-7xl mx-auto">
+      <!-- 服务列表 -->
+      <section class="mb-16">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <CardView
+            v-for="service in services"
+            :key="service.id"
+            class="hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 group"
+            padding="p-0"
+            css-width="w-full"
+          >
+            <div class="relative overflow-hidden">
+              <!-- 背景渐变 -->
+              <div
+                class="absolute top-0 left-0 w-full h-40 bg-gradient-to-r"
+                :class="service.gradient"
+              ></div>
 
-        <!-- 服务提供部分 -->
-        <div class="section service-supply">
-            <h2 class="title">Service Supply</h2>
-            <div class="supply-container">
-                <Card v-for="service in serviceSupply" :key="service.head" class="supply-card">
-                    <template #header>
-                        <div class="card-header">
-                            <img src="/svg/pinned.svg" alt="service" class="service-icon" />
-                            <h3>{{ service.head }}</h3>
-                        </div>
-                    </template>
-                    <template #content>
-                        <div class="service-content">
-                            <p>{{ service.content }}</p>
-                        </div>
-                    </template>
-                </Card>
-            </div>
-        </div>
+              <!-- 服务内容 -->
+              <div class="relative p-6 pt-8">
+                <div class="flex items-start mb-4">
+                  <span class="text-4xl mr-4 mt-2">{{ service.icon }}</span>
+                  <div class="flex-1">
+                    <h3 class="text-xl font-bold text-white mb-2">
+                      {{ service.title }}
+                    </h3>
+                    <div class="flex items-center text-white/80 text-sm">
+                      <span class="mr-4">💰 {{ service.price }}</span>
+                      <span>⏱️ {{ service.duration }}</span>
+                    </div>
+                  </div>
+                </div>
 
-        <!-- 联系方式部分 -->
-        <div class="section work-contact">
-            <h2 class="title">Work Contact</h2>
-            <Card class="contact-card">
-                <template #header>
-                    <div class="card-header">
-                        <h3>{{ workContact.head }}</h3>
+                <div class="bg-white dark:bg-zinc-800 rounded-lg p-6 mt-6">
+                  <p
+                    class="text-gray-600 dark:text-gray-300 mb-4 leading-relaxed"
+                  >
+                    {{ service.description }}
+                  </p>
+
+                  <!-- 特性列表 -->
+                  <div class="mb-4">
+                    <h4
+                      class="font-semibold text-gray-900 dark:text-white mb-3"
+                    >
+                      服务内容：
+                    </h4>
+                    <ul class="space-y-2">
+                      <li
+                        v-for="feature in service.features"
+                        :key="feature"
+                        class="flex items-start text-sm text-gray-600 dark:text-gray-300"
+                      >
+                        <span class="text-green-500 mr-2 mt-0.5 flex-shrink-0"
+                          >✓</span
+                        >
+                        <span>{{ feature }}</span>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <!-- 技术标签 -->
+                  <div>
+                    <h4
+                      class="font-semibold text-gray-900 dark:text-white mb-3"
+                    >
+                      技术栈：
+                    </h4>
+                    <div class="flex flex-wrap gap-2">
+                      <span
+                        v-for="tech in service.technologies"
+                        :key="tech"
+                        class="px-3 py-1 bg-gray-100 dark:bg-zinc-700 text-gray-700 dark:text-gray-300 rounded-full text-xs font-medium hover:bg-blue-100 dark:hover:bg-zinc-600 transition-colors"
+                      >
+                        {{ tech }}
+                      </span>
                     </div>
-                </template>
-                <template #content>
-                    <div class="contact-content">
-                        <div class="contact-image">
-                            <img src="@/assets/avatar3.jpg" alt="Contact" />
-                        </div>
-                        <div class="contact-details">
-                            <div v-for="(section, index) in workContact.content" :key="index" class="contact-section">
-                                <h4>{{ section.head }}</h4>
-                                <ul>
-                                    <li v-for="(item, i) in section.content" :key="i">
-                                        <!-- 有链接的项目 -->
-                                        <a v-if="item.link" 
-                                           :href="item.link" 
-                                           target="_blank" 
-                                           class="contact-link">
-                                            <img v-if="item.icon" :src="item.icon" :alt="item.text" class="contact-icon" />
-                                            {{ item.text }}
-                                        </a>
-                                        <!-- 普通文本项目 -->
-                                        <span v-else>{{ item.text }}</span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </template>
-            </Card>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </CardView>
         </div>
+      </section>
+
+      <!-- 技术栈展示 -->
+      <section class="mb-16">
+        <h2
+          class="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center"
+        >
+          技术栈
+        </h2>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <CardView
+            v-for="(stack, index) in techStacks"
+            :key="index"
+            class="hover:shadow-xl transition-all duration-300 relative overflow-hidden"
+            padding="p-6"
+          >
+
+            <div class="flex items-center mb-6 relative z-10">
+              <span class="text-2xl mr-3">{{ stack.icon }}</span>
+              <h3 class="text-xl font-bold text-gray-900 dark:text-white">
+                {{ stack.category }}
+              </h3>
+            </div>
+
+            <div class="space-y-4 relative z-10">
+              <div
+                v-for="skill in stack.skills"
+                :key="skill.name"
+                class="skill-item"
+              >
+                <div class="flex justify-between items-center mb-2">
+                  <span class="font-medium text-gray-700 dark:text-gray-300">{{
+                    skill.name
+                  }}</span>
+                  <span class="text-sm text-gray-500 dark:text-gray-400"
+                    >{{ skill.level }}%</span
+                  >
+                </div>
+                <div
+                  class="w-full bg-gray-200 dark:bg-zinc-700 rounded-full h-2"
+                >
+                  <div
+                    class="h-2 rounded-full transition-all duration-1000 ease-out"
+                    :style="{
+                      width: `${skill.level}%`,
+                      backgroundColor: skill.color,
+                    }"
+                  ></div>
+                </div>
+              </div>
+            </div>
+          </CardView>
+        </div>
+      </section>
+
+      <!-- 联系方式 -->
+      <section class="text-center">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-8">
+          联系我
+        </h2>
+        <CardView
+          class="max-w-4xl mx-auto relative overflow-hidden"
+          padding="p-8"
+        >
+          <!-- 背景装饰 -->
+          <div class="absolute top-0 right-0 w-32 h-32 opacity-5">
+            <img
+              src="/src/assets/zx.svg"
+              alt="logo decoration"
+              class="w-full h-full object-contain"
+            />
+          </div>
+
+          <div class="relative z-10">
+            <p
+              class="text-gray-600 dark:text-gray-300 mb-8 text-lg leading-relaxed"
+            >
+              准备开始您的项目了吗？我很乐意与您讨论项目需求，提供专业的技术方案。
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div
+                v-for="contact in contacts"
+                :key="contact.platform"
+                @click="copyToClipboard(contact.value, contact.platform)"
+                class="group cursor-pointer"
+              >
+                <div
+                  class="p-4 rounded-lg border-2 border-gray-200 dark:border-zinc-700 hover:border-blue-500 dark:hover:border-blue-400 transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+                >
+                  <div class="text-2xl mb-2">{{ contact.icon }}</div>
+                  <div class="font-semibold text-gray-900 dark:text-white mb-1">
+                    {{ contact.platform }}
+                  </div>
+                  <div
+                    class="text-sm text-gray-600 dark:text-gray-300 break-all"
+                  >
+                    {{ contact.value }}
+                  </div>
+                  <div
+                    class="text-xs text-blue-600 dark:text-blue-400 mt-2 opacity-0 group-hover:opacity-100 transition-opacity"
+                  >
+                    点击复制
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="mt-8 p-6 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-zinc-800 dark:to-zinc-700 rounded-lg"
+            >
+              <h3 class="font-bold text-gray-900 dark:text-white mb-2">
+                💡 服务流程
+              </h3>
+              <div class="grid grid-cols-1 md:grid-cols-4 gap-4 text-sm">
+                <div class="text-center">
+                  <div class="text-blue-600 dark:text-blue-400 font-semibold">
+                    1. 需求分析
+                  </div>
+                  <div class="text-gray-600 dark:text-gray-300">
+                    深入了解项目需求
+                  </div>
+                </div>
+                <div class="text-center">
+                  <div class="text-blue-600 dark:text-blue-400 font-semibold">
+                    2. 技术方案
+                  </div>
+                  <div class="text-gray-600 dark:text-gray-300">
+                    制定最优技术方案
+                  </div>
+                </div>
+                <div class="text-center">
+                  <div class="text-blue-600 dark:text-blue-400 font-semibold">
+                    3. 开发实现
+                  </div>
+                  <div class="text-gray-600 dark:text-gray-300">
+                    高质量代码实现
+                  </div>
+                </div>
+                <div class="text-center">
+                  <div class="text-blue-600 dark:text-blue-400 font-semibold">
+                    4. 交付支持
+                  </div>
+                  <div class="text-gray-600 dark:text-gray-300">
+                    项目交付及技术支持
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </CardView>
+      </section>
     </div>
+  </div>
 </template>
 
-<style lang="scss" scoped>
-.se-container {
-    width: 95%;
-    margin: auto;
-    display: flex;
-    flex-direction: column;
+<style scoped>
+.animate-fade-in {
+  animation: fadeIn 0.8s ease-out forwards;
 }
 
-.section {
-    margin-bottom: 2rem;
-    width: 100%;
+.animate-slide-up {
+  animation: slideUp 0.8s ease-out forwards;
 }
 
-.title {
-    font-size: 1.6rem;
-    font-weight: bold;
-    margin: 2rem 4rem;
-    color: #303F9F; /* Indigo 700 */
+.skill-item:hover .h-2 {
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
 }
 
-// 卡片通用样式
-.card-header {
-    h3 {
-        font-size: 1.2rem;
-        margin: 0;
-        padding: 0.5rem;
-        color: #3F51B5; /* Indigo 500 */
-        text-align: center;
-    }
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-// 技术栈样式
-.stack-container, .supply-container {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 1rem;
-    max-width: 1200px;
-    margin: 0 auto;
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.stack-card, .supply-card {
-    flex: 1;
-    min-width: 280px;
-    margin-bottom: 1rem;
-}
+/* 响应式设计调整 */
+@media (max-width: 768px) {
+  .grid-cols-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
 
-.tech-grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0.8rem;
-    padding: 0.5rem;
-}
-
-.tech-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 0.5rem;
-    border-radius: 8px;
-    width: calc(33.33% - 0.8rem);
-    transition: background-color 0.2s ease;
-    
-    &:hover {
-        background-color: rgba(63, 81, 181, 0.1);
-    }
-    
-    .tech-logo {
-        margin-bottom: 0.5rem;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        
-        img {
-            width: 32px;
-            height: 32px;
-            object-fit: contain;
-        }
-    }
-    
-    .tech-name {
-        font-size: 0.8rem;
-        text-align: center;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        width: 100%;
-    }
-}
-
-// 服务供应样式
-.supply-card {
-    .card-header {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        
-        .service-icon {
-            width: 20px;
-            height: 20px;
-            margin-right: 8px;
-        }
-    }
-}
-
-.service-content {
-    padding: 1rem;
-    
-    p {
-        line-height: 1.6;
-        color: #616161; /* Grey 700 */
-        text-align: center;
-    }
-}
-
-// 联系方式样式
-.contact-card {
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-.contact-content {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    
-    .contact-image {
-        flex: 0 1 250px;
-        padding: 1rem;
-        
-        img {
-            width: 100%;
-            height: auto;
-            border-radius: 8px;
-            object-fit: cover;
-        }
-    }
-    
-    .contact-details {
-        flex: 1 1 400px;
-        padding: 1rem;
-        
-        .contact-section {
-            margin-bottom: 1.5rem;
-            
-            h4 {
-                color: #303F9F; /* Indigo 700 */
-                margin: 0 0 0.5rem 0;
-                font-size: 1.1rem;
-                border-bottom: 1px solid #E0E0E0; /* Grey 300 */
-                padding-bottom: 0.3rem;
-            }
-            
-            ul {
-                list-style: none;
-                padding: 0;
-                margin: 0;
-                
-                li {
-                    padding: 0.5rem 0;
-                    color: #616161; /* Grey 700 */
-                    
-                    .contact-link {
-                        display: flex;
-                        align-items: center;
-                        color: #3F51B5;
-                        text-decoration: none;
-                        transition: color 0.2s ease;
-                        
-                        &:hover {
-                            color: #5C6BC0;
-                            text-decoration: underline;
-                        }
-                        
-                        .contact-icon {
-                            width: 20px;
-                            height: 20px;
-                            margin-right: 8px;
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-
-/* 响应式设计 - 合并所有媒体查询 */
-@media (max-width: 960px) {
-    .se-container {
-        width: 95%;
-    }
-    
-    .stack-container, .supply-container {
-        flex-direction: column;
-    }
-}
-
-@media (max-width: 600px) {
-    .title {
-        margin: 1.5rem 1rem;
-    }
-    
-    .tech-grid {
-        grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
-    }
-    
-    .contact-content {
-        flex-direction: column;
-        
-        .contact-image {
-            max-width: 100%;
-            margin: 0 auto;
-            
-            img {
-                max-height: 200px;
-                object-position: center;
-            }
-        }
-    }
+  .md\:grid-cols-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 </style>

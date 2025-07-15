@@ -1,33 +1,14 @@
-<script setup>
-const text = "© 2025 Zhixia."
-const slogan = "我们被我们塑造的东西所塑造着"
-const github = "Github"
-
-</script>
+<script setup lang="ts"></script>
 
 <template>
-    <div class="footer">
-        <div class="footer-content">
-            <p class="text">
-                {{ text }} &nbsp;
-                <a href="https://github.com/zxzxovo" target="_blank">{{ github }}</a>
-            </p>
-            <q class="slogan">{{ slogan }}</q>
-        </div>
+  <div class="flex justify-center pt-8">
+    <div
+      class="text-gray-700 dark:text-zinc-300 border-t-2 border-zinc-200 dark:border-zinc-600 w-11/12 h-18 text-center content-center text-sm"
+    >
+      <p>© 2025 Zhixia. <a href="https://github.com/zxzxovo" class=" underline text-sky-600">Github</a></p>
+      <p>“我们被我们塑造的东西所塑造着”</p>
     </div>
+  </div>
 </template>
 
-<style scoped>
-.footer {
-    background-color: #424242; /* Grey 800*/
-    text-align: center;
-    font-size: 0.8rem;
-    color: #eee;
-    margin-top: 2rem;
-    padding: 1rem 0;
-}
-p {
-    margin: 0.5rem 0;
-}
-
-</style>
+<style></style>

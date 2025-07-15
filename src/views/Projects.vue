@@ -1,415 +1,282 @@
 <script setup lang="ts">
-import Card from '../components/Card.vue';
-import seqHereImg from '@/assets/seq-here.png';
-import { onMounted } from 'vue';
+import CardView from "@/components/CardView.vue";
+import { onMounted } from "vue";
 
+// 有趣的小项目
 const somethingFun = [
-    {
-        title: '好玩的标签',
-        link: 'https://hizhixia.site',
-        description: '这只是一个标签喵^w^',
-    },
-    {
-        title: 'Unicode-Emoji Copy😼',
-        link: '/fun/unicode-emoji',
-        description: 'Unicode Emoji Chars ( AI generated )',
-    }
-]
+  {
+    title: "好玩的标签",
+    link: "https://hizhixia.site",
+    description: "这只是一个标签喵^w^",
+    tags: ["fun", "ui"],
+  },
+  {
+    title: "Unicode-Emoji Copy😼",
+    link: "/fun/unicode-emoji",
+    description: "Unicode Emoji Chars ( AI generated )",
+    tags: ["unicode", "emoji", "tool"],
+  },
+];
 
+// 主要项目
 const activeProjects = [
-    {
-        title: 'bio-here',
-        link: "https://bio-here.github.io/",
-        description: 'A series of bioinformatics tools',
-        // image: seqHereImg,
-        tags: ['Rust','bioinformatics',]
-    },
-    {
-        title: 'bio-here/seq-here',
-        link: "https://bio-here.github.io/seq-here",
-        description: 'A fast tool for bio-sequence processing',
-        image: seqHereImg,
-        tags: ['Rust','bioinformatics', 'cli', 'linux', 'windows']
-    },
-    {
-        title: 'bio-here/placecare',
-        link: "https://bio-here.github.io/zh/project/placecare.html",
-        description: 'A tool for cis-acting regulatory elements search, based on PLACE',
-        // image: seqHereImg,
-        tags: ['Rust','bioinformatics', 'cli', 'linux', 'windows', "PLACE", "string search"]
-    },
-
-    // {
-    //     title: 'wipe-windows',
-    //     link: 'https://example.com',
-    //     description: 'A windows tool for wiping data',
-    //     image: 'https://via.placeholder.com/150',
-    //     tags: ['Rust', 'windows', 'rust', 'tauri', 'tool']
-    // },
-    // {
-    //     title: 'install-me',
-    //     link: 'https://example.com',
-    //     description: 'A easy tool for installing software',
-    //     image: 'https://via.placeholder.com/150',
-    //     tags: ['Rust', 'installation', 'software', 'tool' ]
-    // },
-]
+  {
+    title: "bio-here",
+    githubRepo: "bio-here/bio-here",
+    link: "https://bio-here.github.io/",
+    description: "A series of bioinformatics tools",
+    image: "/src/assets/zx.svg", // 使用现有的logo作为占位图
+    tags: ["Rust", "bioinformatics"],
+  },
+  {
+    title: "bio-here/seq-here",
+    githubRepo: "bio-here/seq-here",
+    link: "https://bio-here.github.io/seq-here",
+    description: "A fast tool for bio-sequence processing",
+    image: "/src/assets/zx.svg",
+    tags: ["Rust", "bioinformatics", "cli", "linux", "windows"],
+  },
+  {
+    title: "bio-here/placecare",
+    githubRepo: "bio-here/placecare",
+    link: "https://bio-here.github.io/zh/project/placecare.html",
+    description:
+      "A tool for cis-acting regulatory elements search, based on PLACE",
+    image: "/src/assets/zx.svg",
+    tags: [
+      "Rust",
+      "bioinformatics",
+      "cli",
+      "linux",
+      "windows",
+      "PLACE",
+      "string search",
+    ],
+  },
+];
 
 // 获取标签颜色
 const getTagColor = (tag: string) => {
-    const colorMap: Record<string, string> = {
-        'rust': '#ff5722',
-        'bioinformatics': '#26A69A',
-        'cli': '#2196f3',
-        'linux': '#455A64',
-        'windows': '#42A5F5',
-        'tauri': '#9c27b0',
-        'tool': '#795548',
-        'installation': '#ff9800',
-        'software': '#3f51b5'
-    };
+  const colorMap: Record<string, string> = {
+    rust: "#ff5722",
+    bioinformatics: "#26A69A",
+    cli: "#2196f3",
+    linux: "#455A64",
+    windows: "#42A5F5",
+    tauri: "#9c27b0",
+    tool: "#795548",
+    installation: "#ff9800",
+    software: "#3f51b5",
+    place: "#4CAF50",
+    "string search": "#9E9E9E",
+    fun: "#E91E63",
+    ui: "#FF9800",
+    unicode: "#673AB7",
+    emoji: "#FFC107",
+  };
 
-    return colorMap[tag.toLowerCase()] || '#5C6BC0';
+  return colorMap[tag.toLowerCase()] || "#5C6BC0";
 };
 
 // 图片懒加载设置
 const setupLazyLoading = () => {
-    if ('IntersectionObserver' in window) {
-        const imageObserver = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const img = entry.target as HTMLImageElement;
-                    const src = img.dataset.src;
-                    if (src) {
-                        img.src = src;
-                        img.removeAttribute('data-src');
-                    }
-                    observer.unobserve(img);
-                }
-            });
-        });
+  if ("IntersectionObserver" in window) {
+    const imageObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const img = entry.target as HTMLImageElement;
+          const src = img.dataset.src;
+          if (src) {
+            img.src = src;
+            img.removeAttribute("data-src");
+          }
+          observer.unobserve(img);
+        }
+      });
+    });
 
-        // 延迟执行以确保DOM已更新
-        setTimeout(() => {
-            document.querySelectorAll('.project-image img').forEach(img => {
-                imageObserver.observe(img);
-            });
-        }, 300);
-    }
+    // 延迟执行以确保DOM已更新
+    setTimeout(() => {
+      document.querySelectorAll(".project-image img").forEach((img) => {
+        imageObserver.observe(img);
+      });
+    }, 300);
+  }
 };
 
 onMounted(() => {
-    setupLazyLoading();
+  setupLazyLoading();
 });
 </script>
 
 <template>
-    <div class="proj-container">
-        <!-- 有趣项目部分 -->
-        <div class="section proj-fun">
-            <h2 class="title">Something Fun</h2>
-            <div class="projects-container fun-projects">
-                <Card v-for="(project, index) in somethingFun" :key="index" class="project-card fun-card">
-                    <template #header>
-                        <div class="card-header">
-                            <h3>{{ project.title }}</h3>
-                        </div>
-                    </template>
-                    <template #content>
-                        <div class="project-content fun-content">
-                            <div class="project-info">
-                                <p class="project-description">{{ project.description }}</p>
-                            </div>
-                        </div>
-                    </template>
-                    <template #footer>
-                        <div class="fun-footer">
-                            <div class="spacer"></div>
-                            <a :href="project.link" target="_blank" class="project-link fun-link">Visit</a>
-                        </div>
-                    </template>
-                </Card>
-            </div>
-        </div>
+  <div class="bg-gray-50 dark:bg-zinc-900 py-8 px-4">
+    <div class="max-w-7xl mx-auto">
+      <!-- 主要项目部分 -->
+      <section class="mb-12">
+        <h2
+          class="text-2xl font-semibold text-gray-900 dark:text-white mb-6 flex items-center"
+        >
+          <span class="mr-2 text-xl">🚀</span>
+          主要项目
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <CardView
+            v-for="(project, index) in activeProjects"
+            :key="index"
+            class="hover:shadow-xl"
+            css-width="w-full"
+            padding="p-0"
+          >
+            <div class="flex flex-col h-full">
+              <!-- 项目图片 -->
+              <div
+                class="relative h-40 bg-gradient-to-br from-blue-500 to-purple-600 overflow-hidden group rounded-t-xl"
+              >
+                <img
+                  :data-src="project.image"
+                  :alt="project.title"
+                  src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                  class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                />
+                <div
+                  class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                >
+                  <span class="text-white font-semibold">查看项目</span>
+                </div>
+              </div>
 
-        <!-- 活跃项目部分 -->
-        <div class="section proj-active">
-            <h2 class="title">Active Projects</h2>
-            <div class="projects-container masonry-layout">
-                <Card v-for="(project, index) in activeProjects" 
-                      :key="index" 
-                      class="project-card"
-                      :class="`height-variant-${index % 3}`">
-                    <template #header>
-                        <div class="card-header">
-                            <h3>{{ project.title }}</h3>
-                        </div>
-                    </template>
-                    <template #content>
-                        <div class="project-content">
-                            <div class="project-image">
-                                <img 
-                                    :data-src="project.image" 
-                                    :alt="project.title" 
-                                    src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-                                />
-                            </div>
-                            <div class="project-info">
-                                <p class="project-description">{{ project.description }}</p>
-                                <div class="project-tags">
-                                    <span 
-                                        v-for="(tag, tagIndex) in project.tags" 
-                                        :key="tagIndex" 
-                                        class="tag"
-                                        :style="{ backgroundColor: getTagColor(tag) }">
-                                        {{ tag }}
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </template>
-                    <template #footer>
-                        <a :href="project.link" target="_blank" class="project-link">Visit Project</a>
-                    </template>
-                </Card>
+              <!-- 项目信息 -->
+              <div class="p-6 flex flex-col gap-3 flex-1">
+                <div class="flex items-start justify-between gap-3">
+                  <h3
+                    class="text-lg font-semibold text-gray-900 dark:text-white leading-tight"
+                  >
+                    {{ project.title }}
+                  </h3>
+                  <a
+                    :href="`https://github.com/${project.githubRepo}`"
+                    target="_blank"
+                    class="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors duration-200 flex-shrink-0"
+                    title="查看 GitHub 仓库"
+                  >
+                    <svg
+                      class="w-5 h-5"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                    >
+                      <path
+                        d="M12 0C5.374 0 0 5.373 0 12 0 17.302 3.438 21.8 8.207 23.387c.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"
+                      />
+                    </svg>
+                  </a>
+                </div>
+
+                <div
+                  class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400"
+                >
+                  <span>📦</span>
+                  <span class="truncate">{{ project.githubRepo }}</span>
+                </div>
+
+                <p
+                  class="text-gray-600 dark:text-gray-300 leading-relaxed text-sm flex-1"
+                >
+                  {{ project.description }}
+                </p>
+
+                <!-- 标签 -->
+                <div class="flex flex-wrap gap-2">
+                  <span
+                    v-for="(tag, tagIndex) in project.tags"
+                    :key="tagIndex"
+                    class="px-2 py-1 rounded-full text-xs text-white font-medium"
+                    :style="{ backgroundColor: getTagColor(tag) }"
+                  >
+                    {{ tag }}
+                  </span>
+                </div>
+
+                <!-- 操作按钮 -->
+                <div class="flex gap-3 mt-4">
+                  <a
+                    :href="project.link"
+                    target="_blank"
+                    class="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-blue-600 dark:bg-blue-500 text-white rounded-lg font-medium text-sm transition-all duration-200 hover:bg-blue-700 dark:hover:bg-blue-600 hover:transform hover:-translate-y-0.5"
+                  >
+                    🔗 访问
+                  </a>
+                  <a
+                    :href="`https://github.com/${project.githubRepo}`"
+                    target="_blank"
+                    class="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-gray-200 dark:bg-zinc-700 text-gray-700 dark:text-gray-300 rounded-lg font-medium text-sm transition-all duration-200 hover:bg-gray-300 dark:hover:bg-zinc-600 hover:transform hover:-translate-y-0.5"
+                  >
+                    📁 源码
+                  </a>
+                </div>
+              </div>
             </div>
+          </CardView>
         </div>
+      </section>
+
+      <!-- 有趣的小项目部分 -->
+      <section class="mb-12">
+        <h2
+          class="text-2xl font-semibold text-gray-900 dark:text-white mb-6 flex items-center"
+        >
+          <span class="mr-2 text-xl">✨</span>
+          有趣的小项目
+        </h2>
+        <div
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+        >
+          <CardView
+            v-for="(project, index) in somethingFun"
+            :key="index"
+            class="transition-all duration-300 hover:transform hover:-translate-y-1 hover:shadow-lg"
+            css-width="w-full"
+            padding="p-6"
+          >
+            <div class="text-center">
+              <h3
+                class="text-lg font-semibold text-gray-900 dark:text-white mb-3"
+              >
+                {{ project.title }}
+              </h3>
+              <p
+                class="text-gray-600 dark:text-gray-300 leading-relaxed text-sm mb-4"
+              >
+                {{ project.description }}
+              </p>
+
+              <!-- 标签 -->
+              <div class="flex flex-wrap justify-center gap-2 mb-4">
+                <span
+                  v-for="(tag, tagIndex) in project.tags"
+                  :key="tagIndex"
+                  class="px-2 py-1 rounded-full text-xs text-white font-medium"
+                  :style="{ backgroundColor: getTagColor(tag) }"
+                >
+                  {{ tag }}
+                </span>
+              </div>
+
+              <a
+                :href="project.link"
+                target="_blank"
+                class="inline-flex items-center gap-2 text-blue-600 dark:text-blue-400 font-medium text-sm transition-all duration-200 hover:text-blue-700 dark:hover:text-blue-300 hover:transform hover:translate-x-1"
+              >
+                探索 →
+              </a>
+            </div>
+          </CardView>
+        </div>
+      </section>
     </div>
+  </div>
 </template>
 
-
-<style lang="scss" scoped>
-.proj-container {
-    width: 95%;
-    margin: auto;
-    display: flex;
-    flex-direction: column;
-}
-
-.section {
-    margin-bottom: 2rem;
-    width: 100%;
-}
-
-.title {
-    font-size: 1.6rem;
-    font-weight: bold;
-    margin: 2rem 4rem;
-    color: #303F9F; /* Indigo 700 */
-}
-
-// 卡片通用样式
-.card-header {
-    h3 {
-        font-size: 1.2rem;
-        margin: 0;
-        padding: 0.5rem;
-        color: #3F51B5; /* Indigo 500 */
-        text-align: center;
-    }
-}
-
-// 项目容器
-.projects-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1.5rem;
-    max-width: 1200px;
-    margin: 0 auto;
-    
-    &.fun-projects {
-        flex-direction: row;
-        align-items: stretch;
-        max-width: 1200px;
-    }
-    
-    &.masonry-layout {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-        grid-auto-rows: minmax(100px, auto);
-        grid-gap: 1.5rem;
-        align-items: start;
-    }
-}
-
-.project-card {
-    flex: 1;
-    min-width: 280px;
-    max-width: 380px;
-    margin-bottom: 1rem;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    
-    &:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-    }
-    
-    &.fun-card {
-        max-width: 350px;
-        min-width: 250px;
-        margin-bottom: 0.8rem;
-        flex: 0 1 calc(33.333% - 1.5rem);
-        
-        &:hover {
-            transform: translateY(-3px);
-        }
-    }
-    
-    &.height-variant-0 {
-        padding-bottom: 0.5rem;
-    }
-    
-    &.height-variant-1 {
-        padding-bottom: 1.5rem;
-    }
-    
-    &.height-variant-2 {
-        padding-bottom: 1rem;
-    }
-}
-
-// 项目内容样式
-.project-content {
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-    
-    &.fun-content {
-        padding: 0.5rem 1rem;
-        flex-direction: row;
-    }
-    
-    .project-image {
-        width: 100%;
-        height: auto;
-        max-height: 180px;
-        overflow: hidden;
-        border-radius: 8px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        
-        img {
-            width: auto;
-            max-width: 100%;
-            height: auto;
-            max-height: 180px;
-            object-fit: contain;
-            transition: transform 0.3s ease;
-            
-            &:hover {
-                transform: scale(1.05);
-            }
-        }
-    }
-    
-    .project-info {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        gap: 0.8rem;
-        
-        .project-description {
-            color: #616161; /* Grey 700 */
-            line-height: 1.5;
-            text-align: center;
-            margin: 0;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-        }
-        
-        .project-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            justify-content: center;
-            
-            .tag {
-                padding: 0.3rem 0.8rem;
-                border-radius: 16px;
-                font-size: 0.8rem;
-                color: white;
-                white-space: nowrap;
-            }
-        }
-    }
-}
-
-.project-link {
-    display: block;
-    text-align: center;
-    padding: 0.5rem 1rem;
-    background-color: #3F51B5; /* Indigo 500 */
-    color: white;
-    border-radius: 4px;
-    text-decoration: none;
-    font-weight: 500;
-    transition: background-color 0.2s ease;
-    
-    &:hover {
-        background-color: #303F9F; /* Indigo 700 */
-    }
-    
-    &.fun-link {
-        padding: 0.3rem 0.7rem;
-        font-size: 0.9rem;
-        align-self: flex-end;
-    }
-}
-
-.fun-footer {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    
-    .spacer {
-        flex-grow: 1;
-    }
-}
-
-/* 响应式设计 */
-@media (max-width: 960px) {
-    .proj-container {
-        width: 95%;
-    }
-    
-    .project-card {
-        min-width: 250px;
-    }
-    
-    .project-card.fun-card {
-        flex: 0 1 calc(50% - 1.5rem);
-    }
-    
-    .projects-container.masonry-layout {
-        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    }
-}
-
-@media (max-width: 600px) {
-    .title {
-        margin: 1.5rem 1rem;
-    }
-    
-    .projects-container {
-        flex-direction: column;
-        align-items: center;
-    }
-    
-    .projects-container.masonry-layout {
-        display: flex;
-        flex-direction: column;
-    }
-    
-    .project-card {
-        max-width: 95%;
-    }
-    
-    .project-card.fun-card {
-        flex: 0 1 100%;
-    }
-}
+<style scoped>
+/* 保留必要的样式以确保懒加载正常工作 */
 </style>

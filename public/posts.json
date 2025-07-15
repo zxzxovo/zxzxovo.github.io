@@ -1,0 +1,534 @@
+{
+  "posts": [
+    {
+      "slug": "解构之三",
+      "title": "解构之三",
+      "description": "一些想法",
+      "date": "2025-07-15",
+      "image": "/posts/解构之三/./navigation.jpg",
+      "categories": [
+        "Daily",
+        "MY_ME"
+      ],
+      "tags": [
+        "Daily",
+        "呓语",
+        "解构",
+        "无所事事"
+      ],
+      "draft": false,
+      "wordCount": 796,
+      "readingTime": 1,
+      "lastModified": "2025-07-15T09:17:50.483Z"
+    },
+    {
+      "slug": "我赠予离别",
+      "title": "我赠予离别",
+      "description": "毕业啦，都要好好的",
+      "date": "2025-07-01T03:52:34+08:00",
+      "image": "/posts/我赠予离别/navigation.jpg",
+      "categories": [
+        "Daily",
+        "Texts"
+      ],
+      "tags": [
+        "Daily",
+        "呓语",
+        "散文诗类似体",
+        "给朋友"
+      ],
+      "draft": false,
+      "wordCount": 841,
+      "readingTime": 1,
+      "lastModified": "2025-07-11T08:28:36.258Z"
+    },
+    {
+      "slug": "孤独是一缕烟雾",
+      "title": "孤独是一缕烟雾",
+      "description": "月夜想到最近的某些事...",
+      "date": "2025-06-29T10:53:46+08:00",
+      "image": "/posts/孤独是一缕烟雾/navigation.jpg",
+      "categories": [
+        "Daily",
+        "Texts"
+      ],
+      "tags": [
+        "Daily",
+        "呓语",
+        "散文诗类似体",
+        "小诗"
+      ],
+      "draft": false,
+      "wordCount": 284,
+      "readingTime": 1,
+      "lastModified": "2025-07-11T08:28:36.261Z"
+    },
+    {
+      "slug": "Android四大组件基础",
+      "title": "Android四大组件基础",
+      "description": "Android应用开发中的四大组件",
+      "date": "2025-06-21T14:54:32+08:00",
+      "image": "/posts/Android四大组件基础/nav.svg",
+      "categories": [
+        "Code",
+        "Android"
+      ],
+      "tags": [
+        "Android",
+        "Code",
+        "Kotlin",
+        "学习"
+      ],
+      "draft": false,
+      "wordCount": 27304,
+      "readingTime": 28,
+      "lastModified": "2025-07-15T09:10:07.816Z"
+    },
+    {
+      "slug": "月夜",
+      "title": "月夜",
+      "description": "月夜想到最近的某些事...",
+      "date": "2025-05-10T08:32:42+08:00",
+      "image": "/posts/月夜/navigation.jpg",
+      "categories": [
+        "Daily",
+        "Texts"
+      ],
+      "tags": [
+        "Daily",
+        "呓语",
+        "散文诗类似体",
+        "小诗"
+      ],
+      "draft": false,
+      "wordCount": 330,
+      "readingTime": 1,
+      "lastModified": "2025-07-11T08:28:36.254Z"
+    },
+    {
+      "slug": "某些洁癖",
+      "title": "某些洁癖",
+      "description": "人大抵是需要名字的。",
+      "date": "2025-04-23T10:17:00+08:00",
+      "image": "/posts/某些洁癖/navigation.jpg",
+      "categories": [
+        "Daily",
+        "Texts"
+      ],
+      "tags": [
+        "Daily",
+        "呓语",
+        "小说类似体"
+      ],
+      "draft": false,
+      "wordCount": 1564,
+      "readingTime": 2,
+      "lastModified": "2025-07-11T08:28:36.204Z"
+    },
+    {
+      "slug": "解构之二",
+      "title": "解构之二",
+      "description": "不定期搬运别的地方写的某些东西。",
+      "date": "2025-04-20T11:15:21+08:00",
+      "image": "/posts/解构之二/navigation.jpg",
+      "categories": [
+        "Daily",
+        "MY_ME"
+      ],
+      "tags": [
+        "Daily",
+        "呓语",
+        "解构",
+        "无所事事"
+      ],
+      "draft": false,
+      "wordCount": 607,
+      "readingTime": 1,
+      "lastModified": "2025-07-11T08:28:36.258Z"
+    },
+    {
+      "slug": "使用Tauri开发跨平台应用",
+      "title": "使用Tauri开发跨平台应用",
+      "description": "使用 Tauri 2.0 编写更好的跨平台程序",
+      "date": "2025-04-05T00:41:44+08:00",
+      "image": "/posts/使用Tauri开发跨平台应用/navigation.jpg",
+      "categories": [
+        "Code"
+      ],
+      "tags": [
+        "Rust",
+        "Code",
+        "GUI",
+        "跨平台程序",
+        "前端",
+        "入门",
+        "Tauri"
+      ],
+      "draft": true,
+      "wordCount": 19,
+      "readingTime": 1,
+      "lastModified": "2025-07-11T08:28:36.258Z"
+    },
+    {
+      "slug": "Rust的函数式编程—-闭包",
+      "title": "Rust的函数式编程— 闭包",
+      "description": "关于Rust中的闭包",
+      "date": "2025-04-01T13:38:17+08:00",
+      "image": "/posts/Rust的函数式编程—-闭包/navigation.jpg",
+      "categories": [
+        "Code"
+      ],
+      "tags": [
+        "Rust",
+        "Code",
+        "闭包",
+        "函数式编程"
+      ],
+      "draft": false,
+      "wordCount": 5563,
+      "readingTime": 6,
+      "lastModified": "2025-07-11T08:28:36.261Z"
+    },
+    {
+      "slug": "冬至",
+      "title": "冬至",
+      "description": "某段时期浑浑噩噩中写的文字",
+      "date": "2025-04-01T13:37:48+08:00",
+      "image": "/posts/冬至/navigation.jpg",
+      "categories": [
+        "Daily",
+        "Texts"
+      ],
+      "tags": [
+        "Daily",
+        "呓语",
+        "小说类似体"
+      ],
+      "draft": false,
+      "wordCount": 2525,
+      "readingTime": 3,
+      "lastModified": "2025-07-11T08:28:36.164Z"
+    },
+    {
+      "slug": "解构之一",
+      "title": "解构之一",
+      "description": "关于我对自己的认识和现状的一些描述。",
+      "date": "2025-04-01T13:06:18+08:00",
+      "image": "/posts/解构之一/navigation.jpg",
+      "categories": [
+        "Daily",
+        "MY_ME"
+      ],
+      "tags": [
+        "Daily",
+        "呓语",
+        "解构",
+        "无所事事"
+      ],
+      "draft": false,
+      "wordCount": 690,
+      "readingTime": 1,
+      "lastModified": "2025-07-11T08:28:36.258Z"
+    },
+    {
+      "slug": "草儿长满山丘",
+      "title": "草儿长满山丘",
+      "description": "情绪激荡时由感觉出发得到的小诗。",
+      "date": "2025-03-29T15:07:31+08:00",
+      "image": "/posts/草儿长满山丘/navigation.jpg",
+      "categories": [
+        "Daily",
+        "Texts"
+      ],
+      "tags": [
+        "Daily",
+        "呓语",
+        "散文诗类似体",
+        "小诗"
+      ],
+      "draft": false,
+      "wordCount": 403,
+      "readingTime": 1,
+      "lastModified": "2025-07-11T08:28:36.261Z"
+    },
+    {
+      "slug": "进制转换",
+      "title": "进制转换",
+      "description": "教一位朋友学进制转换时的一些笔记",
+      "date": "2025-02-20T00:40:47+08:00",
+      "image": null,
+      "categories": [
+        "Math",
+        "Code"
+      ],
+      "tags": [
+        "Math",
+        "Code",
+        "进制转换",
+        "数学",
+        "笔记",
+        "学习"
+      ],
+      "draft": false,
+      "wordCount": 3379,
+      "readingTime": 4,
+      "lastModified": "2025-07-12T10:24:09.618Z"
+    },
+    {
+      "slug": "Clap的一些用法",
+      "title": "Clap的一些用法",
+      "description": "用Clap快速编写命令行程序",
+      "date": "2025-02-12T20:40:22+08:00",
+      "image": "/posts/Clap的一些用法/navigation.svg",
+      "categories": [
+        "Code"
+      ],
+      "tags": [
+        "Clap",
+        "Code",
+        "Tools",
+        "Rust"
+      ],
+      "draft": false,
+      "wordCount": 6011,
+      "readingTime": 7,
+      "lastModified": "2025-07-11T08:28:36.164Z"
+    },
+    {
+      "slug": "再学一遍Git",
+      "title": "再学一遍Git",
+      "description": "Git命令快查册或备忘录或半个指南",
+      "date": "2025-02-08T20:25:00+08:00",
+      "image": "/posts/再学一遍Git/navigation.png",
+      "categories": [
+        "Code"
+      ],
+      "tags": [
+        "Git",
+        "Code",
+        "Tools",
+        "学习",
+        "笔记"
+      ],
+      "draft": false,
+      "wordCount": 4971,
+      "readingTime": 5,
+      "lastModified": "2025-07-11T08:28:36.254Z"
+    },
+    {
+      "slug": "许多日前的自由",
+      "title": "许多日前的自由",
+      "description": "随便写的一些类似散文诗的文字之一",
+      "date": "2025-02-08T02:18:14+08:00",
+      "image": "/posts/许多日前的自由/flower1.jpg",
+      "categories": [
+        "Daily"
+      ],
+      "tags": [
+        "Daily",
+        "呓语",
+        "自由",
+        "青春"
+      ],
+      "draft": false,
+      "wordCount": 380,
+      "readingTime": 1,
+      "lastModified": "2025-07-11T08:28:36.261Z"
+    },
+    {
+      "slug": "许多日前的晚安",
+      "title": "许多日前的晚安",
+      "description": "题为 \"晚安\"，随便写的一些类似散文诗的文字之一",
+      "date": "2025-02-08T01:13:35+08:00",
+      "image": "/posts/许多日前的晚安/navigation.jpg",
+      "categories": [
+        "Daily"
+      ],
+      "tags": [
+        "Daily",
+        "呓语",
+        "散文诗类似体"
+      ],
+      "draft": false,
+      "wordCount": 496,
+      "readingTime": 1,
+      "lastModified": "2025-07-11T08:28:36.208Z"
+    },
+    {
+      "slug": "hellooo-world",
+      "title": "Hello Wrold",
+      "description": "The first blog flag",
+      "date": "2025-01-30T13:30:00+08:00",
+      "image": "/posts/hellooo-world/cover.jpg",
+      "categories": [
+        "Daily"
+      ],
+      "tags": [
+        "Daily"
+      ],
+      "draft": false,
+      "wordCount": 92,
+      "readingTime": 1,
+      "lastModified": "2025-07-11T08:28:36.261Z"
+    }
+  ],
+  "stats": {
+    "total": 18,
+    "published": 17,
+    "draft": 1,
+    "categories": [
+      {
+        "name": "Daily",
+        "count": 12
+      },
+      {
+        "name": "Texts",
+        "count": 6
+      },
+      {
+        "name": "Code",
+        "count": 6
+      },
+      {
+        "name": "MY_ME",
+        "count": 3
+      },
+      {
+        "name": "Android",
+        "count": 1
+      },
+      {
+        "name": "Math",
+        "count": 1
+      }
+    ],
+    "tags": [
+      {
+        "name": "Daily",
+        "count": 12
+      },
+      {
+        "name": "呓语",
+        "count": 11
+      },
+      {
+        "name": "Code",
+        "count": 6
+      },
+      {
+        "name": "散文诗类似体",
+        "count": 5
+      },
+      {
+        "name": "解构",
+        "count": 3
+      },
+      {
+        "name": "无所事事",
+        "count": 3
+      },
+      {
+        "name": "小诗",
+        "count": 3
+      },
+      {
+        "name": "学习",
+        "count": 3
+      },
+      {
+        "name": "Rust",
+        "count": 3
+      },
+      {
+        "name": "小说类似体",
+        "count": 2
+      },
+      {
+        "name": "笔记",
+        "count": 2
+      },
+      {
+        "name": "Tools",
+        "count": 2
+      },
+      {
+        "name": "给朋友",
+        "count": 1
+      },
+      {
+        "name": "Android",
+        "count": 1
+      },
+      {
+        "name": "Kotlin",
+        "count": 1
+      },
+      {
+        "name": "GUI",
+        "count": 1
+      },
+      {
+        "name": "跨平台程序",
+        "count": 1
+      },
+      {
+        "name": "前端",
+        "count": 1
+      },
+      {
+        "name": "入门",
+        "count": 1
+      },
+      {
+        "name": "Tauri",
+        "count": 1
+      },
+      {
+        "name": "闭包",
+        "count": 1
+      },
+      {
+        "name": "函数式编程",
+        "count": 1
+      },
+      {
+        "name": "Math",
+        "count": 1
+      },
+      {
+        "name": "进制转换",
+        "count": 1
+      },
+      {
+        "name": "数学",
+        "count": 1
+      },
+      {
+        "name": "Clap",
+        "count": 1
+      },
+      {
+        "name": "Git",
+        "count": 1
+      },
+      {
+        "name": "自由",
+        "count": 1
+      },
+      {
+        "name": "青春",
+        "count": 1
+      }
+    ],
+    "years": [
+      {
+        "year": 2025,
+        "count": 18
+      }
+    ],
+    "totalWords": 56255,
+    "averageReadingTime": 4
+  },
+  "errors": [],
+  "generated": "2025-07-15T09:59:24.669Z"
+}

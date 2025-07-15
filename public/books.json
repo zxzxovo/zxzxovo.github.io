@@ -1,0 +1,203 @@
+{
+  "books": [
+    {
+      "id": "fltk-rs-book",
+      "title": "FLTK-rs Book",
+      "description": "FLTK-rs 的中文文档",
+      "author": [
+        "Flatig Lau",
+        "Zhixia Lau"
+      ],
+      "ref": "link",
+      "link": "https://fltk.flatig.vip"
+    },
+    {
+      "id": "tokio-docs",
+      "title": "Tokio Docs",
+      "description": "Tokio文档的中文翻译,以及部分相关文章（AI翻译）",
+      "author": [
+        "tokio",
+        "Zhixia Lau"
+      ],
+      "ref": "book",
+      "chapters": [
+        {
+          "id": "10-introduction",
+          "title": "介绍",
+          "order": 1,
+          "level": 0,
+          "hasContent": true,
+          "wordCount": 58
+        },
+        {
+          "id": "20-tutorial",
+          "title": "教程",
+          "order": 2,
+          "level": 0,
+          "hasContent": true,
+          "wordCount": 6,
+          "children": [
+            {
+              "id": "10-overview",
+              "title": "概述",
+              "order": 1,
+              "level": 1,
+              "hasContent": true,
+              "wordCount": 148
+            },
+            {
+              "id": "20-setup",
+              "title": "设置",
+              "order": 2,
+              "level": 1,
+              "hasContent": true,
+              "wordCount": 127
+            },
+            {
+              "id": "30-hello-tokio",
+              "title": "Hello Tokio",
+              "order": 3,
+              "level": 1,
+              "hasContent": true,
+              "wordCount": 383
+            },
+            {
+              "id": "40-spawning",
+              "title": "生成任务",
+              "order": 4,
+              "level": 1,
+              "hasContent": true,
+              "wordCount": 852
+            },
+            {
+              "id": "50-shared-state",
+              "title": "共享状态",
+              "order": 5,
+              "level": 1,
+              "hasContent": true,
+              "wordCount": 788
+            },
+            {
+              "id": "60-channels",
+              "title": "通道",
+              "order": 6,
+              "level": 1,
+              "hasContent": true,
+              "wordCount": 1008
+            },
+            {
+              "id": "70-io",
+              "title": "I/O",
+              "order": 7,
+              "level": 1,
+              "hasContent": true,
+              "wordCount": 826
+            },
+            {
+              "id": "80-framing",
+              "title": "帧（Framing）",
+              "order": 8,
+              "level": 1,
+              "hasContent": true,
+              "wordCount": 933
+            },
+            {
+              "id": "90-async",
+              "title": "深入异步",
+              "order": 9,
+              "level": 1,
+              "hasContent": true,
+              "wordCount": 2101
+            },
+            {
+              "id": "100-select",
+              "title": "Select",
+              "order": 10,
+              "level": 1,
+              "hasContent": true,
+              "wordCount": 2318
+            },
+            {
+              "id": "110-streams",
+              "title": "流",
+              "order": 11,
+              "level": 1,
+              "hasContent": true,
+              "wordCount": 1234
+            }
+          ]
+        },
+        {
+          "id": "30-topics",
+          "title": "主题",
+          "order": 3,
+          "level": 0,
+          "hasContent": true,
+          "wordCount": 9,
+          "children": [
+            {
+              "id": "10-bridging",
+              "title": "与同步代码桥接",
+              "order": 1,
+              "level": 1,
+              "hasContent": true,
+              "wordCount": 794
+            },
+            {
+              "id": "20-shutdown",
+              "title": "优雅关闭",
+              "order": 2,
+              "level": 1,
+              "hasContent": true,
+              "wordCount": 289
+            },
+            {
+              "id": "30-tracing",
+              "title": "追踪入门",
+              "order": 3,
+              "level": 1,
+              "hasContent": true,
+              "wordCount": 528
+            },
+            {
+              "id": "40-tracing-next-steps",
+              "title": "追踪的下一步",
+              "order": 4,
+              "level": 1,
+              "hasContent": true,
+              "wordCount": 462
+            },
+            {
+              "id": "50-testing",
+              "title": "单元测试",
+              "order": 5,
+              "level": 1,
+              "hasContent": true,
+              "wordCount": 409
+            }
+          ]
+        },
+        {
+          "id": "40-Glossary",
+          "title": "词汇表",
+          "order": 4,
+          "level": 0,
+          "hasContent": true,
+          "wordCount": 364
+        }
+      ],
+      "stats": {
+        "totalChapters": 20,
+        "totalWords": 13637,
+        "lastModified": "2025-07-15"
+      }
+    }
+  ],
+  "stats": {
+    "total": 2,
+    "localBooks": 1,
+    "externalLinks": 1,
+    "totalChapters": 20
+  },
+  "generated": "2025-07-15T09:59:24.785Z"
+}

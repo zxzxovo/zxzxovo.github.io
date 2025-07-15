@@ -1,48 +1,41 @@
 <script setup lang="ts">
-
-
+import { RouterView } from "vue-router";
 </script>
 
 <template>
-  <div id="app">
-    <router-view name="appcontent" > </router-view>
-  </div>
+  <RouterView name="appcontent"></RouterView>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>
 
 <style>
-* {
+/* 全局禁用滚动 */
+html,
+body {
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-
 }
 
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: #f5f5f5; /* Added background color */
-}
-
-a {
-    color: #90CAF9;  /* Blue 200*/
-    text-decoration: none;
-    transition: color 0.3s;
-}
-a:hover {
-    color: #F48FB1; /* Pink 200*/
-    text-decoration: underline; 
-}
-
-p {
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-  white-space: normal;
+  height: 100vh;
+  width: 100vw;
   overflow: hidden;
-  text-overflow: ellipsis;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.page-container {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
 }
 </style>

@@ -1,0 +1,169 @@
+@import "tailwindcss";
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+root {
+  font-family: 'Inter','Roboto', system-ui, Avenir, Helvetica, Arial, sans-serif;
+}
+
+#app {
+  text-align: center;
+  color-scheme: light;
+}
+
+/* 全局平滑滚动 */
+html {
+  scroll-behavior: smooth;
+}
+
+/* 自定义滚动条样式 */
+/* 适用于 Webkit 浏览器 (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(241, 245, 249, 0.5); /* slate-100 with opacity */
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.7); /* slate-400 with opacity */
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 116, 139, 0.8); /* slate-500 with opacity */
+}
+
+::-webkit-scrollbar-corner {
+  background: rgba(241, 245, 249, 0.5);
+}
+
+/* 暗色主题下的滚动条 */
+[data-theme="dark"] ::-webkit-scrollbar-track {
+  background: rgba(39, 39, 42, 0.5); /* zinc-800 with opacity */
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: rgba(113, 113, 122, 0.7); /* zinc-500 with opacity */
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+  background: rgba(161, 161, 170, 0.8); /* zinc-400 with opacity */
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-corner {
+  background: rgba(39, 39, 42, 0.5);
+}
+
+/* Firefox 滚动条样式 */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(148, 163, 184, 0.7) rgba(241, 245, 249, 0.5);
+}
+
+[data-theme="dark"] * {
+  scrollbar-color: rgba(113, 113, 122, 0.7) rgba(39, 39, 42, 0.5);
+}
+
+/* 为搜索框等特定区域的滚动条提供更精细的样式 */
+.search-results::-webkit-scrollbar {
+  width: 6px;
+}
+
+.search-results::-webkit-scrollbar-thumb {
+  background: rgba(139, 92, 246, 0.6); /* violet-500 with opacity */
+  border-radius: 3px;
+}
+
+.search-results::-webkit-scrollbar-thumb:hover {
+  background: rgba(124, 58, 237, 0.8); /* violet-600 with opacity */
+}
+
+/* 侧边栏滚动条样式 */
+.sidebar-scroll::-webkit-scrollbar {
+  width: 5px;
+}
+
+.sidebar-scroll::-webkit-scrollbar-thumb {
+  background: rgba(156, 163, 175, 0.5); /* gray-400 with opacity */
+  border-radius: 2.5px;
+}
+
+.sidebar-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(107, 114, 128, 0.7); /* gray-500 with opacity */
+}
+
+[data-theme="dark"] .sidebar-scroll::-webkit-scrollbar-thumb {
+  background: rgba(75, 85, 99, 0.5); /* gray-600 with opacity */
+}
+
+[data-theme="dark"] .sidebar-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(55, 65, 81, 0.7); /* gray-700 with opacity */
+}
+
+/* 主内容区域滚动条样式 */
+.main-content::-webkit-scrollbar {
+  width: 10px;
+}
+
+.main-content::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.6); /* slate-400 with opacity */
+  border-radius: 5px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+.main-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 116, 139, 0.8); /* slate-500 with opacity */
+  background-clip: content-box;
+}
+
+[data-theme="dark"] .main-content::-webkit-scrollbar-thumb {
+  background: rgba(113, 113, 122, 0.6); /* zinc-500 with opacity */
+  background-clip: content-box;
+}
+
+[data-theme="dark"] .main-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(161, 161, 170, 0.8); /* zinc-400 with opacity */
+  background-clip: content-box;
+}
+
+/* 目录导航滚动条样式 */
+.toc-scroll::-webkit-scrollbar {
+  width: 4px;
+}
+
+.toc-scroll::-webkit-scrollbar-thumb {
+  background: rgba(139, 92, 246, 0.4); /* violet-500 with opacity */
+  border-radius: 2px;
+}
+
+.toc-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(124, 58, 237, 0.6); /* violet-600 with opacity */
+}
+
+/* 代码块滚动条样式 */
+pre::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+pre::-webkit-scrollbar-thumb {
+  background: rgba(75, 85, 99, 0.6); /* gray-600 with opacity */
+  border-radius: 3px;
+}
+
+pre::-webkit-scrollbar-thumb:hover {
+  background: rgba(55, 65, 81, 0.8); /* gray-700 with opacity */
+}
+
+[data-theme="dark"] pre::-webkit-scrollbar-thumb {
+  background: rgba(156, 163, 175, 0.6); /* gray-400 with opacity */
+}
+
+[data-theme="dark"] pre::-webkit-scrollbar-thumb:hover {
+  background: rgba(209, 213, 219, 0.8); /* gray-300 with opacity */
+}

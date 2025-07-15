@@ -1,32 +1,46 @@
 {
-  "name": "hizhixia.site",
+  "name": "hzx",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc -b && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "newp": "bun scripts/new-post.js",
+    "generate-posts": "node scripts/generate-posts.js"
   },
   "dependencies": {
-    "@types/node": "^22.16.0",
-    "element-plus": "^2.10.2",
-    "hizhixia.site": "file:",
+    "@highlightjs/vue-plugin": "^2.1.0",
+    "@iarna/toml": "^2.2.5",
+    "@iconify/vue": "^5.0.0",
+    "@rollup/rollup-linux-x64-gnu": "^4.44.2",
+    "@tailwindcss/postcss": "^4.1.11",
+    "@tailwindcss/vite": "^4.1.11",
+    "@types/markdown-it": "^14.1.2",
+    "autoprefixer": "^10.4.21",
+    "gray-matter": "^4.0.3",
+    "highlight.js": "^11.11.1",
+    "katex": "^0.16.22",
+    "markdown-it": "^14.1.0",
+    "markdown-it-anchor": "^9.2.0",
+    "markdown-it-katex": "^2.0.3",
+    "markdown-it-table-of-contents": "^0.9.0",
     "pinia": "^3.0.3",
-    "sass-embedded": "^1.89.2",
-    "sass-embedded-linux-musl-x64": "^1.89.2",
-    "vite-plugin-compression": "^0.5.1",
-    "vite-plugin-imagemin": "^0.6.1",
-    "vite-plugin-pwa": "^1.0.1",
+    "postcss": "^8.5.6",
+    "prettier": "^3.6.2",
+    "terser": "^5.43.1",
     "vue": "^3.5.17",
     "vue-router": "^4.5.1"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^5.2.4",
+    "@tailwindcss/typography": "^0.5.16",
+    "@types/node": "^24.0.13",
+    "@vitejs/plugin-vue": "^6.0.0",
     "@vue/tsconfig": "^0.7.0",
-    "typescript": "~5.7.3",
-    "vite": "^6.3.5",
-    "vue-tsc": "^2.2.12"
-  },
-  "packageManager": "bun@1.0.30"
+    "tailwindcss": "^4.1.11",
+    "typescript": "~5.8.3",
+    "vite": "^7.0.0",
+    "vue-tsc": "^2.2.10"
+  }
 }

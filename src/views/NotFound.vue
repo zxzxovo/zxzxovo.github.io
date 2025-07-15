@@ -1,81 +1,53 @@
-<script setup lang="ts">
-import { useRouter } from 'vue-router';
-
-const router = useRouter();
-
-const goHome = () => {
-  router.push('/');
-};
-</script>
-
 <template>
-  <div class="not-found-container">
-    <div class="not-found-content">
-      <h1>404</h1>
-      <h2>页面未找到</h2>
-      <p>抱歉，您访问的页面不存在或已被移除</p>
-      <button @click="goHome" class="home-button">返回首页</button>
+  <div
+    class="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center"
+  >
+    <div class="max-w-md mx-auto text-center px-6">
+      <div class="text-9xl font-bold text-gray-300 dark:text-gray-600 mb-8">
+        404
+      </div>
+
+      <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+        页面未找到
+      </h1>
+
+      <p class="text-gray-600 dark:text-gray-400 mb-8">
+        抱歉，您访问的页面不存在或已被移除。
+      </p>
+
+      <div class="space-y-4">
+        <button
+          @click="goBack"
+          class="w-full bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors"
+        >
+          返回上一页
+        </button>
+
+        <router-link
+          to="/"
+          class="block w-full bg-gray-600 text-white px-6 py-3 rounded-lg hover:bg-gray-700 transition-colors"
+        >
+          返回首页
+        </router-link>
+      </div>
     </div>
   </div>
 </template>
 
-<style scoped lang="scss">
-.not-found-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 70vh;
-  text-align: center;
-}
+<script setup lang="ts">
+import { useRouter } from "vue-router";
 
-.not-found-content {
-  max-width: 500px;
-  padding: 2rem;
-  
-  h1 {
-    font-size: 6rem;
-    margin: 0;
-    color: #3498db;
-    animation: pulse 1.5s infinite;
-  }
-  
-  h2 {
-    font-size: 2rem;
-    margin-top: 0;
-    margin-bottom: 1rem;
-  }
-  
-  p {
-    font-size: 1.2rem;
-    color: #666;
-    margin-bottom: 2rem;
-  }
-}
+const router = useRouter();
 
-.home-button {
-  padding: 0.8rem 1.5rem;
-  font-size: 1rem;
-  background-color: #3498db;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  
-  &:hover {
-    background-color: #2980b9;
+function goBack() {
+  if (window.history.length > 1) {
+    router.go(-1);
+  } else {
+    router.push("/");
   }
 }
+</script>
 
-@keyframes pulse {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.05);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
+<style scoped>
+/* 404 页面样式 */
 </style>

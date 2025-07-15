@@ -1,0 +1,14 @@
+<svg width="400" height="200" viewBox="0 0 400 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="200" fill="#431407"/>
+  <g transform="translate(200,100)">
+    <!-- Rust gear -->
+    <circle cx="0" cy="0" r="30" fill="#DC2626"/>
+    <circle cx="0" cy="0" r="15" fill="#431407"/>
+    <!-- Gear teeth -->
+    <rect x="-3" y="-35" width="6" height="10" fill="#DC2626"/>
+    <rect x="-3" y="25" width="6" height="10" fill="#DC2626"/>
+    <rect x="-35" y="-3" width="10" height="6" fill="#DC2626"/>
+    <rect x="25" y="-3" width="10" height="6" fill="#DC2626"/>
+  </g>
+  <text x="200" y="160" text-anchor="middle" fill="#FEE2E2" font-family="Arial" font-size="16">Rust 编程</text>
+</svg>

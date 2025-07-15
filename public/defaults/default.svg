@@ -1,0 +1,13 @@
+<svg width="400" height="200" viewBox="0 0 400 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="200" fill="#1F2937"/>
+  <g transform="translate(200,100)">
+    <!-- Book -->
+    <rect x="-25" y="-20" width="50" height="40" rx="2" fill="#6366F1"/>
+    <rect x="-25" y="-20" width="8" height="40" fill="#4F46E5"/>
+    <!-- Pages -->
+    <line x1="-15" y1="-10" x2="15" y2="-10" stroke="white" stroke-width="2"/>
+    <line x1="-15" y1="0" x2="15" y2="0" stroke="white" stroke-width="2"/>
+    <line x1="-15" y1="10" x2="15" y2="10" stroke="white" stroke-width="2"/>
+  </g>
+  <text x="200" y="160" text-anchor="middle" fill="#C7D2FE" font-family="Arial" font-size="16">默认文章</text>
+</svg>

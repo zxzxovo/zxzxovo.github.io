@@ -1,0 +1,7 @@
+[book]
+ref = "book"
+title = "Tokio Docs"
+description = "Tokio文档的中文翻译,以及部分相关文章（AI翻译）"
+author = ["tokio", "Zhixia Lau"]
+
+# 无指定image时应该使用占位图片

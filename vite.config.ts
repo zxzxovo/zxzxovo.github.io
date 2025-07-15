@@ -1,149 +1,97 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import { fileURLToPath, URL } from 'node:url'
-import { VitePWA } from 'vite-plugin-pwa'
-import viteCompression from 'vite-plugin-compression'
-import viteImagemin from 'vite-plugin-imagemin'
+import tailwindcss from "@tailwindcss/vite"
+import { postsGeneratorPlugin } from './plugins/posts-generator.ts'
+import { booksGeneratorPlugin } from './plugins/books-generator-plugin.ts'
+import { resolve } from 'path'
 
-// https://vitejs.dev/config/
+// https://vite.dev/config/
 export default defineConfig({
   plugins: [
     vue(),
-    VitePWA({
-      registerType: 'autoUpdate',
-      includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'robots.txt'],
-      manifest: {
-        name: 'Zhixia的官方网站',
-        short_name: 'Zhixia',
-        description: '分享软件开发经验、项目和服务',
-        theme_color: '#3F51B5',
-        icons: [
-          {
-            src: '/pwa-192x192.png',
-            sizes: '192x192',
-            type: 'image/png'
-          },
-          {
-            src: '/pwa-512x512.png',
-            sizes: '512x512',
-            type: 'image/png'
-          },
-          {
-            src: '/pwa-512x512.png',
-            sizes: '512x512',
-            type: 'image/png',
-            purpose: 'maskable'
-          }
-        ]
-      },
-      workbox: {
-        // 缓存策略配置
-        runtimeCaching: [
-          {
-            urlPattern: /^https:\/\/hizhixia\.site\/.*\.(png|jpg|jpeg|svg|gif|webp)/i,
-            handler: 'CacheFirst',
-            options: {
-              cacheName: 'images-cache',
-              expiration: {
-                maxEntries: 100,
-                maxAgeSeconds: 60 * 60 * 24 * 30 // 30天
-              }
-            }
-          },
-          {
-            urlPattern: /^https:\/\/hizhixia\.site\/page\/archives\//i,
-            handler: 'NetworkFirst',
-            options: {
-              cacheName: 'api-cache',
-              expiration: {
-                maxEntries: 10,
-                maxAgeSeconds: 60 * 60 // 1小时
-              }
-            }
-          }
-        ]
-      }
-    }),
-    viteCompression({
-      algorithm: 'gzip',
-      ext: '.gz',
-      threshold: 10240 // 大于10kb的文件进行压缩
-    }),
-    viteImagemin({
-      gifsicle: {
-        optimizationLevel: 7,
-        interlaced: false
-      },
-      optipng: {
-        optimizationLevel: 7
-      },
-      mozjpeg: {
-        quality: 80
-      },
-      pngquant: {
-        quality: [0.7, 0.8],
-        speed: 4
-      },
-      svgo: {
-        plugins: [
-          {
-            name: 'removeViewBox'
-          },
-          {
-            name: 'removeEmptyAttrs',
-            active: false
-          }
-        ]
-      }
-    })
+    tailwindcss(),
+    postsGeneratorPlugin(),
+    booksGeneratorPlugin(),
   ],
-  resolve: {
-    alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
-    }
+  css: {
+    postcss: './postcss.config.js'
   },
-  // 设置基础路径，适合GitHub Pages部署
-  base: '/',
+  assetsInclude: ['**/*.md'],
+  
+  // 性能优化配置
   build: {
-    // 生产环境构建配置
+    // 压缩配置
     minify: 'terser',
-    terserOptions: {
-      compress: {
-        drop_console: true, // 移除console
-        drop_debugger: true // 移除debugger
+    // 启用代码分割
+    rollupOptions: {
+      output: {
+        // 手动分包
+        manualChunks: {
+          'vue-vendor': ['vue', 'vue-router', 'pinia'],
+          'markdown-vendor': ['markdown-it', 'highlight.js', 'katex'],
+          'ui-vendor': ['@iconify/vue'],
+        }
       }
     },
-    // rollupOptions: {
-    //   output: {
-    //     // // 拆分代码块
-    //     // manualChunks: {
-    //     //   vendor: ['vue', 'vue-router'],
-    //     //   utils: ['./src/utils/index.ts']
-    //     // },
-    //     // 静态资源分类输出
-    //     chunkFileNames: 'assets/js/[name]-[hash].js',
-    //     entryFileNames: 'assets/js/[name]-[hash].js',
-    //     assetFileNames: (assetInfo) => {
-    //       if (!assetInfo.name) return 'assets/other/[name]-[hash].[ext]';
-    //       const info = assetInfo.name.split('.')
-    //       let extType = info[info.length - 1]
-    //       if (/\.(png|jpe?g|gif|svg|webp)(\?.*)?$/.test(assetInfo.name)) {
-    //         extType = 'img'
-    //       } else if (/\.(woff2?|eot|ttf|otf)(\?.*)?$/i.test(assetInfo.name)) {
-    //         extType = 'fonts'
-    //       } else if (/\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/.test(assetInfo.name)) {
-    //         extType = 'media'
-    //       } else if (/\.css$/.test(assetInfo.name)) {
-    //         extType = 'css'
-    //       }
-    //       return `assets/${extType}/[name]-[hash].[ext]`
-    //     }
+    // 设置chunk大小警告限制
+    chunkSizeWarningLimit: 1000,
+    // 启用 CSS 代码分割
+    cssCodeSplit: true,
+    // 启用源码映射（仅开发环境）
+    sourcemap: false,
+  },
+  
+  // 别名配置
+  resolve: {
+    alias: {
+      '@': resolve(__dirname, 'src'),
+      '@components': resolve(__dirname, 'src/components'),
+      '@views': resolve(__dirname, 'src/views'),
+      '@utils': resolve(__dirname, 'src/utils'),
+      '@stores': resolve(__dirname, 'src/stores'),
+      '@types': resolve(__dirname, 'src/types'),
+      '@services': resolve(__dirname, 'src/services'),
+      '@composables': resolve(__dirname, 'src/composables'),
+    }
+  },
+  
+  // 开发服务器配置
+  server: {
+    open: true,
+    cors: true,
+    // 热更新优化
+    hmr: {
+      overlay: true
+    },
+    // 预设代理（如需要）
+    // proxy: {
+    //   '/api': {
+    //     target: 'http://localhost:3000',
+    //     changeOrigin: true,
     //   }
     // }
   },
-  // server: {
-  //   port: 3000,
-  //   cors: true,
-  //   open: true
-  // }
+  
+  // 依赖预构建优化
+  optimizeDeps: {
+    include: [
+      'vue',
+      'vue-router',
+      'pinia',
+      '@iconify/vue',
+      'highlight.js',
+      'markdown-it',
+      'katex'
+    ],
+    // 排除不需要预构建的依赖
+    exclude: [
+      // 'some-package'
+    ]
+  },
+  
+  // 预览服务器配置
+  preview: {
+    port: 4173,
+    open: true,
+  }
 })

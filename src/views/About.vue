@@ -1,894 +1,559 @@
 <script setup lang="ts">
-import Card from '@/components/Card.vue';
-import { ref, onMounted, onBeforeUnmount } from 'vue';
+import { ref, onMounted, onUnmounted, computed, watch } from "vue";
+import CardView from "@/components/CardView.vue";
 
-// 导入图片资源
-import avatar from '@/assets/avatar3.jpg';
-import me1 from '@/assets/me1.jpg';
-import me2 from '@/assets/me2.jpg';
-import me3 from '@/assets/me3.jpg';
-import me4 from '@/assets/me4.jpg';
-import me5 from '@/assets/me5.jpg';
-import me6 from '@/assets/me6.jpg';
+// 定义类型
+interface CommitData {
+  date: string;
+  commits: number;
+}
 
-// 个人信息
-const personalInfo = {
-    name: 'Zhixia Lau',
-    title: '软件开发 | 技术爱好者',
-    avatar: avatar, // 使用导入的图片
-    introduction: '这里是 芷夏 的赛博小站！欢迎 ^w^ ',
-    quote: 'Here today, gone tomorrow.'
-};
+interface GitHubEvent {
+  type: string;
+  created_at: string;
+  payload: {
+    commits?: Array<any>;
+  };
+}
 
-// 个人照片库
-const gallery = [
-    {
-        img: me1, // 使用导入的图片
-        title: '照片',
-        description: ''
-    },
-    {
-        img: me2, // 使用导入的图片
-        title: '照片',
-        description: ''
-    },
-    {
-        img: me3, // 使用导入的图片
-        title: '照片',
-        description: ''
-    },
-    {
-        img: me4, // 使用导入的图片
-        title: '照片',
-        description: ''
-    },
-    {
-        img: me5, // 使用导入的图片
-        title: '照片',
-        description: ''
-    },
-    {
-        img: me6, // 使用导入的图片
-        title: '照片',
-        description: ''
-    }
-];
+interface GitHubUser {
+  public_repos: number;
+  followers: number;
+  following: number;
+}
 
-// 最近活动
-const recentActivities = {
-    music: [
-        { name: '迷失广州', artist: '唯利玉碎计划', link: '#' },
-        { name: 'Stuck In A Moment You Can\'t Get Out Of', artist: 'U2', link: '#' },
-        { name: '向往', artist: '李健', link: '#' },
-        { name: '太史公之缢', artist: '沉默演讲', link: '#' },
-        { name: '悲伤的梦', artist: '窦唯', link: '#' },
-        { name: '你的城市', artist: '声音玩具', link: '#' }
+// 简介信息
+const personalInfo = ref({
+  name: "zhixia_OvO",
+  age: 23,
+  avatar: "https://avatars.githubusercontent.com/u/196936508?v=4",
+  bio: `热爱编程的全栈开发者。\n\n“长恨此身非我有，何时忘却营营？\n夜阑风静縠纹平。小舟从此逝，江海寄余生。”`,
+});
 
+const interests = ref([
+  {
+    title: "软件开发",
+    icon: "💻",
+    description: "Rust, Android, Vue.js",
+    details: "应用开发者，主要使用Rust",
+    items: [
+      { name: "Rust", status: "熟练使用" },
+      { name: "Java/Kotlin", status: "使用中" },
+      { name: "HTML/CSS/JS+Vue", status: "使用中" },
+      { name: "Android", status: "应用开发" },
+      { name: "C/C++", status: "不常用" },
     ],
-    tech: [
-        { name: 'Vue3', progress: 60, link: '' },
-        { name: 'Java 后端技术', progress: 60, link: '' },
-        { name: 'Tauri', progress: 80, link: '' },
+  },
+  {
+    title: "阅读",
+    icon: "📚",
+    description: "技术书籍，小说",
+    details: "不要丢掉人性，不要忘记阅读",
+    items: [
+      { name: "《Blue》", status: "" },
+      { name: "《代码整洁之道》", status: "" },
+      { name: "《野草》", status: "" },
+      { name: "《终结的感觉》", status: "" },
     ],
-    movies: [
-        { name: '神探', rating: 9.7, comment: '挺不错的港片' },
-        { name: '河边的错误', rating: 9.5, comment: '有些意思的文艺片' }
+  },
+  {
+    title: "音乐",
+    icon: "🎵",
+    description: "摇滚民谣，古典，流行",
+    details: "音乐会替你说出情绪",
+    items: [
+      { name: "Leonard Cohen", status: "" },
+      { name: "沉默演讲", status: "" },
+      { name: "万能青年旅店", status: "" },
+      { name: "U2", status: "" },
     ],
-    articles: [
-        { title: '西方哲学史：从古希腊到当下', source: '' },
-        { title: '野草——鲁迅', source: ''},
-        { title: '终结的感觉——巴恩斯', source: '' }
-    ]
+  },
+  {
+    title: "摄影",
+    icon: "📸",
+    description: "是记录，是生活",
+    details: "拍自己喜欢的好玩的照片",
+    items: [
+      { name: "街头摄影", status: "练习中" },
+      { name: "风景摄影", status: "爱好" },
+    ],
+  },
+]);
+
+const githubStats = ref({
+  totalCommits: 0,
+  repositories: 0,
+  followers: 0,
+  following: 0,
+});
+
+const friends = ref([
+  {
+    name: "Runoob菜鸟教程",
+    url: "https://runoob.com",
+    description: "较为齐全的基础知识参考手册",
+  },
+]);
+
+const commitData = ref<CommitData[]>([]);
+const isLoadingCommits = ref(false);
+const isLoadingStats = ref(false);
+const isLoadingGitHubImages = ref(false);
+
+// GitHub用户名
+const githubUsername = "zxzxovo";
+
+// 主题状态 - 使用ref以确保响应性
+const currentTheme = ref(document.documentElement.getAttribute("data-theme") || "light");
+
+// 检测当前主题
+const isDarkMode = computed(() => {
+  return currentTheme.value === "dark" || 
+         document.documentElement.classList.contains("dark");
+});
+
+// 获取今天的日期字符串（用于缓存）
+const getTodayDateString = () => {
+  return new Date().toISOString().split('T')[0]; // 格式: YYYY-MM-DD
 };
 
+// 每日缓存键 - 每天自动更新
+const dailyCacheKey = ref(getTodayDateString());
 
-// 当前选中的活动类别
-const activeTab = ref('music');
-
-// 全图预览相关状态
-const showFullImage = ref(false);
-const currentImage = ref('');
-const currentImageTitle = ref('');
-
-// 打开全图预览
-const openFullImage = (photo: { img: string; title: string; }) => {
-    currentImage.value = photo.img;
-    currentImageTitle.value = photo.title;
-    showFullImage.value = true;
-    // 禁止背景滚动
-    document.body.style.overflow = 'hidden';
+// 手动更新主题状态
+const updateThemeState = () => {
+  const theme = document.documentElement.getAttribute("data-theme");
+  const hasClassDark = document.documentElement.classList.contains("dark");
+  const newTheme = theme === "dark" || hasClassDark ? "dark" : "light";
+  
+  if (currentTheme.value !== newTheme) {
+    currentTheme.value = newTheme;
+  }
 };
 
-// 关闭全图预览
-const closeFullImage = () => {
-    showFullImage.value = false;
-    // 恢复背景滚动
-    document.body.style.overflow = '';
-};
+// GitHub统计图片URL - 使用每日缓存
+const githubStatsUrl = computed(() => {
+  const cacheKey = dailyCacheKey.value;
+  if (isDarkMode.value) {
+    return `https://github-readme-stats.vercel.app/api?username=${githubUsername}&show_icons=true&theme=github_dark&hide_border=true&bg_color=00000000&text_color=e6edf3&icon_color=7c3aed&title_color=e6edf3&cache_seconds=86400&t=${cacheKey}`;
+  } else {
+    return `https://github-readme-stats.vercel.app/api?username=${githubUsername}&show_icons=true&theme=default&hide_border=true&bg_color=00000000&text_color=24292f&icon_color=0969da&title_color=24292f&cache_seconds=86400&t=${cacheKey}`;
+  }
+});
 
-// 点击模态框背景时关闭
-const handleModalClick = (event: MouseEvent) => {
-    if ((event.target as HTMLElement).classList.contains('image-modal')) {
-        closeFullImage();
-    }
-};
+const githubLangsUrl = computed(() => {
+  const cacheKey = dailyCacheKey.value;
+  if (isDarkMode.value) {
+    return `https://github-readme-stats.vercel.app/api/top-langs/?username=${githubUsername}&layout=compact&theme=github_dark&hide_border=true&bg_color=00000000&text_color=e6edf3&title_color=e6edf3&hide=html&cache_seconds=86400&t=${cacheKey}`;
+  } else {
+    return `https://github-readme-stats.vercel.app/api/top-langs/?username=${githubUsername}&layout=compact&theme=default&hide_border=true&bg_color=00000000&text_color=24292f&title_color=24292f&hide=html&cache_seconds=86400&t=${cacheKey}`;
+  }
+});
 
-// 按ESC键关闭模态框
-const handleKeyDown = (event: KeyboardEvent) => {
-    if (event.key === 'Escape' && showFullImage.value) {
-        closeFullImage();
-    }
-};
+// 监听主题变化
+watch([isDarkMode, currentTheme], () => {
+  // 主题变化时，更新日期缓存键以强制刷新图片
+  dailyCacheKey.value = getTodayDateString();
+}, { immediate: false });
 
-// 增强图片懒加载功能
-const setupLazyLoading = () => {
-    if ('IntersectionObserver' in window) {
-        const imageObserver = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const img = entry.target as HTMLImageElement;
-                    const src = img.dataset.src;
-                    if (src) {
-                        img.src = src;
-                        img.removeAttribute('data-src');
-                    }
-                    observer.unobserve(img);
-                }
-            });
-        });
-
-        // 延迟执行以确保DOM已更新
+// 监听DOM变化来检测主题切换
+const observeThemeChanges = () => {
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      if (mutation.type === 'attributes' && 
+          (mutation.attributeName === 'data-theme' || mutation.attributeName === 'class')) {
+        // 延时更新，确保主题变化完成
         setTimeout(() => {
-            document.querySelectorAll('.gallery-image img, .avatar').forEach(img => {
-                imageObserver.observe(img);
-            });
-        }, 300);
+          updateThemeState();
+        }, 50);
+      }
+    });
+  });
+
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['data-theme', 'class']
+  });
+
+  return observer;
+};
+
+// GitHub个人主页链接
+const githubProfileUrl = computed(() => `https://github.com/${githubUsername}`);
+
+// 获取GitHub用户统计数据
+const fetchGitHubStats = async () => {
+  isLoadingStats.value = true;
+  try {
+    const response = await fetch(
+      `https://api.github.com/users/${githubUsername}`,
+    );
+    const userData: GitHubUser = await response.json();
+
+    // 获取总提交数（通过events API估算）
+    const eventsResponse = await fetch(
+      `https://api.github.com/users/${githubUsername}/events?per_page=100`,
+    );
+    const events: GitHubEvent[] = await eventsResponse.json();
+
+    let totalCommits = 0;
+    events.forEach((event: GitHubEvent) => {
+      if (event.type === "PushEvent") {
+        totalCommits += event.payload.commits?.length || 0;
+      }
+    });
+
+    // 更新统计数据
+    githubStats.value = {
+      totalCommits: totalCommits * 10, // 估算总提交数（最近100个事件的10倍）
+      repositories: userData.public_repos,
+      followers: userData.followers,
+      following: userData.following,
+    };
+  } catch (error) {
+    console.error("获取GitHub统计数据失败:", error);
+    // 保持默认值
+    githubStats.value = {
+      totalCommits: 1234,
+      repositories: 56,
+      followers: 89,
+      following: 123,
+    };
+  } finally {
+    isLoadingStats.value = false;
+  }
+};
+
+// 获取GitHub提交数据
+const fetchGitHubCommits = async () => {
+  isLoadingCommits.value = true;
+  try {
+    const response = await fetch(
+      `https://api.github.com/users/${githubUsername}/events?per_page=100`,
+    );
+    const events: GitHubEvent[] = await response.json();
+
+    // 过滤推送事件并统计每日提交数
+    const commitsByDate: Record<string, number> = {};
+    const today = new Date();
+
+    // 初始化最近30天的数据
+    for (let i = 29; i >= 0; i--) {
+      const date = new Date(today);
+      date.setDate(date.getDate() - i);
+      const dateStr = date.toISOString().split("T")[0];
+      commitsByDate[dateStr] = 0;
     }
+
+    // 统计提交数据
+    events.forEach((event: GitHubEvent) => {
+      if (event.type === "PushEvent") {
+        const eventDate = new Date(event.created_at)
+          .toISOString()
+          .split("T")[0];
+        if (commitsByDate.hasOwnProperty(eventDate)) {
+          commitsByDate[eventDate] += event.payload.commits?.length || 0;
+        }
+      }
+    });
+
+    // 转换为数组格式
+    commitData.value = Object.entries(commitsByDate).map(([date, commits]) => ({
+      date,
+      commits,
+    }));
+  } catch (error) {
+    console.error("获取GitHub提交数据失败:", error);
+    // 使用模拟数据作为后备
+    commitData.value = [
+      { date: "2024-01-15", commits: 5 },
+      { date: "2024-01-14", commits: 3 },
+      { date: "2024-01-13", commits: 8 },
+      { date: "2024-01-12", commits: 2 },
+      { date: "2024-01-11", commits: 6 },
+      { date: "2024-01-10", commits: 4 },
+      { date: "2024-01-09", commits: 7 },
+    ];
+  } finally {
+    isLoadingCommits.value = false;
+  }
 };
 
 onMounted(() => {
-    window.addEventListener('keydown', handleKeyDown);
-    setupLazyLoading();
+  // 初始化主题状态
+  updateThemeState();
+  
+  // 检查并更新缓存键（确保每天更新）
+  const today = getTodayDateString();
+  if (dailyCacheKey.value !== today) {
+    dailyCacheKey.value = today;
+  }
+  
+  fetchGitHubStats();
+  fetchGitHubCommits();
+  
+  // 开始监听主题变化
+  const themeObserver = observeThemeChanges();
+  
+  // 组件卸载时清理观察器
+  onUnmounted(() => {
+    themeObserver.disconnect();
+  });
 });
-
-onBeforeUnmount(() => {
-    window.removeEventListener('keydown', handleKeyDown);
-    // 确保页面卸载时恢复滚动
-    document.body.style.overflow = '';
-});
-
 </script>
 
 <template>
-    <div class="about-container">
-        <!-- 个人简介部分 -->
-        <div class="section profile-section">
-            <Card class="profile-card">
-                <template #header>
-                    <div class="profile-header">
-                        <div class="avatar-container">
-                            <img 
-                                :data-src="personalInfo.avatar" 
-                                alt="个人头像" 
-                                class="avatar" 
-                                src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-                            />
-                        </div>
-                        <div class="profile-title">
-                            <h1>{{ personalInfo.name }}</h1>
-                            <h2>{{ personalInfo.title }}</h2>
-                        </div>
-                    </div>
-                </template>
-                <template #content>
-                    <div class="profile-content">
-                        <p class="introduction">{{ personalInfo.introduction }}</p>
-                        <blockquote class="profile-quote">
-                            <p>{{ personalInfo.quote }}</p>
-                        </blockquote>
-                    </div>
-                </template>
-            </Card>
-        </div>
+  <div class="bg-gray-50 dark:bg-zinc-900 py-6 px-4">
+    <div class="max-w-7xl mx-auto">
+      <!-- 卡片网格布局 -->
+      <div
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-6"
+      >
+        <!-- 头像卡片 -->
+        <CardView class="flex flex-col items-center">
+          <div
+            class="w-32 h-32 rounded-full overflow-hidden mb-4 ring-4 ring-blue-500 dark:ring-blue-400"
+          >
+            <img
+              :src="personalInfo.avatar"
+              :alt="personalInfo.name"
+              class="w-full h-full object-cover"
+            />
+          </div>
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+            {{ personalInfo.name }}
+          </h3>
+          <p class="text-gray-600 dark:text-gray-300">
+            {{ personalInfo.age }} 岁
+          </p>
+        </CardView>
 
-        <!-- 最近活动部分 -->
-        <div class="section">
-            <h2 class="section-title">最近活动</h2>
-            <Card class="activities-card">
-                <template #header>
-                    <div class="activities-tabs">
-                        <div class="tab" 
-                             :class="{ active: activeTab === 'music' }"
-                             @click="activeTab = 'music'">
-                             🎵 音乐
-                        </div>
-                        <div class="tab" 
-                             :class="{ active: activeTab === 'tech' }"
-                             @click="activeTab = 'tech'">
-                             💻 技术
-                        </div>
-                        <div class="tab" 
-                             :class="{ active: activeTab === 'movies' }"
-                             @click="activeTab = 'movies'">
-                             🎬 电影
-                        </div>
-                        <div class="tab" 
-                             :class="{ active: activeTab === 'articles' }"
-                             @click="activeTab = 'articles'">
-                             📰 文章
-                        </div>
-                    </div>
-                </template>
-                <template #content>
-                    <div class="activities-content">
-                        <!-- 音乐列表 -->
-                        <div v-if="activeTab === 'music'" class="music-list">
-                            <div v-for="(item, index) in recentActivities.music" :key="index" class="music-item">
-                                <div class="music-icon">🎵</div>
-                                <div class="music-info">
-                                    <h3>{{ item.name }}</h3>
-                                    <p>{{ item.artist }}</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- 技术学习 -->
-                        <div v-if="activeTab === 'tech'" class="tech-list">
-                            <div v-for="(item, index) in recentActivities.tech" :key="index" class="tech-item">
-                                <div class="tech-header">
-                                    <h3>{{ item.name }}</h3>
-                                    <span>{{ item.progress }}%</span>
-                                </div>
-                                <div class="progress-bar">
-                                    <div class="progress" :style="{ width: item.progress + '%' }"></div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- 电影列表 -->
-                        <div v-if="activeTab === 'movies'" class="movie-list">
-                            <div v-for="(item, index) in recentActivities.movies" :key="index" class="movie-item">
-                                <div class="movie-info">
-                                    <h3>{{ item.name }}</h3>
-                                    <div class="rating">
-                                        <span v-for="i in 5" :key="i" class="star" 
-                                              :class="{ filled: i <= item.rating/2 }">★</span>
-                                        <span class="rating-value">{{ item.rating }}</span>
-                                    </div>
-                                    <p class="movie-comment">{{ item.comment }}</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- 文章列表 -->
-                        <div v-if="activeTab === 'articles'" class="article-list">
-                            <div v-for="(item, index) in recentActivities.articles" :key="index" class="article-item">
-                                <div class="article-icon">📄</div>
-                                <div class="article-info">
-                                    <h3>{{ item.title }}</h3>
-                                    <p>来源: {{ item.source }}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </template>
-            </Card>
-        </div>
+        <!-- 个人信息卡片 -->
+        <CardView class="md:col-span-2">
+          <h3
+            class="text-xl font-semibold text-gray-900 dark:text-white mb-4 flex items-center"
+          >
+            <span class="mr-2">👋</span>
+            自我介绍
+          </h3>
+          <p
+            class="text-gray-600 dark:text-gray-300 leading-relaxed whitespace-pre-line"
+          >
+            {{ personalInfo.bio }}
+          </p>
+        </CardView>
 
-        <!-- 照片库部分 -->
-        <div class="section">
-            <h2 class="section-title">照片库</h2>
-            <div class="gallery-container">
-                <div v-for="(photo, index) in gallery" :key="index" class="gallery-item" @click="openFullImage(photo)">
-                    <div class="gallery-image">
-                        <img 
-                            :data-src="photo.img" 
-                            :alt="photo.title" 
-                            src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-                        />
-                    </div>
-                    <div class="gallery-overlay">
-                        <h3>{{ photo.title }}</h3>
-                        <p>{{ photo.description }}</p>
-                        <span class="view-full">点击查看大图</span>
-                    </div>
-                </div>
+        <!-- GitHub统计卡片 -->
+        <CardView>
+          <h3
+            class="text-xl font-semibold text-gray-900 dark:text-white mb-4 flex items-center"
+          >
+            <span class="mr-2">📊</span>
+            GitHub 统计
+            <span v-if="isLoadingStats" class="ml-2 text-xs text-gray-500"
+              >加载中...</span
+            >
+          </h3>
+          <div class="space-y-3">
+            <div class="flex justify-between">
+              <span class="text-gray-600 dark:text-gray-300">提交数</span>
+              <span class="font-semibold text-gray-900 dark:text-white">{{
+                githubStats.totalCommits
+              }}</span>
             </div>
-        </div>
-
-        <!-- 图片全屏预览模态框 -->
-        <Transition name="fade">
-            <div v-if="showFullImage" class="image-modal" @click="handleModalClick">
-                <div class="modal-content">
-                    <button class="close-button" @click="closeFullImage">&times;</button>
-                    <h3 v-if="currentImageTitle" class="modal-title">{{ currentImageTitle }}</h3>
-                    <img :src="currentImage" alt="全图预览" />
-                </div>
+            <div class="flex justify-between">
+              <span class="text-gray-600 dark:text-gray-300">仓库数</span>
+              <span class="font-semibold text-gray-900 dark:text-white">{{
+                githubStats.repositories
+              }}</span>
             </div>
-        </Transition>
+            <div class="flex justify-between">
+              <span class="text-gray-600 dark:text-gray-300">关注者</span>
+              <span class="font-semibold text-gray-900 dark:text-white">{{
+                githubStats.followers
+              }}</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-600 dark:text-gray-300">关注中</span>
+              <span class="font-semibold text-gray-900 dark:text-white">{{
+                githubStats.following
+              }}</span>
+            </div>
+          </div>
+          <div class="mt-4 pt-3 border-t border-gray-200 dark:border-zinc-700">
+            <a
+              :href="githubProfileUrl"
+              target="_blank"
+              class="flex items-center justify-center w-full px-3 py-2 text-sm font-medium text-white bg-gray-800 dark:bg-gray-700 rounded-lg hover:bg-gray-900 dark:hover:bg-gray-600 transition-colors duration-200"
+            >
+              <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  fill-rule="evenodd"
+                  d="M10 0C4.477 0 0 4.484 0 10.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0110 4.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.942.359.31.678.921.678 1.856 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0020 10.017C20 4.484 15.522 0 10 0z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+              访问 GitHub
+            </a>
+          </div>
+        </CardView>
+
+        <!-- GitHub Stats 卡片 -->
+        <CardView class="md:col-span-2 lg:col-span-4">
+          <h3
+            class="text-xl font-semibold text-gray-900 dark:text-white mb-4 flex items-center"
+          >
+            <span class="mr-2">📈</span>
+            GitHub 数据统计
+            <span v-if="isLoadingGitHubImages" class="ml-2 text-xs text-gray-500"
+              >重新加载中...</span
+            >
+          </h3>
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <div class="flex justify-center">
+              <img
+                :src="githubStatsUrl"
+                :key="`stats-${dailyCacheKey}-${isDarkMode}`"
+                alt="GitHub Stats"
+                class="max-w-full h-auto rounded-lg transition-opacity duration-300"
+                @load="isLoadingGitHubImages = false"
+                @loadstart="isLoadingGitHubImages = true"
+                @error="isLoadingGitHubImages = false"
+              />
+            </div>
+            <div class="flex justify-center">
+              <img
+                :src="githubLangsUrl"
+                :key="`langs-${dailyCacheKey}-${isDarkMode}`"
+                alt="Top Languages"
+                class="max-w-full h-auto rounded-lg transition-opacity duration-300"
+                @load="isLoadingGitHubImages = false"
+                @loadstart="isLoadingGitHubImages = true" 
+                @error="isLoadingGitHubImages = false"
+              />
+            </div>
+          </div>
+        </CardView>
+
+        <!-- 兴趣爱好卡片 -->
+        <CardView
+          v-for="interest in interests"
+          :key="interest.title"
+          class="md:col-span-1 lg:col-span-2"
+        >
+          <div class="text-3xl mb-3">{{ interest.icon }}</div>
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+            {{ interest.title }}
+          </h3>
+          <p class="text-gray-600 dark:text-gray-300 text-sm mb-3">
+            {{ interest.description }}
+          </p>
+          <div class="border-t border-gray-200 dark:border-zinc-700 pt-3 mb-4">
+            <p
+              class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed mb-3"
+            >
+              {{ interest.details }}
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              <div
+                v-for="item in interest.items"
+                :key="item.name"
+                class="flex justify-between items-center p-2 bg-gray-50 dark:bg-zinc-800 rounded text-xs"
+              >
+                <span class="text-gray-700 dark:text-gray-300 truncate mr-2">{{
+                  item.name
+                }}</span>
+                <span
+                  class="text-blue-600 dark:text-blue-400 font-medium whitespace-nowrap"
+                  >{{ item.status }}</span
+                >
+              </div>
+            </div>
+          </div>
+        </CardView>
+
+        <!-- GitHub提交活动卡片 -->
+        <CardView class="md:col-span-2 lg:col-span-4">
+          <h3
+            class="text-xl font-semibold text-gray-900 dark:text-white mb-4 flex items-center"
+          >
+            <span class="mr-2">📈</span>
+            最近提交活动 (30天)
+            <span v-if="isLoadingCommits" class="ml-2 text-sm text-gray-500"
+              >加载中...</span
+            >
+          </h3>
+          <div
+            v-if="commitData.length > 0"
+            class="flex items-end space-x-1 h-32 overflow-x-auto"
+          >
+            <div
+              v-for="commit in commitData"
+              :key="commit.date"
+              class="flex-shrink-0 w-2 bg-green-500 dark:bg-green-400 rounded-t opacity-80 hover:opacity-100 transition-opacity duration-200"
+              :style="{
+                height:
+                  Math.max(
+                    (commit.commits /
+                      Math.max(
+                        ...commitData.map((c: CommitData) => c.commits),
+                        1,
+                      )) *
+                      100,
+                    5,
+                  ) + '%',
+              }"
+              :title="`${commit.date}: ${commit.commits} commits`"
+            ></div>
+          </div>
+          <div
+            v-else-if="!isLoadingCommits"
+            class="flex items-center justify-center h-32 text-gray-500 dark:text-gray-400"
+          >
+            暂无提交数据
+          </div>
+          <div
+            v-if="commitData.length > 0"
+            class="flex justify-between text-xs text-gray-500 dark:text-gray-400 mt-2"
+          >
+            <span>30天前</span>
+            <span>今天</span>
+          </div>
+        </CardView>
+
+        <!-- 友链卡片 -->
+        <CardView class="md:col-span-2 lg:col-span-4">
+          <h3
+            class="text-xl font-semibold text-gray-900 dark:text-white mb-4 flex items-center"
+          >
+            <span class="mr-2">🔗</span>
+            友情链接
+          </h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <a
+              v-for="friend in friends"
+              :key="friend.name"
+              :href="friend.url"
+              target="_blank"
+              class="block p-4 border border-gray-200 dark:border-zinc-700 rounded-lg hover:border-blue-500 dark:hover:border-blue-400 transition-colors duration-200"
+            >
+              <h4 class="font-semibold text-gray-900 dark:text-white mb-1">
+                {{ friend.name }}
+              </h4>
+              <p class="text-sm text-gray-600 dark:text-gray-300">
+                {{ friend.description }}
+              </p>
+            </a>
+          </div>
+        </CardView>
+      </div>
     </div>
+  </div>
 </template>
 
-<style lang="scss" scoped>
-.about-container {
-    width: 90%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem 0;
-}
-
-.section {
-    margin-bottom: 3rem;
-}
-
-.section-title {
-    font-size: 1.8rem;
-    color: #303F9F; /* Indigo 700 */
-    margin-bottom: 1.5rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 2px solid #E0E0E0;
-    text-align: center;
-}
-
-// 个人简介样式
-.profile-card {
-    max-width: 900px;
-    margin: 0 auto;
-    
-    .profile-header {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        flex-wrap: wrap;
-        padding: 1rem;
-        
-        .avatar-container {
-            flex: 0 0 140px;
-            margin-right: 2rem;
-            
-            .avatar {
-                width: 140px;
-                height: 140px;
-                border-radius: 50%;
-                object-fit: cover;
-                border: 4px solid #C5CAE9; /* Indigo 100 */
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            }
-        }
-        
-        .profile-title {
-            flex: 1;
-            
-            h1 {
-                font-size: 2.2rem;
-                color: #3F51B5; /* Indigo 500 */
-                margin: 0 0 0.5rem 0;
-            }
-            
-            h2 {
-                font-size: 1.3rem;
-                color: #7986CB; /* Indigo 300 */
-                font-weight: 400;
-                margin: 0;
-            }
-        }
-    }
-    
-    .profile-content {
-        padding: 1rem 2rem 2rem;
-        
-        .introduction {
-            font-size: 1.1rem;
-            line-height: 1.6;
-            color: #616161; /* Grey 700 */
-            margin-bottom: 1.5rem;
-        }
-        
-        .profile-quote {
-            background-color: #E8EAF6; /* Indigo 50 */
-            border-left: 4px solid #3F51B5; /* Indigo 500 */
-            padding: 1rem 1.5rem;
-            margin: 0;
-            font-style: italic;
-            color: #5C6BC0; /* Indigo 400 */
-            
-            p {
-                margin: 0;
-            }
-        }
-    }
-}
-
-// 最近活动样式
-.activities-card {
-    max-width: 900px;
-    margin: 0 auto;
-
-    .activities-tabs {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 0.5rem;
-        padding: 0.5rem;
-
-        .tab {
-            padding: 0.6rem 1.2rem;
-            background-color: #E8EAF6; /* Indigo 50 */
-            color: #5C6BC0; /* Indigo 400 */
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 500;
-
-            &:hover {
-                background-color: #C5CAE9; /* Indigo 100 */
-            }
-
-            &.active {
-                background-color: #3F51B5; /* Indigo 500 */
-                color: white;
-            }
-        }
-    }
-
-    .activities-content {
-        padding: 1.5rem;
-        min-height: 300px;
-    }
-
-    // 音乐列表样式
-    .music-list {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-
-        .music-item {
-            display: flex;
-            align-items: center;
-            padding: 0.8rem;
-            background-color: #F5F5F5;
-            border-radius: 8px;
-            transition: background-color 0.2s ease;
-
-            &:hover {
-                background-color: #E8EAF6; /* Indigo 50 */
-            }
-
-            .music-icon {
-                font-size: 1.5rem;
-                margin-right: 1rem;
-            }
-
-            .music-info {
-                flex: 1;
-
-                h3 {
-                    margin: 0 0 0.3rem 0;
-                    font-size: 1.1rem;
-                    color: #3F51B5; /* Indigo 500 */
-                }
-
-                p {
-                    margin: 0;
-                    color: #757575; /* Grey 600 */
-                    font-size: 0.9rem;
-                }
-            }
-
-            .music-link {
-                width: 36px;
-                height: 36px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                background-color: #3F51B5; /* Indigo 500 */
-                color: white;
-                border-radius: 50%;
-                text-decoration: none;
-                transition: transform 0.2s ease;
-
-                &:hover {
-                    transform: scale(1.1);
-                }
-
-                .play-icon {
-                    font-size: 1rem;
-                }
-            }
-        }
-    }
-
-    // 技术学习样式
-    .tech-list {
-        display: flex;
-        flex-direction: column;
-        gap: 1.5rem;
-
-        .tech-item {
-            background-color: #F5F5F5;
-            padding: 1rem;
-            border-radius: 8px;
-
-            .tech-header {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                margin-bottom: 0.8rem;
-
-                h3 {
-                    margin: 0;
-                    color: #3F51B5; /* Indigo 500 */
-                    font-size: 1.1rem;
-                }
-
-                span {
-                    color: #5C6BC0; /* Indigo 400 */
-                    font-weight: 600;
-                }
-            }
-
-            .progress-bar {
-                height: 8px;
-                background-color: #E0E0E0;
-                border-radius: 4px;
-                overflow: hidden;
-                margin-bottom: 0.8rem;
-
-                .progress {
-                    height: 100%;
-                    background-color: #3F51B5; /* Indigo 500 */
-                    border-radius: 4px;
-                }
-            }
-
-            .tech-link {
-                display: inline-block;
-                padding: 0.4rem 0.8rem;
-                background-color: #E8EAF6; /* Indigo 50 */
-                color: #3F51B5; /* Indigo 500 */
-                border-radius: 4px;
-                text-decoration: none;
-                font-size: 0.9rem;
-                transition: background-color 0.2s ease;
-
-                &:hover {
-                    background-color: #C5CAE9; /* Indigo 100 */
-                }
-            }
-        }
-    }
-
-    // 电影列表样式
-    .movie-list {
-        display: flex;
-        flex-direction: column;
-        gap: 1.5rem;
-
-        .movie-item {
-            background-color: #F5F5F5;
-            padding: 1.2rem;
-            border-radius: 8px;
-            transition: transform 0.2s ease;
-
-            &:hover {
-                transform: translateY(-3px);
-                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            }
-
-            .movie-info {
-                h3 {
-                    margin: 0 0 0.8rem 0;
-                    color: #3F51B5; /* Indigo 500 */
-                    font-size: 1.2rem;
-                }
-
-                .rating {
-                    display: flex;
-                    align-items: center;
-                    margin-bottom: 0.8rem;
-
-                    .star {
-                        color: #E0E0E0;
-                        font-size: 1.2rem;
-
-                        &.filled {
-                            color: #FFC107; /* Amber 500 */
-                        }
-                    }
-
-                    .rating-value {
-                        margin-left: 0.5rem;
-                        color: #757575; /* Grey 600 */
-                        font-weight: 600;
-                    }
-                }
-
-                .movie-comment {
-                    margin: 0;
-                    color: #616161; /* Grey 700 */
-                    font-style: italic;
-                }
-            }
-        }
-    }
-
-    // 文章列表样式
-    .article-list {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-
-        .article-item {
-            display: flex;
-            align-items: center;
-            padding: 1rem;
-            background-color: #F5F5F5;
-            border-radius: 8px;
-            transition: background-color 0.2s ease;
-
-            &:hover {
-                background-color: #E8EAF6; /* Indigo 50 */
-            }
-
-            .article-icon {
-                font-size: 1.5rem;
-                margin-right: 1rem;
-                color: #5C6BC0; /* Indigo 400 */
-            }
-
-            .article-info {
-                flex: 1;
-
-                h3 {
-                    margin: 0 0 0.3rem 0;
-                    font-size: 1.1rem;
-                    color: #3F51B5; /* Indigo 500 */
-                }
-
-                p {
-                    margin: 0;
-                    color: #757575; /* Grey 600 */
-                    font-size: 0.9rem;
-                }
-            }
-
-            .article-link {
-                padding: 0.4rem 1rem;
-                background-color: #3F51B5; /* Indigo 500 */
-                color: white;
-                border-radius: 4px;
-                text-decoration: none;
-                font-size: 0.9rem;
-                transition: background-color 0.2s ease;
-
-                &:hover {
-                    background-color: #5C6BC0; /* Indigo 400 */
-                }
-            }
-        }
-    }
-}
-
-// 照片库样式
-.gallery-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 1.5rem;
-    
-    .gallery-item {
-        position: relative;
-        height: 200px;
-        border-radius: 8px;
-        overflow: hidden;
-        cursor: pointer;
-        
-        &:hover .gallery-overlay {
-            opacity: 1;
-        }
-        
-        &:hover .gallery-image img {
-            transform: scale(1.05);
-        }
-        
-        .gallery-image {
-            width: 100%;
-            height: 100%;
-            
-            img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-                transition: transform 0.3s ease;
-            }
-        }
-        
-        .gallery-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(63, 81, 181, 0.7); /* Indigo 500 with opacity */
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 1rem;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            color: white;
-            text-align: center;
-            
-            h3 {
-                margin: 0 0 0.5rem 0;
-                font-size: 1.2rem;
-            }
-            
-            p {
-                margin: 0;
-                font-size: 0.9rem;
-            }
-            
-            .view-full {
-                margin-top: 0.8rem;
-                padding: 0.4rem 0.8rem;
-                background-color: rgba(255, 255, 255, 0.2);
-                border-radius: 20px;
-                font-size: 0.8rem;
-                transition: background-color 0.2s ease;
-                
-                &:hover {
-                    background-color: rgba(255, 255, 255, 0.3);
-                }
-            }
-        }
-    }
-}
-
-// 全图预览模态框样式
-.image-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.9);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    cursor: pointer;
-    padding: 2rem;
-    box-sizing: border-box;
-    
-    .modal-content {
-        position: relative;
-        max-width: 90%;
-        max-height: 90%;
-        cursor: default;
-        
-        .close-button {
-            position: absolute;
-            top: -40px;
-            right: -40px;
-            width: 40px;
-            height: 40px;
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
-            border-radius: 50%;
-            color: white;
-            font-size: 1.5rem;
-            cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: background-color 0.2s ease;
-            
-            &:hover {
-                background: rgba(255, 255, 255, 0.4);
-            }
-        }
-        
-        .modal-title {
-            color: white;
-            text-align: center;
-            margin-top: 0;
-            margin-bottom: 1rem;
-        }
-        
-        img {
-            max-width: 100%;
-            max-height: 80vh;
-            object-fit: contain;
-            border-radius: 4px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-        }
-    }
-}
-
-// 模态框过渡动画
-.fade-enter-active,
-.fade-leave-active {
-    transition: opacity 0.3s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-    opacity: 0;
-}
-
-// 响应式设计
-@media (max-width: 960px) {
-    .about-container {
-        width: 95%;
-    }
-    
-    .profile-header {
-        justify-content: center;
-        text-align: center;
-        
-        .avatar-container {
-            margin-right: 0;
-            margin-bottom: 1.5rem;
-        }
-        
-        .profile-title {
-            flex: 0 0 100%;
-            text-align: center;
-        }
-    }
-    
-    .gallery-container {
-        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    }
-    
-    .activities-tabs {
-        .tab {
-            flex: 1 1 calc(50% - 0.5rem);
-            text-align: center;
-        }
-    }
-}
-
-@media (max-width: 600px) {
-    .section-title {
-        font-size: 1.5rem;
-    }
-    
-    .profile-content {
-        padding: 1rem !important;
-    }
-    
-    .profile-header .avatar-container .avatar {
-        width: 120px;
-        height: 120px;
-    }
-    
-    .profile-title h1 {
-        font-size: 1.8rem;
-    }
-    
-    .gallery-container {
-        grid-template-columns: 1fr;
-    }
-    
-    .activities-tabs {
-        .tab {
-            flex: 1 1 100%;
-        }
-    }
-}
-
-@media (max-width: 768px) {
-    .image-modal {
-        padding: 1rem;
-        
-        .modal-content {
-            .close-button {
-                top: -30px;
-                right: -10px;
-            }
-        }
-    }
+<style scoped>
+/* 自定义滚动条样式 */
+::-webkit-scrollbar {
+  width: 6px;
 }
 </style>
