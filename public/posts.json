@@ -1,6 +1,26 @@
 {
   "posts": [
     {
+      "slug": "Rust标准库的Prelude",
+      "title": "Rust标准库的Prelude",
+      "description": "Rust标准库中的预导入部分有哪些内容",
+      "date": "2025-07-24",
+      "image": "/posts/Rust标准库的Prelude/./navigation.jpg",
+      "categories": [
+        "Code"
+      ],
+      "tags": [
+        "Rust",
+        "Rust标准库",
+        "Prelude",
+        "学习"
+      ],
+      "draft": false,
+      "wordCount": 4564,
+      "readingTime": 5,
+      "lastModified": "2025-07-24T16:07:36.054Z"
+    },
+    {
       "slug": "解构之三",
       "title": "解构之三",
       "description": "一些想法",
@@ -373,8 +393,8 @@
     }
   ],
   "stats": {
-    "total": 18,
-    "published": 17,
+    "total": 19,
+    "published": 18,
     "draft": 1,
     "categories": [
       {
@@ -382,11 +402,11 @@
         "count": 12
       },
       {
-        "name": "Texts",
-        "count": 6
+        "name": "Code",
+        "count": 7
       },
       {
-        "name": "Code",
+        "name": "Texts",
         "count": 6
       },
       {
@@ -420,6 +440,14 @@
         "count": 5
       },
       {
+        "name": "Rust",
+        "count": 4
+      },
+      {
+        "name": "学习",
+        "count": 4
+      },
+      {
         "name": "解构",
         "count": 3
       },
@@ -429,14 +457,6 @@
       },
       {
         "name": "小诗",
-        "count": 3
-      },
-      {
-        "name": "学习",
-        "count": 3
-      },
-      {
-        "name": "Rust",
         "count": 3
       },
       {
@@ -450,6 +470,14 @@
       {
         "name": "Tools",
         "count": 2
+      },
+      {
+        "name": "Rust标准库",
+        "count": 1
+      },
+      {
+        "name": "Prelude",
+        "count": 1
       },
       {
         "name": "给朋友",
@@ -523,12 +551,12 @@
     "years": [
       {
         "year": 2025,
-        "count": 18
+        "count": 19
       }
     ],
-    "totalWords": 56251,
+    "totalWords": 60815,
     "averageReadingTime": 4
   },
   "errors": [],
-  "generated": "2025-07-15T15:01:55.336Z"
+  "generated": "2025-07-24T16:17:46.649Z"
 }

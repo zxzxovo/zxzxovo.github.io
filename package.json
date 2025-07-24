@@ -8,14 +8,14 @@
     "build": "vue-tsc -b && vite build",
     "preview": "vite preview",
     "newp": "bun scripts/new-post.js",
-    "generate-posts": "bun scripts/generate-posts.js",
-    "seo-analyze": "bun scripts/seo-analyze.js"
+    "gps": "bun scripts/generate-posts.js",
+    "seo-anal": "bun scripts/seo-analyze.js"
   },
   "dependencies": {
     "@highlightjs/vue-plugin": "^2.1.0",
     "@iarna/toml": "^2.2.5",
     "@iconify/vue": "^5.0.0",
-    "@rollup/rollup-linux-x64-gnu": "^4.44.2",
+    "@rollup/rollup-linux-x64-gnu": "^4.45.1",
     "@tailwindcss/postcss": "^4.1.11",
     "@tailwindcss/vite": "^4.1.11",
     "@types/markdown-it": "^14.1.2",
@@ -31,17 +31,17 @@
     "postcss": "^8.5.6",
     "prettier": "^3.6.2",
     "terser": "^5.43.1",
-    "vue": "^3.5.17",
+    "vue": "^3.5.18",
     "vue-router": "^4.5.1"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.16",
-    "@types/node": "^24.0.13",
+    "@types/node": "^24.1.0",
     "@vitejs/plugin-vue": "^6.0.0",
     "@vue/tsconfig": "^0.7.0",
     "tailwindcss": "^4.1.11",
     "typescript": "~5.8.3",
-    "vite": "^7.0.0",
-    "vue-tsc": "^2.2.10"
+    "vite": "^7.0.6",
+    "vue-tsc": "^2.2.12"
   }
 }
