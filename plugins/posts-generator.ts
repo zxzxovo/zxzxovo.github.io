@@ -10,7 +10,7 @@ const execAsync = promisify(exec);
 async function generatePostsData() {
   try {
     console.log('🔄 开始生成文章数据...');
-    const { stdout, stderr } = await execAsync('node scripts/generate-posts.js');
+    const { stdout, stderr } = await execAsync('bun scripts/generate-posts.js');
     if (stdout) console.log(stdout);
     if (stderr) console.warn(stderr);
     console.log('✅ 文章数据生成完成');

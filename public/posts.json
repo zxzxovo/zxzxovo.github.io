@@ -1,6 +1,27 @@
 {
   "posts": [
     {
+      "slug": "语言能力的消失",
+      "title": "语言能力的消失",
+      "description": "人的语言能力与肌肉一样，都有一些用进废退的性质。",
+      "date": "2025-08-02",
+      "image": "/posts/语言能力的消失/./navigation.jpg",
+      "categories": [
+        "Daily",
+        "Texts"
+      ],
+      "tags": [
+        "呓语",
+        "Daily",
+        "语言",
+        "解构"
+      ],
+      "draft": false,
+      "wordCount": 855,
+      "readingTime": 1,
+      "lastModified": "2025-08-01T19:39:45.855Z"
+    },
+    {
       "slug": "Rust标准库的Prelude",
       "title": "Rust标准库的Prelude",
       "description": "Rust标准库中的预导入部分有哪些内容",
@@ -18,7 +39,7 @@
       "draft": false,
       "wordCount": 4564,
       "readingTime": 5,
-      "lastModified": "2025-07-24T16:07:36.054Z"
+      "lastModified": "2025-07-24T16:07:36.053Z"
     },
     {
       "slug": "解构之三",
@@ -60,7 +81,7 @@
       "draft": false,
       "wordCount": 841,
       "readingTime": 1,
-      "lastModified": "2025-07-11T08:28:36.258Z"
+      "lastModified": "2025-07-11T08:28:36.257Z"
     },
     {
       "slug": "孤独是一缕烟雾",
@@ -102,7 +123,7 @@
       "draft": false,
       "wordCount": 27304,
       "readingTime": 28,
-      "lastModified": "2025-07-15T09:10:07.816Z"
+      "lastModified": "2025-07-15T09:10:07.815Z"
     },
     {
       "slug": "月夜",
@@ -164,7 +185,7 @@
       "draft": false,
       "wordCount": 607,
       "readingTime": 1,
-      "lastModified": "2025-07-11T08:28:36.258Z"
+      "lastModified": "2025-07-11T08:28:36.257Z"
     },
     {
       "slug": "使用Tauri开发跨平台应用",
@@ -187,7 +208,7 @@
       "draft": true,
       "wordCount": 19,
       "readingTime": 1,
-      "lastModified": "2025-07-11T08:28:36.258Z"
+      "lastModified": "2025-07-11T08:28:36.257Z"
     },
     {
       "slug": "Rust的函数式编程—-闭包",
@@ -248,7 +269,7 @@
       "draft": false,
       "wordCount": 690,
       "readingTime": 1,
-      "lastModified": "2025-07-11T08:28:36.258Z"
+      "lastModified": "2025-07-11T08:28:36.257Z"
     },
     {
       "slug": "草儿长满山丘",
@@ -292,7 +313,7 @@
       "draft": false,
       "wordCount": 3379,
       "readingTime": 4,
-      "lastModified": "2025-07-12T10:24:09.618Z"
+      "lastModified": "2025-07-12T10:24:09.617Z"
     },
     {
       "slug": "Clap的一些用法",
@@ -333,7 +354,7 @@
       "draft": false,
       "wordCount": 4967,
       "readingTime": 5,
-      "lastModified": "2025-07-15T14:00:58.718Z"
+      "lastModified": "2025-07-15T14:00:58.717Z"
     },
     {
       "slug": "许多日前的自由",
@@ -372,7 +393,7 @@
       "draft": false,
       "wordCount": 496,
       "readingTime": 1,
-      "lastModified": "2025-07-11T08:28:36.208Z"
+      "lastModified": "2025-07-11T08:28:36.207Z"
     },
     {
       "slug": "hellooo-world",
@@ -393,21 +414,21 @@
     }
   ],
   "stats": {
-    "total": 19,
-    "published": 18,
+    "total": 20,
+    "published": 19,
     "draft": 1,
     "categories": [
       {
         "name": "Daily",
-        "count": 12
+        "count": 13
+      },
+      {
+        "name": "Texts",
+        "count": 7
       },
       {
         "name": "Code",
         "count": 7
-      },
-      {
-        "name": "Texts",
-        "count": 6
       },
       {
         "name": "MY_ME",
@@ -425,11 +446,11 @@
     "tags": [
       {
         "name": "Daily",
-        "count": 12
+        "count": 13
       },
       {
         "name": "呓语",
-        "count": 11
+        "count": 12
       },
       {
         "name": "Code",
@@ -440,16 +461,16 @@
         "count": 5
       },
       {
+        "name": "解构",
+        "count": 4
+      },
+      {
         "name": "Rust",
         "count": 4
       },
       {
         "name": "学习",
         "count": 4
-      },
-      {
-        "name": "解构",
-        "count": 3
       },
       {
         "name": "无所事事",
@@ -470,6 +491,10 @@
       {
         "name": "Tools",
         "count": 2
+      },
+      {
+        "name": "语言",
+        "count": 1
       },
       {
         "name": "Rust标准库",
@@ -551,12 +576,12 @@
     "years": [
       {
         "year": 2025,
-        "count": 19
+        "count": 20
       }
     ],
-    "totalWords": 60815,
+    "totalWords": 61670,
     "averageReadingTime": 4
   },
   "errors": [],
-  "generated": "2025-07-24T16:17:46.649Z"
+  "generated": "2025-08-01T19:46:16.639Z"
 }
