@@ -2,10 +2,9 @@
 
 ## Tokio-console
 
-[`tokio-console`](https://github.com/tokio-rs/console) is an htop-like utility that enables you to see a real-time view
-of an application’s spans and events. It can also represent "resources" that the
-Tokio runtime has created, such as Tasks. It's essential for understanding
-performance issues during the development process.
+[`tokio-console`](https://github.com/tokio-rs/console) 是一个类似 htop 的工具，
+可以实时查看应用程序的跨度和事件。它还可以显示 Tokio 运行时创建的“资源”，例如任务。
+在开发过程中，它对于理解性能问题至关重要。
 
 例如，要在 [mini-redis 项目](https://github.com/tokio-rs/mini-redis) 中使用 tokio-console，
 你需要为 Tokio 包启用 `tracing` 特性：
