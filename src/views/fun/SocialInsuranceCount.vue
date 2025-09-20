@@ -25,7 +25,13 @@ const allowance = ref(2000); // 津贴补贴
 const bonus = ref(0); // 奖金
 
 // 计算总工资
-const salary = computed(() => baseSalary.value + commission.value + allowance.value + bonus.value);
+const salary = computed(() => {
+  const base = baseSalary.value || 0;
+  const comm = commission.value || 0;
+  const allow = allowance.value || 0;
+  const bon = bonus.value || 0;
+  return base + comm + allow + bon;
+});
 
 const baseMin = ref(4000); // 社保基数下限
 const baseMax = ref(25000); // 社保基数上限
@@ -81,23 +87,32 @@ const openLink = (url: string) => {
 // 计算结果
 const results = computed(() => {
   const monthlySalary = salary.value || 0;
+  const minBase = baseMin.value || 0;
+  const maxBase = baseMax.value || 0;
   let personalTotal = 0;
   let companyTotal = 0;
 
   // 计算社保基数（在基数范围内）
-  const socialSecurityBase = Math.max(baseMin.value, Math.min(monthlySalary, baseMax.value));
+  const socialSecurityBase = Math.max(minBase, Math.min(monthlySalary, maxBase));
 
   const itemCalculations = insuranceItems.value.map((item: InsuranceItem) => {
     if (!item.enabled) {
       return { name: item.name, personal: 0, company: 0 };
     }
     
-    const personal = (socialSecurityBase * item.personalRate) / 100;
-    const company = (socialSecurityBase * item.companyRate) / 100;
-    personalTotal += personal;
-    companyTotal += company;
+    const personalRate = item.personalRate || 0;
+    const companyRate = item.companyRate || 0;
+    const personal = (socialSecurityBase * personalRate) / 100;
+    const company = (socialSecurityBase * companyRate) / 100;
     
-    return { name: item.name, personal, company };
+    // 确保计算结果是有效数字
+    const personalAmount = isNaN(personal) ? 0 : personal;
+    const companyAmount = isNaN(company) ? 0 : company;
+    
+    personalTotal += personalAmount;
+    companyTotal += companyAmount;
+    
+    return { name: item.name, personal: personalAmount, company: companyAmount };
   });
 
   // 计算个人所得税
@@ -106,22 +121,33 @@ const results = computed(() => {
 
   let tax = 0;
   for (const bracket of taxBrackets.value) {
-    if (annualTaxableIncome <= bracket.limit) {
-      tax = (annualTaxableIncome * (bracket.rate / 100) - bracket.deduction) / 12;
+    const rate = bracket.rate || 0;
+    const deduction = bracket.deduction || 0;
+    const limit = bracket.limit || 0;
+    
+    if (annualTaxableIncome <= limit) {
+      tax = (annualTaxableIncome * (rate / 100) - deduction) / 12;
       break;
     }
   }
-  tax = Math.max(0, tax);
+  
+  // 确保税额不为负数且是有效数字
+  tax = Math.max(0, isNaN(tax) ? 0 : tax);
 
-  const takeHomePay = monthlySalary - personalTotal - tax;
+  // 计算实际到手工资，确保不为负数
+  const takeHomePay = Math.max(0, monthlySalary - personalTotal - tax);
+  
+  // 检测是否存在工资过低的情况
+  const isLowSalaryWarning = monthlySalary > 0 && (monthlySalary - personalTotal - tax) < 0;
 
   return {
-    socialSecurityBase,
-    personalTotal,
-    companyTotal,
+    socialSecurityBase: isNaN(socialSecurityBase) ? 0 : socialSecurityBase,
+    personalTotal: isNaN(personalTotal) ? 0 : personalTotal,
+    companyTotal: isNaN(companyTotal) ? 0 : companyTotal,
     tax,
-    takeHomePay,
+    takeHomePay: isNaN(takeHomePay) ? 0 : takeHomePay,
     itemCalculations,
+    isLowSalaryWarning,
   };
 });
 
@@ -511,6 +537,17 @@ const resetToDefault = () => {
                     <span class="font-mono text-green-600 dark:text-green-400">
                       {{ results.takeHomePay.toFixed(2) }} 元
                     </span>
+                  </div>
+                  
+                  <!-- 工资过低警告 -->
+                  <div v-if="results.isLowSalaryWarning" class="mt-3 p-3 bg-yellow-100 dark:bg-yellow-900/30 border border-yellow-300 dark:border-yellow-700 rounded-lg">
+                    <div class="flex items-start">
+                      <span class="text-yellow-600 dark:text-yellow-400 mr-2">⚠️</span>
+                      <div class="text-sm text-yellow-800 dark:text-yellow-200">
+                        <strong>工资过低提醒：</strong>当前工资低于社保缴费基数下限，实际应缴纳的社保费用可能超过工资收入。
+                        在实际情况下，通常会按实际工资缴纳社保，而不是按最低基数缴纳。
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
