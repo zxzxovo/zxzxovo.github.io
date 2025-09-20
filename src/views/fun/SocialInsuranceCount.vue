@@ -49,14 +49,15 @@ const defaultInsuranceItems: InsuranceItem[] = [
 const insuranceItems = ref<InsuranceItem[]>(JSON.parse(JSON.stringify(defaultInsuranceItems)));
 
 // 个人所得税税率表（2024年标准），允许用户修改
+// 注意：这是年度综合所得税率表，适用于工资薪金、劳务报酬、稿酬、特许权使用费等
 const defaultTaxBrackets: TaxBracket[] = [
-  { limit: 36000, rate: 3, deduction: 0, name: "3万6以下" },
-  { limit: 144000, rate: 10, deduction: 2520, name: "3万6-14万4" },
-  { limit: 300000, rate: 20, deduction: 16920, name: "14万4-30万" },
-  { limit: 420000, rate: 25, deduction: 31920, name: "30万-42万" },
-  { limit: 660000, rate: 30, deduction: 52920, name: "42万-66万" },
-  { limit: 960000, rate: 35, deduction: 85920, name: "66万-96万" },
-  { limit: Infinity, rate: 45, deduction: 181920, name: "96万以上" },
+  { limit: 36000, rate: 3, deduction: 0, name: "不超过36,000元" },
+  { limit: 144000, rate: 10, deduction: 2520, name: "超过36,000至144,000元" },
+  { limit: 300000, rate: 20, deduction: 16920, name: "超过144,000至300,000元" },
+  { limit: 420000, rate: 25, deduction: 31920, name: "超过300,000至420,000元" },
+  { limit: 660000, rate: 30, deduction: 52920, name: "超过420,000至660,000元" },
+  { limit: 960000, rate: 35, deduction: 85920, name: "超过660,000至960,000元" },
+  { limit: Infinity, rate: 45, deduction: 181920, name: "超过960,000元" },
 ];
 
 const taxBrackets = ref<TaxBracket[]>(JSON.parse(JSON.stringify(defaultTaxBrackets)));
@@ -101,7 +102,7 @@ const tooltips = {
   },
   taxBrackets: {
     title: '个人所得税说明',
-    content: '按照7级超额累进税率计算，起征点为5000元/月。税率从3%到45%不等。',
+    content: '采用7级超额累进税率，起征点为5000元/月（60000元/年）。超过起征点的部分按年度综合所得计算，税率从3%到45%。包含工资薪金、劳务报酬、稿酬、特许权使用费等。',
     link: 'http://www.gov.cn/zhengce/2018-08/31/content_5318023.htm'
   }
 };
@@ -499,6 +500,17 @@ const resetToDefault = () => {
                 </div>
               </h3>
             </div>
+            
+            <!-- 起征点说明 -->
+            <div class="mb-4 p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700 rounded-lg">
+              <div class="flex items-center">
+                <span class="text-blue-600 dark:text-blue-400 mr-2">💡</span>
+                <span class="text-sm text-blue-800 dark:text-blue-200">
+                  <strong>起征点：</strong>5,000元/月（60,000元/年）- 超过此金额的部分才需要缴纳个人所得税
+                </span>
+              </div>
+            </div>
+            
             <div class="space-y-3">
               <div
                 v-for="(bracket, index) in taxBrackets"
@@ -668,8 +680,8 @@ const resetToDefault = () => {
               <p>• <strong>社保基数：</strong>取工资在基数上下限范围内的值</p>
               <p>• <strong>个人缴纳：</strong>社保基数 × 各项个人缴纳比例</p>
               <p>• <strong>公司缴纳：</strong>社保基数 × 各项公司缴纳比例</p>
-              <p>• <strong>应纳税所得额：</strong>税前工资 - 个人缴纳 - 5000元(起征点)</p>
-              <p>• <strong>个人所得税：</strong>按照7级超额累进税率计算</p>
+              <p>• <strong>应纳税所得额：</strong>税前工资 - 个人缴纳 - 5000元(基本减除费用/起征点)</p>
+              <p>• <strong>个人所得税：</strong>按照7级超额累进税率计算年度综合所得</p>
               <p>• <strong>实发工资：</strong>税前工资 - 个人缴纳 - 个人所得税</p>
             </div>
           </CardView>
