@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, computed } from "vue";
+import { ref, computed, onMounted, onUnmounted } from "vue";
 import CardView from "@/components/CardView.vue";
 
 // 定义保险项目接口
@@ -83,6 +83,65 @@ const toggleTheme = () => {
 const openLink = (url: string) => {
   window.open(url, '_blank');
 };
+
+// Tooltip状态管理
+const activeTooltip = ref<string | null>(null);
+
+// 定义tooltip内容
+const tooltips = {
+  socialSecurityBase: {
+    title: '社保基数说明',
+    content: '社保基数是计算社保缴费的基础，通常为当地平均工资的60%-300%之间。各地标准不同，请查看具体政策。',
+    link: 'http://www.gov.cn/fuwu/2024-06/28/content_6954329.htm'
+  },
+  insuranceItems: {
+    title: '社保项目说明',
+    content: '包括养老保险、医疗保险、失业保险、工伤保险、生育保险和住房公积金。各项比例根据国家和地方政策确定。',
+    link: 'http://www.gov.cn/zhengce/xxgk/main/202312/content_6920663.htm'
+  },
+  taxBrackets: {
+    title: '个人所得税说明',
+    content: '按照7级超额累进税率计算，起征点为5000元/月。税率从3%到45%不等。',
+    link: 'http://www.gov.cn/zhengce/2018-08/31/content_5318023.htm'
+  }
+};
+
+// 显示tooltip
+const showTooltip = (tooltipKey: string) => {
+  activeTooltip.value = tooltipKey;
+};
+
+// 隐藏tooltip
+const hideTooltip = () => {
+  activeTooltip.value = null;
+};
+
+// 点击tooltip内容时跳转链接
+const handleTooltipClick = (tooltipKey: string) => {
+  const tooltip = tooltips[tooltipKey as keyof typeof tooltips];
+  if (tooltip && tooltip.link) {
+    openLink(tooltip.link);
+  }
+  hideTooltip();
+};
+
+// 点击外部区域关闭tooltip
+const handleClickOutside = (event: Event) => {
+  const target = event.target as HTMLElement;
+  if (activeTooltip.value && !target.closest('.tooltip-container')) {
+    hideTooltip();
+  }
+};
+
+// 在组件挂载时添加全局点击监听
+onMounted(() => {
+  document.addEventListener('click', handleClickOutside);
+});
+
+// 在组件卸载时移除监听器
+onUnmounted(() => {
+  document.removeEventListener('click', handleClickOutside);
+});
 
 // 计算结果
 const results = computed(() => {
@@ -272,20 +331,35 @@ const resetToDefault = () => {
 
               <!-- 社保基数设置 -->
               <div class="space-y-3 pt-4 border-t border-gray-200 dark:border-zinc-600">
-                <h4 class="text-lg font-medium text-gray-800 dark:text-gray-200 mb-2">社保基数设置</h4>
+                <div class="flex items-center mb-2">
+                  <h4 class="text-lg font-medium text-gray-800 dark:text-gray-200">社保基数设置</h4>
+                  <div class="relative ml-2 tooltip-container">
+                    <button
+                      @click.stop="showTooltip('socialSecurityBase')"
+                      class="text-blue-500 hover:text-blue-700 cursor-pointer transition-colors"
+                      title="点击查看详细说明"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                      </svg>
+                    </button>
+                    
+                    <!-- Tooltip -->
+                    <div
+                      v-if="activeTooltip === 'socialSecurityBase'"
+                      @click="handleTooltipClick('socialSecurityBase')"
+                      class="absolute left-0 top-6 z-50 w-72 p-4 bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-600 rounded-lg shadow-lg cursor-pointer"
+                    >
+                      <h5 class="font-semibold text-gray-900 dark:text-white mb-2">{{ tooltips.socialSecurityBase.title }}</h5>
+                      <p class="text-sm text-gray-600 dark:text-gray-300 mb-2">{{ tooltips.socialSecurityBase.content }}</p>
+                      <div class="text-xs text-blue-600 dark:text-blue-400">点击查看详细政策 →</div>
+                    </div>
+                  </div>
+                </div>
                 <div class="grid grid-cols-2 gap-4">
                   <div>
-                    <label class="flex items-center text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                       社保基数下限 (元)
-                      <button
-                        @click="openLink('http://www.gov.cn/fuwu/2024-06/28/content_6954329.htm')"
-                        class="ml-2 text-blue-500 hover:text-blue-700 cursor-pointer transition-colors"
-                        title="查看各地社保基数标准"
-                      >
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                          <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
-                        </svg>
-                      </button>
                     </label>
                     <input
                       type="number"
@@ -294,17 +368,8 @@ const resetToDefault = () => {
                     />
                   </div>
                   <div>
-                    <label class="flex items-center text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                       社保基数上限 (元)
-                      <button
-                        @click="openLink('http://www.gov.cn/fuwu/2024-06/28/content_6954329.htm')"
-                        class="ml-2 text-blue-500 hover:text-blue-700 cursor-pointer transition-colors"
-                        title="查看各地社保基数标准"
-                      >
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                          <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
-                        </svg>
-                      </button>
                     </label>
                     <input
                       type="number"
@@ -327,15 +392,28 @@ const resetToDefault = () => {
               <h3 class="text-xl font-semibold text-gray-900 dark:text-white flex items-center">
                 <span class="mr-2">🏥</span>
                 社保与公积金项目
-                <button
-                  @click="openLink('http://www.gov.cn/zhengce/xxgk/main/202312/content_6920663.htm')"
-                  class="ml-2 text-blue-500 hover:text-blue-700 cursor-pointer transition-colors"
-                  title="查看国家社保相关政策"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
-                  </svg>
-                </button>
+                <div class="relative ml-2 tooltip-container">
+                  <button
+                    @click.stop="showTooltip('insuranceItems')"
+                    class="text-blue-500 hover:text-blue-700 cursor-pointer transition-colors"
+                    title="点击查看详细说明"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                    </svg>
+                  </button>
+                  
+                  <!-- Tooltip -->
+                  <div
+                    v-if="activeTooltip === 'insuranceItems'"
+                    @click="handleTooltipClick('insuranceItems')"
+                    class="absolute left-0 top-6 z-50 w-72 p-4 bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-600 rounded-lg shadow-lg cursor-pointer"
+                  >
+                    <h5 class="font-semibold text-gray-900 dark:text-white mb-2">{{ tooltips.insuranceItems.title }}</h5>
+                    <p class="text-sm text-gray-600 dark:text-gray-300 mb-2">{{ tooltips.insuranceItems.content }}</p>
+                    <div class="text-xs text-blue-600 dark:text-blue-400">点击查看详细政策 →</div>
+                  </div>
+                </div>
               </h3>
               <button
                 @click="resetToDefault"
@@ -397,15 +475,28 @@ const resetToDefault = () => {
               <h3 class="text-xl font-semibold text-gray-900 dark:text-white flex items-center">
                 <span class="mr-2">📈</span>
                 个人所得税税率表
-                <button
-                  @click="openLink('http://www.gov.cn/zhengce/2018-08/31/content_5318023.htm')"
-                  class="ml-2 text-blue-500 hover:text-blue-700 cursor-pointer transition-colors"
-                  title="查看个人所得税法"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
-                  </svg>
-                </button>
+                <div class="relative ml-2 tooltip-container">
+                  <button
+                    @click.stop="showTooltip('taxBrackets')"
+                    class="text-blue-500 hover:text-blue-700 cursor-pointer transition-colors"
+                    title="点击查看详细说明"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                    </svg>
+                  </button>
+                  
+                  <!-- Tooltip -->
+                  <div
+                    v-if="activeTooltip === 'taxBrackets'"
+                    @click="handleTooltipClick('taxBrackets')"
+                    class="absolute left-0 top-6 z-50 w-72 p-4 bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-600 rounded-lg shadow-lg cursor-pointer"
+                  >
+                    <h5 class="font-semibold text-gray-900 dark:text-white mb-2">{{ tooltips.taxBrackets.title }}</h5>
+                    <p class="text-sm text-gray-600 dark:text-gray-300 mb-2">{{ tooltips.taxBrackets.content }}</p>
+                    <div class="text-xs text-blue-600 dark:text-blue-400">点击查看详细政策 →</div>
+                  </div>
+                </div>
               </h3>
             </div>
             <div class="space-y-3">
@@ -515,15 +606,28 @@ const resetToDefault = () => {
                 <h4 class="font-semibold text-lg mb-3 text-green-800 dark:text-green-300 flex items-center">
                   <span class="mr-2">💸</span>
                   税务与实发
-                  <button
-                    @click="openLink('http://www.gov.cn/zhengce/2018-08/31/content_5318023.htm')"
-                    class="ml-2 text-green-600 hover:text-green-800 cursor-pointer transition-colors"
-                    title="查看个人所得税法"
-                  >
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                      <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
-                    </svg>
-                  </button>
+                  <div class="relative ml-2 tooltip-container">
+                    <button
+                      @click.stop="showTooltip('taxBrackets')"
+                      class="text-green-600 hover:text-green-800 cursor-pointer transition-colors"
+                      title="点击查看详细说明"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                      </svg>
+                    </button>
+                    
+                    <!-- Tooltip -->
+                    <div
+                      v-if="activeTooltip === 'taxBrackets'"
+                      @click="handleTooltipClick('taxBrackets')"
+                      class="absolute left-0 top-6 z-50 w-72 p-4 bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-600 rounded-lg shadow-lg cursor-pointer"
+                    >
+                      <h5 class="font-semibold text-gray-900 dark:text-white mb-2">{{ tooltips.taxBrackets.title }}</h5>
+                      <p class="text-sm text-gray-600 dark:text-gray-300 mb-2">{{ tooltips.taxBrackets.content }}</p>
+                      <div class="text-xs text-blue-600 dark:text-blue-400">点击查看详细政策 →</div>
+                    </div>
+                  </div>
                 </h4>
                 <div class="space-y-3">
                   <div class="flex justify-between text-sm">
