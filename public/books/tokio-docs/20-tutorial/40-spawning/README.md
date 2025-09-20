@@ -148,7 +148,7 @@ Tokio 中的任务非常轻量级。在内部，它们只需要一个分配和 6
 
 当您在 Tokio 运行时上生成任务时，其类型的生命周期必须是 `'static`。这意味着生成的任务不能包含对任务外部拥有的数据的任何引用。
 
-> **信息**
+> Info
 > 一个常见的误解是 `'static` 总是意味着"永远存在"，但事实并非如此。仅仅因为一个值是 `'static` 并不意味着您有内存泄漏。您可以在[常见的 Rust 生命周期误解][common-lifetime]中阅读更多内容。
 
 [common-lifetime]: https://github.com/pretzelhammer/rust-blog/blob/master/posts/common-rust-lifetime-misconceptions.md#2-if-t-static-then-t-must-be-valid-for-the-entire-program

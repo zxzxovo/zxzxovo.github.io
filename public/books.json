@@ -165,7 +165,7 @@
               "order": 4,
               "level": 1,
               "hasContent": true,
-              "wordCount": 462
+              "wordCount": 427
             },
             {
               "id": "50-testing",
@@ -188,8 +188,8 @@
       ],
       "stats": {
         "totalChapters": 20,
-        "totalWords": 13637,
-        "lastModified": "2025-08-07"
+        "totalWords": 13602,
+        "lastModified": "2025-09-20"
       }
     }
   ],
@@ -199,5 +199,5 @@
     "externalLinks": 1,
     "totalChapters": 20
   },
-  "generated": "2025-08-07T10:09:23.602Z"
+  "generated": "2025-09-20T18:32:50.210Z"
 }

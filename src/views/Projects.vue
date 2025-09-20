@@ -16,6 +16,12 @@ const somethingFun = [
     description: "Unicode Emoji Chars ( AI generated )",
     tags: ["unicode", "emoji", "tool"],
   },
+  {
+    title: "社保缴纳计算😼",
+    link: "/fun/social-insurance",
+    description: "Social Insurance Count( AI generated )",
+    tags: ["social-insurance", "job", "tool"],
+  },
 ];
 
 // 主要项目

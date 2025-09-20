@@ -9,6 +9,7 @@ import Home  from "@views/Home.vue";
 // 懒加载组件
 const FunIndex = () => import("@views/fun/Index.vue");
 const UnicodeEmoji = () => import("@views/fun/UnicodeEmoji.vue");
+const SocialInsuranceCount = () => import("@views/fun/SocialInsuranceCount.vue")
 const About = () => import("@views/About.vue");
 const Projects = () => import("@views/Projects.vue");
 const Services = () => import("@views/Services.vue");
@@ -135,6 +136,16 @@ const routes: Readonly<RouteRecordRaw[]> = [
         },
         meta: {
           title: "Unicode Emoji 表情符号",
+        },
+      },
+      {
+        path: "social-insurance",
+        name: "SocialInsuracne",
+        components: {
+          fun: SocialInsuranceCount,
+        },
+        meta: {
+          title: "社保缴纳计算",
         },
       },
     ],
