@@ -123,7 +123,6 @@ onMounted(() => {
         <h2
           class="text-2xl font-semibold text-gray-900 dark:text-white mb-6 flex items-center"
         >
-          <span class="mr-2 text-xl">🚀</span>
           主要项目
         </h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -231,7 +230,6 @@ onMounted(() => {
         <h2
           class="text-2xl font-semibold text-gray-900 dark:text-white mb-6 flex items-center"
         >
-          <span class="mr-2 text-xl">✨</span>
           有趣的小项目
         </h2>
         <div
