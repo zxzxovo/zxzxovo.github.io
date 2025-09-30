@@ -157,7 +157,7 @@ struct BArgs {
 }
 
 #[derive(Copy, Clone, ValueEnum)]  
-enum InfoFaArgsMode {
+enum BArgsMode {
 	#[value(help = "aa")]  
 	AA,
 	#[value(help = "aa")]  

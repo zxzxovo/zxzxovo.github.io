@@ -1,6 +1,27 @@
 {
   "posts": [
     {
+      "slug": "菜谱小记",
+      "title": "菜谱小记",
+      "description": "最近的一些简单易做省时美味的小菜。",
+      "date": "2025-10-01",
+      "image": "/posts/菜谱小记/./navigation.jpg",
+      "categories": [
+        "Daily"
+      ],
+      "tags": [
+        "厨房",
+        "菜谱",
+        "做饭",
+        "生活",
+        "美食"
+      ],
+      "draft": false,
+      "wordCount": 5268,
+      "readingTime": 6,
+      "lastModified": "2025-09-30T20:23:21.724Z"
+    },
+    {
       "slug": "Rust标准库的path",
       "title": "Rust标准库中的path",
       "description": "关于Rust标准库中路径处理的跨平台抽象模块 path 以及它的一些细节",
@@ -354,9 +375,9 @@
         "Rust"
       ],
       "draft": false,
-      "wordCount": 6011,
+      "wordCount": 6006,
       "readingTime": 7,
-      "lastModified": "2025-07-11T08:28:36.164Z"
+      "lastModified": "2025-09-21T04:57:05.422Z"
     },
     {
       "slug": "再学一遍Git",
@@ -437,13 +458,13 @@
     }
   ],
   "stats": {
-    "total": 21,
-    "published": 20,
+    "total": 22,
+    "published": 21,
     "draft": 1,
     "categories": [
       {
         "name": "Daily",
-        "count": 13
+        "count": 14
       },
       {
         "name": "Code",
@@ -518,6 +539,26 @@
       {
         "name": "Tools",
         "count": 2
+      },
+      {
+        "name": "厨房",
+        "count": 1
+      },
+      {
+        "name": "菜谱",
+        "count": 1
+      },
+      {
+        "name": "做饭",
+        "count": 1
+      },
+      {
+        "name": "生活",
+        "count": 1
+      },
+      {
+        "name": "美食",
+        "count": 1
       },
       {
         "name": "path",
@@ -615,12 +656,12 @@
     "years": [
       {
         "year": 2025,
-        "count": 21
+        "count": 22
       }
     ],
-    "totalWords": 81732,
+    "totalWords": 86995,
     "averageReadingTime": 5
   },
   "errors": [],
-  "generated": "2025-09-21T02:46:14.834Z"
+  "generated": "2025-09-30T20:24:03.181Z"
 }
