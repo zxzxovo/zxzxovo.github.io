@@ -268,7 +268,6 @@ onMounted(() => {
 
               <a
                 :href="project.link"
-                target="_blank"
                 class="inline-flex items-center gap-2 text-blue-600 dark:text-blue-400 font-medium text-sm transition-all duration-200 hover:text-blue-700 dark:hover:text-blue-300 hover:transform hover:translate-x-1"
               >
                 探索 →
