@@ -5,7 +5,6 @@ import { postsGeneratorPlugin } from './plugins/posts-generator.ts'
 import { booksGeneratorPlugin } from './plugins/books-generator-plugin.ts'
 import { sitemapGenerator } from './plugins/sitemap-generator.ts'
 import { sitemapHtmlGenerator } from './plugins/sitemap-html-generator.ts'
-import { githubPagesSpaPlugin } from './plugins/github-pages-spa.ts'
 import { httpsAssetsPlugin } from './plugins/https-assets.ts'
 import { resolve } from 'path'
 
@@ -33,7 +32,6 @@ export default defineConfig({
       hostname: 'https://hizhixia.site',
       siteName: 'Zhixia的官方网站'
     }),
-    githubPagesSpaPlugin(),
     httpsAssetsPlugin(),
   ],
   css: {
