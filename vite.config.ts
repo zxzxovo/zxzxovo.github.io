@@ -7,6 +7,8 @@ import { sitemapGenerator } from './plugins/sitemap-generator.ts'
 import { sitemapHtmlGenerator } from './plugins/sitemap-html-generator.ts'
 import { httpsAssetsPlugin } from './plugins/https-assets.ts'
 import { resolve } from 'path'
+import { visualizer } from 'rollup-plugin-visualizer'
+import { ViteImageOptimizer } from 'vite-plugin-image-optimizer'
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -33,6 +35,45 @@ export default defineConfig({
       siteName: 'Zhixia的官方网站'
     }),
     httpsAssetsPlugin(),
+    // 📦 图片优化插件 - 自动压缩图片资源
+    ViteImageOptimizer({
+      // PNG 压缩
+      png: {
+        quality: 80,  // 质量 0-100
+      },
+      // JPEG 压缩
+      jpeg: {
+        quality: 80,
+      },
+      // JPG 压缩（同 JPEG）
+      jpg: {
+        quality: 80,
+      },
+      // WebP 转换（可选）
+      webp: {
+        quality: 80,
+      },
+      // SVG 优化
+      svg: {
+        plugins: [
+          {
+            name: 'removeViewBox',
+            active: false,  // 保留 viewBox
+          },
+          {
+            name: 'removeEmptyAttrs',
+            active: true,
+          },
+        ],
+      },
+    }),
+    // Bundle 分析工具 - 仅在分析时启用
+    visualizer({
+      open: false,  // 构建后不自动打开
+      gzipSize: true,
+      brotliSize: true,
+      filename: 'dist/stats.html'
+    })
   ],
   css: {
     postcss: './postcss.config.js'
@@ -43,41 +84,76 @@ export default defineConfig({
   build: {
     // 确保资源使用绝对路径
     assetsDir: 'assets',
-    // 压缩配置
-    minify: 'terser',
-    // Terser 压缩选项
-    terserOptions: {
-      compress: {
-        // 移除生产环境的控制台输出
-        drop_console: true,
-        drop_debugger: true,
-        // 移除无用代码
-        dead_code: true,
-        // 移除无用的变量
-        unused: true,
-      },
-      mangle: {
-        // 混淆变量名以减小文件大小
-        safari10: true,
-      },
-    },
+    
+    // ⚡ 使用 esbuild minify
+    minify: 'esbuild',
+    target: 'es2020',
+    
     // 启用代码分割
     rollupOptions: {
       output: {
-        // 手动分包
-        manualChunks: {
-          'vue-vendor': ['vue', 'vue-router', 'pinia'],
-          'markdown-vendor': ['markdown-it', 'highlight.js', 'katex'],
-          'ui-vendor': ['@iconify/vue'],
-        }
+        // 🎯 精细化手动分包 - Rolldown 兼容模式（使用 manualChunks）
+        // 注意：advancedChunks 在当前版本尚不可用，使用 manualChunks 作为过渡
+        manualChunks: (id) => {
+          // Vue 核心库
+          if (id.includes('node_modules/vue/') || id.includes('node_modules/@vue/')) {
+            return 'vue-core';
+          }
+          if (id.includes('node_modules/vue-router/')) {
+            return 'vue-router';
+          }
+          if (id.includes('node_modules/pinia/')) {
+            return 'pinia';
+          }
+          
+          // ⚡ Markdown 细分：将 1MB 的包拆分成多个小包
+          if (id.includes('node_modules/markdown-it/')) {
+            return 'markdown-parser';
+          }
+          if (id.includes('node_modules/katex/')) {
+            return 'markdown-katex';
+          }
+          if (id.includes('node_modules/highlight.js/')) {
+            return 'markdown-highlight';
+          }
+          if (id.includes('markdown-it-anchor') || id.includes('markdown-it-katex') || id.includes('markdown-it-table')) {
+            return 'markdown-plugins';
+          }
+          
+          // UI 库
+          if (id.includes('node_modules/@iconify/')) {
+            return 'iconify';
+          }
+          
+          // Tailwind CSS 运行时（如果有）
+          if (id.includes('tailwindcss')) {
+            return 'tailwind';
+          }
+          
+          // 其他第三方库
+          if (id.includes('node_modules/')) {
+            return 'vendor';
+          }
+        },
+        
+        // 优化文件命名
+        chunkFileNames: 'assets/js/[name]-[hash].js',
+        entryFileNames: 'assets/js/[name]-[hash].js',
+        assetFileNames: 'assets/[ext]/[name]-[hash].[ext]'
       }
     },
-    // 设置chunk大小警告限制
-    chunkSizeWarningLimit: 1000,
+    
+    // 降低警告阈值，更早发现大文件
+    chunkSizeWarningLimit: 500,
+    
     // 启用 CSS 代码分割
     cssCodeSplit: true,
-    // 启用源码映射（仅开发环境）
+    
+    // 生产环境禁用 sourcemap（减小体积）
     sourcemap: false,
+    
+    // 提高构建性能
+    reportCompressedSize: false,  // 禁用 gzip 大小报告以加快构建
   },
   
   // 别名配置
@@ -113,6 +189,7 @@ export default defineConfig({
   
   // 依赖预构建优化
   optimizeDeps: {
+    // 🆕 Rolldown 原生配置（替代过时的 esbuildOptions）
     include: [
       'vue',
       'vue-router',

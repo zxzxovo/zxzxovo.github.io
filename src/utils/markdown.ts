@@ -1,10 +1,14 @@
-import MarkdownIt from 'markdown-it';
-import anchor from 'markdown-it-anchor';
-// @ts-ignore - markdown-it-katex 缺少类型定义
-import katex from 'markdown-it-katex';
-import hljs from 'highlight.js';
-import 'highlight.js/styles/github-dark.css';
-import 'katex/dist/katex.min.css';
+/**
+ * 🚀 优化版 Markdown 工具
+ * 
+ * 优化策略：
+ * 1. 按需加载 highlight.js 语言包（减少初始包大小）
+ * 2. 异步加载 KaTeX（数学公式不常用）
+ * 3. 缓存已加载的语言
+ * 4. 使用懒加载策略
+ */
+
+import type MarkdownIt from 'markdown-it';
 import { devLog, devError } from './logger';
 
 // 目录项接口
@@ -12,7 +16,7 @@ export interface TableOfContent {
   id: string;
   text: string;
   level: number;
-  sectionNumber: string; // 添加节号，如 "1.", "1.1", "1.1.1" 等
+  sectionNumber: string;
 }
 
 // 缓存接口
@@ -23,11 +27,14 @@ interface MarkdownCache {
   timestamp: number;
 }
 
-// 缓存存储（内存缓存）
-const markdownCache = new Map<string, MarkdownCache>();
-const CACHE_EXPIRY = 1000 * 60 * 10; // 10分钟缓存
+// 已加载的语言包缓存
+const loadedLanguages = new Set<string>();
 
-// 缓存清理函数
+// Markdown 缓存
+const markdownCache = new Map<string, MarkdownCache>();
+const CACHE_EXPIRY = 1000 * 60 * 10; // 10分钟
+
+// 缓存清理
 function cleanupCache() {
   const now = Date.now();
   for (const [key, cache] of markdownCache.entries()) {
@@ -37,34 +44,100 @@ function cleanupCache() {
   }
 }
 
-// 定期清理缓存
 setInterval(cleanupCache, CACHE_EXPIRY);
+
+// 🎯 按需加载 highlight.js 语言包
+async function loadHighlightLanguage(lang: string): Promise<void> {
+  if (loadedLanguages.has(lang)) {
+    return;
+  }
+
+  const languageMap: Record<string, () => Promise<any>> = {
+    // 常用语言
+    'javascript': () => import('highlight.js/lib/languages/javascript'),
+    'typescript': () => import('highlight.js/lib/languages/typescript'),
+    'python': () => import('highlight.js/lib/languages/python'),
+    'java': () => import('highlight.js/lib/languages/java'),
+    'rust': () => import('highlight.js/lib/languages/rust'),
+    'go': () => import('highlight.js/lib/languages/go'),
+    'cpp': () => import('highlight.js/lib/languages/cpp'),
+    'c': () => import('highlight.js/lib/languages/c'),
+    
+    // Web 相关
+    'html': () => import('highlight.js/lib/languages/xml'),
+    'xml': () => import('highlight.js/lib/languages/xml'),
+    'css': () => import('highlight.js/lib/languages/css'),
+    'scss': () => import('highlight.js/lib/languages/scss'),
+    'json': () => import('highlight.js/lib/languages/json'),
+    
+    // Shell 和配置
+    'bash': () => import('highlight.js/lib/languages/bash'),
+    'shell': () => import('highlight.js/lib/languages/shell'),
+    'yaml': () => import('highlight.js/lib/languages/yaml'),
+    'toml': () => import('highlight.js/lib/languages/ini'), // TOML 类似 INI
+    
+    // 其他
+    'sql': () => import('highlight.js/lib/languages/sql'),
+    'markdown': () => import('highlight.js/lib/languages/markdown'),
+    'dockerfile': () => import('highlight.js/lib/languages/dockerfile'),
+  };
+
+  try {
+    if (languageMap[lang]) {
+      const { default: langModule } = await languageMap[lang]();
+      const hljs = (await import('highlight.js/lib/core')).default;
+      hljs.registerLanguage(lang, langModule);
+      loadedLanguages.add(lang);
+      devLog(`已加载语言包: ${lang}`);
+    }
+  } catch (error) {
+    devError(`加载语言包失败: ${lang}`, error);
+  }
+}
+
+// 🎯 按需加载 KaTeX
+let katexLoaded = false;
+let katexPlugin: any = null;
+
+async function loadKatex() {
+  if (katexLoaded) {
+    return katexPlugin;
+  }
+
+  try {
+    // 动态导入 KaTeX 样式和插件
+    await import('katex/dist/katex.min.css');
+    // @ts-ignore - markdown-it-katex 缺少类型定义
+    const katexModule = await import('markdown-it-katex');
+    katexPlugin = katexModule.default;
+    katexLoaded = true;
+    devLog('KaTeX 已加载');
+    return katexPlugin;
+  } catch (error) {
+    devError('KaTeX 加载失败', error);
+    return null;
+  }
+}
 
 // 创建自定义 SnackText 插件
 const snackTextPlugin = (md: MarkdownIt) => {
-  // 创建一个规则来处理 #后直接跟文字的语法
   md.inline.ruler.before('text', 'snack_text', (state, silent) => {
     const start = state.pos;
     const max = state.posMax;
     
-    // 检查是否以 # 开头
     if (state.src.charCodeAt(start) !== 0x23 /* # */) {
       return false;
     }
     
-    // 检查是否在行首（避免与标题冲突）
     if (start > 0) {
       const prevChar = state.src.charCodeAt(start - 1);
-      // 如果前面是换行符，可能是标题，需要更仔细检查
       if (prevChar === 0x0A /* \n */ || prevChar === 0x0D /* \r */) {
-        // 检查是否是标题格式（# 后面跟空格）
         if (start + 1 < max && state.src.charCodeAt(start + 1) === 0x20 /* space */) {
-          return false; // 这是标题，不处理
+          return false;
         }
       }
     }
     
-    // 检查 # 后面是否直接跟着非空格、非换行字符
     if (start + 1 >= max) {
       return false;
     }
@@ -74,25 +147,17 @@ const snackTextPlugin = (md: MarkdownIt) => {
       return false;
     }
     
-    // 寻找结束位置（遇到空格、换行、标点符号或结束）
     let pos = start + 1;
     while (pos < max) {
       const ch = state.src.charCodeAt(pos);
-      if (ch === 0x20 /* space */ || 
-          ch === 0x0A /* \n */ || 
-          ch === 0x0D /* \r */ ||
-          ch === 0x2E /* . */ ||
-          ch === 0x2C /* , */ ||
-          ch === 0x21 /* ! */ ||
-          ch === 0x3F /* ? */ ||
-          ch === 0x3A /* : */ ||
-          ch === 0x3B /* ; */) {
+      if (ch === 0x20 || ch === 0x0A || ch === 0x0D ||
+          ch === 0x2E || ch === 0x2C || ch === 0x21 ||
+          ch === 0x3F || ch === 0x3A || ch === 0x3B) {
         break;
       }
       pos++;
     }
     
-    // 如果没有找到有效的文本
     if (pos === start + 1) {
       return false;
     }
@@ -107,7 +172,6 @@ const snackTextPlugin = (md: MarkdownIt) => {
     return true;
   });
   
-  // 渲染规则
   md.renderer.rules.snack_text = (tokens, idx) => {
     const token = tokens[idx];
     const content = md.utils.escapeHtml(token.content);
@@ -115,9 +179,25 @@ const snackTextPlugin = (md: MarkdownIt) => {
   };
 };
 
-// 创建并配置 Markdown 实例
-function createMarkdownInstance(): MarkdownIt {
-  const md = new MarkdownIt({
+// 🚀 创建优化的 Markdown 实例
+let markdownInstance: MarkdownIt | null = null;
+
+async function createMarkdownInstance(): Promise<MarkdownIt> {
+  // 动态导入核心库
+  const MarkdownItModule = await import('markdown-it');
+  const MarkdownItConstructor = MarkdownItModule.default;
+  
+  const anchorModule = await import('markdown-it-anchor');
+  const anchor = anchorModule.default;
+  
+  // 导入 highlight.js 核心（不含语言包）
+  const hljsModule = await import('highlight.js/lib/core');
+  const hljs = hljsModule.default;
+  
+  // 导入 github-dark 主题样式
+  await import('highlight.js/styles/github-dark.css');
+  
+  const md = new MarkdownItConstructor({
     html: true,
     linkify: true,
     typographer: true,
@@ -136,11 +216,8 @@ function createMarkdownInstance(): MarkdownIt {
       symbol: '',
       placement: 'before'
     }),
-    // 确保标题文本正确显示，不包含锚点标记
     tabIndex: false,
-    // 自定义slugify函数，确保ID生成正确
     slugify: (str: string) => {
-      // 清理标题文本并生成 ID
       const cleanStr = str.replace(/\{#[^}]*\}/g, '').trim();
       return cleanStr.toLowerCase()
         .replace(/[^\w\u4e00-\u9fa5\s-]/g, '')
@@ -149,47 +226,35 @@ function createMarkdownInstance(): MarkdownIt {
         .replace(/^-|-$/g, '');
     }
   })
-  .use(katex, {
-    throwOnError: false,
-    errorColor: '#cc0000',
-    // 启用严格的LaTeX渲染
-    strict: 'warn',
-    // 自定义宏定义
-    macros: {
-      "\\dots": "\\ldots",
-      "\\div": "\\div",
-      "\\times": "\\times",
-      "\\cdot": "\\cdot"
-    },
-    // 信任函数，允许更多功能
-    trust: () => true,
-    // 输出格式
-    output: 'html',
-    // 允许最大长度
-    maxSize: Infinity,
-    // 允许最大展开
-    maxExpand: 1000,
-    // 全局组设置
-    globalGroup: false,
-    // 显示模式设置
-    displayMode: false,
-    // 左对齐
-    fleqn: false
-  })
   .use(snackTextPlugin);
 
   return md;
 }
 
-// 全局 Markdown 实例
-let markdownInstance: MarkdownIt | null = null;
-
-// 获取 Markdown 实例（单例模式）
-export function getMarkdownInstance(): MarkdownIt {
+// 获取 Markdown 实例
+export async function getMarkdownInstance(): Promise<MarkdownIt> {
   if (!markdownInstance) {
-    markdownInstance = createMarkdownInstance();
+    markdownInstance = await createMarkdownInstance();
   }
   return markdownInstance;
+}
+
+// 🎯 检测内容中使用的语言
+function detectLanguages(content: string): string[] {
+  const languageRegex = /```(\w+)/g;
+  const languages = new Set<string>();
+  let match;
+  
+  while ((match = languageRegex.exec(content)) !== null) {
+    languages.add(match[1]);
+  }
+  
+  return Array.from(languages);
+}
+
+// 🎯 检测是否包含数学公式
+function hasKatexContent(content: string): boolean {
+  return content.includes('$$') || content.includes('$');
 }
 
 // 生成目录
@@ -198,8 +263,7 @@ export function generateTableOfContents(htmlContent: string): TableOfContent[] {
   const doc = parser.parseFromString(htmlContent, 'text/html');
   const headings = doc.querySelectorAll('h1, h2, h3, h4, h5, h6');
   
-  // 用于跟踪各级别的编号
-  const sectionNumbers: number[] = [0, 0, 0, 0, 0, 0]; // 支持6级标题
+  const sectionNumbers: number[] = [0, 0, 0, 0, 0, 0];
   
   return Array.from(headings).map((heading) => {
     const level = parseInt(heading.tagName.charAt(1));
@@ -210,19 +274,15 @@ export function generateTableOfContents(htmlContent: string): TableOfContent[] {
       .replace(/--+/g, '-')
       .replace(/^-|-$/g, '');
     
-    // 确保heading有ID
     if (!heading.id) {
       heading.id = id;
     }
     
-    // 生成节号
-    sectionNumbers[level - 1]++; // 当前级别+1
-    // 重置更低级别的编号
+    sectionNumbers[level - 1]++;
     for (let i = level; i < 6; i++) {
       sectionNumbers[i] = 0;
     }
     
-    // 构建节号字符串，如 "1.", "1.1", "1.1.1"
     const sectionNumber = sectionNumbers
       .slice(0, level)
       .filter(num => num > 0)
@@ -232,19 +292,41 @@ export function generateTableOfContents(htmlContent: string): TableOfContent[] {
   });
 }
 
-// 处理 Markdown 内容并添加样式
-export function processMarkdownContent(content: string, options: { removeFirstH1?: boolean } = {}): string {
+// 🚀 优化的 Markdown 渲染函数
+export async function processMarkdownContent(
+  content: string, 
+  options: { removeFirstH1?: boolean } = {}
+): Promise<string> {
   let processedContent = content;
   
   devLog('开始处理Markdown内容，长度:', content.length);
   
-  // 如果需要移除首个 H1 标题
   if (options.removeFirstH1) {
-    // 移除第一个 H1 标题（包括可能的 ID 语法）
     processedContent = processedContent.replace(/^#\s+[^\n]+(\s*\{#[^}]+\})?\s*\n?/m, '');
   }
   
-  const md = getMarkdownInstance();
+  // 🎯 预加载需要的语言包
+  const languages = detectLanguages(processedContent);
+  devLog('检测到的语言:', languages);
+  await Promise.all(languages.map(lang => loadHighlightLanguage(lang)));
+  
+  // 🎯 如果包含数学公式，加载 KaTeX
+  if (hasKatexContent(processedContent)) {
+    const katex = await loadKatex();
+    const md = await getMarkdownInstance();
+    if (katex && !katexLoaded) {
+      md.use(katex, {
+        throwOnError: false,
+        errorColor: '#cc0000',
+        strict: 'warn',
+        trust: () => true,
+        output: 'html',
+      });
+      katexLoaded = true;
+    }
+  }
+  
+  const md = await getMarkdownInstance();
   
   if (!md) {
     devError('无法获取Markdown实例');
@@ -260,7 +342,7 @@ export function processMarkdownContent(content: string, options: { removeFirstH1
       return '<p class="text-gray-600 dark:text-gray-400">内容为空</p>';
     }
     
-    // 为段落、标题等添加Tailwind样式
+    // 添加样式
     const styledHtml = html
       .replace(/<h1([^>]*)>/g, '<h1$1 class="text-3xl font-bold text-gray-900 dark:text-white mt-8 mb-4 pb-2 border-b border-gray-200 dark:border-gray-700 text-center cursor-pointer hover:text-blue-600 dark:hover:text-blue-400 transition-colors" onclick="updateUrlHash(this.id)">')
       .replace(/<h2([^>]*)>/g, '<h2$1 class="text-2xl font-semibold text-gray-900 dark:text-white mt-6 mb-3 pb-2 border-b border-gray-200 dark:border-gray-700 text-center cursor-pointer hover:text-blue-600 dark:hover:text-blue-400 transition-colors" onclick="updateUrlHash(this.id)">')
@@ -290,13 +372,11 @@ export function processMarkdownContent(content: string, options: { removeFirstH1
   }
 }
 
-// 快速标题提取（用于性能优化）
+// 快速标题提取
 export function extractHeadingsFromMarkdown(content: string): TableOfContent[] {
   const lines = content.split('\n');
   const headings: TableOfContent[] = [];
-  
-  // 用于跟踪各级别的编号
-  const sectionNumbers: number[] = [0, 0, 0, 0, 0, 0]; // 支持6级标题
+  const sectionNumbers: number[] = [0, 0, 0, 0, 0, 0];
   
   let inCodeBlock = false;
   
@@ -304,23 +384,15 @@ export function extractHeadingsFromMarkdown(content: string): TableOfContent[] {
     const line = lines[i];
     const trimmedLine = line.trim();
     
-    // 检查是否进入或退出代码块
     if (trimmedLine.startsWith('```') || trimmedLine.startsWith('~~~')) {
       inCodeBlock = !inCodeBlock;
       continue;
     }
     
-    // 如果在代码块内，跳过这一行
-    if (inCodeBlock) {
+    if (inCodeBlock || /^\s{4,}/.test(line)) {
       continue;
     }
     
-    // 检查是否是缩进代码块（4个空格缩进）
-    if (/^\s{4,}/.test(line)) {
-      continue;
-    }
-    
-    // 检查是否是标题
     const headingMatch = trimmedLine.match(/^(#{1,6})\s+(.+)$/);
     if (headingMatch) {
       const level = headingMatch[1].length;
@@ -340,14 +412,11 @@ export function extractHeadingsFromMarkdown(content: string): TableOfContent[] {
         counter++;
       }
       
-      // 生成节号
-      sectionNumbers[level - 1]++; // 当前级别+1
-      // 重置更低级别的编号
+      sectionNumbers[level - 1]++;
       for (let j = level; j < 6; j++) {
         sectionNumbers[j] = 0;
       }
       
-      // 构建节号字符串，如 "1.", "1.1", "1.1.1"
       const sectionNumber = sectionNumbers
         .slice(0, level)
         .filter(num => num > 0)
@@ -360,28 +429,15 @@ export function extractHeadingsFromMarkdown(content: string): TableOfContent[] {
   return headings;
 }
 
-// 为Markdown内容添加标题ID
-export function addHeadingIds(content: string, _headings: TableOfContent[]): string {
-  // 不再添加 {#id} 标记，让 markdown-it-anchor 插件自动处理
-  // 这样可以避免标题显示 {#id} 的问题
-  return content;
-}
-
-// 完整的Markdown渲染函数（包含目录生成）- 添加缓存支持
-export function renderMarkdownWithTOC(content: string): { html: string; toc: TableOfContent[] } {
+// 完整的Markdown渲染函数
+export async function renderMarkdownWithTOC(content: string): Promise<{ html: string; toc: TableOfContent[] }> {
   try {
     devLog('渲染Markdown内容，长度:', content.length);
     
-    // 提取标题
     const headings = extractHeadingsFromMarkdown(content);
     devLog('提取到的标题数量:', headings.length);
     
-    // 添加ID到内容
-    const processedContent = addHeadingIds(content, headings);
-    devLog('处理后的内容长度:', processedContent.length);
-    
-    // 渲染HTML
-    const html = processMarkdownContent(processedContent);
+    const html = await processMarkdownContent(content);
     devLog('渲染的HTML长度:', html.length);
     
     if (!html || html.trim().length === 0) {

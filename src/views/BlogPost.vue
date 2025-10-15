@@ -20,6 +20,7 @@ const allPosts = ref<BlogPost[]>([]);
 const tableOfContents = ref<TableOfContent[]>([]);
 const activeHeadingId = ref<string>(""); // 当前活跃的标题ID
 const scrollY = ref<number>(0); // 滚动位置
+const renderedContent = ref<string>(''); // 渲染后的HTML内容
 
 // 响应式设计状态
 const isLeftSidebarOpen = ref(false);
@@ -88,24 +89,6 @@ let loadingTimeout: ReturnType<typeof setTimeout> | null = null;
 
 // 计算属性
 const postSlug = computed(() => route.params.slug as string);
-
-// 渲染的文章内容
-const renderedContent = computed(() => {
-  if (!currentPost.value?.content) {
-    devLog('没有文章内容可渲染');
-    return '<p class="text-gray-500 dark:text-gray-400">暂无内容</p>';
-  }
-  
-  devLog('开始渲染文章内容:', currentPost.value.title);
-  try {
-    const { html } = renderMarkdownWithTOC(currentPost.value.content);
-    devLog('文章内容渲染完成，HTML长度:', html.length);
-    return html;
-  } catch (error) {
-    devError('渲染文章内容失败:', error);
-    return '<p class="text-red-500">内容渲染失败</p>';
-  }
-});
 
 // 获取标签颜色
 const getTagColor = (tag: string) => {
@@ -325,9 +308,12 @@ const loadPostData = async () => {
 
     console.log("处理后的文章内容长度:", currentPost.value.content.length);
 
-    // 处理Markdown内容并生成目录
-    const { toc } = renderMarkdownWithTOC(currentPost.value.content);
+    // 处理Markdown内容并生成目录和HTML
+    devLog('开始渲染文章内容:', currentPost.value.title);
+    const { html, toc } = await renderMarkdownWithTOC(currentPost.value.content);
+    renderedContent.value = html;
     tableOfContents.value = toc;
+    devLog('文章内容渲染完成，HTML长度:', html.length);
 
     console.log("生成目录项数:", tableOfContents.value.length);
 

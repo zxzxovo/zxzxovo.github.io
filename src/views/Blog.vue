@@ -866,7 +866,7 @@ onActivated(() => {
 
 /* 移动端优化 */
 @media (max-width: 1024px) {
-  .grid.grid-cols-1.lg\\:grid-cols-4 {
+  .grid.grid-cols-1:where(.lg\:grid-cols-4) {
     gap: 1rem;
   }
 }

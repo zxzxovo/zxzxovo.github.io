@@ -38,6 +38,7 @@ const tableOfContents = ref<TableOfContent[]>([]);
 const expandedChapters = ref<Set<string>>(new Set());
 const contentCache = ref<Map<string, string>>(new Map());
 const activeHeadingId = ref<string>(""); // 当前活跃的标题ID
+const renderedContent = ref<string>(""); // 渲染后的HTML内容
 
 // 明暗模式和搜索功能
 const navStore = useNavStore();
@@ -145,23 +146,6 @@ const searchToggled = () => navStore.onSearch();
 const bookId = computed(() => route.params.bookId as string);
 const chapterId = computed(() => route.params.chapterId as string);
 
-// 渲染的 Markdown 内容
-const renderedContent = computed(() => {
-  if (!chapterContent.value) return "";
-
-  try {
-    // 在显示章节内容时，移除首个 H1 标题以避免与章节标题重复
-    const processedContent = processMarkdownContent(chapterContent.value, {
-      removeFirstH1: true,
-    });
-    tableOfContents.value = generateTableOfContents(processedContent);
-    return processedContent;
-  } catch (error) {
-    console.error("Markdown 渲染错误:", error);
-    return '<p class="text-red-500">内容渲染失败</p>';
-  }
-});
-
 // 加载书籍数据
 async function loadBookData() {
   try {
@@ -217,6 +201,16 @@ async function loadChapterContent() {
     const cachedContent = contentCache.value.get(cacheKey)!;
     chapterContent.value = cachedContent;
 
+    // 渲染 Markdown 内容
+    try {
+      const html = await processMarkdownContent(cachedContent, { removeFirstH1: true });
+      renderedContent.value = html;
+      tableOfContents.value = generateTableOfContents(html);
+    } catch (error) {
+      console.error("Markdown 渲染错误:", error);
+      renderedContent.value = '<p class="text-red-500">内容渲染失败</p>';
+    }
+
     // 查找章节信息
     const chapter = findChapterById(
       currentBook.value.chapters || [],
@@ -270,6 +264,16 @@ async function loadChapterContent() {
     const content = await loadChapterFile(bookId.value, chapterId.value);
     chapterContent.value = content;
 
+    // 渲染 Markdown 内容
+    try {
+      const html = await processMarkdownContent(content, { removeFirstH1: true });
+      renderedContent.value = html;
+      tableOfContents.value = generateTableOfContents(html);
+    } catch (error) {
+      console.error("Markdown 渲染错误:", error);
+      renderedContent.value = '<p class="text-red-500">内容渲染失败</p>';
+    }
+
     // 缓存内容
     contentCache.value.set(cacheKey, content);
     
@@ -282,6 +286,7 @@ async function loadChapterContent() {
   } catch (error) {
     loadError.value = error instanceof Error ? error.message : "加载章节失败";
     chapterContent.value = "";
+    renderedContent.value = "";
     currentChapter.value = null;
   } finally {
     isContentLoading.value = false;

@@ -1,0 +1,23 @@
+# Bun 配置文件
+# https://bun.sh/docs/runtime/bunfig
+
+[install]
+# 使用更快的安装策略
+production = false
+dev = true
+optional = true
+peer = true
+
+[install.cache]
+# 缓存配置
+dir = "node_modules/.cache/bun"
+
+[run]
+# 运行时配置
+# 启用 Bun 的原生模块解析
+bun = true
+
+# 环境变量
+[env]
+# 强制使用 Bun 运行时
+FORCE_COLOR = "1"

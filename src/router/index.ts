@@ -6,18 +6,27 @@ import {
 import RootIndex from "@views/Index.vue";
 import Home  from "@views/Home.vue";
 
-// 懒加载组件
-const FunIndex = () => import("@views/fun/Index.vue");
-const UnicodeEmoji = () => import("@views/fun/UnicodeEmoji.vue");
-const SocialInsuranceCount = () => import("@views/fun/SocialInsuranceCount.vue")
-const About = () => import("@views/About.vue");
-const Projects = () => import("@views/Projects.vue");
-const Services = () => import("@views/Services.vue");
-const Book = () => import("@views/Book.vue");
-const BookContent = () => import("@views/BookContent.vue");
-const Blog = () => import("@views/Blog.vue");
-const BlogPost = () => import("@views/BlogPost.vue");
-const NotFound = () => import("@views/NotFound.vue");
+// 🚀 优化懒加载 - 使用精细的 chunk 分组
+// 主要页面 - 单独分包
+const About = () => import(/* webpackChunkName: "page-about" */ "@views/About.vue");
+const Projects = () => import(/* webpackChunkName: "page-projects" */ "@views/Projects.vue");
+const Services = () => import(/* webpackChunkName: "page-services" */ "@views/Services.vue");
+
+// 博客相关 - 组合到一个 chunk（频繁一起使用）
+const Blog = () => import(/* webpackChunkName: "feature-blog" */ "@views/Blog.vue");
+const BlogPost = () => import(/* webpackChunkName: "feature-blog" */ "@views/BlogPost.vue");
+
+// 书籍相关 - 组合到一个 chunk
+const Book = () => import(/* webpackChunkName: "feature-book" */ "@views/Book.vue");
+const BookContent = () => import(/* webpackChunkName: "feature-book" */ "@views/BookContent.vue");
+
+// 趣味功能 - 组合到一个 chunk（低优先级）
+const FunIndex = () => import(/* webpackChunkName: "feature-fun" */ "@views/fun/Index.vue");
+const UnicodeEmoji = () => import(/* webpackChunkName: "feature-fun" */ "@views/fun/UnicodeEmoji.vue");
+const SocialInsuranceCount = () => import(/* webpackChunkName: "feature-fun" */ "@views/fun/SocialInsuranceCount.vue");
+
+// 错误页面 - 独立 chunk
+const NotFound = () => import(/* webpackChunkName: "page-error" */ "@views/NotFound.vue");
 
 const routes: Readonly<RouteRecordRaw[]> = [
   {

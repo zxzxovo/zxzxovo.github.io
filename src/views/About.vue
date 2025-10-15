@@ -3,11 +3,6 @@ import { ref, onMounted, onUnmounted, computed, watch } from "vue";
 import CardView from "@/components/CardView.vue";
 
 // 定义类型
-interface CommitData {
-  date: string;
-  commits: number;
-}
-
 interface GitHubEvent {
   type: string;
   created_at: string;
@@ -95,13 +90,12 @@ const friends = ref([
   },
 ]);
 
-const commitData = ref<CommitData[]>([]);
-const isLoadingCommits = ref(false);
 const isLoadingStats = ref(false);
 const isLoadingGitHubImages = ref(false);
 
 // GitHub用户名
 const githubUsername = "zxzxovo";
+
 
 // 主题状态 - 使用ref以确保响应性
 const currentTheme = ref(document.documentElement.getAttribute("data-theme") || "light");
@@ -224,61 +218,6 @@ const fetchGitHubStats = async () => {
   }
 };
 
-// 获取GitHub提交数据
-const fetchGitHubCommits = async () => {
-  isLoadingCommits.value = true;
-  try {
-    const response = await fetch(
-      `https://api.github.com/users/${githubUsername}/events?per_page=100`,
-    );
-    const events: GitHubEvent[] = await response.json();
-
-    // 过滤推送事件并统计每日提交数
-    const commitsByDate: Record<string, number> = {};
-    const today = new Date();
-
-    // 初始化最近30天的数据
-    for (let i = 29; i >= 0; i--) {
-      const date = new Date(today);
-      date.setDate(date.getDate() - i);
-      const dateStr = date.toISOString().split("T")[0];
-      commitsByDate[dateStr] = 0;
-    }
-
-    // 统计提交数据
-    events.forEach((event: GitHubEvent) => {
-      if (event.type === "PushEvent") {
-        const eventDate = new Date(event.created_at)
-          .toISOString()
-          .split("T")[0];
-        if (commitsByDate.hasOwnProperty(eventDate)) {
-          commitsByDate[eventDate] += event.payload.commits?.length || 0;
-        }
-      }
-    });
-
-    // 转换为数组格式
-    commitData.value = Object.entries(commitsByDate).map(([date, commits]) => ({
-      date,
-      commits,
-    }));
-  } catch (error) {
-    console.error("获取GitHub提交数据失败:", error);
-    // 使用模拟数据作为后备
-    commitData.value = [
-      { date: "2024-01-15", commits: 5 },
-      { date: "2024-01-14", commits: 3 },
-      { date: "2024-01-13", commits: 8 },
-      { date: "2024-01-12", commits: 2 },
-      { date: "2024-01-11", commits: 6 },
-      { date: "2024-01-10", commits: 4 },
-      { date: "2024-01-09", commits: 7 },
-    ];
-  } finally {
-    isLoadingCommits.value = false;
-  }
-};
-
 onMounted(() => {
   // 初始化主题状态
   updateThemeState();
@@ -290,7 +229,6 @@ onMounted(() => {
   }
   
   fetchGitHubStats();
-  fetchGitHubCommits();
   
   // 开始监听主题变化
   const themeObserver = observeThemeChanges();
@@ -472,52 +410,23 @@ onMounted(() => {
           </div>
         </CardView>
 
-        <!-- GitHub提交活动卡片 -->
+        <!-- GitHub提交活动卡片 - GitHub官方贡献图 -->
         <CardView class="md:col-span-2 lg:col-span-4">
           <h3
             class="text-xl font-semibold text-gray-900 dark:text-white mb-4 flex items-center"
           >
             <span class="mr-2">📈</span>
-            最近提交活动 (30天)
-            <span v-if="isLoadingCommits" class="ml-2 text-sm text-gray-500"
-              >加载中...</span
-            >
+            GitHub 贡献活动
           </h3>
-          <div
-            v-if="commitData.length > 0"
-            class="flex items-end space-x-1 h-32 overflow-x-auto"
-          >
-            <div
-              v-for="commit in commitData"
-              :key="commit.date"
-              class="flex-shrink-0 w-2 bg-green-500 dark:bg-green-400 rounded-t opacity-80 hover:opacity-100 transition-opacity duration-200"
-              :style="{
-                height:
-                  Math.max(
-                    (commit.commits /
-                      Math.max(
-                        ...commitData.map((c: CommitData) => c.commits),
-                        1,
-                      )) *
-                      100,
-                    5,
-                  ) + '%',
-              }"
-              :title="`${commit.date}: ${commit.commits} commits`"
-            ></div>
-          </div>
-          <div
-            v-else-if="!isLoadingCommits"
-            class="flex items-center justify-center h-32 text-gray-500 dark:text-gray-400"
-          >
-            暂无提交数据
-          </div>
-          <div
-            v-if="commitData.length > 0"
-            class="flex justify-between text-xs text-gray-500 dark:text-gray-400 mt-2"
-          >
-            <span>30天前</span>
-            <span>今天</span>
+          
+          <!-- 使用 GitHub 官方的贡献图 -->
+          <div class="w-full overflow-hidden rounded-lg">
+            <img 
+              :src="`https://ghchart.rshah.org/${githubUsername}`" 
+              alt="GitHub 贡献图"
+              class="w-full h-auto"
+              loading="lazy"
+            />
           </div>
         </CardView>
 
