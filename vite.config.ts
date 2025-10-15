@@ -57,12 +57,12 @@ export default defineConfig({
       svg: {
         plugins: [
           {
-            name: 'removeViewBox',
-            active: false,  // 保留 viewBox
-          },
-          {
-            name: 'removeEmptyAttrs',
-            active: true,
+            name: 'preset-default',
+            params: {
+              overrides: {
+                removeViewBox: false,  // 保留 viewBox
+              },
+            },
           },
         ],
       },
