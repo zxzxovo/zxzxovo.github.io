@@ -103,7 +103,7 @@ docker run -d -p6831:6831/udp -p6832:6832/udp -p16686:16686 -p14268:14268 jaeger
 # 实现 Otel 规范中定义的类型
 opentelemetry = "0.17.0"
 # tracing crate 和 opentelemetry crate 之间的集成
-tracing-opentelemetry = "0.17.2" 
+tracing-opentelemetry = "0.17.2"
 # 允许你将数据导出到 Jaeger
 opentelemetry-jaeger = "0.16.0"
 ```

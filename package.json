@@ -34,11 +34,11 @@
     "sass-embedded-linux-musl-x64": "^1.93.2",
     "terser": "^5.44.0",
     "vue": "^3.5.22",
-    "vue-router": "^4.6.0"
+    "vue-router": "^4.6.3"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.19",
-    "@types/node": "^24.7.2",
+    "@types/node": "^24.8.0",
     "@vitejs/plugin-vue": "^6.0.1",
     "@vue/tsconfig": "^0.7.0",
     "esbuild": "^0.24.2",

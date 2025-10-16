@@ -4,29 +4,42 @@ import {
   type RouteRecordRaw,
 } from "vue-router";
 import RootIndex from "@views/Index.vue";
-import Home  from "@views/Home.vue";
+import Home from "@views/Home.vue";
 
 // 🚀 优化懒加载 - 使用精细的 chunk 分组
 // 主要页面 - 单独分包
-const About = () => import(/* webpackChunkName: "page-about" */ "@views/About.vue");
-const Projects = () => import(/* webpackChunkName: "page-projects" */ "@views/Projects.vue");
-const Services = () => import(/* webpackChunkName: "page-services" */ "@views/Services.vue");
+const About = () =>
+  import(/* webpackChunkName: "page-about" */ "@views/About.vue");
+const Projects = () =>
+  import(/* webpackChunkName: "page-projects" */ "@views/Projects.vue");
+const Services = () =>
+  import(/* webpackChunkName: "page-services" */ "@views/Services.vue");
 
 // 博客相关 - 组合到一个 chunk（频繁一起使用）
-const Blog = () => import(/* webpackChunkName: "feature-blog" */ "@views/Blog.vue");
-const BlogPost = () => import(/* webpackChunkName: "feature-blog" */ "@views/BlogPost.vue");
+const Blog = () =>
+  import(/* webpackChunkName: "feature-blog" */ "@views/Blog.vue");
+const BlogPost = () =>
+  import(/* webpackChunkName: "feature-blog" */ "@views/BlogPost.vue");
 
 // 书籍相关 - 组合到一个 chunk
-const Book = () => import(/* webpackChunkName: "feature-book" */ "@views/Book.vue");
-const BookContent = () => import(/* webpackChunkName: "feature-book" */ "@views/BookContent.vue");
+const Book = () =>
+  import(/* webpackChunkName: "feature-book" */ "@views/Book.vue");
+const BookContent = () =>
+  import(/* webpackChunkName: "feature-book" */ "@views/BookContent.vue");
 
 // 趣味功能 - 组合到一个 chunk（低优先级）
-const FunIndex = () => import(/* webpackChunkName: "feature-fun" */ "@views/fun/Index.vue");
-const UnicodeEmoji = () => import(/* webpackChunkName: "feature-fun" */ "@views/fun/UnicodeEmoji.vue");
-const SocialInsuranceCount = () => import(/* webpackChunkName: "feature-fun" */ "@views/fun/SocialInsuranceCount.vue");
+const FunIndex = () =>
+  import(/* webpackChunkName: "feature-fun" */ "@views/fun/Index.vue");
+const UnicodeEmoji = () =>
+  import(/* webpackChunkName: "feature-fun" */ "@views/fun/UnicodeEmoji.vue");
+const SocialInsuranceCount = () =>
+  import(
+    /* webpackChunkName: "feature-fun" */ "@views/fun/SocialInsuranceCount.vue"
+  );
 
 // 错误页面 - 独立 chunk
-const NotFound = () => import(/* webpackChunkName: "page-error" */ "@views/NotFound.vue");
+const NotFound = () =>
+  import(/* webpackChunkName: "page-error" */ "@views/NotFound.vue");
 
 const routes: Readonly<RouteRecordRaw[]> = [
   {
@@ -123,7 +136,7 @@ const routes: Readonly<RouteRecordRaw[]> = [
     path: "/book/:bookId/:chapterId?",
     name: "BookContent",
     components: {
-      appcontent: BookContent
+      appcontent: BookContent,
     },
     props: true,
     meta: {

@@ -46,7 +46,9 @@ const defaultInsuranceItems: InsuranceItem[] = [
   { name: "住房公积金", enabled: true, personalRate: 12, companyRate: 12 },
 ];
 
-const insuranceItems = ref<InsuranceItem[]>(JSON.parse(JSON.stringify(defaultInsuranceItems)));
+const insuranceItems = ref<InsuranceItem[]>(
+  JSON.parse(JSON.stringify(defaultInsuranceItems)),
+);
 
 // 个人所得税税率表（2024年标准），允许用户修改
 // 注意：这是年度综合所得税率表，适用于工资薪金、劳务报酬、稿酬、特许权使用费等
@@ -60,11 +62,13 @@ const defaultTaxBrackets: TaxBracket[] = [
   { limit: Infinity, rate: 45, deduction: 181920, name: "超过960,000元" },
 ];
 
-const taxBrackets = ref<TaxBracket[]>(JSON.parse(JSON.stringify(defaultTaxBrackets)));
+const taxBrackets = ref<TaxBracket[]>(
+  JSON.parse(JSON.stringify(defaultTaxBrackets)),
+);
 
 // 检测当前主题
 const isDarkMode = computed(() => {
-  if (typeof document !== 'undefined') {
+  if (typeof document !== "undefined") {
     return document.documentElement.getAttribute("data-theme") === "dark";
   }
   return false;
@@ -72,8 +76,9 @@ const isDarkMode = computed(() => {
 
 // 切换明暗主题
 const toggleTheme = () => {
-  if (typeof document !== 'undefined') {
-    const currentTheme = document.documentElement.getAttribute("data-theme") || "light";
+  if (typeof document !== "undefined") {
+    const currentTheme =
+      document.documentElement.getAttribute("data-theme") || "light";
     const newTheme = currentTheme === "dark" ? "light" : "dark";
     document.documentElement.setAttribute("data-theme", newTheme);
     localStorage.setItem("theme", newTheme);
@@ -82,7 +87,7 @@ const toggleTheme = () => {
 
 // 打开链接
 const openLink = (url: string) => {
-  window.open(url, '_blank');
+  window.open(url, "_blank");
 };
 
 // Tooltip状态管理
@@ -91,20 +96,23 @@ const activeTooltip = ref<string | null>(null);
 // 定义tooltip内容
 const tooltips = {
   socialSecurityBase: {
-    title: '社保基数说明',
-    content: '社保基数是计算社保缴费的基础，通常为当地平均工资的60%-300%之间。各地标准不同，请查看具体政策。',
-    link: 'http://www.gov.cn/fuwu/2024-06/28/content_6954329.htm'
+    title: "社保基数说明",
+    content:
+      "社保基数是计算社保缴费的基础，通常为当地平均工资的60%-300%之间。各地标准不同，请查看具体政策。",
+    link: "http://www.gov.cn/fuwu/2024-06/28/content_6954329.htm",
   },
   insuranceItems: {
-    title: '社保项目说明',
-    content: '包括养老保险、医疗保险、失业保险、工伤保险、生育保险和住房公积金。各项比例根据国家和地方政策确定。',
-    link: 'http://www.gov.cn/zhengce/xxgk/main/202312/content_6920663.htm'
+    title: "社保项目说明",
+    content:
+      "包括养老保险、医疗保险、失业保险、工伤保险、生育保险和住房公积金。各项比例根据国家和地方政策确定。",
+    link: "http://www.gov.cn/zhengce/xxgk/main/202312/content_6920663.htm",
   },
   taxBrackets: {
-    title: '个人所得税说明',
-    content: '采用7级超额累进税率，起征点为5000元/月（60000元/年）。超过起征点的部分按年度综合所得计算，税率从3%到45%。包含工资薪金、劳务报酬、稿酬、特许权使用费等。',
-    link: 'http://www.gov.cn/zhengce/2018-08/31/content_5318023.htm'
-  }
+    title: "个人所得税说明",
+    content:
+      "采用7级超额累进税率，起征点为5000元/月（60000元/年）。超过起征点的部分按年度综合所得计算，税率从3%到45%。包含工资薪金、劳务报酬、稿酬、特许权使用费等。",
+    link: "http://www.gov.cn/zhengce/2018-08/31/content_5318023.htm",
+  },
 };
 
 // 显示tooltip
@@ -129,19 +137,19 @@ const handleTooltipClick = (tooltipKey: string) => {
 // 点击外部区域关闭tooltip
 const handleClickOutside = (event: Event) => {
   const target = event.target as HTMLElement;
-  if (activeTooltip.value && !target.closest('.tooltip-container')) {
+  if (activeTooltip.value && !target.closest(".tooltip-container")) {
     hideTooltip();
   }
 };
 
 // 在组件挂载时添加全局点击监听
 onMounted(() => {
-  document.addEventListener('click', handleClickOutside);
+  document.addEventListener("click", handleClickOutside);
 });
 
 // 在组件卸载时移除监听器
 onUnmounted(() => {
-  document.removeEventListener('click', handleClickOutside);
+  document.removeEventListener("click", handleClickOutside);
 });
 
 // 计算结果
@@ -153,26 +161,33 @@ const results = computed(() => {
   let companyTotal = 0;
 
   // 计算社保基数（在基数范围内）
-  const socialSecurityBase = Math.max(minBase, Math.min(monthlySalary, maxBase));
+  const socialSecurityBase = Math.max(
+    minBase,
+    Math.min(monthlySalary, maxBase),
+  );
 
   const itemCalculations = insuranceItems.value.map((item: InsuranceItem) => {
     if (!item.enabled) {
       return { name: item.name, personal: 0, company: 0 };
     }
-    
+
     const personalRate = item.personalRate || 0;
     const companyRate = item.companyRate || 0;
     const personal = (socialSecurityBase * personalRate) / 100;
     const company = (socialSecurityBase * companyRate) / 100;
-    
+
     // 确保计算结果是有效数字
     const personalAmount = isNaN(personal) ? 0 : personal;
     const companyAmount = isNaN(company) ? 0 : company;
-    
+
     personalTotal += personalAmount;
     companyTotal += companyAmount;
-    
-    return { name: item.name, personal: personalAmount, company: companyAmount };
+
+    return {
+      name: item.name,
+      personal: personalAmount,
+      company: companyAmount,
+    };
   });
 
   // 计算个人所得税
@@ -184,21 +199,22 @@ const results = computed(() => {
     const rate = bracket.rate || 0;
     const deduction = bracket.deduction || 0;
     const limit = bracket.limit || 0;
-    
+
     if (annualTaxableIncome <= limit) {
       tax = (annualTaxableIncome * (rate / 100) - deduction) / 12;
       break;
     }
   }
-  
+
   // 确保税额不为负数且是有效数字
   tax = Math.max(0, isNaN(tax) ? 0 : tax);
 
   // 计算实际到手工资，确保不为负数
   const takeHomePay = Math.max(0, monthlySalary - personalTotal - tax);
-  
+
   // 检测是否存在工资过低的情况
-  const isLowSalaryWarning = monthlySalary > 0 && (monthlySalary - personalTotal - tax) < 0;
+  const isLowSalaryWarning =
+    monthlySalary > 0 && monthlySalary - personalTotal - tax < 0;
 
   return {
     socialSecurityBase: isNaN(socialSecurityBase) ? 0 : socialSecurityBase,
@@ -254,11 +270,15 @@ const resetToDefault = () => {
             viewBox="0 0 20 20"
             fill="currentColor"
           >
-            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
+            <path
+              d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+            />
           </svg>
         </button>
 
-        <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+        <h1
+          class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4"
+        >
           💰 社保及个税计算器
         </h1>
         <p class="text-lg text-gray-600 dark:text-gray-400">
@@ -271,17 +291,25 @@ const resetToDefault = () => {
         <div class="flex flex-col gap-6">
           <!-- 基本信息 -->
           <CardView>
-            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
+            <h3
+              class="text-xl font-semibold text-gray-900 dark:text-white mb-4 flex items-center"
+            >
               <span class="mr-2">📊</span>
               基本信息
             </h3>
             <div class="space-y-4">
               <!-- 工资组成部分 -->
               <div class="space-y-3">
-                <h4 class="text-lg font-medium text-gray-800 dark:text-gray-200 mb-2">工资组成</h4>
+                <h4
+                  class="text-lg font-medium text-gray-800 dark:text-gray-200 mb-2"
+                >
+                  工资组成
+                </h4>
                 <div class="grid grid-cols-2 gap-4">
                   <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                    <label
+                      class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                    >
                       底薪 (元)
                     </label>
                     <input
@@ -292,7 +320,9 @@ const resetToDefault = () => {
                     />
                   </div>
                   <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                    <label
+                      class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                    >
                       提成 (元)
                     </label>
                     <input
@@ -303,7 +333,9 @@ const resetToDefault = () => {
                     />
                   </div>
                   <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                    <label
+                      class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                    >
                       津贴补贴 (元)
                     </label>
                     <input
@@ -314,7 +346,9 @@ const resetToDefault = () => {
                     />
                   </div>
                   <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                    <label
+                      class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                    >
                       奖金 (元)
                     </label>
                     <input
@@ -325,41 +359,70 @@ const resetToDefault = () => {
                     />
                   </div>
                 </div>
-                <div class="text-sm text-gray-500 dark:text-gray-400 bg-green-50 dark:bg-green-900/20 p-3 rounded-lg">
-                  <p>💰 <strong>税前月薪总计：</strong>{{ salary.toFixed(2) }} 元</p>
+                <div
+                  class="text-sm text-gray-500 dark:text-gray-400 bg-green-50 dark:bg-green-900/20 p-3 rounded-lg"
+                >
+                  <p>
+                    💰 <strong>税前月薪总计：</strong>{{ salary.toFixed(2) }} 元
+                  </p>
                 </div>
               </div>
 
               <!-- 社保基数设置 -->
-              <div class="space-y-3 pt-4 border-t border-gray-200 dark:border-zinc-600">
+              <div
+                class="space-y-3 pt-4 border-t border-gray-200 dark:border-zinc-600"
+              >
                 <div class="flex items-center mb-2">
-                  <h4 class="text-lg font-medium text-gray-800 dark:text-gray-200">社保基数设置</h4>
+                  <h4
+                    class="text-lg font-medium text-gray-800 dark:text-gray-200"
+                  >
+                    社保基数设置
+                  </h4>
                   <div class="relative ml-2 tooltip-container">
                     <button
                       @click.stop="showTooltip('socialSecurityBase')"
                       class="text-blue-500 hover:text-blue-700 cursor-pointer transition-colors"
                       title="点击查看详细说明"
                     >
-                      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-4 w-4"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                          clip-rule="evenodd"
+                        />
                       </svg>
                     </button>
-                    
+
                     <!-- Tooltip -->
                     <div
                       v-if="activeTooltip === 'socialSecurityBase'"
                       @click="handleTooltipClick('socialSecurityBase')"
                       class="absolute left-0 top-6 z-50 w-72 p-4 bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-600 rounded-lg shadow-lg cursor-pointer"
                     >
-                      <h5 class="font-semibold text-gray-900 dark:text-white mb-2">{{ tooltips.socialSecurityBase.title }}</h5>
-                      <p class="text-sm text-gray-600 dark:text-gray-300 mb-2">{{ tooltips.socialSecurityBase.content }}</p>
-                      <div class="text-xs text-blue-600 dark:text-blue-400">点击查看详细政策 →</div>
+                      <h5
+                        class="font-semibold text-gray-900 dark:text-white mb-2"
+                      >
+                        {{ tooltips.socialSecurityBase.title }}
+                      </h5>
+                      <p class="text-sm text-gray-600 dark:text-gray-300 mb-2">
+                        {{ tooltips.socialSecurityBase.content }}
+                      </p>
+                      <div class="text-xs text-blue-600 dark:text-blue-400">
+                        点击查看详细政策 →
+                      </div>
                     </div>
                   </div>
                 </div>
                 <div class="grid grid-cols-2 gap-4">
                   <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                    <label
+                      class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                    >
                       社保基数下限 (元)
                     </label>
                     <input
@@ -369,7 +432,9 @@ const resetToDefault = () => {
                     />
                   </div>
                   <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                    <label
+                      class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                    >
                       社保基数上限 (元)
                     </label>
                     <input
@@ -379,9 +444,16 @@ const resetToDefault = () => {
                     />
                   </div>
                 </div>
-                <div class="text-sm text-gray-500 dark:text-gray-400 bg-blue-50 dark:bg-blue-900/20 p-3 rounded-lg">
-                  <p>💡 <strong>当前社保基数：</strong>{{ results.socialSecurityBase.toFixed(2) }} 元</p>
-                  <p class="mt-1">社保基数 = min(max(工资, 基数下限), 基数上限)</p>
+                <div
+                  class="text-sm text-gray-500 dark:text-gray-400 bg-blue-50 dark:bg-blue-900/20 p-3 rounded-lg"
+                >
+                  <p>
+                    💡 <strong>当前社保基数：</strong
+                    >{{ results.socialSecurityBase.toFixed(2) }} 元
+                  </p>
+                  <p class="mt-1">
+                    社保基数 = min(max(工资, 基数下限), 基数上限)
+                  </p>
                 </div>
               </div>
             </div>
@@ -390,7 +462,9 @@ const resetToDefault = () => {
           <!-- 社保项目配置 -->
           <CardView>
             <div class="flex items-center justify-between mb-4">
-              <h3 class="text-xl font-semibold text-gray-900 dark:text-white flex items-center">
+              <h3
+                class="text-xl font-semibold text-gray-900 dark:text-white flex items-center"
+              >
                 <span class="mr-2">🏥</span>
                 社保与公积金项目
                 <div class="relative ml-2 tooltip-container">
@@ -399,20 +473,37 @@ const resetToDefault = () => {
                     class="text-blue-500 hover:text-blue-700 cursor-pointer transition-colors"
                     title="点击查看详细说明"
                   >
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                      <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                        clip-rule="evenodd"
+                      />
                     </svg>
                   </button>
-                  
+
                   <!-- Tooltip -->
                   <div
                     v-if="activeTooltip === 'insuranceItems'"
                     @click="handleTooltipClick('insuranceItems')"
                     class="absolute left-0 top-6 z-50 w-72 p-4 bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-600 rounded-lg shadow-lg cursor-pointer"
                   >
-                    <h5 class="font-semibold text-gray-900 dark:text-white mb-2">{{ tooltips.insuranceItems.title }}</h5>
-                    <p class="text-sm text-gray-600 dark:text-gray-300 mb-2">{{ tooltips.insuranceItems.content }}</p>
-                    <div class="text-xs text-blue-600 dark:text-blue-400">点击查看详细政策 →</div>
+                    <h5
+                      class="font-semibold text-gray-900 dark:text-white mb-2"
+                    >
+                      {{ tooltips.insuranceItems.title }}
+                    </h5>
+                    <p class="text-sm text-gray-600 dark:text-gray-300 mb-2">
+                      {{ tooltips.insuranceItems.content }}
+                    </p>
+                    <div class="text-xs text-blue-600 dark:text-blue-400">
+                      点击查看详细政策 →
+                    </div>
                   </div>
                 </div>
               </h3>
@@ -430,21 +521,28 @@ const resetToDefault = () => {
                 class="p-4 rounded-lg border border-gray-200 dark:border-zinc-600 bg-gray-50 dark:bg-zinc-700/50"
               >
                 <div class="flex items-center justify-between mb-3">
-                  <label :for="'enabled-' + index" class="flex items-center cursor-pointer">
+                  <label
+                    :for="'enabled-' + index"
+                    class="flex items-center cursor-pointer"
+                  >
                     <input
                       :id="'enabled-' + index"
                       type="checkbox"
                       v-model="item.enabled"
                       class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600"
                     />
-                    <span class="ml-3 text-lg font-medium text-gray-900 dark:text-gray-100">
+                    <span
+                      class="ml-3 text-lg font-medium text-gray-900 dark:text-gray-100"
+                    >
                       {{ item.name }}
                     </span>
                   </label>
                 </div>
                 <div v-if="item.enabled" class="grid grid-cols-2 gap-4">
                   <div>
-                    <label class="block text-xs text-gray-600 dark:text-gray-400 mb-1">
+                    <label
+                      class="block text-xs text-gray-600 dark:text-gray-400 mb-1"
+                    >
                       个人缴纳比例 (%)
                     </label>
                     <input
@@ -455,7 +553,9 @@ const resetToDefault = () => {
                     />
                   </div>
                   <div>
-                    <label class="block text-xs text-gray-600 dark:text-gray-400 mb-1">
+                    <label
+                      class="block text-xs text-gray-600 dark:text-gray-400 mb-1"
+                    >
                       公司缴纳比例 (%)
                     </label>
                     <input
@@ -473,7 +573,9 @@ const resetToDefault = () => {
           <!-- 个人所得税税率配置 -->
           <CardView>
             <div class="flex items-center justify-between mb-4">
-              <h3 class="text-xl font-semibold text-gray-900 dark:text-white flex items-center">
+              <h3
+                class="text-xl font-semibold text-gray-900 dark:text-white flex items-center"
+              >
                 <span class="mr-2">📈</span>
                 个人所得税税率表
                 <div class="relative ml-2 tooltip-container">
@@ -482,35 +584,55 @@ const resetToDefault = () => {
                     class="text-blue-500 hover:text-blue-700 cursor-pointer transition-colors"
                     title="点击查看详细说明"
                   >
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                      <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                        clip-rule="evenodd"
+                      />
                     </svg>
                   </button>
-                  
+
                   <!-- Tooltip -->
                   <div
                     v-if="activeTooltip === 'taxBrackets'"
                     @click="handleTooltipClick('taxBrackets')"
                     class="absolute left-0 top-6 z-50 w-72 p-4 bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-600 rounded-lg shadow-lg cursor-pointer"
                   >
-                    <h5 class="font-semibold text-gray-900 dark:text-white mb-2">{{ tooltips.taxBrackets.title }}</h5>
-                    <p class="text-sm text-gray-600 dark:text-gray-300 mb-2">{{ tooltips.taxBrackets.content }}</p>
-                    <div class="text-xs text-blue-600 dark:text-blue-400">点击查看详细政策 →</div>
+                    <h5
+                      class="font-semibold text-gray-900 dark:text-white mb-2"
+                    >
+                      {{ tooltips.taxBrackets.title }}
+                    </h5>
+                    <p class="text-sm text-gray-600 dark:text-gray-300 mb-2">
+                      {{ tooltips.taxBrackets.content }}
+                    </p>
+                    <div class="text-xs text-blue-600 dark:text-blue-400">
+                      点击查看详细政策 →
+                    </div>
                   </div>
                 </div>
               </h3>
             </div>
-            
+
             <!-- 起征点说明 -->
-            <div class="mb-4 p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700 rounded-lg">
+            <div
+              class="mb-4 p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700 rounded-lg"
+            >
               <div class="flex items-center">
                 <span class="text-blue-600 dark:text-blue-400 mr-2">💡</span>
                 <span class="text-sm text-blue-800 dark:text-blue-200">
-                  <strong>起征点：</strong>5,000元/月（60,000元/年）- 超过此金额的部分才需要缴纳个人所得税
+                  <strong>起征点：</strong>5,000元/月（60,000元/年）-
+                  超过此金额的部分才需要缴纳个人所得税
                 </span>
               </div>
             </div>
-            
+
             <div class="space-y-3">
               <div
                 v-for="(bracket, index) in taxBrackets"
@@ -519,15 +641,23 @@ const resetToDefault = () => {
               >
                 <div class="grid grid-cols-3 gap-3">
                   <div>
-                    <label class="block text-xs text-gray-600 dark:text-gray-400 mb-1">
+                    <label
+                      class="block text-xs text-gray-600 dark:text-gray-400 mb-1"
+                    >
                       {{ bracket.name }}
                     </label>
                     <div class="text-sm text-gray-700 dark:text-gray-300">
-                      {{ bracket.limit === Infinity ? '无上限' : `≤${(bracket.limit/10000).toFixed(1)}万` }}
+                      {{
+                        bracket.limit === Infinity
+                          ? "无上限"
+                          : `≤${(bracket.limit / 10000).toFixed(1)}万`
+                      }}
                     </div>
                   </div>
                   <div>
-                    <label class="block text-xs text-gray-600 dark:text-gray-400 mb-1">
+                    <label
+                      class="block text-xs text-gray-600 dark:text-gray-400 mb-1"
+                    >
                       税率 (%)
                     </label>
                     <input
@@ -538,7 +668,9 @@ const resetToDefault = () => {
                     />
                   </div>
                   <div>
-                    <label class="block text-xs text-gray-600 dark:text-gray-400 mb-1">
+                    <label
+                      class="block text-xs text-gray-600 dark:text-gray-400 mb-1"
+                    >
                       速算扣除数
                     </label>
                     <input
@@ -556,31 +688,47 @@ const resetToDefault = () => {
         <!-- 右侧结果展示 -->
         <div class="flex flex-col gap-6">
           <CardView>
-            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
+            <h3
+              class="text-xl font-semibold text-gray-900 dark:text-white mb-4 flex items-center"
+            >
               <span class="mr-2">📋</span>
               计算结果
             </h3>
             <div class="space-y-4">
               <!-- 个人部分 -->
-              <div class="p-4 border rounded-lg border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-900/20">
-                <h4 class="font-semibold text-lg mb-3 text-red-800 dark:text-red-300 flex items-center">
+              <div
+                class="p-4 border rounded-lg border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-900/20"
+              >
+                <h4
+                  class="font-semibold text-lg mb-3 text-red-800 dark:text-red-300 flex items-center"
+                >
                   <span class="mr-2">👤</span>
                   个人缴纳部分
                 </h4>
                 <div class="space-y-2">
                   <div
-                    v-for="item in results.itemCalculations.filter((i: any) => i.personal > 0)"
+                    v-for="item in results.itemCalculations.filter(
+                      (i: any) => i.personal > 0,
+                    )"
                     :key="item.name"
                     class="flex justify-between text-sm"
                   >
-                    <span class="text-gray-700 dark:text-gray-300">{{ item.name }}</span>
+                    <span class="text-gray-700 dark:text-gray-300">{{
+                      item.name
+                    }}</span>
                     <span class="font-mono text-red-600 dark:text-red-400">
                       -{{ item.personal.toFixed(2) }} 元
                     </span>
                   </div>
-                  <div class="flex justify-between text-base pt-2 border-t border-red-300 dark:border-red-700">
-                    <span class="font-bold text-red-700 dark:text-red-300">个人缴纳小计</span>
-                    <span class="font-bold font-mono text-red-600 dark:text-red-400">
+                  <div
+                    class="flex justify-between text-base pt-2 border-t border-red-300 dark:border-red-700"
+                  >
+                    <span class="font-bold text-red-700 dark:text-red-300"
+                      >个人缴纳小计</span
+                    >
+                    <span
+                      class="font-bold font-mono text-red-600 dark:text-red-400"
+                    >
                       -{{ results.personalTotal.toFixed(2) }} 元
                     </span>
                   </div>
@@ -588,25 +736,39 @@ const resetToDefault = () => {
               </div>
 
               <!-- 公司部分 -->
-              <div class="p-4 border rounded-lg border-blue-200 dark:border-blue-800 bg-blue-50 dark:bg-blue-900/20">
-                <h4 class="font-semibold text-lg mb-3 text-blue-800 dark:text-blue-300 flex items-center">
+              <div
+                class="p-4 border rounded-lg border-blue-200 dark:border-blue-800 bg-blue-50 dark:bg-blue-900/20"
+              >
+                <h4
+                  class="font-semibold text-lg mb-3 text-blue-800 dark:text-blue-300 flex items-center"
+                >
                   <span class="mr-2">🏢</span>
                   公司缴纳部分
                 </h4>
                 <div class="space-y-2">
                   <div
-                    v-for="item in results.itemCalculations.filter((i: any) => i.company > 0)"
+                    v-for="item in results.itemCalculations.filter(
+                      (i: any) => i.company > 0,
+                    )"
                     :key="item.name"
                     class="flex justify-between text-sm"
                   >
-                    <span class="text-gray-700 dark:text-gray-300">{{ item.name }}</span>
+                    <span class="text-gray-700 dark:text-gray-300">{{
+                      item.name
+                    }}</span>
                     <span class="font-mono text-blue-600 dark:text-blue-400">
                       +{{ item.company.toFixed(2) }} 元
                     </span>
                   </div>
-                  <div class="flex justify-between text-base pt-2 border-t border-blue-300 dark:border-blue-700">
-                    <span class="font-bold text-blue-700 dark:text-blue-300">公司缴纳小计</span>
-                    <span class="font-bold font-mono text-blue-600 dark:text-blue-400">
+                  <div
+                    class="flex justify-between text-base pt-2 border-t border-blue-300 dark:border-blue-700"
+                  >
+                    <span class="font-bold text-blue-700 dark:text-blue-300"
+                      >公司缴纳小计</span
+                    >
+                    <span
+                      class="font-bold font-mono text-blue-600 dark:text-blue-400"
+                    >
                       {{ results.companyTotal.toFixed(2) }} 元
                     </span>
                   </div>
@@ -614,8 +776,12 @@ const resetToDefault = () => {
               </div>
 
               <!-- 税务和最终结果 -->
-              <div class="p-4 border rounded-lg border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-900/20">
-                <h4 class="font-semibold text-lg mb-3 text-green-800 dark:text-green-300 flex items-center">
+              <div
+                class="p-4 border rounded-lg border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-900/20"
+              >
+                <h4
+                  class="font-semibold text-lg mb-3 text-green-800 dark:text-green-300 flex items-center"
+                >
                   <span class="mr-2">💸</span>
                   税务与实发
                   <div class="relative ml-2 tooltip-container">
@@ -624,43 +790,72 @@ const resetToDefault = () => {
                       class="text-green-600 hover:text-green-800 cursor-pointer transition-colors"
                       title="点击查看详细说明"
                     >
-                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-5 w-5"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                          clip-rule="evenodd"
+                        />
                       </svg>
                     </button>
-                    
+
                     <!-- Tooltip -->
                     <div
                       v-if="activeTooltip === 'taxBrackets'"
                       @click="handleTooltipClick('taxBrackets')"
                       class="absolute left-0 top-6 z-50 w-72 p-4 bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-600 rounded-lg shadow-lg cursor-pointer"
                     >
-                      <h5 class="font-semibold text-gray-900 dark:text-white mb-2">{{ tooltips.taxBrackets.title }}</h5>
-                      <p class="text-sm text-gray-600 dark:text-gray-300 mb-2">{{ tooltips.taxBrackets.content }}</p>
-                      <div class="text-xs text-blue-600 dark:text-blue-400">点击查看详细政策 →</div>
+                      <h5
+                        class="font-semibold text-gray-900 dark:text-white mb-2"
+                      >
+                        {{ tooltips.taxBrackets.title }}
+                      </h5>
+                      <p class="text-sm text-gray-600 dark:text-gray-300 mb-2">
+                        {{ tooltips.taxBrackets.content }}
+                      </p>
+                      <div class="text-xs text-blue-600 dark:text-blue-400">
+                        点击查看详细政策 →
+                      </div>
                     </div>
                   </div>
                 </h4>
                 <div class="space-y-3">
                   <div class="flex justify-between text-sm">
-                    <span class="text-gray-700 dark:text-gray-300">个人所得税</span>
+                    <span class="text-gray-700 dark:text-gray-300"
+                      >个人所得税</span
+                    >
                     <span class="font-mono text-red-500 dark:text-red-400">
                       -{{ results.tax.toFixed(2) }} 元
                     </span>
                   </div>
-                  <div class="flex justify-between text-xl font-bold pt-3 border-t border-green-300 dark:border-green-700">
-                    <span class="text-green-800 dark:text-green-200">实发工资</span>
+                  <div
+                    class="flex justify-between text-xl font-bold pt-3 border-t border-green-300 dark:border-green-700"
+                  >
+                    <span class="text-green-800 dark:text-green-200"
+                      >实发工资</span
+                    >
                     <span class="font-mono text-green-600 dark:text-green-400">
                       {{ results.takeHomePay.toFixed(2) }} 元
                     </span>
                   </div>
-                  
+
                   <!-- 工资过低警告 -->
-                  <div v-if="results.isLowSalaryWarning" class="mt-3 p-3 bg-yellow-100 dark:bg-yellow-900/30 border border-yellow-300 dark:border-yellow-700 rounded-lg">
+                  <div
+                    v-if="results.isLowSalaryWarning"
+                    class="mt-3 p-3 bg-yellow-100 dark:bg-yellow-900/30 border border-yellow-300 dark:border-yellow-700 rounded-lg"
+                  >
                     <div class="flex items-start">
-                      <span class="text-yellow-600 dark:text-yellow-400 mr-2">⚠️</span>
+                      <span class="text-yellow-600 dark:text-yellow-400 mr-2"
+                        >⚠️</span
+                      >
                       <div class="text-sm text-yellow-800 dark:text-yellow-200">
-                        <strong>工资过低提醒：</strong>当前工资低于社保缴费基数下限，实际应缴纳的社保费用可能超过工资收入。
+                        <strong>工资过低提醒：</strong
+                        >当前工资低于社保缴费基数下限，实际应缴纳的社保费用可能超过工资收入。
                         在实际情况下，通常会按实际工资缴纳社保，而不是按最低基数缴纳。
                       </div>
                     </div>
@@ -672,7 +867,9 @@ const resetToDefault = () => {
 
           <!-- 计算说明 -->
           <CardView>
-            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
+            <h3
+              class="text-xl font-semibold text-gray-900 dark:text-white mb-4 flex items-center"
+            >
               <span class="mr-2">📝</span>
               计算说明
             </h3>
@@ -680,9 +877,17 @@ const resetToDefault = () => {
               <p>• <strong>社保基数：</strong>取工资在基数上下限范围内的值</p>
               <p>• <strong>个人缴纳：</strong>社保基数 × 各项个人缴纳比例</p>
               <p>• <strong>公司缴纳：</strong>社保基数 × 各项公司缴纳比例</p>
-              <p>• <strong>应纳税所得额：</strong>税前工资 - 个人缴纳 - 5000元(基本减除费用/起征点)</p>
-              <p>• <strong>个人所得税：</strong>按照7级超额累进税率计算年度综合所得</p>
-              <p>• <strong>实发工资：</strong>税前工资 - 个人缴纳 - 个人所得税</p>
+              <p>
+                • <strong>应纳税所得额：</strong>税前工资 - 个人缴纳 -
+                5000元(基本减除费用/起征点)
+              </p>
+              <p>
+                •
+                <strong>个人所得税：</strong>按照7级超额累进税率计算年度综合所得
+              </p>
+              <p>
+                • <strong>实发工资：</strong>税前工资 - 个人缴纳 - 个人所得税
+              </p>
             </div>
           </CardView>
         </div>

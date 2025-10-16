@@ -16,7 +16,7 @@ const {
   data: postsData,
   isLoading,
   error: loadError,
-  execute: loadPosts
+  execute: loadPosts,
 } = useAsyncState<PostsData>();
 
 // 计算属性：所有文章
@@ -273,8 +273,8 @@ onActivated(() => {
       <LoadingState v-if="isLoading" text="正在加载文章..." />
 
       <!-- 错误状态 -->
-      <ErrorBoundary 
-        v-else-if="loadError" 
+      <ErrorBoundary
+        v-else-if="loadError"
         :error="loadError"
         @retry="loadPostsData"
       />

@@ -4,67 +4,38 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/ico" href="/zx.svg " />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <!-- 基础SEO Meta标签 -->
-    <title>Zhixia的官方网站</title>
+    <title>芷夏的官方网站</title>
     <meta
       name="description"
-      content="欢迎来到Zhixia的个人网站，这里分享技术文章、开源项目、编程经验和生活感悟。涵盖Vue、Rust、前端开发、软件工程等技术内容。"
+      content="欢迎来到芷夏的个人网站，这里分享技术文章、开源项目、编程经验和生活感悟。涵盖Vue、Rust、前端开发、软件工程等技术内容。"
     />
     <meta
       name="keywords"
-      content="Zhixia,个人博客,技术博客,Vue,Rust,编程,前端开发,软件工程,开源项目"
+      content="芷夏,个人博客,技术博客,Vue,Rust,编程,前端开发,软件工程,开源项目"
     />
-    <meta name="author" content="Zhixia" />
+    <meta name="author" content="芷夏" />
     <meta name="robots" content="index,follow" />
-
-    <!-- Open Graph Meta标签 -->
-    <meta property="og:title" content="Zhixia的官方网站 - 技术博客与项目展示" />
+    <meta property="og:title" content="芷夏的官方网站 - 技术博客与项目展示" />
     <meta
       property="og:description"
-      content="欢迎来到Zhixia的个人网站，这里分享技术文章、开源项目、编程经验和生活感悟。"
+      content="欢迎来到芷夏的个人网站，这里分享技术文章、开源项目、编程经验和生活感悟。"
     />
     <meta property="og:image" content="https://hizhixia.site/zx.svg" />
     <meta property="og:url" content="https://hizhixia.site" />
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Zhixia的官方网站" />
-
-    <!-- Twitter Card Meta标签 -->
+    <meta property="og:site_name" content="芷夏的官方网站" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta
       name="twitter:title"
-      content="Zhixia的官方网站 - 技术博客与项目展示"
+      content="芷夏的官方网站 - 技术博客与项目展示"
     />
     <meta
       name="twitter:description"
-      content="欢迎来到Zhixia的个人网站，这里分享技术文章、开源项目、编程经验和生活感悟。"
+      content="欢迎来到芷夏的个人网站，这里分享技术文章、开源项目、编程经验和生活感悟。"
     />
     <meta name="twitter:image" content="https://hizhixia.site/zx.svg" />
-
-    <!-- 规范链接 -->
     <link rel="canonical" href="https://hizhixia.site" />
-
-    <!-- Google AdSense -->
-    <script
-      async
-      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7819682643742139"
-      crossorigin="anonymous"
-    ></script>
   </head>
-  <!-- Google tag (gtag.js) 使用 Cloudflare 标签-->
-
-  <!-- GitHub Pages SPA 重定向处理 -->
-  <script>
-    // 处理从404.html重定向过来的路径
-    (function () {
-      var redirect = sessionStorage.getItem("redirect");
-      if (redirect && redirect !== location.pathname) {
-        sessionStorage.removeItem("redirect");
-        history.replaceState(null, null, redirect);
-      }
-    })();
-  </script>
-
   <body>
     <div id="app"></div>
     <script type="module" src="/src/main.ts"></script>

@@ -5,6 +5,7 @@
 
     /* 路径别名配置 */
     "baseUrl": ".",
+    "ignoreDeprecations": "6.0",
     "paths": {
       "@/*": ["src/*"],
       "@components/*": ["src/components/*"],

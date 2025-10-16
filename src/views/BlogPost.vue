@@ -20,7 +20,7 @@ const allPosts = ref<BlogPost[]>([]);
 const tableOfContents = ref<TableOfContent[]>([]);
 const activeHeadingId = ref<string>(""); // 当前活跃的标题ID
 const scrollY = ref<number>(0); // 滚动位置
-const renderedContent = ref<string>(''); // 渲染后的HTML内容
+const renderedContent = ref<string>(""); // 渲染后的HTML内容
 
 // 响应式设计状态
 const isLeftSidebarOpen = ref(false);
@@ -32,7 +32,7 @@ function setTheme(theme: string | null) {
   const finalTheme = theme || "light"; // 默认为 light 主题
   localStorage.setItem("darkTheme", finalTheme);
   document.documentElement.setAttribute("data-theme", finalTheme);
-  
+
   // 同时设置 class 以确保 Tailwind 暗色模式生效
   if (finalTheme === "dark") {
     document.documentElement.classList.add("dark");
@@ -42,9 +42,9 @@ function setTheme(theme: string | null) {
 }
 
 const changeDayLight = () => {
-  const now = document.documentElement.getAttribute('data-theme')
+  const now = document.documentElement.getAttribute("data-theme");
   setTheme(now === "dark" ? "light" : "dark");
-  
+
   // 主题切换后重新加载评论以应用新主题
   if (currentPost.value) {
     setTimeout(() => {
@@ -56,7 +56,7 @@ const changeDayLight = () => {
 // 检测屏幕尺寸
 function checkScreenSize() {
   isMobile.value = window.innerWidth < 1024; // lg 断点
-  
+
   // 在大屏幕上默认显示侧边栏，小屏幕上默认隐藏
   if (!isMobile.value) {
     isLeftSidebarOpen.value = true;
@@ -113,31 +113,32 @@ const getTagColor = (tag: string) => {
 // Giscus 评论系统
 function loadGiscus() {
   // 清除现有的评论
-  const container = document.getElementById('giscus-container');
+  const container = document.getElementById("giscus-container");
   if (container) {
-    container.innerHTML = '';
+    container.innerHTML = "";
   }
 
   // 获取当前主题
-  const currentTheme = document.documentElement.getAttribute("data-theme") || "light";
+  const currentTheme =
+    document.documentElement.getAttribute("data-theme") || "light";
   const giscusTheme = currentTheme === "dark" ? "dark" : "light";
 
   // 创建 script 标签
-  const script = document.createElement('script');
-  script.src = 'https://giscus.app/client.js';
-  script.setAttribute('data-repo', 'zxzxovo/zxzxovo.github.io');
-  script.setAttribute('data-repo-id', 'R_kgDONxTewg');
-  script.setAttribute('data-category', 'Announcements');
-  script.setAttribute('data-category-id', 'DIC_kwDONxTews4CmeWX');
-  script.setAttribute('data-mapping', 'pathname');
-  script.setAttribute('data-strict', '0');
-  script.setAttribute('data-reactions-enabled', '1');
-  script.setAttribute('data-emit-metadata', '0');
-  script.setAttribute('data-input-position', 'top');
-  script.setAttribute('data-theme', giscusTheme);
-  script.setAttribute('data-lang', 'zh-CN');
-  script.setAttribute('data-loading', 'lazy');
-  script.setAttribute('crossorigin', 'anonymous');
+  const script = document.createElement("script");
+  script.src = "https://giscus.app/client.js";
+  script.setAttribute("data-repo", "zxzxovo/zxzxovo.github.io");
+  script.setAttribute("data-repo-id", "R_kgDONxTewg");
+  script.setAttribute("data-category", "Announcements");
+  script.setAttribute("data-category-id", "DIC_kwDONxTews4CmeWX");
+  script.setAttribute("data-mapping", "pathname");
+  script.setAttribute("data-strict", "0");
+  script.setAttribute("data-reactions-enabled", "1");
+  script.setAttribute("data-emit-metadata", "0");
+  script.setAttribute("data-input-position", "top");
+  script.setAttribute("data-theme", giscusTheme);
+  script.setAttribute("data-lang", "zh-CN");
+  script.setAttribute("data-loading", "lazy");
+  script.setAttribute("crossorigin", "anonymous");
   script.async = true;
 
   // 将 script 添加到容器中
@@ -301,7 +302,7 @@ const loadPostData = async () => {
         content: contentText || post.description,
       };
     }
-    
+
     if (!currentPost.value?.content) {
       throw new Error("文章内容为空");
     }
@@ -309,11 +310,13 @@ const loadPostData = async () => {
     console.log("处理后的文章内容长度:", currentPost.value.content.length);
 
     // 处理Markdown内容并生成目录和HTML
-    devLog('开始渲染文章内容:', currentPost.value.title);
-    const { html, toc } = await renderMarkdownWithTOC(currentPost.value.content);
+    devLog("开始渲染文章内容:", currentPost.value.title);
+    const { html, toc } = await renderMarkdownWithTOC(
+      currentPost.value.content,
+    );
     renderedContent.value = html;
     tableOfContents.value = toc;
-    devLog('文章内容渲染完成，HTML长度:', html.length);
+    devLog("文章内容渲染完成，HTML长度:", html.length);
 
     console.log("生成目录项数:", tableOfContents.value.length);
 
@@ -325,7 +328,7 @@ const loadPostData = async () => {
       lastModified: currentPost.value.lastModified,
       tags: currentPost.value.tags,
       slug: currentPost.value.slug,
-      image: currentPost.value.image
+      image: currentPost.value.image,
     });
 
     // 找到相关文章
@@ -493,7 +496,7 @@ watch(currentPost, (newPost) => {
       }, 500);
     });
   }
-  
+
   // 文章内容加载完成后，初始化评论
   if (newPost) {
     nextTick(() => {
@@ -507,11 +510,11 @@ watch(currentPost, (newPost) => {
 onMounted(() => {
   // 初始化响应式设计
   checkScreenSize();
-  window.addEventListener('resize', checkScreenSize);
-  
+  window.addEventListener("resize", checkScreenSize);
+
   // 初始化主题
   setTheme(localStorage.getItem("darkTheme"));
-  
+
   loadPostData();
 
   // 添加全局的 updateUrlHash 函数
@@ -557,7 +560,7 @@ watch(
 // 组件卸载时移除监听器
 onUnmounted(() => {
   removeScrollListener();
-  window.removeEventListener('resize', checkScreenSize);
+  window.removeEventListener("resize", checkScreenSize);
   if (scrollTimeout) {
     clearTimeout(scrollTimeout);
   }
@@ -569,7 +572,9 @@ onUnmounted(() => {
 <template>
   <div class="flex-1 flex flex-col">
     <!-- 移动端顶部控制栏 -->
-    <div class="lg:hidden fixed top-0 left-0 right-0 z-50 bg-white dark:bg-zinc-900 border-b border-gray-200 dark:border-zinc-700 px-4 py-3">
+    <div
+      class="lg:hidden fixed top-0 left-0 right-0 z-50 bg-white dark:bg-zinc-900 border-b border-gray-200 dark:border-zinc-700 px-4 py-3"
+    >
       <div class="flex items-center justify-between">
         <button
           @click="goBack"
@@ -577,7 +582,7 @@ onUnmounted(() => {
         >
           ← 返回博客
         </button>
-        
+
         <div class="flex items-center gap-0">
           <!-- 明暗切换按钮 -->
           <button
@@ -587,7 +592,7 @@ onUnmounted(() => {
           >
             <Icon icon="noto:waxing-gibbous-moon" width="20" height="20" />
           </button>
-          
+
           <!-- 左侧边栏切换按钮 -->
           <button
             @click="toggleLeftSidebar"
@@ -601,29 +606,28 @@ onUnmounted(() => {
               height="20"
             />
           </button>
-          
+
           <!-- 右侧边栏切换按钮（仅在有目录时显示） -->
           <button
             v-if="tableOfContents.length > 0"
             @click="toggleRightSidebar"
             class="hover:bg-zinc-200 dark:hover:bg-zinc-800 size-12 flex justify-center items-center rounded-full cursor-pointer transition-all"
-            :class="{ 
+            :class="{
               'bg-zinc-200 dark:bg-zinc-800': isRightSidebarOpen,
-              'rotate-90': isRightSidebarOpen 
+              'rotate-90': isRightSidebarOpen,
             }"
             title="文章目录"
           >
-            <Icon
-              icon="marketeq:menu"
-              width="20"
-              height="20"
-            />
+            <Icon icon="marketeq:menu" width="20" height="20" />
           </button>
         </div>
       </div>
     </div>
     <!-- 加载状态 -->
-    <div v-if="isLoading" class="flex items-center justify-center h-96 pt-20 lg:pt-0">
+    <div
+      v-if="isLoading"
+      class="flex items-center justify-center h-96 pt-20 lg:pt-0"
+    >
       <div class="text-center">
         <div
           class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 dark:border-blue-400 mb-4"
@@ -633,7 +637,10 @@ onUnmounted(() => {
     </div>
 
     <!-- 错误状态 -->
-    <div v-else-if="loadError" class="flex items-center justify-center h-96 pt-20 lg:pt-0">
+    <div
+      v-else-if="loadError"
+      class="flex items-center justify-center h-96 pt-20 lg:pt-0"
+    >
       <CardView class="max-w-md mx-4">
         <div class="text-center p-6">
           <div class="text-red-500 dark:text-red-400 text-xl mb-2">❌</div>
@@ -671,7 +678,7 @@ onUnmounted(() => {
         class="fixed inset-0 backdrop-blur-xs backdrop-brightness-60 z-20 lg:hidden"
         :style="{ top: '61px' }"
       ></div>
-      
+
       <div
         class="max-w-none mx-auto grid grid-cols-1 gap-3 lg:gap-4 relative"
         :class="
@@ -680,203 +687,208 @@ onUnmounted(() => {
       >
         <!-- 左侧栏：返回按钮、文章信息、相关文章 -->
         <Transition name="sidebar-left">
-          <aside 
+          <aside
             v-if="isLeftSidebarOpen"
             class="lg:col-span-2 order-1 lg:order-1 z-30"
             :class="{
-              'fixed left-0 h-full w-4/5 max-w-sm bg-white dark:bg-zinc-900 p-4 lg:relative lg:top-auto lg:w-auto lg:p-0 lg:bg-transparent dark:lg:bg-transparent': isMobile,
-              'relative': !isMobile
+              'fixed left-0 h-full w-4/5 max-w-sm bg-white dark:bg-zinc-900 p-4 lg:relative lg:top-auto lg:w-auto lg:p-0 lg:bg-transparent dark:lg:bg-transparent':
+                isMobile,
+              relative: !isMobile,
             }"
-            :style="isMobile ? { top: '61px', height: 'calc(100vh - 61px)' } : {}"
+            :style="
+              isMobile ? { top: '61px', height: 'calc(100vh - 61px)' } : {}
+            "
           >
-          <div class="sticky top-6 h-[calc(100vh-5rem)] flex flex-col" :class="{ 'h-full': isMobile }">
-            <!-- 返回按钮 - 只在桌面端显示 -->
-            <CardView v-if="!isMobile" class="p-3 flex-shrink-0 mb-4">
-              <button
-                @click="goBack"
-                class="w-full inline-flex items-center justify-center px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors shadow-sm text-sm"
-              >
-                <svg
-                  class="w-4 h-4 mr-1.5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
+            <div
+              class="sticky top-6 h-[calc(100vh-5rem)] flex flex-col"
+              :class="{ 'h-full': isMobile }"
+            >
+              <!-- 返回按钮 - 只在桌面端显示 -->
+              <CardView v-if="!isMobile" class="p-3 flex-shrink-0 mb-4">
+                <button
+                  @click="goBack"
+                  class="w-full inline-flex items-center justify-center px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors shadow-sm text-sm"
                 >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M15 19l-7-7 7-7"
-                  />
-                </svg>
-                返回
-              </button>
-            </CardView>
-
-            <!-- 可滚动内容区域 -->
-            <div class="flex-1 overflow-y-auto space-y-4 min-h-0 pb-2 sidebar-scroll">
-              <!-- 文章信息 - 移动端和桌面端都显示 -->
-              <CardView class="p-3" data-article-info>
-                <h3
-                  class="text-sm font-semibold text-gray-900 dark:text-white mb-3 text-center"
-                >
-                  文章信息
-                </h3>
-
-                <!-- 发布日期 -->
-                <div class="mb-3 flex justify-center">
-                  <div
-                    class="flex items-center text-xs text-gray-600 dark:text-gray-400"
+                  <svg
+                    class="w-4 h-4 mr-1.5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
                   >
-                    <svg
-                      class="w-3 h-3 mr-1.5"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                      />
-                    </svg>
-                    {{ formatDate(currentPost.date) }}
-                  </div>
-                </div>
-
-                <!-- 分类 -->
-                <div
-                  v-if="currentPost.categories.length > 0"
-                  class="mb-3 text-center"
-                >
-                  <h4
-                    class="text-xs font-medium text-gray-900 dark:text-white mb-2"
-                  >
-                    分类
-                  </h4>
-                  <div class="flex flex-wrap gap-1 justify-center">
-                    <span
-                      v-for="category in currentPost.categories"
-                      :key="category"
-                      class="px-1.5 py-0.5 text-xs bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded"
-                    >
-                      {{ category }}
-                    </span>
-                  </div>
-                </div>
-
-                <!-- 标签 -->
-                <div
-                  v-if="currentPost.tags.length > 0"
-                  class="mb-3 text-center"
-                >
-                  <h4
-                    class="text-xs font-medium text-gray-900 dark:text-white mb-2"
-                  >
-                    标签
-                  </h4>
-                  <div class="flex flex-wrap gap-1 justify-center">
-                    <span
-                      v-for="tag in currentPost.tags.slice(0, 3)"
-                      :key="tag"
-                      class="px-1.5 py-0.5 text-xs rounded text-white"
-                      :style="{ backgroundColor: getTagColor(tag) }"
-                    >
-                      {{ tag }}
-                    </span>
-                    <span
-                      v-if="currentPost.tags.length > 3"
-                      class="px-1.5 py-0.5 text-xs bg-gray-300 dark:bg-gray-600 text-gray-700 dark:text-gray-300 rounded"
-                    >
-                      +{{ currentPost.tags.length - 3 }}
-                    </span>
-                  </div>
-                </div>
-
-                <!-- 阅读统计 - 简化显示 -->
-                <div
-                  v-if="currentPost.wordCount || currentPost.readingTime"
-                  class="text-center"
-                >
-                  <div
-                    class="space-y-1 text-xs text-gray-600 dark:text-gray-400"
-                  >
-                    <div
-                      v-if="currentPost.wordCount"
-                      class="flex items-center justify-center"
-                    >
-                      <svg
-                        class="w-3 h-3 mr-1.5"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                        />
-                      </svg>
-                      {{ currentPost.wordCount }} 字
-                    </div>
-                    <div
-                      v-if="currentPost.readingTime"
-                      class="flex items-center justify-center"
-                    >
-                      <svg
-                        class="w-3 h-3 mr-1.5"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                        />
-                      </svg>
-                      {{ currentPost.readingTime }} 分钟
-                    </div>
-                  </div>
-                </div>
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M15 19l-7-7 7-7"
+                    />
+                  </svg>
+                  返回
+                </button>
               </CardView>
 
-              <!-- 相关文章 - 移动端和桌面端都显示 -->
-              <CardView
-                v-if="relatedPosts.length > 0"
-                class="p-3"
+              <!-- 可滚动内容区域 -->
+              <div
+                class="flex-1 overflow-y-auto space-y-4 min-h-0 pb-2 sidebar-scroll"
               >
-                <h3
-                  class="text-sm font-semibold text-gray-900 dark:text-white mb-3 text-center"
-                >
-                  相关文章
-                </h3>
+                <!-- 文章信息 - 移动端和桌面端都显示 -->
+                <CardView class="p-3" data-article-info>
+                  <h3
+                    class="text-sm font-semibold text-gray-900 dark:text-white mb-3 text-center"
+                  >
+                    文章信息
+                  </h3>
 
-                <!-- 紧凑的列表显示 -->
-                <div class="space-y-2">
+                  <!-- 发布日期 -->
+                  <div class="mb-3 flex justify-center">
+                    <div
+                      class="flex items-center text-xs text-gray-600 dark:text-gray-400"
+                    >
+                      <svg
+                        class="w-3 h-3 mr-1.5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                        />
+                      </svg>
+                      {{ formatDate(currentPost.date) }}
+                    </div>
+                  </div>
+
+                  <!-- 分类 -->
                   <div
-                    v-for="post in relatedPosts"
-                    :key="post.slug"
-                    @click="goToPost(post.slug)"
-                    class="group p-2 border border-gray-200 dark:border-gray-700 rounded hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer transition-colors"
+                    v-if="currentPost.categories.length > 0"
+                    class="mb-3 text-center"
                   >
                     <h4
-                      class="font-medium text-xs text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2 leading-tight mb-1"
+                      class="text-xs font-medium text-gray-900 dark:text-white mb-2"
                     >
-                      {{ post.title }}
+                      分类
                     </h4>
-                    <time class="text-xs text-gray-500 dark:text-gray-400">
-                      {{ formatDate(post.date) }}
-                    </time>
+                    <div class="flex flex-wrap gap-1 justify-center">
+                      <span
+                        v-for="category in currentPost.categories"
+                        :key="category"
+                        class="px-1.5 py-0.5 text-xs bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded"
+                      >
+                        {{ category }}
+                      </span>
+                    </div>
                   </div>
-                </div>
-              </CardView>
+
+                  <!-- 标签 -->
+                  <div
+                    v-if="currentPost.tags.length > 0"
+                    class="mb-3 text-center"
+                  >
+                    <h4
+                      class="text-xs font-medium text-gray-900 dark:text-white mb-2"
+                    >
+                      标签
+                    </h4>
+                    <div class="flex flex-wrap gap-1 justify-center">
+                      <span
+                        v-for="tag in currentPost.tags.slice(0, 3)"
+                        :key="tag"
+                        class="px-1.5 py-0.5 text-xs rounded text-white"
+                        :style="{ backgroundColor: getTagColor(tag) }"
+                      >
+                        {{ tag }}
+                      </span>
+                      <span
+                        v-if="currentPost.tags.length > 3"
+                        class="px-1.5 py-0.5 text-xs bg-gray-300 dark:bg-gray-600 text-gray-700 dark:text-gray-300 rounded"
+                      >
+                        +{{ currentPost.tags.length - 3 }}
+                      </span>
+                    </div>
+                  </div>
+
+                  <!-- 阅读统计 - 简化显示 -->
+                  <div
+                    v-if="currentPost.wordCount || currentPost.readingTime"
+                    class="text-center"
+                  >
+                    <div
+                      class="space-y-1 text-xs text-gray-600 dark:text-gray-400"
+                    >
+                      <div
+                        v-if="currentPost.wordCount"
+                        class="flex items-center justify-center"
+                      >
+                        <svg
+                          class="w-3 h-3 mr-1.5"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                          />
+                        </svg>
+                        {{ currentPost.wordCount }} 字
+                      </div>
+                      <div
+                        v-if="currentPost.readingTime"
+                        class="flex items-center justify-center"
+                      >
+                        <svg
+                          class="w-3 h-3 mr-1.5"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                          />
+                        </svg>
+                        {{ currentPost.readingTime }} 分钟
+                      </div>
+                    </div>
+                  </div>
+                </CardView>
+
+                <!-- 相关文章 - 移动端和桌面端都显示 -->
+                <CardView v-if="relatedPosts.length > 0" class="p-3">
+                  <h3
+                    class="text-sm font-semibold text-gray-900 dark:text-white mb-3 text-center"
+                  >
+                    相关文章
+                  </h3>
+
+                  <!-- 紧凑的列表显示 -->
+                  <div class="space-y-2">
+                    <div
+                      v-for="post in relatedPosts"
+                      :key="post.slug"
+                      @click="goToPost(post.slug)"
+                      class="group p-2 border border-gray-200 dark:border-gray-700 rounded hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer transition-colors"
+                    >
+                      <h4
+                        class="font-medium text-xs text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2 leading-tight mb-1"
+                      >
+                        {{ post.title }}
+                      </h4>
+                      <time class="text-xs text-gray-500 dark:text-gray-400">
+                        {{ formatDate(post.date) }}
+                      </time>
+                    </div>
+                  </div>
+                </CardView>
+              </div>
             </div>
-          </div>
-        </aside>
+          </aside>
         </Transition>
 
         <!-- 主要内容区 -->
@@ -1003,9 +1015,11 @@ onUnmounted(() => {
                 class="prose prose-sm sm:prose-lg dark:prose-invert max-w-none prose-headings:scroll-mt-20 text-left overflow-x-hidden"
                 v-html="renderedContent"
               ></div>
-              
+
               <!-- 评论区 -->
-              <div class="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
+              <div
+                class="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700"
+              >
                 <div id="giscus-container"></div>
               </div>
             </div>
@@ -1018,58 +1032,63 @@ onUnmounted(() => {
             v-if="tableOfContents.length > 0 && isRightSidebarOpen"
             class="lg:col-span-3 order-1 lg:order-3 z-30"
             :class="{
-              'fixed right-0 h-full w-4/5 max-w-sm bg-white dark:bg-zinc-900 p-4 lg:relative lg:top-auto lg:w-auto lg:p-0 lg:bg-transparent dark:lg:bg-transparent': isMobile,
-              'relative': !isMobile
+              'fixed right-0 h-full w-4/5 max-w-sm bg-white dark:bg-zinc-900 p-4 lg:relative lg:top-auto lg:w-auto lg:p-0 lg:bg-transparent dark:lg:bg-transparent':
+                isMobile,
+              relative: !isMobile,
             }"
-            :style="isMobile ? { top: '61px', height: 'calc(100vh - 61px)' } : {}"
+            :style="
+              isMobile ? { top: '61px', height: 'calc(100vh - 61px)' } : {}
+            "
           >
             <!-- 目录 -->
             <CardView
               v-if="tableOfContents.length > 0"
               class="p-3 lg:sticky lg:top-6 h-full lg:h-auto"
             >
-            <h4
-              class="text-sm font-semibold text-gray-900 dark:text-white mb-3"
-            >
-              目录
-            </h4>
-            <nav class="text-sm max-h-[calc(100vh-12rem)] overflow-y-auto toc-scroll">
-              <ul class="space-y-1">
-                <li
-                  v-for="item in tableOfContents"
-                  :key="item.id"
-                  :class="{
-                    'ml-0': item.level === 1,
-                    'ml-3': item.level === 2,
-                    'ml-6': item.level === 3,
-                    'ml-9': item.level > 3,
-                  }"
-                >
-                  <a
-                    @click="scrollToHeading(item.id)"
-                    class="block w-full text-left py-1.5 px-2 rounded transition-colors hover:bg-blue-50 dark:hover:bg-blue-950/30 hover:text-blue-600 dark:hover:text-blue-400 cursor-pointer"
+              <h4
+                class="text-sm font-semibold text-gray-900 dark:text-white mb-3"
+              >
+                目录
+              </h4>
+              <nav
+                class="text-sm max-h-[calc(100vh-12rem)] overflow-y-auto toc-scroll"
+              >
+                <ul class="space-y-1">
+                  <li
+                    v-for="item in tableOfContents"
+                    :key="item.id"
                     :class="{
-                      'font-semibold text-gray-900 dark:text-white':
-                        item.level === 1,
-                      'font-medium text-gray-800 dark:text-gray-200':
-                        item.level === 2,
-                      'text-gray-700 dark:text-gray-300': item.level === 3,
-                      'text-gray-600 dark:text-gray-400': item.level > 3,
-                      'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 border-l-2 border-blue-500':
-                        activeHeadingId === item.id,
+                      'ml-0': item.level === 1,
+                      'ml-3': item.level === 2,
+                      'ml-6': item.level === 3,
+                      'ml-9': item.level > 3,
                     }"
                   >
-                    <span
-                      class="text-blue-500 dark:text-blue-400 font-mono text-xs mr-2"
-                      >{{ item.sectionNumber }}</span
+                    <a
+                      @click="scrollToHeading(item.id)"
+                      class="block w-full text-left py-1.5 px-2 rounded transition-colors hover:bg-blue-50 dark:hover:bg-blue-950/30 hover:text-blue-600 dark:hover:text-blue-400 cursor-pointer"
+                      :class="{
+                        'font-semibold text-gray-900 dark:text-white':
+                          item.level === 1,
+                        'font-medium text-gray-800 dark:text-gray-200':
+                          item.level === 2,
+                        'text-gray-700 dark:text-gray-300': item.level === 3,
+                        'text-gray-600 dark:text-gray-400': item.level > 3,
+                        'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 border-l-2 border-blue-500':
+                          activeHeadingId === item.id,
+                      }"
                     >
-                    <span>{{ item.text }}</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </CardView>
-        </aside>
+                      <span
+                        class="text-blue-500 dark:text-blue-400 font-mono text-xs mr-2"
+                        >{{ item.sectionNumber }}</span
+                      >
+                      <span>{{ item.text }}</span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+            </CardView>
+          </aside>
         </Transition>
       </div>
     </div>

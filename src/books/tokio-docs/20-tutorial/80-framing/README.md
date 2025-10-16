@@ -56,7 +56,7 @@ struct Connection {
 }
 
 impl Connection {    /// 从连接读取一个帧。
-    /// 
+    ///
     /// 如果到达 EOF 则返回 `None`    pub async fn read_frame(&mut self)
         -> Result<Option<Frame>>
     {
@@ -397,9 +397,9 @@ async fn write_frame(&mut self, frame: &Frame)
 
 这里使用的函数由 [`AsyncWriteExt`] 提供。它们在 `TcpStream` 上也可用，但在没有中间缓冲区的情况下发出单字节写入是不明智的。
 
-* [`write_u8`] 向写入器写入单个字节。
-* [`write_all`] 将整个切片写入写入器。
-* [`write_decimal`] 由 mini-redis 实现。
+- [`write_u8`] 向写入器写入单个字节。
+- [`write_all`] 将整个切片写入写入器。
+- [`write_decimal`] 由 mini-redis 实现。
 
 函数以调用 `self.stream.flush().await` 结束。因为 `BufWriter` 将写入存储在中间缓冲区中，对 `write` 的调用不保证数据被写入套接字。在返回之前，我们希望帧被写入套接字。对 `flush()` 的调用将缓冲区中待处理的任何数据写入套接字。
 

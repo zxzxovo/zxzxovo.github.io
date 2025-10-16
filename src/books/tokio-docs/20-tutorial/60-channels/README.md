@@ -397,10 +397,10 @@ loop {
 
 并发和排队必须明确引入。这样做的方法包括：
 
-* `tokio::spawn`
-* `select!`
-* `join!`
-* `mpsc::channel`
+- `tokio::spawn`
+- `select!`
+- `join!`
+- `mpsc::channel`
 
 这样做时，要注意确保并发的总量是有界的。例如，在编写 TCP 接受循环时，确保打开的套接字总数是有界的。当使用 `mpsc::channel` 时，选择一个可管理的通道容量。具体的边界值将是特定于应用程序的。
 

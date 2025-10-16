@@ -8,14 +8,15 @@ categories = ["Code"]
 tags = ["Rust", "Code", "闭包", "函数式编程"]
 +++
 
-
 本节参考：
+
 - [Rust语言圣经](https://course.rs/advance/functional-programing/closure.html)
 - [RF-闭包表达式](https://rustwiki.org/zh-CN/reference/expressions/closure-expr.html)
 - [RF-闭包类型](https://rustwiki.org/zh-CN/reference/types/closure.html)
 - [Rust中的闭包与关键字Move](https://zhuanlan.zhihu.com/p/341815515)
 
 Rust有很多对函数式编程的支持，主要有：
+
 - 模式匹配
 - 枚举
 - 迭代器
@@ -24,10 +25,10 @@ Rust有很多对函数式编程的支持，主要有：
 使用 **闭包（Closure）** 可以做到 将一系列语句和表达式 赋值给某个变量，因此 这一堆语句和表达式 就可以作为变量，被当作参数传递进函数，或者作为函数返回值返回，这是闭包最明显的特征。闭包的使用很简单，但Rust的闭包不像 `JS`, `Python` 中的一样，由于语言特性，它有一些额外需要掌握的细节。
 下面将从 闭包如何捕获环境 ， 闭包如何使用捕获值 ，以及 闭包的实现 的角度来介绍闭包。
 
-
 ## 开始——捕获环境
 
 Rust中的函数是无法“捕获环境”的。这一特性意味着，对于以下代码：
+
 ```rust
 fn main() {
 	let num = 0;
@@ -37,6 +38,7 @@ fn main() {
 	}
 }
 ```
+
 即使函数 `func()` 定义在 `main()` 内部，它仍然无法**直接**访问到 `main()` 中定义的变量。若要访问这些变量，只能通过传递函数参数的方式。需要注意，`static` 和 `const` 方式定义的变量具有**静态生命周期**，是可以访问的。
 
 而闭包则可以做到捕获环境。
@@ -44,36 +46,37 @@ fn main() {
 那么如何定义一个闭包呢？Rust中通过闭包表达式定义一个闭包类型，在其他语言中也称为 **lambda表达式**。
 
 闭包表达式的**句法规则**是：可选的 `move` ，后跟由 `||` 包围的参数模式列表（可以**省略类型标注**），后跟可选的返回值标注 `-> type` ，后跟一个块表达式（无返回值标注时，若块内只有一个表达式则可以直接写在 `||` 后）。例如：
+
 ```rust
-fn main() {  
+fn main() {
     // 函数
-    fn func(a: i32, b: i32) -> i32 {  
-        a + b  
-    }  
-    
+    fn func(a: i32, b: i32) -> i32 {
+        a + b
+    }
+
     // 闭包定义1
-    let func = |a: i32, b: i32| -> i32 {  
-        a + b  
+    let func = |a: i32, b: i32| -> i32 {
+        a + b
     };
     // 闭包定义2: 省略类型标注
-    let func = |a, b| {  
-        a + b  
-    };  
+    let func = |a, b| {
+        a + b
+    };
     // 闭包定义3: 块内只有一个表达式时，省略大括号
-    let func = |a, b| a + b;  
+    let func = |a, b| a + b;
     // 闭包定义4: 使用 move
-    let func = move |a, b| a + b;  
-  
-    // 相同的调用方式 
-    let res = func(1, 2);  
-    assert_eq!(res, 3);  
+    let func = move |a, b| a + b;
+
+    // 相同的调用方式
+    let res = func(1, 2);
+    assert_eq!(res, 3);
 }
 ```
 
-
-## 闭包捕获环境的方式 
+## 闭包捕获环境的方式
 
 闭包如果需要捕获环境的话，方式有这几种（对应于函数参数定义的三种方式）：
+
 - 不可变引用 `&T`
 - 可变引用 `&mut T`
 - 移动语义（获取所有权） `T`
@@ -81,38 +84,41 @@ fn main() {
 当在 `||` 前使用 `move` 时，将强制闭包以 **移动语义（move）** 捕获值，获取值的所有权。若捕获的值的类型实现了 `Copy Trait` ，则会使用 `Copy` **复制语义**。
 
 当没有使用 `move` 时，编译器会按照如下顺序进行检查，选择捕获方式，直到遇到第一个能通过编译的选项：
+
 1. 不可变引用
 2. 唯一不可变引用
 3. 可变引用
 4. 移动语义
 
 此处，**唯一不可变引用** 是基于借用规则而出现的一种特殊的捕获方式。对于下述代码：
+
 ```rust
-let mut a = 0;  
-let b = &mut a;  
-{  
-    let mut x = || { *b = 1; };  
-    x();  
-    
-    // 下行代码会导致编译错误  
-    let y = &b;  
+let mut a = 0;
+let b = &mut a;
+{
+    let mut x = || { *b = 1; };
+    x();
+
+    // 下行代码会导致编译错误
+    let y = &b;
     println!("{y}");
-}  
+}
 let z = &b;
 ```
+
 代码中 `b` 是对 `a` 的可变借用，因此可以通过解引用 `b` 来修改 `a` 的值。但在这里我们将修改a的值的操作放在了闭包中，而这个闭包理所当然地使用了 `b`，因此闭包需要捕获它。
 
 由于 `b` 本身不是 `mut` 的，因此无法以可变引用的形式捕获。但若以不可变引用的形式捕获，那么就会获得对可变引用的引用 `& &mut`，这会导致可以存在多个可变引用（即不唯一的可变引用），这违反了借用规则。
 
 这时，闭包便使用被称作**唯一不可变引用**的特殊方式来捕获变量，即它会对 `b` 进行不可变引用，同时由编译器确保对 `b` 的引用只有一个。
 
-
-## 3种闭包Trait 
+## 3种闭包Trait
 
 这里需要做一区别，闭包**如何捕获环境**，和闭包**如何使用捕获到的值**，两者是不同的。
 
 Rust编译器会根据闭包 **如何使用** 捕获到的值（将值返回，或不返回但修改，或不返回且不修改），来决定为闭包实现哪些**闭包Trait**。
 或者说，编译器通过这3种Trait来描述和分类不同的闭包：
+
 - `FnOnce` ：闭包可能会消耗掉捕获值的所有权，只能调用一次。（若消耗掉所有权则只能使用一次，故而所有的闭包均实现了该Trait。）
 - `FnMut` ：闭包不会消耗掉捕获值的所有权，会对捕获值进行修改。
 - `Fn` ：闭包不会消耗掉捕获值的所有权，不会对捕获值进行修改。
@@ -125,6 +131,7 @@ Rust编译器会根据闭包 **如何使用** 捕获到的值（将值返回，�
 因此可以说，3种闭包Trait，是在 **闭包如何使用捕获值的角度上，对闭包的分类。**
 
 现在观察这3种Trait的定义签名（简化）：
+
 ```rust
 pub trait Fn<Args> : FnMut<Args> {
     extern "rust-call" fn call(&self, args: Args) -> Self::Output;
@@ -137,34 +144,38 @@ pub trait FnOnce<Args> {
     extern "rust-call" fn call_once(self, args: Args) -> Self::Output;
 }
 ```
+
 可以看到，实现 `FnMut` 的条件是，已经实现了 `FnOnce`（可以说`FnOnce`就代表了闭包），而实现 `Fn` 的条件是已经实现了 `FnMut`，因此，闭包对这3种Trait的实现有这三种情况：
+
 1. 只实现了 `FnOnce`
 2. 实现了 `FnOnce` 和 `FnMut`
 3. 实现了 `FnOnce` ，`FnMut` 和 `Fn`
 
 分别对应上述三种 `trait` 。
 
-
 ## 函数式编程：作为参数和返回值
 
 由于Rust中的闭包实现了上文介绍的几种闭包特征，因此可以使用特征约束的方法让闭包作为函数参数或返回值来使用，例如：
+
 ```rust
 // 接收一个 FnOnce() 类型的闭包并调用
-fn function<F> (f: F) 
+fn function<F> (f: F)
 where F: FnOnce() {
 	f();
 }
 
 // 返回一个 FnOnce() -> &'static str 类型的闭包
-fn some_func() -> impl FnOnce() -> &'static str {  
-    || { "666" }  
+fn some_func() -> impl FnOnce() -> &'static str {
+    || { "666" }
 }
 // 返回一个特征对象，不常用
 fn dyn_func() -> Box<dyn FnOnce() -> &'static str> {
-	Box::new(|| { "999" })  
+	Box::new(|| { "999" })
 }
 ```
+
 对于函数而言，只要符合特征约束，也可以作为其他函数的参数：
+
 ```rust
 // 将要接收函数和闭包作为参数的函数
 fn call_me<F: Fn()>(f: F) {
@@ -177,18 +188,17 @@ fn function() {
 fn main() {
 	// 一个闭包
     let closure = || println!("I'm a closure!");
-    
+
     call_me(closure);
     call_me(function);
 }
 ```
 
-
-
-## 闭包的实际类型 
+## 闭包的实际类型
 
 当使用闭包表达式定义一个闭包时，编译器会隐式生成一个匿名结构体，闭包将要捕获的变量会作为该**结构体的字段**。同时，该结构体会根据闭包如何使用捕获的值（也就是结构体字段）选择实现哪种闭包`Trait`，由此就可以实现闭包的函数功能。
 例如，对于以下闭包：
+
 ```rust
 fn closure<F>(f: F)
 where F: FnOnce() -> String {
@@ -201,7 +211,9 @@ fn main() {
     closure(s);
 }
 ```
+
 编译器会大致生成如下的代码：
+
 ```rust
 struct ClosureSome {
     a: String,
@@ -233,6 +245,7 @@ fn main() {
 由此可以看出，当传递一个闭包时，**传递的实际上是一个结构体**，而调用一个闭包时，则是调用相应Trait定义的方法。
 
 上文中介绍了编译器根据闭包如何使用捕获到的值而实现不同的闭包特征，而对于 **闭包没有捕获值** 的情况，该闭包可以被 **自动强转** 为函数指针：
+
 ```rust
 fn main() {
 	let add = |x, y| x + y;
@@ -240,11 +253,10 @@ fn main() {
 
 	type FnPointer = fn(i32, i32) -> i32;
 	let p: FnPointer = add;
-	
+
 	x = p(5,7);
 }
 ```
-
 
 ## 总结
 

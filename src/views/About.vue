@@ -96,19 +96,22 @@ const isLoadingGitHubImages = ref(false);
 // GitHub用户名
 const githubUsername = "zxzxovo";
 
-
 // 主题状态 - 使用ref以确保响应性
-const currentTheme = ref(document.documentElement.getAttribute("data-theme") || "light");
+const currentTheme = ref(
+  document.documentElement.getAttribute("data-theme") || "light",
+);
 
 // 检测当前主题
 const isDarkMode = computed(() => {
-  return currentTheme.value === "dark" || 
-         document.documentElement.classList.contains("dark");
+  return (
+    currentTheme.value === "dark" ||
+    document.documentElement.classList.contains("dark")
+  );
 });
 
 // 获取今天的日期字符串（用于缓存）
 const getTodayDateString = () => {
-  return new Date().toISOString().split('T')[0]; // 格式: YYYY-MM-DD
+  return new Date().toISOString().split("T")[0]; // 格式: YYYY-MM-DD
 };
 
 // 每日缓存键 - 每天自动更新
@@ -119,7 +122,7 @@ const updateThemeState = () => {
   const theme = document.documentElement.getAttribute("data-theme");
   const hasClassDark = document.documentElement.classList.contains("dark");
   const newTheme = theme === "dark" || hasClassDark ? "dark" : "light";
-  
+
   if (currentTheme.value !== newTheme) {
     currentTheme.value = newTheme;
   }
@@ -145,17 +148,24 @@ const githubLangsUrl = computed(() => {
 });
 
 // 监听主题变化
-watch([isDarkMode, currentTheme], () => {
-  // 主题变化时，更新日期缓存键以强制刷新图片
-  dailyCacheKey.value = getTodayDateString();
-}, { immediate: false });
+watch(
+  [isDarkMode, currentTheme],
+  () => {
+    // 主题变化时，更新日期缓存键以强制刷新图片
+    dailyCacheKey.value = getTodayDateString();
+  },
+  { immediate: false },
+);
 
 // 监听DOM变化来检测主题切换
 const observeThemeChanges = () => {
   const observer = new MutationObserver((mutations) => {
     mutations.forEach((mutation) => {
-      if (mutation.type === 'attributes' && 
-          (mutation.attributeName === 'data-theme' || mutation.attributeName === 'class')) {
+      if (
+        mutation.type === "attributes" &&
+        (mutation.attributeName === "data-theme" ||
+          mutation.attributeName === "class")
+      ) {
         // 延时更新，确保主题变化完成
         setTimeout(() => {
           updateThemeState();
@@ -166,7 +176,7 @@ const observeThemeChanges = () => {
 
   observer.observe(document.documentElement, {
     attributes: true,
-    attributeFilter: ['data-theme', 'class']
+    attributeFilter: ["data-theme", "class"],
   });
 
   return observer;
@@ -221,18 +231,18 @@ const fetchGitHubStats = async () => {
 onMounted(() => {
   // 初始化主题状态
   updateThemeState();
-  
+
   // 检查并更新缓存键（确保每天更新）
   const today = getTodayDateString();
   if (dailyCacheKey.value !== today) {
     dailyCacheKey.value = today;
   }
-  
+
   fetchGitHubStats();
-  
+
   // 开始监听主题变化
   const themeObserver = observeThemeChanges();
-  
+
   // 组件卸载时清理观察器
   onUnmounted(() => {
     themeObserver.disconnect();
@@ -343,7 +353,9 @@ onMounted(() => {
           >
             <span class="mr-2">📈</span>
             GitHub 数据统计
-            <span v-if="isLoadingGitHubImages" class="ml-2 text-xs text-gray-500"
+            <span
+              v-if="isLoadingGitHubImages"
+              class="ml-2 text-xs text-gray-500"
               >重新加载中...</span
             >
           </h3>
@@ -366,7 +378,7 @@ onMounted(() => {
                 alt="Top Languages"
                 class="max-w-full h-auto rounded-lg transition-opacity duration-300"
                 @load="isLoadingGitHubImages = false"
-                @loadstart="isLoadingGitHubImages = true" 
+                @loadstart="isLoadingGitHubImages = true"
                 @error="isLoadingGitHubImages = false"
               />
             </div>
@@ -418,11 +430,11 @@ onMounted(() => {
             <span class="mr-2">📈</span>
             GitHub 贡献活动
           </h3>
-          
+
           <!-- 使用 GitHub 官方的贡献图 -->
           <div class="w-full overflow-hidden rounded-lg">
-            <img 
-              :src="`https://ghchart.rshah.org/${githubUsername}`" 
+            <img
+              :src="`https://ghchart.rshah.org/${githubUsername}`"
               alt="GitHub 贡献图"
               class="w-full h-auto"
               loading="lazy"

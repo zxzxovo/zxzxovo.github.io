@@ -51,7 +51,7 @@ const isMobile = ref(false);
 // 检测屏幕尺寸
 function checkScreenSize() {
   isMobile.value = window.innerWidth < 1024; // lg 断点
-  
+
   // 在大屏幕上默认显示侧边栏，小屏幕上默认隐藏
   if (!isMobile.value) {
     isLeftSidebarOpen.value = true;
@@ -95,31 +95,32 @@ function setTheme(theme: string | null) {
 // Giscus 评论系统
 function loadGiscus() {
   // 清除现有的评论
-  const container = document.getElementById('giscus-container-book');
+  const container = document.getElementById("giscus-container-book");
   if (container) {
-    container.innerHTML = '';
+    container.innerHTML = "";
   }
 
   // 获取当前主题
-  const currentTheme = document.documentElement.getAttribute("data-theme") || "light";
+  const currentTheme =
+    document.documentElement.getAttribute("data-theme") || "light";
   const giscusTheme = currentTheme === "dark" ? "dark" : "light";
 
   // 创建 script 标签
-  const script = document.createElement('script');
-  script.src = 'https://giscus.app/client.js';
-  script.setAttribute('data-repo', 'zxzxovo/zxzxovo.github.io');
-  script.setAttribute('data-repo-id', 'R_kgDONxTewg');
-  script.setAttribute('data-category', 'Announcements');
-  script.setAttribute('data-category-id', 'DIC_kwDONxTews4CmeWX');
-  script.setAttribute('data-mapping', 'pathname');
-  script.setAttribute('data-strict', '0');
-  script.setAttribute('data-reactions-enabled', '1');
-  script.setAttribute('data-emit-metadata', '0');
-  script.setAttribute('data-input-position', 'top');
-  script.setAttribute('data-theme', giscusTheme);
-  script.setAttribute('data-lang', 'zh-CN');
-  script.setAttribute('data-loading', 'lazy');
-  script.setAttribute('crossorigin', 'anonymous');
+  const script = document.createElement("script");
+  script.src = "https://giscus.app/client.js";
+  script.setAttribute("data-repo", "zxzxovo/zxzxovo.github.io");
+  script.setAttribute("data-repo-id", "R_kgDONxTewg");
+  script.setAttribute("data-category", "Announcements");
+  script.setAttribute("data-category-id", "DIC_kwDONxTews4CmeWX");
+  script.setAttribute("data-mapping", "pathname");
+  script.setAttribute("data-strict", "0");
+  script.setAttribute("data-reactions-enabled", "1");
+  script.setAttribute("data-emit-metadata", "0");
+  script.setAttribute("data-input-position", "top");
+  script.setAttribute("data-theme", giscusTheme);
+  script.setAttribute("data-lang", "zh-CN");
+  script.setAttribute("data-loading", "lazy");
+  script.setAttribute("crossorigin", "anonymous");
   script.async = true;
 
   // 将 script 添加到容器中
@@ -131,7 +132,7 @@ function loadGiscus() {
 const changeDayLight = () => {
   const now = document.documentElement.getAttribute("data-theme");
   setTheme(now === "dark" ? "light" : "dark");
-  
+
   // 主题切换后重新加载评论以应用新主题
   if (chapterContent.value) {
     setTimeout(() => {
@@ -174,7 +175,7 @@ async function loadBookData() {
       title: book.title,
       description: book.description,
       author: book.author,
-      id: book.id
+      id: book.id,
     });
 
     // 初始化章节展开状态 - 一级章节默认展开
@@ -203,7 +204,9 @@ async function loadChapterContent() {
 
     // 渲染 Markdown 内容
     try {
-      const html = await processMarkdownContent(cachedContent, { removeFirstH1: true });
+      const html = await processMarkdownContent(cachedContent, {
+        removeFirstH1: true,
+      });
       renderedContent.value = html;
       tableOfContents.value = generateTableOfContents(html);
     } catch (error) {
@@ -218,7 +221,7 @@ async function loadChapterContent() {
     );
     currentChapter.value = chapter;
     loadError.value = null;
-    
+
     // 缓存内容加载完成后，初始化评论系统
     nextTick(() => {
       setTimeout(() => {
@@ -249,15 +252,18 @@ async function loadChapterContent() {
 
     // 如果加载了章节内容，更新SEO为章节信息
     if (currentBook.value && chapter) {
-      setBookSEO({
-        title: currentBook.value.title,
-        description: currentBook.value.description,
-        author: currentBook.value.author,
-        id: currentBook.value.id
-      }, {
-        title: chapter.title,
-        id: chapter.id
-      });
+      setBookSEO(
+        {
+          title: currentBook.value.title,
+          description: currentBook.value.description,
+          author: currentBook.value.author,
+          id: currentBook.value.id,
+        },
+        {
+          title: chapter.title,
+          id: chapter.id,
+        },
+      );
     }
 
     // 尝试加载章节文件
@@ -266,7 +272,9 @@ async function loadChapterContent() {
 
     // 渲染 Markdown 内容
     try {
-      const html = await processMarkdownContent(content, { removeFirstH1: true });
+      const html = await processMarkdownContent(content, {
+        removeFirstH1: true,
+      });
       renderedContent.value = html;
       tableOfContents.value = generateTableOfContents(html);
     } catch (error) {
@@ -276,7 +284,7 @@ async function loadChapterContent() {
 
     // 缓存内容
     contentCache.value.set(cacheKey, content);
-    
+
     // 内容加载完成后，初始化评论系统
     nextTick(() => {
       setTimeout(() => {
@@ -654,7 +662,7 @@ onMounted(() => {
 
   // 初始化响应式设计
   checkScreenSize();
-  window.addEventListener('resize', checkScreenSize);
+  window.addEventListener("resize", checkScreenSize);
 
   if (bookId.value) {
     loadBookData();
@@ -678,7 +686,7 @@ onMounted(() => {
 // 组件卸载时清理
 onUnmounted(() => {
   removeScrollListener();
-  window.removeEventListener('resize', checkScreenSize);
+  window.removeEventListener("resize", checkScreenSize);
   if (scrollTimeout) {
     clearTimeout(scrollTimeout);
   }
@@ -710,7 +718,9 @@ onUnmounted(() => {
         </button>
 
         <div v-if="currentBook" class="flex-1 min-w-0">
-          <h1 class="text-lg lg:text-xl font-semibold text-gray-900 dark:text-white truncate">
+          <h1
+            class="text-lg lg:text-xl font-semibold text-gray-900 dark:text-white truncate"
+          >
             {{ currentBook.title }}
           </h1>
           <p
@@ -740,21 +750,21 @@ onUnmounted(() => {
             class="hover:bg-gray-200 dark:hover:bg-zinc-800 size-8 lg:size-10 flex justify-center items-center rounded-full cursor-pointer dark:rotate-180 transition-transform ease-in-out"
             title="切换主题"
           >
-            <Icon 
-              icon="noto:waxing-gibbous-moon" 
-              width="18" 
+            <Icon
+              icon="noto:waxing-gibbous-moon"
+              width="18"
               height="18"
-              class="lg:w-5 lg:h-5" 
+              class="lg:w-5 lg:h-5"
             />
           </button>
-          
+
           <!-- 右侧文档目录按钮 -->
           <button
             @click="toggleRightSidebar"
             class="hover:bg-gray-200 dark:hover:bg-zinc-800 size-8 lg:size-10 flex justify-center items-center rounded-full cursor-pointer transition-all"
-            :class="{ 
+            :class="{
               'bg-gray-200 dark:bg-zinc-800': isRightSidebarOpen,
-              'rotate-90': isRightSidebarOpen 
+              'rotate-90': isRightSidebarOpen,
             }"
             title="文档目录"
           >
@@ -771,7 +781,9 @@ onUnmounted(() => {
     </div>
 
     <!-- 移动端顶部控制栏 -->
-    <div class="lg:hidden fixed top-0 left-0 right-0 z-50 bg-white dark:bg-zinc-900 border-b border-gray-200 dark:border-zinc-700 px-4 py-3">
+    <div
+      class="lg:hidden fixed top-0 left-0 right-0 z-50 bg-white dark:bg-zinc-900 border-b border-gray-200 dark:border-zinc-700 px-4 py-3"
+    >
       <div class="flex items-center justify-between">
         <!-- 左侧章节目录按钮 -->
         <button
@@ -780,13 +792,9 @@ onUnmounted(() => {
           :class="{ 'bg-zinc-200 dark:bg-zinc-800': isLeftSidebarOpen }"
           title="章节目录"
         >
-          <Icon
-            icon="streamline-plump-color:book-1"
-            width="20"
-            height="20"
-          />
+          <Icon icon="streamline-plump-color:book-1" width="20" height="20" />
         </button>
-        
+
         <div class="flex items-center gap-0">
           <!-- 明暗切换按钮 -->
           <button
@@ -796,7 +804,7 @@ onUnmounted(() => {
           >
             <Icon icon="noto:waxing-gibbous-moon" width="20" height="20" />
           </button>
-          
+
           <!-- 搜索按钮 -->
           <button
             @click="searchToggled"
@@ -809,23 +817,19 @@ onUnmounted(() => {
               height="20"
             />
           </button>
-          
+
           <!-- 右侧边栏切换按钮（仅在有目录时显示） -->
           <button
             v-if="tableOfContents.length > 0"
             @click="toggleRightSidebar"
             class="hover:bg-zinc-200 dark:hover:bg-zinc-800 size-12 flex justify-center items-center rounded-full cursor-pointer transition-all"
-            :class="{ 
+            :class="{
               'bg-zinc-200 dark:bg-zinc-800': isRightSidebarOpen,
-              'rotate-90': isRightSidebarOpen 
+              'rotate-90': isRightSidebarOpen,
             }"
             title="文档目录"
           >
-            <Icon
-              icon="marketeq:menu"
-              width="20"
-              height="20"
-            />
+            <Icon icon="marketeq:menu" width="20" height="20" />
           </button>
         </div>
       </div>
@@ -837,7 +841,9 @@ onUnmounted(() => {
     </div>
 
     <!-- 主内容区域 -->
-    <div class="flex-1 flex overflow-hidden relative pt-16 lg:pt-0 bg-white dark:bg-zinc-900">
+    <div
+      class="flex-1 flex overflow-hidden relative pt-16 lg:pt-0 bg-white dark:bg-zinc-900"
+    >
       <!-- 移动端遮罩层 -->
       <div
         v-if="isMobile && (isLeftSidebarOpen || isRightSidebarOpen)"
@@ -845,109 +851,111 @@ onUnmounted(() => {
         class="fixed inset-0 backdrop-blur-xs backdrop-brightness-60 z-20 lg:hidden"
         :style="{ top: '61px' }"
       ></div>
-      
+
       <!-- 左侧章节目录 -->
       <Transition name="sidebar-left">
         <div
           v-if="isLeftSidebarOpen"
           class="bg-gray-50 dark:bg-zinc-800 border-r border-gray-200 dark:border-zinc-700 overflow-y-auto sidebar-scroll z-30"
           :class="{
-            'fixed left-0 h-full w-4/5 max-w-sm lg:relative lg:top-auto lg:w-80': isMobile,
-            'relative w-80': !isMobile
+            'fixed left-0 h-full w-4/5 max-w-sm lg:relative lg:top-auto lg:w-80':
+              isMobile,
+            'relative w-80': !isMobile,
           }"
           :style="isMobile ? { top: '61px', height: 'calc(100vh - 61px)' } : {}"
         >
-        <div class="p-4">
-          <div class="flex items-center justify-between mb-4">
-            <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
-              章节目录
-            </h2>
-            <button
-              @click="router.push('/book')"
-              class="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 text-sm"
-              title="返回书籍列表"
-            >
-              ← 返回
-            </button>
-          </div>
-          <div v-if="isLoading" class="text-gray-500 dark:text-gray-400">
-            加载中...
-          </div>
-          <div v-else-if="loadError" class="text-red-500 dark:text-red-400">
-            {{ loadError }}
-          </div>
-          <div v-else-if="currentBook?.chapters" class="space-y-1">
-            <div
-              v-for="chapter in flattenedChapters"
-              :key="chapter.id"
-              class="chapter-item"
-              :style="{ paddingLeft: `${chapter.level * 16}px` }"
-            >
-              <div class="flex items-center">
-                <!-- 折叠/展开按钮 -->
-                <button
-                  v-if="chapter.hasChildren"
-                  @click="toggleChapterExpanded(chapter.id)"
-                  class="w-4 h-4 flex items-center justify-center text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 mr-1"
-                >
-                  <svg
-                    :class="{ 'rotate-90': chapter.isExpanded }"
-                    class="w-3 h-3 transition-transform"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
+          <div class="p-4">
+            <div class="flex items-center justify-between mb-4">
+              <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
+                章节目录
+              </h2>
+              <button
+                @click="router.push('/book')"
+                class="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 text-sm"
+                title="返回书籍列表"
+              >
+                ← 返回
+              </button>
+            </div>
+            <div v-if="isLoading" class="text-gray-500 dark:text-gray-400">
+              加载中...
+            </div>
+            <div v-else-if="loadError" class="text-red-500 dark:text-red-400">
+              {{ loadError }}
+            </div>
+            <div v-else-if="currentBook?.chapters" class="space-y-1">
+              <div
+                v-for="chapter in flattenedChapters"
+                :key="chapter.id"
+                class="chapter-item"
+                :style="{ paddingLeft: `${chapter.level * 16}px` }"
+              >
+                <div class="flex items-center">
+                  <!-- 折叠/展开按钮 -->
+                  <button
+                    v-if="chapter.hasChildren"
+                    @click="toggleChapterExpanded(chapter.id)"
+                    class="w-4 h-4 flex items-center justify-center text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 mr-1"
                   >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M9 5l7 7-7 7"
-                    ></path>
-                  </svg>
-                </button>
-                <div v-else class="w-5"></div>
+                    <svg
+                      :class="{ 'rotate-90': chapter.isExpanded }"
+                      class="w-3 h-3 transition-transform"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M9 5l7 7-7 7"
+                      ></path>
+                    </svg>
+                  </button>
+                  <div v-else class="w-5"></div>
 
-                <!-- 章节标题按钮 -->
-                <button
-                  @click="navigateToChapter(chapter.id)"
-                  :class="[
-                    'flex-1 text-left p-2 rounded hover:bg-gray-200 dark:hover:bg-zinc-700 transition-colors',
-                    chapterId === chapter.id
-                      ? 'bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200'
-                      : 'text-gray-700 dark:text-gray-300',
-                  ]"
-                  :disabled="!chapter.hasContent"
-                >
-                  <div class="flex items-center justify-between">
-                    <span
-                      :class="{
-                        'text-gray-400 dark:text-gray-500': !chapter.hasContent,
-                      }"
-                      class="flex items-center"
-                    >
+                  <!-- 章节标题按钮 -->
+                  <button
+                    @click="navigateToChapter(chapter.id)"
+                    :class="[
+                      'flex-1 text-left p-2 rounded hover:bg-gray-200 dark:hover:bg-zinc-700 transition-colors',
+                      chapterId === chapter.id
+                        ? 'bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200'
+                        : 'text-gray-700 dark:text-gray-300',
+                    ]"
+                    :disabled="!chapter.hasContent"
+                  >
+                    <div class="flex items-center justify-between">
                       <span
-                        class="text-blue-500 dark:text-blue-400 font-mono text-xs mr-2"
-                        >{{ chapter.sectionNumber }}</span
+                        :class="{
+                          'text-gray-400 dark:text-gray-500':
+                            !chapter.hasContent,
+                        }"
+                        class="flex items-center"
                       >
-                      {{ chapter.title }}
-                    </span>
-                    <span
-                      v-if="chapter.wordCount"
-                      class="text-xs text-gray-400 dark:text-gray-500"
-                    >
-                      {{ chapter.wordCount }} 字
-                    </span>
-                  </div>
-                </button>
+                        <span
+                          class="text-blue-500 dark:text-blue-400 font-mono text-xs mr-2"
+                          >{{ chapter.sectionNumber }}</span
+                        >
+                        {{ chapter.title }}
+                      </span>
+                      <span
+                        v-if="chapter.wordCount"
+                        class="text-xs text-gray-400 dark:text-gray-500"
+                      >
+                        {{ chapter.wordCount }} 字
+                      </span>
+                    </div>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
       </Transition>
 
       <!-- 中间内容区域 -->
-      <div 
+      <div
         class="flex-1 overflow-y-auto bg-white dark:bg-zinc-900 main-content"
         @click="closeSidebars"
       >
@@ -1005,9 +1013,12 @@ onUnmounted(() => {
             class="prose prose-lg max-w-none text-left prose-gray dark:prose-invert"
             v-html="renderedContent"
           ></div>
-          
+
           <!-- 评论区 - 仅在有章节内容时显示 -->
-          <div v-if="chapterContent" class="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
+          <div
+            v-if="chapterContent"
+            class="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700"
+          >
             <div id="giscus-container-book"></div>
           </div>
         </div>
@@ -1019,53 +1030,54 @@ onUnmounted(() => {
           v-if="isRightSidebarOpen"
           class="bg-gray-50 dark:bg-zinc-800 border-l border-gray-200 dark:border-zinc-700 overflow-y-auto toc-scroll z-30"
           :class="{
-            'fixed right-0 h-full w-4/5 max-w-sm lg:relative lg:top-auto lg:w-64': isMobile,
-            'relative w-64': !isMobile
+            'fixed right-0 h-full w-4/5 max-w-sm lg:relative lg:top-auto lg:w-64':
+              isMobile,
+            'relative w-64': !isMobile,
           }"
           :style="isMobile ? { top: '61px', height: 'calc(100vh - 61px)' } : {}"
         >
-        <div class="p-4 text-left">
-          <h3
-            class="text-sm font-semibold text-gray-900 dark:text-white mb-4 text-left"
-          >
-            文档目录
-          </h3>
-          <div
-            v-if="tableOfContents.length > 0"
-            class="space-y-1"
-            style="text-align: left"
-          >
-            <button
-              v-for="item in tableOfContents"
-              :key="item.id"
-              @click="scrollToHeading(item.id)"
-              :class="[
-                'block w-full text-sm py-1.5 px-2 rounded transition-colors text-left',
-                item.level === 1
-                  ? 'font-bold text-gray-900 dark:text-white'
-                  : item.level === 2
-                    ? 'font-semibold text-gray-800 dark:text-gray-200'
-                    : item.level === 3
-                      ? 'font-medium text-gray-700 dark:text-gray-300'
-                      : 'text-gray-600 dark:text-gray-400',
-                activeHeadingId === item.id
-                  ? 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-200 border-l-2 border-blue-500 dark:border-blue-400'
-                  : 'hover:bg-gray-200 dark:hover:bg-zinc-700 hover:text-blue-600 dark:hover:text-blue-400',
-              ]"
+          <div class="p-4 text-left">
+            <h3
+              class="text-sm font-semibold text-gray-900 dark:text-white mb-4 text-left"
+            >
+              文档目录
+            </h3>
+            <div
+              v-if="tableOfContents.length > 0"
+              class="space-y-1"
               style="text-align: left"
             >
-              <span
-                class="text-blue-500 dark:text-blue-400 font-mono text-xs mr-2"
-                >{{ item.sectionNumber }}</span
+              <button
+                v-for="item in tableOfContents"
+                :key="item.id"
+                @click="scrollToHeading(item.id)"
+                :class="[
+                  'block w-full text-sm py-1.5 px-2 rounded transition-colors text-left',
+                  item.level === 1
+                    ? 'font-bold text-gray-900 dark:text-white'
+                    : item.level === 2
+                      ? 'font-semibold text-gray-800 dark:text-gray-200'
+                      : item.level === 3
+                        ? 'font-medium text-gray-700 dark:text-gray-300'
+                        : 'text-gray-600 dark:text-gray-400',
+                  activeHeadingId === item.id
+                    ? 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-200 border-l-2 border-blue-500 dark:border-blue-400'
+                    : 'hover:bg-gray-200 dark:hover:bg-zinc-700 hover:text-blue-600 dark:hover:text-blue-400',
+                ]"
+                style="text-align: left"
               >
-              <span>{{ item.text }}</span>
-            </button>
-          </div>
-          <div v-else class="text-sm text-gray-500 dark:text-gray-400">
-            暂无目录
+                <span
+                  class="text-blue-500 dark:text-blue-400 font-mono text-xs mr-2"
+                  >{{ item.sectionNumber }}</span
+                >
+                <span>{{ item.text }}</span>
+              </button>
+            </div>
+            <div v-else class="text-sm text-gray-500 dark:text-gray-400">
+              暂无目录
+            </div>
           </div>
         </div>
-      </div>
       </Transition>
     </div>
   </div>

@@ -20,7 +20,7 @@ topped = false
 ### 代码示例
 
 ```javascript
-console.log('Hello, World!');
+console.log("Hello, World!");
 ```
 
 ### 图片示例

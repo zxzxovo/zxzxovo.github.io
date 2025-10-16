@@ -13,7 +13,7 @@ const {
   data: booksData,
   isLoading,
   error: loadError,
-  execute: loadBooks
+  execute: loadBooks,
 } = useAsyncState<BooksData>();
 
 // 计算属性：所有书籍
@@ -140,9 +140,7 @@ onMounted(() => {
               class="aspect-[4/3] bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-zinc-800 dark:to-zinc-700 relative overflow-hidden"
             >
               <!-- 默认显示书籍封面 -->
-              <div
-                class="w-full h-full flex items-center justify-center"
-              >
+              <div class="w-full h-full flex items-center justify-center">
                 <img
                   :src="getDefaultImage(book)"
                   :alt="book.title"

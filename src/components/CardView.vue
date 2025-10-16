@@ -1,7 +1,11 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-const { cssWidth, cssHeight, padding = "p-6" } = defineProps(["cssWidth", "cssHeight", "padding"]);
+const {
+  cssWidth,
+  cssHeight,
+  padding = "p-6",
+} = defineProps(["cssWidth", "cssHeight", "padding"]);
 const twcWidth = ref(cssWidth);
 const twcHeight = ref(cssHeight);
 </script>

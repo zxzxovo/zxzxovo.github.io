@@ -10,7 +10,7 @@ const dynClass = computed(() => [
     "inline-block": inline,
   },
   colorText,
-  colorDark
+  colorDark,
 ]);
 </script>
 

@@ -8,22 +8,14 @@ const services = ref([
     id: 1,
     title: "前端/后端开发",
     icon: "🌐",
-    description:
-      "前端-Vue; 后端: Rust axum, actix-web",
+    description: "前端-Vue; 后端: Rust axum, actix-web",
     features: [
       "Vue.js 前端",
       "Rust axum, actix-web 后端",
       "SQL, Redis数据库",
       "RESTful API",
     ],
-    technologies: [
-      "Vue.js",
-      "TypeScript",
-      "Rust",
-      "Axum",
-      "SQL",
-      "Redis",
-    ],
+    technologies: ["Vue.js", "TypeScript", "Rust", "Axum", "SQL", "Redis"],
     price: "¥1000 +",
     duration: "1-3 周",
     gradient: "from-blue-500 to-indigo-600",
@@ -32,15 +24,8 @@ const services = ref([
     id: 2,
     title: "PC端工具开发",
     icon: "🖥️",
-    description:
-      "使用Rust、C/C++、Java等编程语言开发高性能PC端工具软件",
-    features: [
-      "跨平台桌面应用开发",
-      "UI设计",
-      "系统工具",
-      "内存安全",
-      "并发",
-    ],
+    description: "使用Rust、C/C++、Java等编程语言开发高性能PC端工具软件",
+    features: ["跨平台桌面应用开发", "UI设计", "系统工具", "内存安全", "并发"],
     technologies: ["Rust", "Tauri", "C/C++", "Java", "Vue.js"],
     price: "¥300 +",
     duration: "1-4 周",
@@ -278,7 +263,6 @@ onMounted(() => {
             class="hover:shadow-xl transition-all duration-300 relative overflow-hidden"
             padding="p-6"
           >
-
             <div class="flex items-center mb-6 relative z-10">
               <span class="text-2xl mr-3">{{ stack.icon }}</span>
               <h3 class="text-xl font-bold text-gray-900 dark:text-white">

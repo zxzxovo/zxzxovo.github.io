@@ -20,7 +20,7 @@ function setTheme(theme: string | null) {
   const finalTheme = theme || "light"; // 默认为 light 主题
   localStorage.setItem("darkTheme", finalTheme);
   document.documentElement.setAttribute("data-theme", finalTheme);
-  
+
   // 同时设置 class 以确保 Tailwind 暗色模式生效
   if (finalTheme === "dark") {
     document.documentElement.classList.add("dark");
@@ -30,7 +30,7 @@ function setTheme(theme: string | null) {
 }
 
 const changeDayLight = () => {
-  const now = document.documentElement.getAttribute('data-theme')
+  const now = document.documentElement.getAttribute("data-theme");
   setTheme(now === "dark" ? "light" : "dark");
 };
 
@@ -135,7 +135,7 @@ onBeforeUnmount(() => {
       <div
         @click.stop
         v-if="isSmallMenuOpen"
-        class="nav-small-menu sm:hidden fixed top-14 right-4 w-2/5 max-w-48 h-auto dark:bg-zinc-900 bg-zinc-50 border-violet-200 dark:border-zinc-800 rounded-b-2xl border-b-1 border-l-1 border-r-1  z-40"
+        class="nav-small-menu sm:hidden fixed top-14 right-4 w-2/5 max-w-48 h-auto dark:bg-zinc-900 bg-zinc-50 border-violet-200 dark:border-zinc-800 rounded-b-2xl border-b-1 border-l-1 border-r-1 z-40"
       >
         <div class="w-full h-auto border-0 opacity-55 flex flex-col">
           <RouterLink

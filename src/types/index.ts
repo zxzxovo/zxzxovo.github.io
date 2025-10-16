@@ -1,4 +1,4 @@
-// 博客文章类型定义
+// 博客文章类型
 export interface BlogPost {
   slug: string;
   title: string;
@@ -76,7 +76,7 @@ export interface BooksData {
 // 搜索结果类型
 export interface SearchResult {
   id: string;
-  type: 'blog' | 'book' | 'chapter';
+  type: "blog" | "book" | "chapter";
   title: string;
   description: string;
   excerpt?: string;
@@ -105,7 +105,7 @@ export interface ApiResponse<T> {
 }
 
 // 主题类型
-export type Theme = 'light' | 'dark';
+export type Theme = "light" | "dark";
 
 // 视口类型
 export interface ViewportInfo {

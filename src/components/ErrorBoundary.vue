@@ -3,22 +3,22 @@
     <div class="max-w-md mx-auto">
       <!-- 错误图标 -->
       <div class="mb-4">
-        <Icon 
-          icon="mdi:alert-circle-outline" 
-          class="text-6xl text-red-500 mx-auto" 
+        <Icon
+          icon="mdi:alert-circle-outline"
+          class="text-6xl text-red-500 mx-auto"
         />
       </div>
-      
+
       <!-- 错误标题 -->
       <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-        {{ title || '出现错误' }}
+        {{ title || "出现错误" }}
       </h2>
-      
+
       <!-- 错误描述 -->
       <p class="text-gray-600 dark:text-gray-400 mb-6">
-        {{ description || '抱歉，加载内容时出现了问题。' }}
+        {{ description || "抱歉，加载内容时出现了问题。" }}
       </p>
-      
+
       <!-- 操作按钮 -->
       <div class="space-y-3">
         <button
@@ -28,7 +28,7 @@
         >
           重试
         </button>
-        
+
         <button
           v-if="showGoBack"
           @click="goBack"
@@ -36,7 +36,7 @@
         >
           返回
         </button>
-        
+
         <router-link
           v-if="showGoHome"
           to="/"
@@ -45,22 +45,27 @@
           回到首页
         </router-link>
       </div>
-      
+
       <!-- 详细错误信息（开发环境） -->
       <details v-if="showDetails && isDev" class="mt-6 text-left">
-        <summary class="cursor-pointer text-sm text-gray-500 dark:text-gray-400 mb-2">
+        <summary
+          class="cursor-pointer text-sm text-gray-500 dark:text-gray-400 mb-2"
+        >
           错误详情
         </summary>
-        <pre class="text-xs bg-gray-100 dark:bg-gray-800 p-3 rounded overflow-x-auto text-red-600 dark:text-red-400">{{ errorDetails }}</pre>
+        <pre
+          class="text-xs bg-gray-100 dark:bg-gray-800 p-3 rounded overflow-x-auto text-red-600 dark:text-red-400"
+          >{{ errorDetails }}</pre
+        >
       </details>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
-import { Icon } from '@iconify/vue';
-import { useRouter } from 'vue-router';
+import { computed } from "vue";
+import { Icon } from "@iconify/vue";
+import { useRouter } from "vue-router";
 
 interface Props {
   title?: string;
@@ -88,12 +93,12 @@ const router = useRouter();
 const isDev = import.meta.env.DEV;
 
 const errorDetails = computed(() => {
-  if (!props.error) return '';
-  
-  if (typeof props.error === 'string') {
+  if (!props.error) return "";
+
+  if (typeof props.error === "string") {
     return props.error;
   }
-  
+
   return `${props.error.name}: ${props.error.message}\n${props.error.stack}`;
 });
 
@@ -101,7 +106,7 @@ function goBack() {
   if (window.history.length > 1) {
     router.back();
   } else {
-    router.push('/');
+    router.push("/");
   }
 }
 </script>

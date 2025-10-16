@@ -1,4 +1,4 @@
-import { ref, nextTick } from 'vue';
+import { ref, nextTick } from "vue";
 
 /**
  * 滚动管理组合式函数
@@ -6,57 +6,59 @@ import { ref, nextTick } from 'vue';
 export function useScroll() {
   const scrollY = ref(0);
   const isScrolling = ref(false);
-  
+
   function updateScrollPosition() {
     scrollY.value = window.scrollY || document.documentElement.scrollTop;
   }
-  
-  function scrollTo(element: Element | string, options?: ScrollIntoViewOptions) {
-    const target = typeof element === 'string' 
-      ? document.querySelector(element)
-      : element;
-      
+
+  function scrollTo(
+    element: Element | string,
+    options?: ScrollIntoViewOptions,
+  ) {
+    const target =
+      typeof element === "string" ? document.querySelector(element) : element;
+
     if (target) {
       target.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
-        ...options
+        behavior: "smooth",
+        block: "start",
+        ...options,
       });
     }
   }
-  
+
   function scrollToTop() {
     window.scrollTo({
       top: 0,
-      behavior: 'smooth'
+      behavior: "smooth",
     });
   }
-  
+
   async function scrollToHash(hash: string) {
     await nextTick();
-    
+
     if (hash) {
-      const element = document.getElementById(hash.replace('#', ''));
+      const element = document.getElementById(hash.replace("#", ""));
       if (element) {
         scrollTo(element);
       }
     }
   }
-  
+
   function trackActiveHeading(headings: NodeListOf<Element> | Element[]) {
     const headingElements = Array.from(headings);
-    let activeId = '';
-    
+    let activeId = "";
+
     for (const heading of headingElements) {
       const rect = heading.getBoundingClientRect();
       if (rect.top <= 100 && rect.bottom >= 0) {
         activeId = heading.id;
       }
     }
-    
+
     return activeId;
   }
-  
+
   return {
     scrollY,
     isScrolling,
@@ -64,6 +66,6 @@ export function useScroll() {
     scrollTo,
     scrollToTop,
     scrollToHash,
-    trackActiveHeading
+    trackActiveHeading,
   };
 }

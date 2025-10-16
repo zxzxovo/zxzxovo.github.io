@@ -17,9 +17,9 @@
         "美食"
       ],
       "draft": false,
-      "wordCount": 5268,
+      "wordCount": 5247,
       "readingTime": 6,
-      "lastModified": "2025-09-30T20:23:21.724Z"
+      "lastModified": "2025-10-16T17:06:37.643Z"
     },
     {
       "slug": "Rust标准库的path",
@@ -659,9 +659,9 @@
         "count": 22
       }
     ],
-    "totalWords": 86995,
+    "totalWords": 86974,
     "averageReadingTime": 5
   },
   "errors": [],
-  "generated": "2025-10-15T09:23:11.536Z"
+  "generated": "2025-10-16T17:47:36.237Z"
 }
