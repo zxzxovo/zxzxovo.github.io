@@ -192,9 +192,9 @@ const goToPost = (slug: string) => {
   router.push(`/blog/${slug}`);
 };
 
-// 回到博客列表
+// 返回上一页
 const goBack = () => {
-  router.push("/blog");
+  router.back();
 };
 
 // 滚动到目录项
