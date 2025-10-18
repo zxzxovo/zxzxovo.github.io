@@ -11,13 +11,16 @@
 ## `#[tokio::main]` 展开的内容
 
 `#[tokio::main]` 宏是一个将您的主函数替换为非异步主函数的宏，该函数启动一个运行时，然后调用您的代码。例如，这样：
+
 ```rust
 #[tokio::main]
 async fn main() {
     println!("Hello world");
 }
 ```
+
 被宏转换成这样：
+
 ```rust
 fn main() {
     tokio::runtime::Builder::new_multi_thread()
@@ -29,6 +32,7 @@ fn main() {
         })
 }
 ```
+
 为了在我们自己的项目中使用 async/await，我们可以做类似的事情，在适当的地方利用 [`block_on`] 方法进入异步上下文。
 
 ## mini-redis 的同步接口
@@ -37,13 +41,14 @@ fn main() {
 
 我们将要包装的接口是异步 [`Client`] 类型。它有几个方法，我们将实现以下方法的阻塞版本：
 
- * [`Client::get`]
- * [`Client::set`]
- * [`Client::set_expires`]
- * [`Client::publish`]
- * [`Client::subscribe`]
+- [`Client::get`]
+- [`Client::set`]
+- [`Client::set_expires`]
+- [`Client::publish`]
+- [`Client::subscribe`]
 
 为此，我们引入一个名为 `src/clients/blocking_client.rs` 的新文件，并用围绕异步 `Client` 类型的包装器结构初始化它：
+
 ```rs
 use tokio::net::ToSocketAddrs;
 use tokio::runtime::Runtime;
@@ -70,6 +75,7 @@ impl BlockingClient {
     }
 }
 ```
+
 在这里，我们包含了构造函数作为如何在非异步上下文中执行异步方法的第一个示例。我们使用 Tokio [`Runtime`] 类型上的 [`block_on`] 方法来做到这一点，该方法执行异步方法并返回其结果。
 
 一个重要的细节是使用 [`current_thread`] 运行时。通常在使用 Tokio 时，您会使用默认的 [`multi_thread`] 运行时，它会生成一堆后台线程，以便能够高效地同时运行许多事情。对于我们的用例，我们一次只做一件事，所以运行多个线程不会获得任何好处。这使得
@@ -82,6 +88,7 @@ time, so we won't gain anything by running multiple threads. This makes the
 > 因为 `current_thread` 运行时不生成线程，它只在调用 `block_on` 时操作。一旦 `block_on` 返回，该运行时上所有生成的任务将冻结，直到您再次调用 `block_on`。如果生成的任务在不调用 `block_on` 时必须继续运行，请使用 `multi_threaded` 运行时。
 
 一旦我们有了这个结构，大多数方法都很容易实现：
+
 ```rs
 use bytes::Bytes;
 use std::time::Duration;
@@ -109,7 +116,9 @@ impl BlockingClient {
     }
 }
 ```
+
 [`Client::subscribe`] 方法更有趣，因为它将 `Client` 转换为 `Subscriber` 对象。我们可以通过以下方式实现它：
+
 ```rs
 /// 进入发布/订阅模式的客户端。
 ///
@@ -152,6 +161,7 @@ impl BlockingSubscriber {
     }
 }
 ```
+
 所以，`subscribe` 方法将首先使用运行时将异步 `Client` 转换为异步 `Subscriber`。然后，它将把生成的 `Subscriber` 与 `Runtime` 一起存储，并使用 [`block_on`] 实现各种方法。
 
 注意异步 `Subscriber` 结构有一个名为 `get_subscribed` 的非异步方法。为了处理这个，我们只是直接调用它，而不涉及运行时。
@@ -160,15 +170,16 @@ impl BlockingSubscriber {
 
 上面的部分解释了实现同步包装器的最简单方法，但这不是唯一的方法。这些方法是：
 
-  * 创建一个 [`Runtime`] 并在异步代码上调用 [`block_on`]。
- * 创建一个 [`Runtime`] 并在其上 [`spawn`] 任务。
- * 在单独的线程中运行 [`Runtime`] 并向其发送消息。
+- 创建一个 [`Runtime`] 并在异步代码上调用 [`block_on`]。
+- 创建一个 [`Runtime`] 并在其上 [`spawn`] 任务。
+- 在单独的线程中运行 [`Runtime`] 并向其发送消息。
 
 我们已经看到了第一种方法。下面概述了另外两种方法。
 
 ### 在运行时上生成任务
 
 [`Runtime`] 对象有一个名为 [`spawn`] 的方法。当您调用此方法时，您会创建一个新的后台任务在运行时上运行。例如：
+
 ```rust
 use tokio::runtime::Builder;
 use tokio::time::{sleep, Duration};
@@ -205,6 +216,7 @@ async fn my_bg_task(i: u64) {
     println!("Task {} stopping.", i);
 }
 ```
+
 ```text
 Task 0 sleeping for 1000 ms.
 Task 1 sleeping for 950 ms.
@@ -228,14 +240,15 @@ Task 2 stopping.
 Task 1 stopping.
 Task 0 stopping.
 ```
+
 在上面的示例中，我们在运行时上生成了 10 个后台任务，然后等待所有任务完成。作为示例，这可能是在图形应用程序中实现后台网络请求的好方法，因为网络请求在主 GUI 线程上运行太耗时。相反，您在后台运行的 Tokio 运行时上生成请求，并在请求完成时让任务将信息发送回 GUI 代码，甚至如果您想要进度条的话，也可以增量发送。
 
 在这个示例中，重要的是运行时被配置为 [`multi_thread`] 运行时。如果您将其更改为 [`current_thread`] 运行时，您会发现耗时任务在任何后台任务开始之前就完成了。这是因为在 `current_thread` 运行时上生成的后台任务只会在调用 `block_on` 期间执行，因为运行时没有其他地方可以运行它们。
 
 该示例通过在 [`spawn`] 调用返回的 [`JoinHandle`] 上调用 `block_on` 来等待生成的任务完成，但这不是唯一的方法。以下是一些替代方案：
 
- * 使用消息传递通道，如 [`tokio::sync::mpsc`]。
- * 修改由例如 `Mutex` 保护的共享值。这对于 GUI 中的进度条来说可能是一个好方法，其中 GUI 每帧读取共享值。
+- 使用消息传递通道，如 [`tokio::sync::mpsc`]。
+- 修改由例如 `Mutex` 保护的共享值。这对于 GUI 中的进度条来说可能是一个好方法，其中 GUI 每帧读取共享值。
 
 `spawn` 方法在 [`Handle`] 类型上也可用。`Handle` 类型可以被克隆以获得运行时的多个句柄，每个 `Handle` 都可以用于在运行时上生成新任务。
 
@@ -298,6 +311,7 @@ impl TaskSpawner {
     }
 }
 ```
+
 这个示例可以通过多种方式配置。例如，您可以使用 [`Semaphore`] 来限制活动任务的数量，或者您可以使用相反方向的通道向生成器发送响应。当您以这种方式生成运行时时，它是一种[actor]。
 
 [`Runtime`]: https://docs.rs/tokio/1/tokio/runtime/struct.Runtime.html

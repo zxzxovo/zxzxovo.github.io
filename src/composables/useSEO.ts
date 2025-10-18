@@ -64,7 +64,7 @@ export function useSEO() {
     updateMetaTag("og:image", meta.image, "property");
     updateMetaTag("og:url", meta.url, "property");
     updateMetaTag("og:type", meta.type, "property");
-    updateMetaTag("og:site_name", "Zhixia的官方网站", "property");
+    updateMetaTag("og:site_name", "芷夏的官方网站", "property");
 
     // Twitter Card meta标签
     updateMetaTag("twitter:card", "summary_large_image", "name");
@@ -179,7 +179,7 @@ export function useSEO() {
     image?: string;
   }) {
     const meta: SEOMetaData = {
-      title: `${post.title} - Zhixia的博客`,
+      title: `${post.title} - 博客 - 芷夏的官方网站`,
       description: post.description || `阅读关于${post.title}的文章`,
       url: `https://hizhixia.site/blog/${encodeURIComponent(post.slug)}`,
       type: "article",
@@ -206,12 +206,12 @@ export function useSEO() {
       image: meta.image,
       author: {
         "@type": "Person",
-        name: "Zhixia",
+        name: "芷夏",
         url: "https://hizhixia.site/about",
       },
       publisher: {
         "@type": "Person",
-        name: "Zhixia",
+        name: "芷夏",
         logo: {
           "@type": "ImageObject",
           url: "https://hizhixia.site/zx.svg",
@@ -245,8 +245,8 @@ export function useSEO() {
   ) {
     const isChapter = !!chapter;
     const title = isChapter
-      ? `${chapter.title} - ${book.title} - Zhixia的电子书`
-      : `${book.title} - Zhixia的电子书`;
+      ? `${chapter.title} - ${book.title} - 芷夏的官方网站`
+      : `${book.title} - 芷夏的官方网站`;
 
     const url = isChapter
       ? `https://hizhixia.site/book/${book.id}/${chapter.id}`
@@ -257,7 +257,7 @@ export function useSEO() {
       description: book.description || `阅读${book.title}`,
       url,
       type: "book",
-      author: book.author?.join(", ") || "Zhixia",
+      author: book.author?.join(", ") || "芷夏",
     };
 
     setMeta(meta);
@@ -271,11 +271,11 @@ export function useSEO() {
       author: book.author?.map((name) => ({
         "@type": "Person",
         name,
-      })) || [{ "@type": "Person", name: "Zhixia" }],
+      })) || [{ "@type": "Person", name: "芷夏" }],
       url: `https://hizhixia.site/book/${book.id}`,
       publisher: {
         "@type": "Person",
-        name: "Zhixia",
+        name: "芷夏",
       },
     };
 

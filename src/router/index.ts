@@ -115,9 +115,6 @@ const routes: Readonly<RouteRecordRaw[]> = [
         components: {
           root: BlogPost,
         },
-        meta: {
-          title: "文章详情",
-        },
       },
       {
         // 404 page
@@ -139,9 +136,6 @@ const routes: Readonly<RouteRecordRaw[]> = [
       appcontent: BookContent,
     },
     props: true,
-    meta: {
-      title: "书籍内容",
-    },
   },
   {
     // Fun projects page

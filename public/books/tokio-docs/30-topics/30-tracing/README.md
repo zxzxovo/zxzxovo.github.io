@@ -69,6 +69,7 @@ pub async fn main() -> mini_redis::Result<()> {
 在上面的示例中，我们使用默认配置配置了 [`FmtSubscriber`]。但是，`tracing-subscriber` 还提供了许多配置 [`FmtSubscriber`] 行为的方法，例如自定义输出格式、在日志中包含附加信息（如线程 ID 或源代码位置），以及将日志写入 `stdout` 以外的地方。
 
 例如：
+
 ```rust
 // 开始配置 `fmt` 订阅者
 let subscriber = tracing_subscriber::fmt()
@@ -150,8 +151,8 @@ impl Handler {
 1. 具有 `info` 的详细程度[级别]（"中等"详细程度），
 2. 命名为 `Handler::run`，
 3. 具有与其关联的一些结构化数据。
-    - `fields(...)` 表示发出的跨度*应该*在名为 `peer_addr` 的字段中包含连接的 `SocketAddr` 的 `fmt::Display` 表示。
-    - `skip(self)` 表示发出的跨度*不应该*记录 `Handler` 的调试表示。
+   - `fields(...)` 表示发出的跨度*应该*在名为 `peer_addr` 的字段中包含连接的 `SocketAddr` 的 `fmt::Display` 表示。
+   - `skip(self)` 表示发出的跨度*不应该*记录 `Handler` 的调试表示。
 
 [级别]: https://docs.rs/tracing/latest/tracing/struct.Level.html
 
@@ -165,6 +166,7 @@ impl Handler {
 [`trace_span!`]: https://docs.rs/tracing/*/tracing/macro.trace_span.html
 
 要发出事件，调用 [`event!`] 宏或其任何级别化简写形式（[`error!`]、[`warn!`]、[`info!`]、[`debug!`]、[`trace!`]）。例如，要记录客户端发送了格式错误的命令：
+
 ```rust
 # type Error = Box<dyn std::error::Error + Send + Sync>;
 # type Result<T> = std::result::Result<T, Error>;

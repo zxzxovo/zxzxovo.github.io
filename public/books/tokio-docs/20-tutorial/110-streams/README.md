@@ -249,7 +249,7 @@ pub trait Stream {
     type Item;
 
     fn poll_next(
-        self: Pin<&mut Self>, 
+        self: Pin<&mut Self>,
         cx: &mut Context<'_>
     ) -> Poll<Option<Self::Item>>;
 
@@ -282,7 +282,7 @@ struct Interval {
 #   type Output = ();
 #   fn poll(self: Pin<&mut Self>, _cx: &mut Context<'_>) -> Poll<()> {
 #       Poll::Pending
-#   }  
+#   }
 # }
 
 impl Interval {

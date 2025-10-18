@@ -10,7 +10,7 @@
 访问 Tokio 相关内容：
 
 | Crates.io [Tokio](https://crates.io/crates/tokio) | 网站主页 [Tokio](https://tokio.rs/) | Docs.rs 文档 [Tokio](https://docs.rs/tokio/) | Github 仓库 [Tokio](https://github.com/tokio-rs/tokio) |
-| :---: | :---: | :---: | :---: |
+| :-----------------------------------------------: | :---------------------------------: | :------------------------------------------: | :----------------------------------------------------: |
 
 Rust 异步编程：
 

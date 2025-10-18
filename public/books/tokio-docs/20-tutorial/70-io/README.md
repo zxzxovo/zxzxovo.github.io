@@ -351,9 +351,7 @@ loop {    match socket.read(&mut buf).await {
 
 [full_manual]: https://github.com/tokio-rs/website/blob/master/tutorial-code/io/src/echo-server.rs
 [full_copy]: https://github.com/tokio-rs/website/blob/master/tutorial-code/io/src/echo-server-copy.rs
-
 [send]: /tokio/tutorial/spawning#send-bound
-
 [`AsyncRead`]: https://docs.rs/tokio/1/tokio/io/trait.AsyncRead.html
 [`AsyncWrite`]: https://docs.rs/tokio/1/tokio/io/trait.AsyncWrite.html
 [`AsyncReadExt`]: https://docs.rs/tokio/1/tokio/io/trait.AsyncReadExt.html

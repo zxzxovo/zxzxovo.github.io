@@ -1,5 +1,5 @@
 import { ref, computed, onMounted } from "vue";
-import type { Theme } from "../types";
+import type { Theme } from "@/types";
 
 /**
  * 主题管理组合式函数

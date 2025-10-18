@@ -6,7 +6,7 @@ import CardView from "@/components/CardView.vue";
 import { renderMarkdownWithTOC, type TableOfContent } from "@/utils/markdown";
 import { useSEO } from "@/composables/useSEO";
 import type { BlogPost } from "@/types";
-import { devLog, devError } from "@/utils/logger";
+import { devLog } from "@/utils/logger";
 
 // 路由和响应式数据
 const route = useRoute();
@@ -224,7 +224,6 @@ const copyLink = async () => {
     await navigator.clipboard.writeText(globalThis.location.href);
     alert("链接已复制到剪贴板！");
   } catch (err) {
-    console.error("复制链接失败:", err);
     const textArea = document.createElement("textarea");
     textArea.value = globalThis.location.href;
     document.body.appendChild(textArea);
@@ -265,15 +264,11 @@ const loadPostData = async () => {
     const postsData = await response.json();
     allPosts.value = postsData.posts;
 
-    devLog("已加载文章列表，总数:", allPosts.value.length);
-
     // 找到当前文章
     const post = allPosts.value.find((p) => p.slug === postSlug.value);
     if (!post) {
       throw new Error("文章未找到");
     }
-
-    devLog("找到文章:", post.title);
 
     // 加载文章内容
     const contentResponse = await fetch(`/posts/${post.slug}/index.md`);
@@ -284,7 +279,6 @@ const loadPostData = async () => {
     }
 
     const contentText = await contentResponse.text();
-    console.log("文章内容长度:", contentText.length);
 
     // 解析 frontmatter 和内容
     const frontmatterMatch = contentText.match(
@@ -307,18 +301,13 @@ const loadPostData = async () => {
       throw new Error("文章内容为空");
     }
 
-    console.log("处理后的文章内容长度:", currentPost.value.content.length);
 
     // 处理Markdown内容并生成目录和HTML
-    devLog("开始渲染文章内容:", currentPost.value.title);
     const { html, toc } = await renderMarkdownWithTOC(
       currentPost.value.content,
     );
     renderedContent.value = html;
     tableOfContents.value = toc;
-    devLog("文章内容渲染完成，HTML长度:", html.length);
-
-    console.log("生成目录项数:", tableOfContents.value.length);
 
     // 设置SEO meta标签
     setBlogPostSEO({
@@ -341,7 +330,6 @@ const loadPostData = async () => {
       }
     }, 500);
   } catch (error) {
-    devError("❌ 加载文章失败:", error);
     loadError.value = error instanceof Error ? error.message : "加载失败";
   } finally {
     isLoading.value = false;
@@ -537,7 +525,6 @@ watch(
   () => route.params.slug,
   (newSlug, oldSlug) => {
     if (newSlug && newSlug !== oldSlug) {
-      console.log(`📖 文章参数变化: ${oldSlug} -> ${newSlug}`);
       debouncedLoadPostData();
     }
   },
@@ -549,7 +536,6 @@ watch(
   () => route.fullPath,
   (newPath, oldPath) => {
     if (newPath !== oldPath && newPath.startsWith("/blog/")) {
-      console.log(`🔄 路由路径变化: ${oldPath} -> ${newPath}`);
       // 确保在路由变化时重新加载数据
       debouncedLoadPostData();
     }

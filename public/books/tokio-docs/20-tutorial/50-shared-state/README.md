@@ -103,7 +103,7 @@ async fn process(socket: TcpStream, db: Db) {
                 let mut db = db.lock().unwrap();
                 db.insert(cmd.key().to_string(), cmd.value().clone());
                 Frame::Simple("OK".to_string())
-            }           
+            }
             Get(cmd) => {
                 let db = db.lock().unwrap();
                 if let Some(value) = db.get(cmd.key()) {
@@ -124,6 +124,7 @@ async fn process(socket: TcpStream, db: Db) {
 ## 在 `.await` 期间持有 `MutexGuard`
 
 您可能会编写如下所示的代码：
+
 ```rust
 use std::sync::{Mutex, MutexGuard};
 
@@ -135,7 +136,9 @@ async fn increment_and_do_stuff(mutex: &Mutex<i32>) {
 } // lock 在这里超出作用域
 # async fn do_something_async() {}
 ```
+
 当您尝试生成调用此函数的任务时，您将遇到以下错误消息：
+
 ```text
 error: future cannot be sent between threads safely
    --> src/lib.rs:13:5
@@ -160,8 +163,10 @@ note: future is not `Send` as this value is used across an await
 8   | }
     | - `mut lock` is later dropped here
 ```
+
 这是因为 `std::sync::MutexGuard` 类型**不是** `Send`。这意味着您不能将互斥锁发送到另一个线程，错误发生是因为 Tokio 运行时可以在每个 `.await` 处在线程之间移动任务。
 为了避免这种情况，您应该重构代码，使互斥锁的析构函数在 `.await` 之前运行。
+
 ```rust
 # use std::sync::{Mutex, MutexGuard};
 // 这可以工作！
@@ -175,7 +180,9 @@ async fn increment_and_do_stuff(mutex: &Mutex<i32>) {
 }
 # async fn do_something_async() {}
 ```
+
 请注意，这不起作用：
+
 ```rust
 use std::sync::{Mutex, MutexGuard};
 
@@ -189,6 +196,7 @@ async fn increment_and_do_stuff(mutex: &Mutex<i32>) {
 }
 # async fn do_something_async() {}
 ```
+
 这是因为编译器目前仅基于作用域信息计算 future 是否为 `Send`。编译器希望在将来更新以支持显式删除它，但现在，您必须显式使用作用域。
 
 请注意，这里讨论的错误也在[生成章节的 Send 绑定部分][send-bound]中讨论。
@@ -204,6 +212,7 @@ async fn increment_and_do_stuff(mutex: &Mutex<i32>) {
 ### 重构您的代码以不在 `.await` 期间持有锁
 
 处理互斥锁的最安全方法是将其包装在结构体中，并仅在该结构体上的非异步方法内锁定互斥锁。
+
 ```rust
 use std::sync::Mutex;
 
@@ -224,6 +233,7 @@ async fn increment_and_do_stuff(can_incr: &CanIncrement) {
 }
 # async fn do_something_async() {}
 ```
+
 这种模式保证您不会遇到 `Send` 错误，因为互斥锁保护在异步函数中的任何地方都不会出现。当使用其 `MutexGuard` 实现 `Send` 的 crate 时，它还可以保护您免受死锁。
 
 您可以在[这篇博客文章][shared-mutable-state-blog-post]中找到更详细的示例。
@@ -235,6 +245,7 @@ async fn increment_and_do_stuff(can_incr: &CanIncrement) {
 ### 使用 Tokio 的异步互斥锁
 
 Tokio 提供的 [`tokio::sync::Mutex`] 类型也可以使用。Tokio 互斥锁的主要特性是它可以在 `.await` 期间持有而不会出现任何问题。也就是说，异步互斥锁比普通互斥锁更昂贵，通常最好使用其他两种方法之一。
+
 ```rust
 use tokio::sync::Mutex; // 注意！这使用 Tokio 互斥锁
 

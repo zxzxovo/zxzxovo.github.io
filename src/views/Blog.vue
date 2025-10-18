@@ -227,7 +227,6 @@ const restoreFilterState = () => {
       sessionStorage.removeItem("blog-filter-state");
     }
   } catch (error) {
-    console.warn("恢复筛选状态失败:", error);
   }
 };
 

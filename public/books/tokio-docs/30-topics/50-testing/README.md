@@ -119,7 +119,7 @@ where
 
 ```rust
 # use tokio::io::{AsyncBufReadExt, AsyncRead, AsyncWrite, AsyncWriteExt, BufReader};
-# 
+#
 # async fn handle_connection<Reader, Writer>(
 #     reader: Reader,
 #     mut writer: Writer,

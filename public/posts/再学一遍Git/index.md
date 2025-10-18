@@ -9,15 +9,14 @@ categories = ["Code"]
 tags = ["Git", "Code", "Tools", "学习", "笔记"]
 +++
 
-
 Git真的是非常重要了！！但我编码不多，用到Git的场景也很少，一段时间不用就会忘掉好多命令和用法QwQ。
 
 按照一般的工作流记录一遍使用Git的工作流（顺便水一篇blog），顺便当个备忘录或教程（？），不要再忘了！
 
-
 ## 配置Git
 
 安装Git后，首先需要设置是谁在这台设备上使用Git工作，给自己注册个身份证：
+
 ```shell
 git config --global user.name "Name"
 git config --global user.email "Email@email.com"
@@ -27,6 +26,7 @@ git config --global user.email "Email@email.com"
 ```
 
 为了方便使用Github或其他Git服务器，我们需要配置SSH。为防止冒名顶替可以配置GPG：
+
 ```shell
 ssh-keygen -t ed25519 -C "your_email@example.com"
 # 若不支持 ed25519 则使用如下命令
@@ -48,8 +48,8 @@ git config --global commit.gpgsign true
 gpg --armor --export SEC_key_id
 ```
 
-
 一些方便的命令 ^w^ ：
+
 ```shell
 # 更改git打开的文本编辑器
 git config -- system core.editor vim
@@ -67,6 +67,7 @@ git config -- global --edit
 ## 本地操作
 
 要管理我们的项目，首先得创建一个Git库：
+
 ```shell
 git init my_proj
 # or
@@ -76,6 +77,7 @@ git init
 ```
 
 从头开始开发，先编写一些项目的配置文件，然后提交，作为最初的版本：
+
 ```shell
 # 添加所有文件到Stage
 git add .
@@ -89,6 +91,7 @@ git commit -m "message" --amend
 ```
 
 之后可以新建一个分支，在该分支上继续开发任务：
+
 ```shell
 # 查看当前仓库分支
 git branch
@@ -110,6 +113,7 @@ git branch -M new_name
 ```
 
 现在看看在开发时怎么进行版本管理（）：
+
 ```shell
 # 查看commit记录
 # --pretty=oneline  选项简化输出每行显示一条commit
@@ -180,6 +184,7 @@ git show tag_here
 ```
 
 在该分支上完成开发任务后，可以合并到master分支：
+
 ```shell
 git switch master
 
@@ -200,6 +205,7 @@ git log --graph
 在本地使用Git进行版本管理进行得差不多了，现在看看如何使用Git借助远程仓库与别人协助工作。
 
 首先看看怎么进行远程仓库的一些相关操作：
+
 ```shell
 # 查看当前仓库的远程仓库信息
 git remote -v
@@ -225,6 +231,7 @@ git clone remote_name
 ```
 
 多分支下与远程仓库的操作：
+
 ```shell
 # 查看远程仓库的分支
 # -a 选项查看本地和远程的所有分支
@@ -250,6 +257,7 @@ git branch -d branch_name
 ## Patch和Submodule
 
 Patch用于记录代码的更改及应用，可以使用它生成最近几次的commit记录的patch，也可以很方便地把patch的改动合并：
+
 ```shell
 # 生成patch
 # 通过最近的n次commit生成n个patch
@@ -265,6 +273,7 @@ git send-email --to="email" patch_name.patch
 ```
 
 Submodule用于管理大型项目，尤其是一个项目是由多个子项目构成时。例如Rust开发中使用 workspace 与 submodule 配合进行项目管理：
+
 ```shell
 # 添加submodule
 # 添加本地的git仓库

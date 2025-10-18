@@ -27,7 +27,7 @@
           "order": 1,
           "level": 0,
           "hasContent": true,
-          "wordCount": 58
+          "wordCount": 59
         },
         {
           "id": "20-tutorial",
@@ -43,7 +43,7 @@
               "order": 1,
               "level": 1,
               "hasContent": true,
-              "wordCount": 148
+              "wordCount": 149
             },
             {
               "id": "20-setup",
@@ -51,7 +51,7 @@
               "order": 2,
               "level": 1,
               "hasContent": true,
-              "wordCount": 127
+              "wordCount": 128
             },
             {
               "id": "30-hello-tokio",
@@ -59,7 +59,7 @@
               "order": 3,
               "level": 1,
               "hasContent": true,
-              "wordCount": 383
+              "wordCount": 384
             },
             {
               "id": "40-spawning",
@@ -67,7 +67,7 @@
               "order": 4,
               "level": 1,
               "hasContent": true,
-              "wordCount": 852
+              "wordCount": 853
             },
             {
               "id": "50-shared-state",
@@ -75,7 +75,7 @@
               "order": 5,
               "level": 1,
               "hasContent": true,
-              "wordCount": 788
+              "wordCount": 789
             },
             {
               "id": "60-channels",
@@ -83,7 +83,7 @@
               "order": 6,
               "level": 1,
               "hasContent": true,
-              "wordCount": 1008
+              "wordCount": 1009
             },
             {
               "id": "70-io",
@@ -91,7 +91,7 @@
               "order": 7,
               "level": 1,
               "hasContent": true,
-              "wordCount": 826
+              "wordCount": 827
             },
             {
               "id": "80-framing",
@@ -99,7 +99,7 @@
               "order": 8,
               "level": 1,
               "hasContent": true,
-              "wordCount": 933
+              "wordCount": 934
             },
             {
               "id": "90-async",
@@ -107,7 +107,7 @@
               "order": 9,
               "level": 1,
               "hasContent": true,
-              "wordCount": 2101
+              "wordCount": 2102
             },
             {
               "id": "100-select",
@@ -115,7 +115,7 @@
               "order": 10,
               "level": 1,
               "hasContent": true,
-              "wordCount": 2318
+              "wordCount": 2319
             },
             {
               "id": "110-streams",
@@ -123,7 +123,7 @@
               "order": 11,
               "level": 1,
               "hasContent": true,
-              "wordCount": 1234
+              "wordCount": 1235
             }
           ]
         },
@@ -133,7 +133,7 @@
           "order": 3,
           "level": 0,
           "hasContent": true,
-          "wordCount": 9,
+          "wordCount": 10,
           "children": [
             {
               "id": "10-bridging",
@@ -141,7 +141,7 @@
               "order": 1,
               "level": 1,
               "hasContent": true,
-              "wordCount": 794
+              "wordCount": 795
             },
             {
               "id": "20-shutdown",
@@ -149,7 +149,7 @@
               "order": 2,
               "level": 1,
               "hasContent": true,
-              "wordCount": 289
+              "wordCount": 290
             },
             {
               "id": "30-tracing",
@@ -157,7 +157,7 @@
               "order": 3,
               "level": 1,
               "hasContent": true,
-              "wordCount": 528
+              "wordCount": 529
             },
             {
               "id": "40-tracing-next-steps",
@@ -165,7 +165,7 @@
               "order": 4,
               "level": 1,
               "hasContent": true,
-              "wordCount": 427
+              "wordCount": 428
             },
             {
               "id": "50-testing",
@@ -173,7 +173,7 @@
               "order": 5,
               "level": 1,
               "hasContent": true,
-              "wordCount": 409
+              "wordCount": 410
             }
           ]
         },
@@ -183,13 +183,13 @@
           "order": 4,
           "level": 0,
           "hasContent": true,
-          "wordCount": 364
+          "wordCount": 365
         }
       ],
       "stats": {
         "totalChapters": 20,
-        "totalWords": 13602,
-        "lastModified": "2025-10-16"
+        "totalWords": 13621,
+        "lastModified": "2025-10-18"
       }
     }
   ],
@@ -199,5 +199,5 @@
     "externalLinks": 1,
     "totalChapters": 20
   },
-  "generated": "2025-10-16T17:47:36.841Z"
+  "generated": "2025-10-18T05:26:23.255Z"
 }

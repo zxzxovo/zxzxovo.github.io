@@ -1,7 +1,8 @@
 import { ref, nextTick } from "vue";
 
 /**
- * 滚动管理组合式函数
+ * 滚动管理组合式函数。
+ * 用于目录导航，高亮标题，平滑滚动。
  */
 export function useScroll() {
   const scrollY = ref(0);

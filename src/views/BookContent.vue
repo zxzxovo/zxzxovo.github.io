@@ -11,6 +11,7 @@ import {
   type TableOfContent,
 } from "@/utils/markdown";
 import type { Book } from "@/types";
+import { devError } from "@/utils/logger";
 
 // 定义章节接口
 interface BookChapter {
@@ -210,7 +211,7 @@ async function loadChapterContent() {
       renderedContent.value = html;
       tableOfContents.value = generateTableOfContents(html);
     } catch (error) {
-      console.error("Markdown 渲染错误:", error);
+      devError("Markdown 渲染错误:", error);
       renderedContent.value = '<p class="text-red-500">内容渲染失败</p>';
     }
 
@@ -278,7 +279,7 @@ async function loadChapterContent() {
       renderedContent.value = html;
       tableOfContents.value = generateTableOfContents(html);
     } catch (error) {
-      console.error("Markdown 渲染错误:", error);
+      devError("Markdown 渲染错误:", error);
       renderedContent.value = '<p class="text-red-500">内容渲染失败</p>';
     }
 
@@ -512,7 +513,6 @@ watch(
         loadError.value = null;
       }
     } catch (error) {
-      console.error("路由变化处理错误:", error);
     }
   },
   { immediate: false },

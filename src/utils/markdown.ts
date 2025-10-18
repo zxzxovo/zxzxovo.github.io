@@ -59,9 +59,8 @@ async function loadHighlightLanguage(lang: string): Promise<void> {
     python: () => import("highlight.js/lib/languages/python"),
     java: () => import("highlight.js/lib/languages/java"),
     rust: () => import("highlight.js/lib/languages/rust"),
-    go: () => import("highlight.js/lib/languages/go"),
-    cpp: () => import("highlight.js/lib/languages/cpp"),
     c: () => import("highlight.js/lib/languages/c"),
+    kotlin: () => import("highlight.js/lib/languages/kotlin"),
 
     // Web 相关
     html: () => import("highlight.js/lib/languages/xml"),

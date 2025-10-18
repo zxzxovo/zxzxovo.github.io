@@ -17,9 +17,9 @@
         "美食"
       ],
       "draft": false,
-      "wordCount": 5247,
+      "wordCount": 5259,
       "readingTime": 6,
-      "lastModified": "2025-10-16T17:06:37.643Z"
+      "lastModified": "2025-10-16T18:10:23.484Z"
     },
     {
       "slug": "Rust标准库的path",
@@ -40,9 +40,9 @@
         "字符串"
       ],
       "draft": false,
-      "wordCount": 20062,
+      "wordCount": 20649,
       "readingTime": 21,
-      "lastModified": "2025-08-07T10:09:03.113Z"
+      "lastModified": "2025-10-16T18:10:24.159Z"
     },
     {
       "slug": "语言能力的消失",
@@ -81,9 +81,9 @@
         "学习"
       ],
       "draft": false,
-      "wordCount": 4564,
+      "wordCount": 4580,
       "readingTime": 5,
-      "lastModified": "2025-07-24T16:07:36.053Z"
+      "lastModified": "2025-10-16T18:10:24.200Z"
     },
     {
       "slug": "解构之三",
@@ -104,7 +104,7 @@
       "draft": false,
       "wordCount": 796,
       "readingTime": 1,
-      "lastModified": "2025-07-15T09:17:50.483Z"
+      "lastModified": "2025-10-16T18:10:23.629Z"
     },
     {
       "slug": "我赠予离别",
@@ -123,9 +123,9 @@
         "给朋友"
       ],
       "draft": false,
-      "wordCount": 841,
+      "wordCount": 836,
       "readingTime": 1,
-      "lastModified": "2025-07-11T08:28:36.257Z"
+      "lastModified": "2025-10-16T18:10:23.775Z"
     },
     {
       "slug": "孤独是一缕烟雾",
@@ -146,7 +146,7 @@
       "draft": false,
       "wordCount": 284,
       "readingTime": 1,
-      "lastModified": "2025-07-11T08:28:36.261Z"
+      "lastModified": "2025-10-16T18:10:23.576Z"
     },
     {
       "slug": "Android四大组件基础",
@@ -165,9 +165,9 @@
         "学习"
       ],
       "draft": false,
-      "wordCount": 27304,
-      "readingTime": 28,
-      "lastModified": "2025-07-15T09:10:07.815Z"
+      "wordCount": 26558,
+      "readingTime": 27,
+      "lastModified": "2025-10-16T18:10:23.972Z"
     },
     {
       "slug": "月夜",
@@ -186,9 +186,9 @@
         "小诗"
       ],
       "draft": false,
-      "wordCount": 330,
+      "wordCount": 327,
       "readingTime": 1,
-      "lastModified": "2025-07-11T08:28:36.254Z"
+      "lastModified": "2025-10-16T18:10:23.871Z"
     },
     {
       "slug": "某些洁癖",
@@ -208,7 +208,7 @@
       "draft": false,
       "wordCount": 1564,
       "readingTime": 2,
-      "lastModified": "2025-07-11T08:28:36.204Z"
+      "lastModified": "2025-10-16T18:10:23.742Z"
     },
     {
       "slug": "解构之二",
@@ -227,9 +227,9 @@
         "无所事事"
       ],
       "draft": false,
-      "wordCount": 607,
+      "wordCount": 605,
       "readingTime": 1,
-      "lastModified": "2025-07-11T08:28:36.257Z"
+      "lastModified": "2025-10-16T18:10:23.602Z"
     },
     {
       "slug": "使用Tauri开发跨平台应用",
@@ -250,9 +250,9 @@
         "Tauri"
       ],
       "draft": true,
-      "wordCount": 19,
+      "wordCount": 20,
       "readingTime": 1,
-      "lastModified": "2025-07-11T08:28:36.257Z"
+      "lastModified": "2025-10-16T18:10:23.755Z"
     },
     {
       "slug": "Rust的函数式编程—-闭包",
@@ -270,9 +270,9 @@
         "函数式编程"
       ],
       "draft": false,
-      "wordCount": 5563,
+      "wordCount": 5508,
       "readingTime": 6,
-      "lastModified": "2025-07-11T08:28:36.261Z"
+      "lastModified": "2025-10-16T18:10:24.259Z"
     },
     {
       "slug": "冬至",
@@ -290,9 +290,9 @@
         "小说类似体"
       ],
       "draft": false,
-      "wordCount": 2525,
+      "wordCount": 2512,
       "readingTime": 3,
-      "lastModified": "2025-07-11T08:28:36.164Z"
+      "lastModified": "2025-10-16T18:10:23.559Z"
     },
     {
       "slug": "解构之一",
@@ -332,9 +332,9 @@
         "小诗"
       ],
       "draft": false,
-      "wordCount": 403,
+      "wordCount": 402,
       "readingTime": 1,
-      "lastModified": "2025-07-11T08:28:36.261Z"
+      "lastModified": "2025-10-16T18:10:23.503Z"
     },
     {
       "slug": "进制转换",
@@ -355,9 +355,9 @@
         "学习"
       ],
       "draft": false,
-      "wordCount": 3379,
-      "readingTime": 4,
-      "lastModified": "2025-07-12T10:24:09.617Z"
+      "wordCount": 4055,
+      "readingTime": 5,
+      "lastModified": "2025-10-16T18:10:23.709Z"
     },
     {
       "slug": "Clap的一些用法",
@@ -375,9 +375,9 @@
         "Rust"
       ],
       "draft": false,
-      "wordCount": 6006,
-      "readingTime": 7,
-      "lastModified": "2025-09-21T04:57:05.422Z"
+      "wordCount": 5957,
+      "readingTime": 6,
+      "lastModified": "2025-10-16T18:10:24.019Z"
     },
     {
       "slug": "再学一遍Git",
@@ -396,9 +396,9 @@
         "笔记"
       ],
       "draft": false,
-      "wordCount": 4967,
+      "wordCount": 4977,
       "readingTime": 5,
-      "lastModified": "2025-07-15T14:00:58.717Z"
+      "lastModified": "2025-10-16T18:10:23.909Z"
     },
     {
       "slug": "许多日前的自由",
@@ -418,7 +418,7 @@
       "draft": false,
       "wordCount": 380,
       "readingTime": 1,
-      "lastModified": "2025-07-11T08:28:36.261Z"
+      "lastModified": "2025-10-16T18:10:23.822Z"
     },
     {
       "slug": "许多日前的晚安",
@@ -435,9 +435,9 @@
         "散文诗类似体"
       ],
       "draft": false,
-      "wordCount": 496,
+      "wordCount": 493,
       "readingTime": 1,
-      "lastModified": "2025-07-11T08:28:36.207Z"
+      "lastModified": "2025-10-16T18:10:23.797Z"
     },
     {
       "slug": "hellooo-world",
@@ -659,9 +659,9 @@
         "count": 22
       }
     ],
-    "totalWords": 86974,
+    "totalWords": 87399,
     "averageReadingTime": 5
   },
   "errors": [],
-  "generated": "2025-10-16T17:47:36.237Z"
+  "generated": "2025-10-18T05:26:23.131Z"
 }
