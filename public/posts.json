@@ -1,6 +1,30 @@
 {
   "posts": [
     {
+      "slug": "AAA",
+      "title": "9月写到11月",
+      "description": "两个月内随意掉落的一些文字。内容包括：好想要爱，不公平啊，不想孤独，做个专业人士，有时想刺激，30天推歌挑战。",
+      "date": "2025-11-25",
+      "image": "/posts/AAA/./navigation.jpg",
+      "categories": [
+        "Daily",
+        "MY_ME"
+      ],
+      "tags": [
+        "Daily",
+        "呓语",
+        "解构",
+        "无所事事",
+        "生活",
+        "音乐",
+        "无聊"
+      ],
+      "draft": false,
+      "wordCount": 3543,
+      "readingTime": 4,
+      "lastModified": "2025-11-24T18:33:09.264Z"
+    },
+    {
       "slug": "菜谱小记",
       "title": "菜谱小记",
       "description": "最近的一些简单易做省时美味的小菜。",
@@ -458,13 +482,13 @@
     }
   ],
   "stats": {
-    "total": 22,
-    "published": 21,
+    "total": 23,
+    "published": 22,
     "draft": 1,
     "categories": [
       {
         "name": "Daily",
-        "count": 14
+        "count": 15
       },
       {
         "name": "Code",
@@ -476,7 +500,7 @@
       },
       {
         "name": "MY_ME",
-        "count": 3
+        "count": 4
       },
       {
         "name": "Android",
@@ -490,15 +514,19 @@
     "tags": [
       {
         "name": "Daily",
-        "count": 13
+        "count": 14
       },
       {
         "name": "呓语",
-        "count": 12
+        "count": 13
       },
       {
         "name": "Code",
         "count": 6
+      },
+      {
+        "name": "解构",
+        "count": 5
       },
       {
         "name": "Rust",
@@ -513,16 +541,16 @@
         "count": 5
       },
       {
-        "name": "解构",
-        "count": 4
-      },
-      {
         "name": "无所事事",
-        "count": 3
+        "count": 4
       },
       {
         "name": "小诗",
         "count": 3
+      },
+      {
+        "name": "生活",
+        "count": 2
       },
       {
         "name": "Rust标准库",
@@ -541,6 +569,14 @@
         "count": 2
       },
       {
+        "name": "音乐",
+        "count": 1
+      },
+      {
+        "name": "无聊",
+        "count": 1
+      },
+      {
         "name": "厨房",
         "count": 1
       },
@@ -550,10 +586,6 @@
       },
       {
         "name": "做饭",
-        "count": 1
-      },
-      {
-        "name": "生活",
         "count": 1
       },
       {
@@ -656,12 +688,12 @@
     "years": [
       {
         "year": 2025,
-        "count": 22
+        "count": 23
       }
     ],
-    "totalWords": 87399,
+    "totalWords": 90942,
     "averageReadingTime": 5
   },
   "errors": [],
-  "generated": "2025-10-18T05:32:52.030Z"
+  "generated": "2025-11-24T18:33:35.018Z"
 }

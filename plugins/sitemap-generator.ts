@@ -139,10 +139,6 @@ Crawl-delay: 1
 # Disallow common non-content paths
 Disallow: /admin/
 Disallow: /api/
-Disallow: /*.json$
-Disallow: /*?*utm_*
-Disallow: /*?*fbclid*
-Disallow: /*?*gclid*
 `
 
   writeFileSync(resolve(outDir, 'robots.txt'), robotsTxt, 'utf-8')
