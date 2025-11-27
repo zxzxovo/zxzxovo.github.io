@@ -455,12 +455,12 @@ onMounted(async () => {
 
       <!-- 联系方式 -->
       <section
-        class="py-12 md:py-16 px-4 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl"
+        class="py-8 md:py-12 px-4 bg-gradient-to-br from-blue-100 via-pink-50 to-blue-50 dark:from-zinc-800 dark:via-zinc-700 dark:to-zinc-800 rounded-2xl shadow-lg"
       >
-        <div class="max-w-4xl mx-auto text-center text-white">
-          <h2 class="text-2xl md:text-3xl font-bold mb-4">💬 联系我</h2>
+        <div class="max-w-4xl mx-auto text-center">
+          <h2 class="text-2xl md:text-3xl font-bold mb-4 text-gray-900 dark:text-white">💬 联系我</h2>
           <p
-            class="text-blue-100 mb-6 md:mb-8 max-w-2xl mx-auto text-sm md:text-base"
+            class="text-gray-600 dark:text-gray-400 mb-6 md:mb-8 max-w-2xl mx-auto text-sm md:text-base"
           >
             欢迎交流技术问题，分享学习心得，或者只是简单地打个招呼
           </p>
@@ -470,9 +470,9 @@ onMounted(async () => {
           >
             <CardView
               class="text-center hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
-              padding="p-4 md:p-6"
+              padding="p-3 md:p-4"
             >
-              <div class="text-2xl md:text-3xl mb-3">📧</div>
+              <div class="text-2xl md:text-3xl mb-2">📧</div>
               <h3
                 class="font-semibold text-gray-900 dark:text-white mb-2 text-sm md:text-base"
               >
@@ -488,9 +488,9 @@ onMounted(async () => {
 
             <CardView
               class="text-center hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
-              padding="p-4 md:p-6"
+              padding="p-3 md:p-4"
             >
-              <div class="text-2xl md:text-3xl mb-3">🐙</div>
+              <div class="text-2xl md:text-3xl mb-2">🐙</div>
               <h3
                 class="font-semibold text-gray-900 dark:text-white mb-2 text-sm md:text-base"
               >
@@ -508,9 +508,9 @@ onMounted(async () => {
 
             <CardView
               class="text-center hover:shadow-xl transition-all duration-300 hover:-translate-y-1 sm:col-span-2 lg:col-span-1"
-              padding="p-4 md:p-6"
+              padding="p-3 md:p-4"
             >
-              <div class="text-2xl md:text-3xl mb-3">🌐</div>
+              <div class="text-2xl md:text-3xl mb-2">🌐</div>
               <h3
                 class="font-semibold text-gray-900 dark:text-white mb-2 text-sm md:text-base"
               >
