@@ -60,6 +60,21 @@ const tags = computed(() => {
   return Array.from(tagSet).sort();
 });
 
+// 热门标签：按出现次数排序，取前20个
+const popularTags = computed(() => {
+  const tagCount = new Map<string, number>();
+  publishedPosts.value.forEach((post) => {
+    post.tags.forEach((tag) => {
+      tagCount.set(tag, (tagCount.get(tag) || 0) + 1);
+    });
+  });
+  
+  return Array.from(tagCount.entries())
+    .sort((a, b) => b[1] - a[1]) // 按出现次数降序排序
+    .slice(0, 20) // 取前20个
+    .map(([tag]) => tag); // 只返回标签名
+});
+
 const years = computed(() => {
   const yearSet = new Set<string>();
   publishedPosts.value.forEach((post) => {
@@ -115,6 +130,7 @@ const totalPages = computed(() =>
 
 // 获取标签颜色
 const getTagColor = (tag: string) => {
+  // 预定义的特殊标签颜色
   const colorMap: Record<string, string> = {
     daily: "#10B981",
     code: "#3B82F6",
@@ -130,8 +146,48 @@ const getTagColor = (tag: string) => {
     小诗: "#F59E0B",
   };
 
-  return colorMap[tag.toLowerCase()] || "#6B7280";
+  // 如果有预定义颜色，直接返回
+  if (colorMap[tag.toLowerCase()]) {
+    return colorMap[tag.toLowerCase()];
+  }
+
+  // 为其他标签自动分配颜色
+  // 使用丰富的颜色调色板
+  const colorPalette = [
+    "#3B82F6", // blue-500
+    "#10B981", // green-500
+    "#F59E0B", // amber-500
+    "#EF4444", // red-500
+    "#8B5CF6", // violet-500
+    "#EC4899", // pink-500
+    "#06B6D4", // cyan-500
+    "#6366F1", // indigo-500
+    "#F97316", // orange-500
+    "#14B8A6", // teal-500
+    "#A855F7", // purple-500
+    "#84CC16", // lime-500
+    "#F43F5E", // rose-500
+    "#0EA5E9", // sky-500
+    "#22D3EE", // cyan-400
+    "#FB923C", // orange-400
+    "#34D399", // emerald-400
+    "#FBBF24", // amber-400
+    "#A78BFA", // violet-400
+    "#F472B6", // pink-400
+  ];
+
+  // 基于标签字符串生成一个稳定的哈希值
+  let hash = 0;
+  for (let i = 0; i < tag.length; i++) {
+    hash = tag.charCodeAt(i) + ((hash << 5) - hash);
+    hash = hash & hash; // Convert to 32bit integer
+  }
+
+  // 使用哈希值选择颜色
+  const index = Math.abs(hash) % colorPalette.length;
+  return colorPalette[index];
 };
+
 
 // 获取默认图片
 const getDefaultImage = (post: BlogPost) => {
@@ -448,11 +504,11 @@ onActivated(() => {
                   class="text-base font-semibold text-gray-900 dark:text-white mb-3 flex items-center"
                 >
                   <span class="mr-2">🏷️</span>
-                  标签
+                  热门标签
                 </h3>
                 <div class="flex flex-wrap gap-2">
                   <button
-                    v-for="tag in tags.slice(0, 12)"
+                    v-for="tag in popularTags"
                     :key="tag"
                     @click="
                       selectedTag = selectedTag === tag ? '' : tag;
@@ -491,33 +547,29 @@ onActivated(() => {
         <div class="lg:col-span-1 space-y-6 hidden lg:block">
           <!-- 统计信息 -->
           <CardView>
-            <div class="p-6">
+            <div class="p-1">
               <h3
-                class="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center"
+                class="text-lg font-semibold text-gray-900 dark:text-white mb-2 flex items-center"
               >
                 <span class="mr-2">📊</span>
                 博客统计
               </h3>
-              <div class="space-y-3">
+              <div class="space-y-2">
                 <div class="flex justify-between">
                   <span class="text-gray-600 dark:text-gray-300">总文章</span>
-                  <span class="font-semibold text-blue-600 dark:text-blue-400">
+                  <span class="font-semibold text-[#5BCEFA] dark:text-[#5BCEFA]">
                     {{ publishedPosts.length }}
                   </span>
                 </div>
                 <div class="flex justify-between">
                   <span class="text-gray-600 dark:text-gray-300">分类</span>
-                  <span
-                    class="font-semibold text-orange-600 dark:text-orange-400"
-                  >
+                  <span class="font-semibold text-[#5BCEFA] dark:text-[#5BCEFA]">
                     {{ categories.length }}
                   </span>
                 </div>
                 <div class="flex justify-between">
                   <span class="text-gray-600 dark:text-gray-300">标签</span>
-                  <span
-                    class="font-semibold text-green-600 dark:text-green-400"
-                  >
+                  <span class="font-semibold text-[#5BCEFA] dark:text-[#5BCEFA]">
                     {{ tags.length }}
                   </span>
                 </div>
@@ -527,9 +579,9 @@ onActivated(() => {
 
           <!-- 分类筛选 -->
           <CardView>
-            <div class="p-6">
+            <div class="p-1">
               <h3
-                class="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center"
+                class="text-lg font-semibold text-gray-900 dark:text-white mb-2 flex items-center"
               >
                 <span class="mr-2">📂</span>
                 分类
@@ -541,13 +593,16 @@ onActivated(() => {
                     currentPage = 1;
                   "
                   :class="[
-                    'w-full text-left px-3 py-2 rounded-lg transition-colors duration-200',
+                    'w-full px-3 py-2 rounded-lg transition-colors duration-200 flex items-center justify-between',
                     selectedCategory === ''
                       ? 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300'
                       : 'hover:bg-gray-100 dark:hover:bg-zinc-700 text-gray-700 dark:text-gray-300',
                   ]"
                 >
-                  全部 ({{ publishedPosts.length }})
+                  <span>全部</span>
+                  <span class="font-semibold text-[#F5A9B8] dark:text-[#F5A9B8]">
+                    {{ publishedPosts.length }}
+                  </span>
                 </button>
                 <button
                   v-for="category in categories"
@@ -557,17 +612,20 @@ onActivated(() => {
                     currentPage = 1;
                   "
                   :class="[
-                    'w-full text-left px-3 py-2 rounded-lg transition-colors duration-200',
+                    'w-full px-3 py-2 rounded-lg transition-colors duration-200 flex items-center justify-between',
                     selectedCategory === category
                       ? 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300'
                       : 'hover:bg-gray-100 dark:hover:bg-zinc-700 text-gray-700 dark:text-gray-300',
                   ]"
                 >
-                  {{ category }} ({{
-                    publishedPosts.filter((post: BlogPost) =>
-                      post.categories.includes(category),
-                    ).length
-                  }})
+                  <span>{{ category }}</span>
+                  <span class="font-semibold text-[#F5A9B8] dark:text-[#F5A9B8]">
+                    {{
+                      publishedPosts.filter((post: BlogPost) =>
+                        post.categories.includes(category),
+                      ).length
+                    }}
+                  </span>
                 </button>
               </div>
             </div>
@@ -575,9 +633,9 @@ onActivated(() => {
 
           <!-- 年份归档 -->
           <CardView>
-            <div class="p-6">
+            <div class="p-1">
               <h3
-                class="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center"
+                class="text-lg font-semibold text-gray-900 dark:text-white mb-2 flex items-center"
               >
                 <span class="mr-2">📅</span>
                 年份归档
@@ -624,16 +682,16 @@ onActivated(() => {
 
           <!-- 热门标签 -->
           <CardView>
-            <div class="p-6">
+            <div class="p-1">
               <h3
-                class="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center"
+                class="text-lg font-semibold text-gray-900 dark:text-white mb-2 flex items-center"
               >
                 <span class="mr-2">🏷️</span>
                 热门标签
               </h3>
               <div class="flex flex-wrap gap-2">
                 <button
-                  v-for="tag in tags.slice(0, 12)"
+                  v-for="tag in popularTags"
                   :key="tag"
                   @click="
                     selectedTag = selectedTag === tag ? '' : tag;
@@ -759,18 +817,12 @@ onActivated(() => {
                   <!-- 标签 -->
                   <div class="flex flex-wrap gap-1">
                     <span
-                      v-for="tag in post.tags.slice(0, 4)"
+                      v-for="tag in post.tags"
                       :key="tag"
                       class="px-2 py-1 rounded-full text-xs text-white font-medium"
                       :style="{ backgroundColor: getTagColor(tag) }"
                     >
                       {{ tag }}
-                    </span>
-                    <span
-                      v-if="post.tags.length > 4"
-                      class="px-2 py-1 rounded-full text-xs bg-gray-300 dark:bg-zinc-600 text-gray-700 dark:text-gray-300"
-                    >
-                      +{{ post.tags.length - 4 }}
                     </span>
                   </div>
                 </div>

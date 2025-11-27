@@ -92,6 +92,7 @@ const postSlug = computed(() => route.params.slug as string);
 
 // 获取标签颜色
 const getTagColor = (tag: string) => {
+  // 预定义的特殊标签颜色
   const colorMap: Record<string, string> = {
     daily: "#10B981",
     code: "#3B82F6",
@@ -107,7 +108,46 @@ const getTagColor = (tag: string) => {
     小诗: "#F59E0B",
   };
 
-  return colorMap[tag.toLowerCase()] || "#6B7280";
+  // 如果有预定义颜色，直接返回
+  if (colorMap[tag.toLowerCase()]) {
+    return colorMap[tag.toLowerCase()];
+  }
+
+  // 为其他标签自动分配颜色
+  // 使用丰富的颜色调色板
+  const colorPalette = [
+    "#3B82F6", // blue-500
+    "#10B981", // green-500
+    "#F59E0B", // amber-500
+    "#EF4444", // red-500
+    "#8B5CF6", // violet-500
+    "#EC4899", // pink-500
+    "#06B6D4", // cyan-500
+    "#6366F1", // indigo-500
+    "#F97316", // orange-500
+    "#14B8A6", // teal-500
+    "#A855F7", // purple-500
+    "#84CC16", // lime-500
+    "#F43F5E", // rose-500
+    "#0EA5E9", // sky-500
+    "#22D3EE", // cyan-400
+    "#FB923C", // orange-400
+    "#34D399", // emerald-400
+    "#FBBF24", // amber-400
+    "#A78BFA", // violet-400
+    "#F472B6", // pink-400
+  ];
+
+  // 基于标签字符串生成一个稳定的哈希值
+  let hash = 0;
+  for (let i = 0; i < tag.length; i++) {
+    hash = tag.charCodeAt(i) + ((hash << 5) - hash);
+    hash = hash & hash; // Convert to 32bit integer
+  }
+
+  // 使用哈希值选择颜色
+  const index = Math.abs(hash) % colorPalette.length;
+  return colorPalette[index];
 };
 
 // Giscus 评论系统
@@ -779,18 +819,12 @@ onUnmounted(() => {
                     </h4>
                     <div class="flex flex-wrap gap-1 justify-center">
                       <span
-                        v-for="tag in currentPost.tags.slice(0, 3)"
+                        v-for="tag in currentPost.tags"
                         :key="tag"
                         class="px-1.5 py-0.5 text-xs rounded text-white"
                         :style="{ backgroundColor: getTagColor(tag) }"
                       >
                         {{ tag }}
-                      </span>
-                      <span
-                        v-if="currentPost.tags.length > 3"
-                        class="px-1.5 py-0.5 text-xs bg-gray-300 dark:bg-gray-600 text-gray-700 dark:text-gray-300 rounded"
-                      >
-                        +{{ currentPost.tags.length - 3 }}
                       </span>
                     </div>
                   </div>
@@ -936,21 +970,15 @@ onUnmounted(() => {
                   {{ formatDate(currentPost.date) }}
                 </time>
 
-                <!-- 标签（只显示前2个） -->
-                <div v-if="currentPost.tags.length > 0" class="flex gap-1">
+                <!-- 标签 -->
+                <div v-if="currentPost.tags.length > 0" class="flex flex-wrap gap-1">
                   <span
-                    v-for="tag in currentPost.tags.slice(0, 2)"
+                    v-for="tag in currentPost.tags"
                     :key="tag"
                     class="px-2 py-1 text-xs rounded text-white"
                     :style="{ backgroundColor: getTagColor(tag) }"
                   >
                     {{ tag }}
-                  </span>
-                  <span
-                    v-if="currentPost.tags.length > 2"
-                    class="px-2 py-1 text-xs bg-gray-300 dark:bg-gray-600 text-gray-700 dark:text-gray-300 rounded"
-                  >
-                    +{{ currentPost.tags.length - 2 }}
                   </span>
                 </div>
               </div>
