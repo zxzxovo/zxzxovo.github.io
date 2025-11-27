@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from "vue";
+import { ref, computed, onMounted, onUnmounted } from "vue";
 import { useRouter } from "vue-router";
 import CardView from "@/components/CardView.vue";
 import LoadingState from "@/components/LoadingState.vue";
@@ -39,19 +39,18 @@ const featuredBooks = computed(() => {
   return booksData.value.books.slice(0, 4);
 });
 
-// 统计数据
-const stats = computed(() => ({
-  posts: postsData.value?.posts?.filter((p) => !p.draft).length || 0,
-  books: booksData.value?.books?.length || 0,
-  categories:
-    new Set(postsData.value?.posts?.flatMap((p) => p.categories)).size || 0,
-  words: Math.round(
-    (postsData.value?.posts?.reduce(
-      (acc, post) => acc + (post.wordCount || 0),
-      0,
-    ) || 0) / 1000,
-  ),
-}));
+// 统计数据(使用缓存避免重复计算)
+const stats = computed(() => {
+  const posts = postsData.value?.posts?.filter((p) => !p.draft) || [];
+  const books = booksData.value?.books || [];
+  
+  return {
+    posts: posts.length,
+    books: books.length,
+    categories: new Set(posts.flatMap((p) => p.categories)).size,
+    words: Math.round(posts.reduce((acc, post) => acc + (post.wordCount || 0), 0) / 1000),
+  };
+});
 
 // 统计卡片配置
 const statCards = computed(() => [
@@ -61,18 +60,35 @@ const statCards = computed(() => [
   { label: '总字数', value: `${stats.value.words}k`, rotation: 270 },
 ]);
 
-// 打字机效果
+// 打字机效果常量
+const TYPEWRITER_CONFIG = {
+  text: "欢迎来到芷夏的个人网站",
+  initialDelay: 200,
+  delayDecrement: 15,
+  minDelay: 50,
+};
+
 const typewriterText = ref("");
-const fullText = "欢迎来到芷夏的个人网站";
 const typewriterIndex = ref(0);
-let timeoutBegin = 200;
+let currentDelay = TYPEWRITER_CONFIG.initialDelay;
+let timeoutId: number | null = null;
 
 const startTypewriter = () => {
-  if (typewriterIndex.value < fullText.length) {
-    typewriterText.value += fullText.charAt(typewriterIndex.value);
+  if (typewriterIndex.value < TYPEWRITER_CONFIG.text.length) {
+    typewriterText.value += TYPEWRITER_CONFIG.text.charAt(typewriterIndex.value);
     typewriterIndex.value++;
-    setTimeout(startTypewriter, timeoutBegin);
-    timeoutBegin -= 15;
+    currentDelay = Math.max(
+      TYPEWRITER_CONFIG.minDelay,
+      currentDelay - TYPEWRITER_CONFIG.delayDecrement
+    );
+    timeoutId = window.setTimeout(startTypewriter, currentDelay);
+  }
+};
+
+const stopTypewriter = () => {
+  if (timeoutId !== null) {
+    clearTimeout(timeoutId);
+    timeoutId = null;
   }
 };
 
@@ -93,44 +109,63 @@ const navigateToBook = (book: Book) => {
   }
 };
 
+// 默认图片映射常量
+const DEFAULT_IMAGES = {
+  code: "/defaults/code.svg",
+  daily: "/defaults/daily.svg",
+  rust: "/defaults/rust.svg",
+  android: "/defaults/code.svg",
+  git: "/defaults/code.svg",
+  tauri: "/defaults/rust.svg",
+  gui: "/defaults/code.svg",
+  教程: "/defaults/code.svg",
+  诗歌: "/defaults/default.svg",
+  呓语: "/defaults/default.svg",
+  散文诗类似体: "/defaults/default.svg",
+  小诗: "/defaults/default.svg",
+  default: "/defaults/default.svg",
+};
+
 // 获取默认图片
 const getDefaultImage = (post?: BlogPost, type: "post" | "book" = "post") => {
-  if (type === "book") {
-    return "/defaults/default.svg";
+  if (type === "book" || !post) {
+    return DEFAULT_IMAGES.default;
   }
 
-  if (!post) {
-    return "/defaults/default.svg";
-  }
+  // 查找匹配的分类图片
+  const matchedCategory = post.categories.find(
+    (category) => category.toLowerCase() in DEFAULT_IMAGES
+  );
 
-  // 根据分类返回不同的默认图片
-  const defaultImages = {
-    code: "/defaults/code.svg",
-    daily: "/defaults/daily.svg",
-    rust: "/defaults/rust.svg",
-    android: "/defaults/code.svg",
-    git: "/defaults/code.svg",
-    tauri: "/defaults/rust.svg",
-    gui: "/defaults/code.svg",
-    教程: "/defaults/code.svg",
-    诗歌: "/defaults/default.svg",
-    呓语: "/defaults/default.svg",
-    散文诗类似体: "/defaults/default.svg",
-    小诗: "/defaults/default.svg",
-    default: "/defaults/default.svg",
-  };
-
-  // 检查是否匹配任何分类
-  for (const category of post.categories) {
-    if (defaultImages[category.toLowerCase() as keyof typeof defaultImages]) {
-      return defaultImages[
-        category.toLowerCase() as keyof typeof defaultImages
-      ];
-    }
-  }
-
-  return defaultImages.default;
+  return matchedCategory
+    ? DEFAULT_IMAGES[matchedCategory.toLowerCase() as keyof typeof DEFAULT_IMAGES]
+    : DEFAULT_IMAGES.default;
 };
+
+// 联系方式配置
+const CONTACT_INFO = [
+  {
+    icon: "📧",
+    title: "邮箱",
+    value: "zhixiaovo@gmail.com",
+    link: "mailto:zhixiaovo@gmail.com",
+    type: "email" as const,
+  },
+  {
+    icon: "🐙",
+    title: "GitHub",
+    value: "github.com/zxzxovo",
+    link: "https://github.com/zxzxovo",
+    type: "external" as const,
+  },
+  {
+    icon: "🌐",
+    title: "博客",
+    value: "hizhixia.site",
+    link: "https://hizhixia.site",
+    type: "external" as const,
+  },
+];
 
 // 图片加载状态
 const imageLoadStates = ref<Record<string, { error: boolean }>>({});
@@ -190,6 +225,11 @@ onMounted(async () => {
   } catch (error) {
     devError("数据加载失败:", error);
   }
+});
+
+onUnmounted(() => {
+  stopTypewriter();
+  devLog("Home页面已卸载");
 });
 </script>
 
@@ -469,60 +509,30 @@ onMounted(async () => {
             class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6"
           >
             <CardView
-              class="text-center hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+              v-for="(contact, index) in CONTACT_INFO"
+              :key="contact.title"
+              :class="[
+                'text-center hover:shadow-xl transition-all duration-300 hover:-translate-y-1',
+                index === 2 ? 'sm:col-span-2 lg:col-span-1' : ''
+              ]"
               padding="p-3 md:p-4"
             >
-              <div class="text-2xl md:text-3xl mb-2">📧</div>
+              <div class="text-2xl md:text-3xl mb-2">{{ contact.icon }}</div>
               <h3
                 class="font-semibold text-gray-900 dark:text-white mb-2 text-sm md:text-base"
               >
-                邮箱
+                {{ contact.title }}
               </h3>
               <a
-                href="mailto:zhixiaovo@gmail.com"
-                class="text-gray-600 dark:text-gray-400 text-xs md:text-sm hover:text-blue-600 dark:hover:text-blue-400 transition-colors break-all"
+                :href="contact.link"
+                :target="contact.type === 'external' ? '_blank' : undefined"
+                :rel="contact.type === 'external' ? 'noopener noreferrer' : undefined"
+                :class="[
+                  'text-gray-600 dark:text-gray-400 text-xs md:text-sm hover:text-blue-600 dark:hover:text-blue-400 transition-colors',
+                  contact.type === 'email' ? 'break-all' : ''
+                ]"
               >
-                zhixiaovo@gmail.com
-              </a>
-            </CardView>
-
-            <CardView
-              class="text-center hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
-              padding="p-3 md:p-4"
-            >
-              <div class="text-2xl md:text-3xl mb-2">🐙</div>
-              <h3
-                class="font-semibold text-gray-900 dark:text-white mb-2 text-sm md:text-base"
-              >
-                GitHub
-              </h3>
-              <a
-                href="https://github.com/zxzxovo"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="text-gray-600 dark:text-gray-400 text-xs md:text-sm hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-              >
-                github.com/zxzxovo
-              </a>
-            </CardView>
-
-            <CardView
-              class="text-center hover:shadow-xl transition-all duration-300 hover:-translate-y-1 sm:col-span-2 lg:col-span-1"
-              padding="p-3 md:p-4"
-            >
-              <div class="text-2xl md:text-3xl mb-2">🌐</div>
-              <h3
-                class="font-semibold text-gray-900 dark:text-white mb-2 text-sm md:text-base"
-              >
-                博客
-              </h3>
-              <a
-                href="https://hizhixia.site"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="text-gray-600 dark:text-gray-400 text-xs md:text-sm hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-              >
-                hizhixia.site
+                {{ contact.value }}
               </a>
             </CardView>
           </div>
