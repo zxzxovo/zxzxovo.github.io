@@ -293,12 +293,18 @@ onMounted(async () => {
 
       <!-- 最新文章 -->
       <section class="mb-12 md:mb-16">
-        <div class="text-center mb-6 md:mb-8 px-4">
-          <h2
-            class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-3 md:mb-4"
-          >
-            ✨ 最近博文
-          </h2>
+        <div class="flex justify-center mb-6 md:mb-8 px-4">
+          <div class="title-box flex w-[220px] md:w-[280px] h-12 md:h-14 rounded-xl overflow-hidden shadow-sm">
+            <div class="flex-1 flex items-center justify-center bg-transparent">
+              <h2 class="text-lg md:text-2xl font-bold text-gray-900 dark:text-white select-none whitespace-nowrap">最近博文</h2>
+            </div>
+            <button
+              @click="navigateTo('/blog')"
+              class="flex items-center justify-center px-4 md:px-5 font-medium text-base md:text-lg bg-gray-200 dark:bg-zinc-700 text-pink-600 dark:text-pink-300 hover:bg-gray-300 dark:hover:bg-zinc-600 transition-colors rounded-lg"
+            >
+              全部
+            </button>
+          </div>
         </div>
 
         <!-- 加载状态 -->
@@ -390,25 +396,24 @@ onMounted(async () => {
             </CardView>
           </div>
 
-          <div class="text-center px-4">
-            <button
-              @click="navigateTo('/blog')"
-              class="px-4 md:px-6 py-2 md:py-3 bg-gray-200 dark:bg-zinc-700 text-gray-800 dark:text-gray-200 rounded-lg hover:bg-gray-300 dark:hover:bg-zinc-600 transition-colors font-medium text-sm md:text-base"
-            >
-              查看全部文章 →
-            </button>
-          </div>
+          <!-- 移除底部按钮，已移至标题右侧 -->
         </div>
       </section>
 
       <!-- 精选书籍 -->
       <section class="mb-12 md:mb-16">
-        <div class="text-center mb-6 md:mb-8 px-4">
-          <h2
-            class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-3 md:mb-4"
-          >
-            📚 部分合集
-          </h2>
+        <div class="flex justify-center mb-6 md:mb-8 px-4">
+          <div class="title-box flex w-[220px] md:w-[280px] h-12 md:h-14 rounded-xl overflow-hidden shadow-sm">
+            <div class="flex-1 flex items-center justify-center bg-transparent">
+              <h2 class="text-lg md:text-2xl font-bold text-gray-900 dark:text-white select-none whitespace-nowrap">部分合集</h2>
+            </div>
+            <button
+              @click="navigateTo('/book')"
+              class="flex items-center justify-center px-4 md:px-5 font-medium text-base md:text-lg bg-gray-200 dark:bg-zinc-700 text-pink-600 dark:text-pink-300 hover:bg-gray-300 dark:hover:bg-zinc-600 transition-colors rounded-lg"
+            >
+              全部
+            </button>
+          </div>
         </div>
 
         <!-- 加载状态 -->
@@ -494,14 +499,7 @@ onMounted(async () => {
             </CardView>
           </div>
 
-          <div class="text-center px-4">
-            <button
-              @click="navigateTo('/book')"
-              class="px-4 md:px-6 py-2 md:py-3 bg-gray-200 dark:bg-zinc-700 text-gray-800 dark:text-gray-200 rounded-lg hover:bg-gray-300 dark:hover:bg-zinc-600 transition-colors font-medium text-sm md:text-base"
-            >
-              查看全部合集 →
-            </button>
-          </div>
+          <!-- 移除底部按钮，已移至标题右侧 -->
         </div>
       </section>
 
@@ -588,11 +586,9 @@ onMounted(async () => {
 .bg-grid-slate-100 {
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32' height='32' fill='none' stroke='rgb(100 116 139 / 0.3)'%3e%3cpath d='m0 .5h32m-32 32v-32'/%3e%3c/svg%3e");
 }
-
 .dark .bg-grid-slate-700\/25 {
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32' height='32' fill='none' stroke='rgb(71 85 105 / 0.4)'%3e%3cpath d='m0 .5h32m-32 32v-32'/%3e%3c/svg%3e");
 }
-
 .line-clamp-1 {
   display: -webkit-box;
   -webkit-line-clamp: 1;
@@ -600,7 +596,6 @@ onMounted(async () => {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-
 .line-clamp-2 {
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -608,4 +603,82 @@ onMounted(async () => {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+/* 标题盒子新设计 */
+.title-box {
+  background: #fff;
+  box-shadow: 0 1px 6px 0 #0001;
+  border-radius: 0.75rem;
+  padding: 4px;
+  gap: 4px;
+}
+.dark .title-box {
+  background: #27272a;
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.5);
+}
+@media (max-width: 640px) {
+  .title-box {
+    width: 220px;
+    min-width: 0;
+    max-width: 98vw;
+    height: 2.8rem;
+    padding: 3px;
+    gap: 3px;
+  }
+  .title-box h2 {
+    font-size: 1.05rem;
+  }
+  .title-box button {
+    font-size: 0.95rem;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+}
 </style>
+
+/* 标题和全部按钮衔接美化 */
+.section-title-group {
+  display: flex;
+  align-items: flex-end;
+}
+.section-title {
+  border-bottom-width: 4px;
+  border-color: #ec4899; /* pink-400 */
+  padding-right: 0.5rem;
+  margin-bottom: 0;
+  line-height: 1.2;
+}
+.dark .section-title {
+  border-color: #f472b6; /* pink-500 */
+}
+.all-btn {
+  border-radius: 0 0.5rem 0.5rem 0;
+  border-width: 1px;
+  border-left: 0;
+  border-color: #ec4899;
+  color: #ec4899;
+  background: #fff;
+  margin-left: 0.5rem;
+  font-weight: 500;
+  transition: background 0.2s, color 0.2s;
+}
+.all-btn:hover {
+  background: #fdf2f8;
+}
+.dark .all-btn {
+  border-color: #f472b6;
+  color: #f472b6;
+  background: #18181b;
+}
+.dark .all-btn:hover {
+  background: #83184333;
+}
+@media (max-width: 640px) {
+  .section-title {
+    font-size: 1.25rem;
+    padding-right: 0.25rem;
+  }
+  .all-btn {
+    font-size: 0.95rem;
+    padding: 0.25rem 0.75rem;
+  }
+}
