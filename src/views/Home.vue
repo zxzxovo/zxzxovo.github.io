@@ -53,9 +53,17 @@ const stats = computed(() => ({
   ),
 }));
 
+// 统计卡片配置
+const statCards = computed(() => [
+  { label: '文章', value: stats.value.posts, rotation: 0 },
+  { label: '合集', value: stats.value.books, rotation: 90 },
+  { label: '分类', value: stats.value.categories, rotation: 180 },
+  { label: '总字数', value: `${stats.value.words}k`, rotation: 270 },
+]);
+
 // 打字机效果
 const typewriterText = ref("");
-const fullText = "欢迎来到我的个人网站";
+const fullText = "欢迎来到芷夏的个人网站";
 const typewriterIndex = ref(0);
 let timeoutBegin = 200;
 
@@ -190,7 +198,7 @@ onMounted(async () => {
     <div class="max-w-7xl mx-auto">
       <!-- Hero Section -->
       <section
-        class="relative py-12 md:py-20 px-4 bg-gradient-to-br from-gray-50 via-slate-50 to-stone-50 dark:from-zinc-900 dark:via-zinc-800 dark:to-zinc-900 rounded-2xl mb-8 md:mb-12"
+        class="relative py-6 md:py-10 px-4 bg-gradient-to-br from-gray-50 via-slate-50 to-stone-50 dark:from-zinc-900 dark:via-zinc-800 dark:to-zinc-900 rounded-2xl mb-8 md:mb-12 shadow-lg"
       >
         <div
           class="absolute inset-0 bg-grid-slate-100 dark:bg-grid-slate-700/25 bg-[size:24px_24px] opacity-90 rounded-2xl"
@@ -200,16 +208,7 @@ onMounted(async () => {
           class="absolute inset-0 bg-gradient-to-br from-slate-100/40 via-gray-100/30 to-stone-100/40 dark:from-slate-900/20 dark:via-zinc-900/30 dark:to-stone-900/20 rounded-2xl"
         ></div>
         <div class="relative max-w-6xl mx-auto text-center z-10">
-          <div class="mb-6 md:mb-8">
-            <div
-              class="w-20 h-20 md:w-28 md:h-28 mx-auto mb-4 md:mb-6 bg-white dark:bg-zinc-800 rounded-xl shadow-lg p-3 md:p-4 flex items-center justify-center"
-            >
-              <img
-                src="/zx.svg"
-                alt="Logo"
-                class="w-full h-full object-contain"
-              />
-            </div>
+          <div class="mb-6 md:mb-10">
             <h1
               class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-3 md:mb-4 px-4"
             >
@@ -219,74 +218,25 @@ onMounted(async () => {
 
           <!-- 统计数据 -->
           <div
-            class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6 mb-8 md:mb-12 px-4"
+            class="flex flex-wrap gap-2 md:gap-3 mb-0 px-2 md:px-4 justify-center"
           >
-            <CardView class="text-center" padding="p-3 md:p-4">
-              <div
-                class="text-xl md:text-3xl font-bold text-blue-600 dark:text-blue-400"
-              >
-                {{ stats.posts }}
-              </div>
-              <div
-                class="text-xs md:text-sm text-gray-600 dark:text-gray-400 mt-1"
-              >
-                文章
-              </div>
-            </CardView>
-            <CardView class="text-center" padding="p-3 md:p-4">
-              <div
-                class="text-xl md:text-3xl font-bold text-green-600 dark:text-green-400"
-              >
-                {{ stats.books }}
-              </div>
-              <div
-                class="text-xs md:text-sm text-gray-600 dark:text-gray-400 mt-1"
-              >
-                书籍
-              </div>
-            </CardView>
-            <CardView class="text-center" padding="p-3 md:p-4">
-              <div
-                class="text-xl md:text-3xl font-bold text-purple-600 dark:text-purple-400"
-              >
-                {{ stats.categories }}
-              </div>
-              <div
-                class="text-xs md:text-sm text-gray-600 dark:text-gray-400 mt-1"
-              >
-                分类
-              </div>
-            </CardView>
-            <CardView class="text-center" padding="p-3 md:p-4">
-              <div
-                class="text-xl md:text-3xl font-bold text-orange-600 dark:text-orange-400"
-              >
-                {{ stats.words }}k
-              </div>
-              <div
-                class="text-xs md:text-sm text-gray-600 dark:text-gray-400 mt-1"
-              >
-                总字数
-              </div>
-            </CardView>
-          </div>
-
-          <!-- CTA 按钮 -->
-          <div
-            class="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center px-4"
-          >
-            <button
-              @click="navigateTo('/blog')"
-              class="px-6 md:px-8 py-2 md:py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-full font-medium transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl text-sm md:text-base"
+            <div 
+              v-for="card in statCards" 
+              :key="card.label" 
+              class="stat-card-wrapper flex-shrink-0"
+              :style="{ '--rotation': card.rotation + 'deg' }"
             >
-              📖 阅读文章
-            </button>
-            <button
-              @click="navigateTo('/book')"
-              class="px-6 md:px-8 py-2 md:py-3 bg-white dark:bg-zinc-800 text-gray-900 dark:text-white border-2 border-gray-200 dark:border-zinc-600 hover:border-blue-500 dark:hover:border-blue-400 rounded-full font-medium transition-all duration-300 transform hover:scale-105 text-sm md:text-base"
-            >
-              📚 浏览合集
-            </button>
+              <CardView class="w-[calc(25vw-1rem)] max-w-[75px] md:max-w-[90px] h-16 md:h-18 flex flex-col rounded-2xl border border-gray-50 dark:border-zinc-900" padding="p-0">
+                <div class="flex-1 flex items-center justify-center">
+                  <div class="text-sm md:text-base font-bold text-green-600 dark:text-green-300">
+                    {{ card.value }}
+                  </div>
+                </div>
+                <div class="text-[9px] md:text-[10px] text-gray-600 dark:text-gray-400 pb-1">
+                  {{ card.label }}
+                </div>
+              </CardView>
+            </div>
           </div>
         </div>
       </section>
@@ -615,6 +565,18 @@ onMounted(async () => {
   background: #27272a;
   box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.5);
 }
+
+/* 统计卡片跨性别旗帜蓝粉色拼接边框 */
+.stat-card-wrapper {
+  position: relative;
+  border-radius: 1rem;
+  padding: 2px;
+  background: conic-gradient(from var(--rotation, 0deg), rgba(91, 206, 250, 0.8) 0deg 120deg, rgba(245, 169, 184, 0.8) 120deg 160deg, rgba(255, 255, 255, 0.8) 160deg 280deg, rgba(245, 169, 184, 0.8) 280deg 360deg);
+}
+.dark .stat-card-wrapper {
+  background: conic-gradient(from var(--rotation, 0deg), rgba(91, 206, 250, 0.7) 0deg 120deg, rgba(245, 169, 184, 0.7) 120deg 160deg, rgba(255, 255, 255, 0.3) 160deg 280deg, rgba(245, 169, 184, 0.7) 280deg 360deg);
+}
+
 @media (max-width: 640px) {
   .title-box {
     width: 220px;
