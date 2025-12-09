@@ -3,8 +3,8 @@ import { useRouter } from "vue-router";
 
 const router = useRouter();
 
-const goToHome = () => {
-  router.push("/");
+const goToProjects = () => {
+  router.push("/projects");
 };
 </script>
 
@@ -19,7 +19,7 @@ const goToHome = () => {
           <!-- 标题和返回按钮 -->
           <div class="flex items-center space-x-3">
             <button
-              @click="goToHome"
+              @click="goToProjects"
               class="flex items-center space-x-2 text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors"
             >
               <svg
@@ -36,7 +36,7 @@ const goToHome = () => {
                   d="M10 19l-7-7m0 0l7-7m-7 7h18"
                 />
               </svg>
-              <span class="text-sm font-medium">返回首页</span>
+              <span class="text-sm font-medium">返回</span>
             </button>
             <div class="w-px h-4 bg-gray-300 dark:bg-zinc-600"></div>
             <span class="text-sm font-semibold text-gray-800 dark:text-gray-200"
@@ -56,8 +56,8 @@ const goToHome = () => {
     </header>
 
     <!-- 主内容区域 -->
-    <main class="relative">
-      <router-view name="fun" class="overflow-auto" />
+    <main class="relative overflow-auto" style="max-height: calc(100vh - 3rem);">
+      <router-view name="fun" />
     </main>
   </div>
 </template>

@@ -22,6 +22,12 @@ const somethingFun = [
     description: "Social Insurance Count( AI generated )",
     tags: ["social-insurance", "job", "tool"],
   },
+  {
+    title: "X-Lottery🎲",
+    link: "/fun/x-lottery",
+    description: "X (Twitter) 评论抽奖工具",
+    tags: ["lottery", "x", "twitter", "tool"],
+  },
 ];
 
 // 主要项目
@@ -79,6 +85,11 @@ const getTagColor = (tag: string) => {
     ui: "#FF9800",
     unicode: "#673AB7",
     emoji: "#FFC107",
+    lottery: "#9C27B0",
+    x: "#000000",
+    twitter: "#1DA1F2",
+    "social-insurance": "#4CAF50",
+    job: "#FF5722",
   };
 
   return colorMap[tag.toLowerCase()] || "#5C6BC0";

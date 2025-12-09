@@ -36,6 +36,8 @@ const SocialInsuranceCount = () =>
   import(
     /* webpackChunkName: "feature-fun" */ "@views/fun/SocialInsuranceCount.vue"
   );
+const XLottery = () =>
+  import(/* webpackChunkName: "feature-fun" */ "@views/fun/XLottery.vue");
 
 // 错误页面 - 独立 chunk
 const NotFound = () =>
@@ -162,6 +164,16 @@ const routes: Readonly<RouteRecordRaw[]> = [
         },
         meta: {
           title: "社保缴纳计算",
+        },
+      },
+      {
+        path: "x-lottery",
+        name: "XLottery",
+        components: {
+          fun: XLottery,
+        },
+        meta: {
+          title: "X-Lottery - X 评论抽奖工具",
         },
       },
     ],
