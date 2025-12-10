@@ -147,7 +147,7 @@ onMounted(() => {
             <div class="flex flex-col h-full">
               <!-- 项目图片 -->
               <div
-                class="relative h-40 bg-gradient-to-br from-blue-500 to-purple-600 overflow-hidden group rounded-t-xl"
+                class="relative h-40 bg-linear-to-br from-blue-500 to-purple-600 overflow-hidden group rounded-t-xl"
               >
                 <img
                   :data-src="project.image"
@@ -173,7 +173,7 @@ onMounted(() => {
                   <a
                     :href="`https://github.com/${project.githubRepo}`"
                     target="_blank"
-                    class="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors duration-200 flex-shrink-0"
+                    class="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors duration-200 shrink-0"
                     title="查看 GitHub 仓库"
                   >
                     <svg

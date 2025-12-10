@@ -403,7 +403,7 @@
               <div class="flex items-end">
                 <button
                   @click="drawLottery"
-                  class="w-full px-6 py-2.5 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold rounded-lg transition-all transform hover:scale-105"
+                  class="w-full px-6 py-2.5 bg-linear-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold rounded-lg transition-all transform hover:scale-105"
                 >
                   🎉 开始抽奖
                 </button>
@@ -442,12 +442,12 @@
                 <div
                   v-for="(winner, index) in winners"
                   :key="index"
-                  class="flex items-center space-x-3 p-3 bg-gradient-to-br from-yellow-50 to-orange-50 dark:from-yellow-900/20 dark:to-orange-900/20 rounded-lg border-2 border-yellow-300 dark:border-yellow-700"
+                  class="flex items-center space-x-3 p-3 bg-linear-to-br from-yellow-50 to-orange-50 dark:from-yellow-900/20 dark:to-orange-900/20 rounded-lg border-2 border-yellow-300 dark:border-yellow-700"
                 >
-                  <div class="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center text-white font-bold">
+                  <div class="shrink-0 w-10 h-10 bg-linear-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center text-white font-bold">
                     {{ index + 1 }}
                   </div>
-                  <div v-if="winner.avatar" class="flex-shrink-0">
+                  <div v-if="winner.avatar" class="shrink-0">
                     <img :src="winner.avatar" :alt="winner.username" class="w-10 h-10 rounded-full" />
                   </div>
                   <div class="flex-1 min-w-0">
