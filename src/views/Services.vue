@@ -93,8 +93,42 @@ const techStacks = ref([
 <template>
   <div class="bg-gray-50 dark:bg-zinc-900 py-8 px-4">
     <div class="max-w-7xl mx-auto">
-      <!-- 服务列表 -->
+      <!-- 技术栈展示 -->
       <section class="mb-16">
+        <h2
+          class="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center"
+        >
+          技术栈
+        </h2>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <CardView
+            v-for="(stack, index) in techStacks"
+            :key="index"
+            class="hover:shadow-xl transition-all duration-300 relative overflow-hidden"
+            padding="p-6"
+          >
+            <div class="flex items-center mb-4">
+              <span class="text-2xl mr-3">{{ stack.icon }}</span>
+              <h3 class="text-xl font-bold text-gray-900 dark:text-white">
+                {{ stack.category }}
+              </h3>
+            </div>
+
+            <div class="flex flex-wrap gap-2">
+              <span
+                v-for="skill in stack.skills"
+                :key="skill"
+                class="px-3 py-1.5 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-sm font-medium hover:bg-blue-200 dark:hover:bg-blue-900/50 transition-colors cursor-default"
+              >
+                {{ skill }}
+              </span>
+            </div>
+          </CardView>
+        </div>
+      </section>
+
+      <!-- 服务列表 -->
+      <section>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
           <CardView
             v-for="service in services"
@@ -172,40 +206,6 @@ const techStacks = ref([
                   </div>
                 </div>
               </div>
-            </div>
-          </CardView>
-        </div>
-      </section>
-
-      <!-- 技术栈展示 -->
-      <section class="mb-16">
-        <h2
-          class="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center"
-        >
-          技术栈
-        </h2>
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <CardView
-            v-for="(stack, index) in techStacks"
-            :key="index"
-            class="hover:shadow-xl transition-all duration-300 relative overflow-hidden"
-            padding="p-6"
-          >
-            <div class="flex items-center mb-4">
-              <span class="text-2xl mr-3">{{ stack.icon }}</span>
-              <h3 class="text-xl font-bold text-gray-900 dark:text-white">
-                {{ stack.category }}
-              </h3>
-            </div>
-
-            <div class="flex flex-wrap gap-2">
-              <span
-                v-for="skill in stack.skills"
-                :key="skill"
-                class="px-3 py-1.5 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-sm font-medium hover:bg-blue-200 dark:hover:bg-blue-900/50 transition-colors cursor-default"
-              >
-                {{ skill }}
-              </span>
             </div>
           </CardView>
         </div>

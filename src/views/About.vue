@@ -346,6 +346,81 @@ onMounted(() => {
           </div>
         </CardView>
 
+        <!-- 联系我 -->
+        <CardView class="md:col-span-2 lg:col-span-4">
+          <h3
+            class="text-xl font-semibold text-gray-900 dark:text-white mb-4 flex items-center"
+          >
+            <span class="mr-2">💬</span>
+            联系我
+          </h3>
+          <p class="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+            欢迎交流技术问题，分享学习心得，或者讨论项目合作。
+          </p>
+          <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+            <a
+              href="mailto:zhixiaovo@gmail.com"
+              class="p-4 text-center border border-gray-200 dark:border-zinc-700 rounded-lg hover:border-blue-500 dark:hover:border-blue-400 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 group"
+            >
+              <div class="text-2xl mb-2">📧</div>
+              <div class="font-semibold text-gray-900 dark:text-white mb-1 text-sm">邮箱</div>
+              <div class="text-xs text-gray-600 dark:text-gray-400 break-all">zhixiaovo@gmail.com</div>
+              <div class="text-xs text-blue-600 dark:text-blue-400 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">点击发送</div>
+            </a>
+            <a
+              href="https://github.com/zxzxovo"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="p-4 text-center border border-gray-200 dark:border-zinc-700 rounded-lg hover:border-blue-500 dark:hover:border-blue-400 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 group"
+            >
+              <div class="text-2xl mb-2">🐙</div>
+              <div class="font-semibold text-gray-900 dark:text-white mb-1 text-sm">GitHub</div>
+              <div class="text-xs text-gray-600 dark:text-gray-400">zxzxovo</div>
+              <div class="text-xs text-blue-600 dark:text-blue-400 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">访问主页</div>
+            </a>
+            <div
+              onclick="navigator.clipboard.writeText('2244697793')"
+              class="p-4 text-center border border-gray-200 dark:border-zinc-700 rounded-lg hover:border-blue-500 dark:hover:border-blue-400 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 cursor-pointer group"
+            >
+              <div class="text-2xl mb-2">💬</div>
+              <div class="font-semibold text-gray-900 dark:text-white mb-1 text-sm">QQ</div>
+              <div class="text-xs text-gray-600 dark:text-gray-400">2244697793</div>
+              <div class="text-xs text-blue-600 dark:text-blue-400 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">点击复制</div>
+            </div>
+            <div
+              onclick="navigator.clipboard.writeText('hizhixia')"
+              class="p-4 text-center border border-gray-200 dark:border-zinc-700 rounded-lg hover:border-blue-500 dark:hover:border-blue-400 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 cursor-pointer group"
+            >
+              <div class="text-2xl mb-2">💭</div>
+              <div class="font-semibold text-gray-900 dark:text-white mb-1 text-sm">微信</div>
+              <div class="text-xs text-gray-600 dark:text-gray-400">hizhixia</div>
+              <div class="text-xs text-blue-600 dark:text-blue-400 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">点击复制</div>
+            </div>
+            <a
+              href="https://t.me/zhixiaovo"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="p-4 text-center border border-gray-200 dark:border-zinc-700 rounded-lg hover:border-blue-500 dark:hover:border-blue-400 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 group"
+            >
+              <div class="text-2xl mb-2">✈️</div>
+              <div class="font-semibold text-gray-900 dark:text-white mb-1 text-sm">Telegram</div>
+              <div class="text-xs text-gray-600 dark:text-gray-400">@zhixiaovo</div>
+              <div class="text-xs text-blue-600 dark:text-blue-400 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">访问</div>
+            </a>
+            <a
+              href="https://hizhixia.site"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="p-4 text-center border border-gray-200 dark:border-zinc-700 rounded-lg hover:border-blue-500 dark:hover:border-blue-400 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 group"
+            >
+              <div class="text-2xl mb-2">🌐</div>
+              <div class="font-semibold text-gray-900 dark:text-white mb-1 text-sm">博客</div>
+              <div class="text-xs text-gray-600 dark:text-gray-400">hizhixia.site</div>
+              <div class="text-xs text-blue-600 dark:text-blue-400 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">访问</div>
+            </a>
+          </div>
+        </CardView>
+
         <!-- GitHub Stats 卡片 -->
         <CardView class="md:col-span-2 lg:col-span-4">
           <h3
@@ -439,81 +514,6 @@ onMounted(() => {
               class="w-full h-auto"
               loading="lazy"
             />
-          </div>
-        </CardView>
-
-        <!-- 联系我 -->
-        <CardView class="md:col-span-2 lg:col-span-4">
-          <h3
-            class="text-xl font-semibold text-gray-900 dark:text-white mb-4 flex items-center"
-          >
-            <span class="mr-2">💬</span>
-            联系我
-          </h3>
-          <p class="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
-            欢迎交流技术问题，分享学习心得，或者讨论项目合作。
-          </p>
-          <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-            <a
-              href="mailto:zhixiaovo@gmail.com"
-              class="p-4 text-center border border-gray-200 dark:border-zinc-700 rounded-lg hover:border-blue-500 dark:hover:border-blue-400 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 group"
-            >
-              <div class="text-2xl mb-2">📧</div>
-              <div class="font-semibold text-gray-900 dark:text-white mb-1 text-sm">邮箱</div>
-              <div class="text-xs text-gray-600 dark:text-gray-400 break-all">zhixiaovo@gmail.com</div>
-              <div class="text-xs text-blue-600 dark:text-blue-400 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">点击发送</div>
-            </a>
-            <a
-              href="https://github.com/zxzxovo"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="p-4 text-center border border-gray-200 dark:border-zinc-700 rounded-lg hover:border-blue-500 dark:hover:border-blue-400 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 group"
-            >
-              <div class="text-2xl mb-2">🐙</div>
-              <div class="font-semibold text-gray-900 dark:text-white mb-1 text-sm">GitHub</div>
-              <div class="text-xs text-gray-600 dark:text-gray-400">zxzxovo</div>
-              <div class="text-xs text-blue-600 dark:text-blue-400 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">访问主页</div>
-            </a>
-            <div
-              onclick="navigator.clipboard.writeText('2244697793')"
-              class="p-4 text-center border border-gray-200 dark:border-zinc-700 rounded-lg hover:border-blue-500 dark:hover:border-blue-400 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 cursor-pointer group"
-            >
-              <div class="text-2xl mb-2">💬</div>
-              <div class="font-semibold text-gray-900 dark:text-white mb-1 text-sm">QQ</div>
-              <div class="text-xs text-gray-600 dark:text-gray-400">2244697793</div>
-              <div class="text-xs text-blue-600 dark:text-blue-400 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">点击复制</div>
-            </div>
-            <div
-              onclick="navigator.clipboard.writeText('hizhixia')"
-              class="p-4 text-center border border-gray-200 dark:border-zinc-700 rounded-lg hover:border-blue-500 dark:hover:border-blue-400 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 cursor-pointer group"
-            >
-              <div class="text-2xl mb-2">💭</div>
-              <div class="font-semibold text-gray-900 dark:text-white mb-1 text-sm">微信</div>
-              <div class="text-xs text-gray-600 dark:text-gray-400">hizhixia</div>
-              <div class="text-xs text-blue-600 dark:text-blue-400 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">点击复制</div>
-            </div>
-            <a
-              href="https://t.me/zhixiaovo"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="p-4 text-center border border-gray-200 dark:border-zinc-700 rounded-lg hover:border-blue-500 dark:hover:border-blue-400 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 group"
-            >
-              <div class="text-2xl mb-2">✈️</div>
-              <div class="font-semibold text-gray-900 dark:text-white mb-1 text-sm">Telegram</div>
-              <div class="text-xs text-gray-600 dark:text-gray-400">@zhixiaovo</div>
-              <div class="text-xs text-blue-600 dark:text-blue-400 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">访问</div>
-            </a>
-            <a
-              href="https://hizhixia.site"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="p-4 text-center border border-gray-200 dark:border-zinc-700 rounded-lg hover:border-blue-500 dark:hover:border-blue-400 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 group"
-            >
-              <div class="text-2xl mb-2">🌐</div>
-              <div class="font-semibold text-gray-900 dark:text-white mb-1 text-sm">博客</div>
-              <div class="text-xs text-gray-600 dark:text-gray-400">hizhixia.site</div>
-              <div class="text-xs text-blue-600 dark:text-blue-400 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">访问</div>
-            </a>
           </div>
         </CardView>
 
