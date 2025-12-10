@@ -73,93 +73,21 @@ const techStacks = ref([
   {
     category: "编程语言",
     icon: "💻",
-    skills: [
-      { name: "Rust", level: 90, color: "#CE422B" },
-      { name: "Java", level: 85, color: "#ED8B00" },
-      { name: "C/C++", level: 75, color: "#00599C" },
-      { name: "JavaScript/TypeScript", level: 70, color: "#3178C6" },
-      { name: "Python", level: 75, color: "#3776AB" },
-      { name: "Kotlin", level: 70, color: "#7F52FF" },
-    ],
+    skills: ["Rust", "Java", "C/C++", "JavaScript/TypeScript", "Python", "Kotlin"],
   },
   {
     category: "框架/应用",
     icon: "🔧",
-    skills: [
-      { name: "Vue.js", level: 85, color: "#4FC08D" },
-      { name: "Tauri", level: 80, color: "#FFC131" },
-      { name: "Axum", level: 70, color: "#CE422B" },
-      { name: "SQL", level: 80, color: "#4479A1" },
-      { name: "Redis", level: 70, color: "#DC382D" },
-      { name: "Android", level: 75, color: "#3DDC84" },
-    ],
+    skills: ["Vue.js", "Tauri", "Axum", "SQL", "Redis", "Android"],
   },
   {
     category: "工具",
     icon: "🛠️",
-    skills: [
-      { name: "Git/GitHub", level: 90, color: "#F05032" },
-      { name: "Linux", level: 85, color: "#FCC624" },
-      { name: "Vim", level: 80, color: "#019733" },
-      { name: "VSCode", level: 92, color: "#007ACC" },
-      { name: "Docker", level: 70, color: "#2496ED" },
-      { name: "Vibe coding", level: 88, color: "#009639" },
-    ],
+    skills: ["Git/GitHub", "Linux", "Vim", "VSCode", "Docker", "Vibe coding"],
   },
 ]);
 
-// 联系方式
-const contacts = ref([
-  {
-    platform: "邮箱",
-    value: "zhixiaovo@gmail.com",
-    icon: "📧",
-    link: "mailto:zhixiaovo@gmail.com",
-    color: "text-red-600 dark:text-red-400",
-  },
-  {
-    platform: "QQ",
-    value: "2244697793",
-    icon: "💬",
-    link: "https://qm.qq.com/cgi-bin/qm/qr?k=your_qq_qr_code",
-    color: "text-blue-600 dark:text-blue-400",
-  },
-  {
-    platform: "微信",
-    value: "hizhixia",
-    icon: "💭",
-    link: "#",
-    color: "text-green-600 dark:text-green-400",
-  },
-  {
-    platform: "Telegram",
-    value: "t.me/zhixiaovo",
-    icon: "✈️",
-    link: "https://t.me/zhixiaovo",
-    color: "text-sky-600 dark:text-sky-400",
-  },
-]);
 
-// 动画状态
-const isVisible = ref(false);
-
-// 复制联系方式
-const copyToClipboard = async (text: string, platform: string) => {
-  try {
-    await navigator.clipboard.writeText(text);
-    // 这里可以添加提示消息
-    console.log(`${platform} 已复制到剪贴板`);
-  } catch (err) {
-    console.error("复制失败:", err);
-  }
-};
-
-onMounted(() => {
-  // 延迟加载动画
-  setTimeout(() => {
-    isVisible.value = true;
-  }, 100);
-});
 </script>
 
 <template>
@@ -263,188 +191,25 @@ onMounted(() => {
             class="hover:shadow-xl transition-all duration-300 relative overflow-hidden"
             padding="p-6"
           >
-            <div class="flex items-center mb-6 relative z-10">
+            <div class="flex items-center mb-4">
               <span class="text-2xl mr-3">{{ stack.icon }}</span>
               <h3 class="text-xl font-bold text-gray-900 dark:text-white">
                 {{ stack.category }}
               </h3>
             </div>
 
-            <div class="space-y-4 relative z-10">
-              <div
+            <div class="flex flex-wrap gap-2">
+              <span
                 v-for="skill in stack.skills"
-                :key="skill.name"
-                class="skill-item"
+                :key="skill"
+                class="px-3 py-1.5 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-sm font-medium hover:bg-blue-200 dark:hover:bg-blue-900/50 transition-colors cursor-default"
               >
-                <div class="flex justify-between items-center mb-2">
-                  <span class="font-medium text-gray-700 dark:text-gray-300">{{
-                    skill.name
-                  }}</span>
-                  <span class="text-sm text-gray-500 dark:text-gray-400"
-                    >{{ skill.level }}%</span
-                  >
-                </div>
-                <div
-                  class="w-full bg-gray-200 dark:bg-zinc-700 rounded-full h-2"
-                >
-                  <div
-                    class="h-2 rounded-full transition-all duration-1000 ease-out"
-                    :style="{
-                      width: `${skill.level}%`,
-                      backgroundColor: skill.color,
-                    }"
-                  ></div>
-                </div>
-              </div>
+                {{ skill }}
+              </span>
             </div>
           </CardView>
         </div>
       </section>
-
-      <!-- 联系方式 -->
-      <section class="text-center">
-        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-8">
-          联系我
-        </h2>
-        <CardView
-          class="max-w-4xl mx-auto relative overflow-hidden"
-          padding="p-8"
-        >
-          <!-- 背景装饰 -->
-          <div class="absolute top-0 right-0 w-32 h-32 opacity-5">
-            <img
-              src="/src/assets/zx.svg"
-              alt="logo decoration"
-              class="w-full h-full object-contain"
-            />
-          </div>
-
-          <div class="relative z-10">
-            <p
-              class="text-gray-600 dark:text-gray-300 mb-8 text-lg leading-relaxed"
-            >
-              准备开始您的项目了吗？我很乐意与您讨论项目需求，提供专业的技术方案。
-            </p>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <div
-                v-for="contact in contacts"
-                :key="contact.platform"
-                @click="copyToClipboard(contact.value, contact.platform)"
-                class="group cursor-pointer"
-              >
-                <div
-                  class="p-4 rounded-lg border-2 border-gray-200 dark:border-zinc-700 hover:border-blue-500 dark:hover:border-blue-400 transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
-                >
-                  <div class="text-2xl mb-2">{{ contact.icon }}</div>
-                  <div class="font-semibold text-gray-900 dark:text-white mb-1">
-                    {{ contact.platform }}
-                  </div>
-                  <div
-                    class="text-sm text-gray-600 dark:text-gray-300 break-all"
-                  >
-                    {{ contact.value }}
-                  </div>
-                  <div
-                    class="text-xs text-blue-600 dark:text-blue-400 mt-2 opacity-0 group-hover:opacity-100 transition-opacity"
-                  >
-                    点击复制
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div
-              class="mt-8 p-6 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-zinc-800 dark:to-zinc-700 rounded-lg"
-            >
-              <h3 class="font-bold text-gray-900 dark:text-white mb-2">
-                💡 服务流程
-              </h3>
-              <div class="grid grid-cols-1 md:grid-cols-4 gap-4 text-sm">
-                <div class="text-center">
-                  <div class="text-blue-600 dark:text-blue-400 font-semibold">
-                    1. 需求分析
-                  </div>
-                  <div class="text-gray-600 dark:text-gray-300">
-                    深入了解项目需求
-                  </div>
-                </div>
-                <div class="text-center">
-                  <div class="text-blue-600 dark:text-blue-400 font-semibold">
-                    2. 技术方案
-                  </div>
-                  <div class="text-gray-600 dark:text-gray-300">
-                    制定最优技术方案
-                  </div>
-                </div>
-                <div class="text-center">
-                  <div class="text-blue-600 dark:text-blue-400 font-semibold">
-                    3. 开发实现
-                  </div>
-                  <div class="text-gray-600 dark:text-gray-300">
-                    高质量代码实现
-                  </div>
-                </div>
-                <div class="text-center">
-                  <div class="text-blue-600 dark:text-blue-400 font-semibold">
-                    4. 交付支持
-                  </div>
-                  <div class="text-gray-600 dark:text-gray-300">
-                    项目交付及技术支持
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </CardView>
-      </section>
     </div>
   </div>
 </template>
-
-<style scoped>
-.animate-fade-in {
-  animation: fadeIn 0.8s ease-out forwards;
-}
-
-.animate-slide-up {
-  animation: slideUp 0.8s ease-out forwards;
-}
-
-.skill-item:hover .h-2 {
-  box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* 响应式设计调整 */
-@media (max-width: 768px) {
-  .grid-cols-2 {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .md\:grid-cols-4 {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-</style>

@@ -492,52 +492,6 @@ onUnmounted(() => {
           <!-- 移除底部按钮，已移至标题右侧 -->
         </div>
       </section>
-
-      <!-- 联系方式 -->
-      <section
-        class="py-8 md:py-12 px-4 bg-gradient-to-br from-blue-100 via-pink-50 to-blue-50 dark:from-zinc-800 dark:via-zinc-700 dark:to-zinc-800 rounded-2xl shadow-lg"
-      >
-        <div class="max-w-4xl mx-auto text-center">
-          <h2 class="text-2xl md:text-3xl font-bold mb-4 text-gray-900 dark:text-white">💬 联系我</h2>
-          <p
-            class="text-gray-600 dark:text-gray-400 mb-6 md:mb-8 max-w-2xl mx-auto text-sm md:text-base"
-          >
-            欢迎交流技术问题，分享学习心得，或者只是简单地打个招呼
-          </p>
-
-          <div
-            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6"
-          >
-            <CardView
-              v-for="(contact, index) in CONTACT_INFO"
-              :key="contact.title"
-              :class="[
-                'text-center hover:shadow-xl transition-all duration-300 hover:-translate-y-1',
-                index === 2 ? 'sm:col-span-2 lg:col-span-1' : ''
-              ]"
-              padding="p-3 md:p-4"
-            >
-              <div class="text-2xl md:text-3xl mb-2">{{ contact.icon }}</div>
-              <h3
-                class="font-semibold text-gray-900 dark:text-white mb-2 text-sm md:text-base"
-              >
-                {{ contact.title }}
-              </h3>
-              <a
-                :href="contact.link"
-                :target="contact.type === 'external' ? '_blank' : undefined"
-                :rel="contact.type === 'external' ? 'noopener noreferrer' : undefined"
-                :class="[
-                  'text-gray-600 dark:text-gray-400 text-xs md:text-sm hover:text-blue-600 dark:hover:text-blue-400 transition-colors',
-                  contact.type === 'email' ? 'break-all' : ''
-                ]"
-              >
-                {{ contact.value }}
-              </a>
-            </CardView>
-          </div>
-        </div>
-      </section>
     </div>
   </div>
 </template>
