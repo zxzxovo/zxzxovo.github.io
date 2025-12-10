@@ -238,14 +238,14 @@ onUnmounted(() => {
     <div class="max-w-7xl mx-auto">
       <!-- Hero Section -->
       <section
-        class="relative py-6 md:py-10 px-4 bg-gradient-to-br from-gray-50 via-slate-50 to-stone-50 dark:from-zinc-900 dark:via-zinc-800 dark:to-zinc-900 rounded-2xl mb-8 md:mb-12 shadow-lg"
+        class="relative py-6 md:py-10 px-4 bg-linear-to-br from-gray-50 via-slate-50 to-stone-50 dark:from-zinc-900 dark:via-zinc-800 dark:to-zinc-900 rounded-2xl mb-8 md:mb-12 shadow-lg"
       >
         <div
-          class="absolute inset-0 bg-grid-slate-100 dark:bg-grid-slate-700/25 bg-[size:24px_24px] opacity-90 rounded-2xl"
+          class="absolute inset-0 bg-grid-slate-100 dark:bg-grid-slate-700/25 bg-size-[24px_24px] opacity-90 rounded-2xl"
         ></div>
         <!-- 朴素背景层 -->
         <div
-          class="absolute inset-0 bg-gradient-to-br from-slate-100/40 via-gray-100/30 to-stone-100/40 dark:from-slate-900/20 dark:via-zinc-900/30 dark:to-stone-900/20 rounded-2xl"
+          class="absolute inset-0 bg-linear-to-br from-slate-100/40 via-gray-100/30 to-stone-100/40 dark:from-slate-900/20 dark:via-zinc-900/30 dark:to-stone-900/20 rounded-2xl"
         ></div>
         <div class="relative max-w-6xl mx-auto text-center z-10">
           <div class="mb-6 md:mb-10">
@@ -263,7 +263,7 @@ onUnmounted(() => {
             <div 
               v-for="card in statCards" 
               :key="card.label" 
-              class="stat-card-wrapper flex-shrink-0"
+              class="stat-card-wrapper shrink-0"
               :style="{ '--rotation': card.rotation + 'deg' }"
             >
               <CardView class="w-[calc(25vw-1rem)] max-w-[75px] md:max-w-[90px] h-16 md:h-18 flex flex-col rounded-2xl border border-gray-50 dark:border-zinc-900" padding="p-0">
@@ -322,7 +322,7 @@ onUnmounted(() => {
               <div class="relative overflow-hidden rounded-t-lg">
                 <!-- 文章图片 -->
                 <div
-                  class="h-48 bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-zinc-800 dark:to-zinc-700 relative overflow-hidden"
+                  class="h-48 bg-linear-to-br from-blue-50 to-indigo-100 dark:from-zinc-800 dark:to-zinc-700 relative overflow-hidden"
                 >
                   <!-- 实际图片 -->
                   <img
@@ -337,7 +337,7 @@ onUnmounted(() => {
                   <!-- 错误时或无图片时显示默认图片 -->
                   <div
                     v-if="!post.image || imageLoadStates[post.slug]?.error"
-                    class="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-100 to-purple-100 dark:from-zinc-700 dark:to-zinc-600"
+                    class="w-full h-full flex items-center justify-center bg-linear-to-br from-blue-100 to-purple-100 dark:from-zinc-700 dark:to-zinc-600"
                   >
                     <img
                       :src="getDefaultImage(post)"
@@ -431,7 +431,7 @@ onUnmounted(() => {
               <div class="relative overflow-hidden">
                 <!-- 书籍封面 -->
                 <div
-                  class="aspect-[4/3] bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-zinc-800 dark:to-zinc-700 relative overflow-hidden"
+                  class="aspect-4/3 bg-linear-to-br from-blue-50 to-indigo-100 dark:from-zinc-800 dark:to-zinc-700 relative overflow-hidden"
                 >
                   <div class="w-full h-full flex items-center justify-center">
                     <img

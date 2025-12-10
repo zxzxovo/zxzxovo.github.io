@@ -106,7 +106,7 @@ const techStacks = ref([
             <div class="relative overflow-hidden">
               <!-- 背景渐变 -->
               <div
-                class="absolute top-0 left-0 w-full h-40 bg-gradient-to-r"
+                class="absolute top-0 left-0 w-full h-40 bg-linear-to-r"
                 :class="service.gradient"
               ></div>
 
@@ -145,7 +145,7 @@ const techStacks = ref([
                         :key="feature"
                         class="flex items-start text-sm text-gray-600 dark:text-gray-300"
                       >
-                        <span class="text-green-500 mr-2 mt-0.5 flex-shrink-0"
+                        <span class="text-green-500 mr-2 mt-0.5 shrink-0"
                           >✓</span
                         >
                         <span>{{ feature }}</span>
