@@ -142,30 +142,6 @@ const getDefaultImage = (post?: BlogPost, type: "post" | "book" = "post") => {
     : DEFAULT_IMAGES.default;
 };
 
-// 联系方式配置
-const CONTACT_INFO = [
-  {
-    icon: "📧",
-    title: "邮箱",
-    value: "zhixiaovo@gmail.com",
-    link: "mailto:zhixiaovo@gmail.com",
-    type: "email" as const,
-  },
-  {
-    icon: "🐙",
-    title: "GitHub",
-    value: "github.com/zxzxovo",
-    link: "https://github.com/zxzxovo",
-    type: "external" as const,
-  },
-  {
-    icon: "🌐",
-    title: "博客",
-    value: "hizhixia.site",
-    link: "https://hizhixia.site",
-    type: "external" as const,
-  },
-];
 
 // 图片加载状态
 const imageLoadStates = ref<Record<string, { error: boolean }>>({});
@@ -258,24 +234,25 @@ onUnmounted(() => {
 
           <!-- 统计数据 -->
           <div
-            class="flex flex-wrap gap-2 md:gap-3 mb-0 px-2 md:px-4 justify-center"
+            class="flex flex-wrap gap-3 md:gap-4 mb-0 px-2 md:px-4 justify-center"
           >
             <div 
               v-for="card in statCards" 
               :key="card.label" 
-              class="stat-card-wrapper shrink-0"
-              :style="{ '--rotation': card.rotation + 'deg' }"
+              class="stat-bar flex overflow-hidden rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
             >
-              <CardView class="w-[calc(25vw-1rem)] max-w-[75px] md:max-w-[90px] h-16 md:h-18 flex flex-col rounded-2xl border border-gray-50 dark:border-zinc-900" padding="p-0">
-                <div class="flex-1 flex items-center justify-center">
-                  <div class="text-sm md:text-base font-bold text-green-600 dark:text-green-300">
-                    {{ card.value }}
-                  </div>
-                </div>
-                <div class="text-[9px] md:text-[10px] text-gray-600 dark:text-gray-400 pb-1">
+              <!-- 左侧：标签 - Material Design 靛蓝色 -->
+              <div class="stat-label flex items-center justify-center px-4 md:px-5 py-2 md:py-2.5 bg-indigo-500 dark:bg-indigo-600">
+                <span class="text-xs md:text-sm font-medium text-white whitespace-nowrap">
                   {{ card.label }}
-                </div>
-              </CardView>
+                </span>
+              </div>
+              <!-- 右侧：数值 - 浅色背景 -->
+              <div class="stat-value flex items-center justify-center px-4 md:px-5 py-2 md:py-2.5 bg-indigo-50 dark:bg-indigo-950/50">
+                <span class="text-sm md:text-base font-bold text-indigo-900 dark:text-indigo-100">
+                  {{ card.value }}
+                </span>
+              </div>
             </div>
           </div>
         </div>
