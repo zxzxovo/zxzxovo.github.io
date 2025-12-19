@@ -771,7 +771,7 @@ onActivated(() => {
                     v-show="imageLoadStates[post.slug]?.loaded"
                     :src="post.image || getDefaultImage(post)"
                     :alt="post.title"
-                    class="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
+                    class="w-full h-full object-cover"
                     loading="lazy"
                     @load="handleImageLoad(post.slug)"
                     @error="handleImageError(post.slug)"
@@ -782,7 +782,7 @@ onActivated(() => {
                     v-show="imageLoadStates[post.slug]?.error"
                     :src="getDefaultImage(post)"
                     :alt="post.title"
-                    class="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
+                    class="w-full h-full object-cover"
                     @load="handleImageLoad(post.slug)"
                   />
                 </div>

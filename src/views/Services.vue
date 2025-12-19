@@ -133,7 +133,7 @@ const techStacks = ref([
           <CardView
             v-for="service in services"
             :key="service.id"
-            class="hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 group"
+            class="hover:shadow-2xl transition-all duration-300"
             padding="p-0"
             css-width="w-full"
           >
