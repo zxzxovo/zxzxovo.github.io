@@ -81,3 +81,112 @@ topped = false
 ## End
 
 这里放个新年的烟花，祝大家新年快乐！
+
+<div id="fireworks-container" style="width:100%;height:400px;max-height:50vh;overflow:hidden;background:linear-gradient(to bottom,#001a33 0%,#000 100%);border-radius:8px;margin:20px 0;">
+  <canvas id="fireworks-canvas" style="width:100%;height:100%;display:block;"></canvas>
+</div>
+
+<script>
+(function(){
+  const c = document.getElementById('fireworks-canvas');
+  if(!c) return;
+  const ctx = c.getContext('2d');
+  
+  function resize(){
+    const dpr = window.devicePixelRatio || 1;
+    c.width = Math.floor(c.clientWidth * dpr);
+    c.height = Math.floor(c.clientHeight * dpr);
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  const rockets = [];
+  const particles = [];
+  function rand(a,b){ return a + Math.random()*(b-a); }
+
+  class Rocket{
+    constructor(){
+      this.x = rand(0, c.clientWidth);
+      this.y = c.clientHeight;
+      this.vx = rand(-1,1);
+      this.vy = rand(-11,-8);
+      this.color = `hsl(${Math.floor(rand(0,360))} 90% 60%)`;
+      this.exploded = false;
+    }
+    update(){
+      this.vy += 0.15;
+      this.x += this.vx;
+      this.y += this.vy;
+      if(this.vy >= 0 && !this.exploded){ 
+        this.explode(); 
+        this.exploded = true; 
+      }
+    }
+    draw(){
+      ctx.beginPath(); 
+      ctx.fillStyle = this.color; 
+      ctx.arc(this.x, this.y, 2, 0, Math.PI*2); 
+      ctx.fill();
+    }
+    explode(){
+      const n = rand(30,60)|0;
+      for(let i=0;i<n;i++){
+        const a = Math.random()*Math.PI*2;
+        const s = rand(1,6);
+        particles.push(new Particle(this.x,this.y,Math.cos(a)*s,Math.sin(a)*s,this.color));
+      }
+    }
+  }
+
+  class Particle{
+    constructor(x,y,vx,vy,color){
+      this.x = x; 
+      this.y = y; 
+      this.vx = vx; 
+      this.vy = vy; 
+      this.alpha = 1; 
+      this.color = color; 
+      this.size = rand(1,3);
+    }
+    update(){ 
+      this.vy += 0.08; 
+      this.vx *= 0.98; 
+      this.vy *= 0.98; 
+      this.x += this.vx; 
+      this.y += this.vy; 
+      this.alpha -= 0.01; 
+    }
+    draw(){ 
+      ctx.beginPath(); 
+      ctx.fillStyle = this.color; 
+      ctx.globalAlpha = Math.max(0,this.alpha); 
+      ctx.arc(this.x,this.y,this.size,0,Math.PI*2); 
+      ctx.fill(); 
+      ctx.globalAlpha = 1; 
+    }
+  }
+
+  function loop(){
+    ctx.fillStyle = 'rgba(0,0,0,0.1)';
+    ctx.fillRect(0,0,c.clientWidth,c.clientHeight);
+    
+    if(Math.random() < 0.05) rockets.push(new Rocket());
+    
+    for(let i=rockets.length-1;i>=0;i--){ 
+      rockets[i].update(); 
+      rockets[i].draw(); 
+      if(rockets[i].exploded) rockets.splice(i,1); 
+    }
+    
+    for(let i=particles.length-1;i>=0;i--){ 
+      particles[i].update(); 
+      particles[i].draw(); 
+      if(particles[i].alpha <= 0) particles.splice(i,1); 
+    }
+    
+    requestAnimationFrame(loop);
+  }
+  loop();
+})();
+</script>

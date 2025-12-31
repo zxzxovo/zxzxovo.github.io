@@ -187,6 +187,35 @@ function loadGiscus() {
   }
 }
 
+// 执行 Markdown 内容中的嵌入式脚本
+function executeEmbeddedScripts() {
+  // 使用 setTimeout 确保 DOM 完全渲染
+  setTimeout(() => {
+    const contentContainer = document.querySelector('.prose');
+    if (!contentContainer) return;
+
+    const scripts = contentContainer.querySelectorAll('script');
+
+    scripts.forEach((oldScript) => {
+      // 创建新的 script 元素（浏览器只会执行新创建的 script）
+      const newScript = document.createElement('script');
+      
+      // 复制所有属性
+      Array.from(oldScript.attributes).forEach((attr) => {
+        newScript.setAttribute(attr.name, attr.value);
+      });
+      
+      // 复制脚本内容
+      if (oldScript.textContent) {
+        newScript.textContent = oldScript.textContent;
+      }
+      
+      // 替换旧脚本
+      oldScript.parentNode?.replaceChild(newScript, oldScript);
+    });
+  }, 100);
+}
+
 // 格式化日期
 const formatDate = (dateString: string) => {
   const date = new Date(dateString);
@@ -362,6 +391,10 @@ const loadPostData = async () => {
 
     // 找到相关文章
     relatedPosts.value = findRelatedPosts(currentPost.value);
+
+    // 等待 DOM 更新后执行嵌入的脚本
+    await nextTick();
+    executeEmbeddedScripts();
 
     // 内容加载完成后，设置滚动监听
     setTimeout(() => {
@@ -730,7 +763,7 @@ onUnmounted(() => {
               :class="{ 'h-full': isMobile }"
             >
               <!-- 返回按钮 - 只在桌面端显示 -->
-              <CardView v-if="!isMobile" class="p-3 flex-shrink-0 mb-4">
+              <CardView v-if="!isMobile" class="p-3 shrink-0 mb-4">
                 <button
                   @click="goBack"
                   class="w-full inline-flex items-center justify-center px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors shadow-sm text-sm"
