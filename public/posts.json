@@ -1,6 +1,27 @@
 {
   "posts": [
     {
+      "slug": "The end of 2025",
+      "title": "再见啦,2025",
+      "description": "5个问题进行我的2025年终总结",
+      "date": "2025-12-31",
+      "image": "/posts/The end of 2025/./navigation.jpg",
+      "categories": [
+        "Daily",
+        "MY_ME"
+      ],
+      "tags": [
+        "新年快乐",
+        "Daily",
+        "呓语",
+        "2025年终总结"
+      ],
+      "draft": false,
+      "wordCount": 2974,
+      "readingTime": 3,
+      "lastModified": "2025-12-31T16:59:56.346Z"
+    },
+    {
       "slug": "AAA",
       "title": "9月写到11月",
       "description": "两个月内随意掉落的一些文字。内容包括：好想要爱，不公平啊，不想孤独，做个专业人士，有时想刺激，30天推歌挑战。",
@@ -482,13 +503,13 @@
     }
   ],
   "stats": {
-    "total": 23,
-    "published": 22,
+    "total": 24,
+    "published": 23,
     "draft": 1,
     "categories": [
       {
         "name": "Daily",
-        "count": 15
+        "count": 16
       },
       {
         "name": "Code",
@@ -500,7 +521,7 @@
       },
       {
         "name": "MY_ME",
-        "count": 4
+        "count": 5
       },
       {
         "name": "Android",
@@ -514,11 +535,11 @@
     "tags": [
       {
         "name": "Daily",
-        "count": 14
+        "count": 15
       },
       {
         "name": "呓语",
-        "count": 13
+        "count": 14
       },
       {
         "name": "Code",
@@ -567,6 +588,14 @@
       {
         "name": "Tools",
         "count": 2
+      },
+      {
+        "name": "新年快乐",
+        "count": 1
+      },
+      {
+        "name": "2025年终总结",
+        "count": 1
       },
       {
         "name": "音乐",
@@ -688,12 +717,12 @@
     "years": [
       {
         "year": 2025,
-        "count": 23
+        "count": 24
       }
     ],
-    "totalWords": 90942,
+    "totalWords": 93916,
     "averageReadingTime": 5
   },
   "errors": [],
-  "generated": "2025-12-31T14:04:05.481Z"
+  "generated": "2025-12-31T17:00:01.508Z"
 }
