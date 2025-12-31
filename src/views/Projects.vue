@@ -2,6 +2,10 @@
 import CardView from "@/components/CardView.vue";
 import { onMounted, ref } from "vue";
 import zxLogo from "@/assets/zx.svg";
+import BioHereLogo from "@/assets/projects/bio-here.png";
+import SeqHereLogo from "@/assets/projects/seq-here.png";
+import PlacecareLogo from "@/assets/projects/placecare.png";
+import ReminexLogo from "@/assets/projects/reminex.png";
 
 // 有趣的小项目
 const somethingFun = [
@@ -38,7 +42,7 @@ const activeProjects = [
     githubRepo: "bio-here/bio-here",
     link: "https://bio-here.github.io/",
     description: "A series of bioinformatics tools",
-    image: "src/assets/projects/bio-here.png", // 每个项目使用不同的图片
+    image: BioHereLogo, // 每个项目使用不同的图片
     tags: ["Rust", "bioinformatics"],
   },
   {
@@ -46,7 +50,7 @@ const activeProjects = [
     githubRepo: "bio-here/seq-here",
     link: "https://bio-here.github.io/seq-here",
     description: "A fast tool for bio-sequence processing",
-    image: "/src/assets/projects/seq-here.png",
+    image: SeqHereLogo,
     tags: ["Rust", "bioinformatics", "cli", "linux", "windows"],
   },
   {
@@ -55,7 +59,7 @@ const activeProjects = [
     link: "https://bio-here.github.io/zh/project/placecare.html",
     description:
       "A tool for cis-acting regulatory elements search, based on PLACE",
-    image: "/src/assets/projects/placecare.png",
+    image: PlacecareLogo,
     tags: [
       "Rust",
       "bioinformatics",
@@ -71,7 +75,7 @@ const activeProjects = [
     githubRepo: "zxzxovo/reminex",
     link: "https://zxzxovo.github.io/reminex",
     description: "A fast tool for bio-sequence processing",
-    image: "/src/assets/projects/reminex.png",
+    image: ReminexLogo,
     tags: ["Rust", "File Search", "cli", "Web", "NAS Indexing"],
   },
 ];
