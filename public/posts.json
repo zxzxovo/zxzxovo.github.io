@@ -1,6 +1,26 @@
 {
   "posts": [
     {
+      "slug": "26年腊月初八",
+      "title": "26年腊月初八",
+      "description": "给自己过生日前乱写了一堆东西",
+      "date": "2026-01-26",
+      "image": "/posts/26年腊月初八/./navigation.jpg",
+      "categories": [
+        "Daily",
+        "MY_ME"
+      ],
+      "tags": [
+        "生日快乐",
+        "Daily",
+        "呓语"
+      ],
+      "draft": false,
+      "wordCount": 6583,
+      "readingTime": 7,
+      "lastModified": "2026-01-24T19:10:05.355Z"
+    },
+    {
       "slug": "The end of 2025",
       "title": "再见啦,2025",
       "description": "5个问题进行我的2025年终总结",
@@ -17,9 +37,9 @@
         "2025年终总结"
       ],
       "draft": false,
-      "wordCount": 5812,
-      "readingTime": 6,
-      "lastModified": "2025-12-31T17:13:19.855Z"
+      "wordCount": 6280,
+      "readingTime": 7,
+      "lastModified": "2025-12-31T17:29:28.399Z"
     },
     {
       "slug": "AAA",
@@ -503,13 +523,13 @@
     }
   ],
   "stats": {
-    "total": 24,
-    "published": 23,
+    "total": 25,
+    "published": 24,
     "draft": 1,
     "categories": [
       {
         "name": "Daily",
-        "count": 16
+        "count": 17
       },
       {
         "name": "Code",
@@ -521,7 +541,7 @@
       },
       {
         "name": "MY_ME",
-        "count": 5
+        "count": 6
       },
       {
         "name": "Android",
@@ -535,11 +555,11 @@
     "tags": [
       {
         "name": "Daily",
-        "count": 15
+        "count": 16
       },
       {
         "name": "呓语",
-        "count": 14
+        "count": 15
       },
       {
         "name": "Code",
@@ -588,6 +608,10 @@
       {
         "name": "Tools",
         "count": 2
+      },
+      {
+        "name": "生日快乐",
+        "count": 1
       },
       {
         "name": "新年快乐",
@@ -716,13 +740,17 @@
     ],
     "years": [
       {
+        "year": 2026,
+        "count": 1
+      },
+      {
         "year": 2025,
         "count": 24
       }
     ],
-    "totalWords": 96754,
+    "totalWords": 103805,
     "averageReadingTime": 5
   },
   "errors": [],
-  "generated": "2025-12-31T17:19:36.721Z"
+  "generated": "2026-01-24T19:18:08.871Z"
 }
