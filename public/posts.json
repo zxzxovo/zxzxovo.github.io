@@ -1,6 +1,27 @@
 {
   "posts": [
     {
+      "slug": "上个月的小宴菜谱",
+      "title": "上个月的小宴菜谱",
+      "description": "记录适合6~8人吃的小菜谱",
+      "date": "2026-05-05",
+      "image": "/posts/上个月的小宴菜谱/./navigation.jpg",
+      "categories": [
+        "Daily"
+      ],
+      "tags": [
+        "厨房",
+        "菜谱",
+        "做饭",
+        "生活",
+        "美食"
+      ],
+      "draft": false,
+      "wordCount": 5162,
+      "readingTime": 6,
+      "lastModified": "2026-05-04T18:19:15.505Z"
+    },
+    {
       "slug": "26年腊月初八",
       "title": "26年腊月初八",
       "description": "给自己过生日前乱写了一堆东西",
@@ -16,9 +37,9 @@
         "呓语"
       ],
       "draft": false,
-      "wordCount": 6583,
+      "wordCount": 6816,
       "readingTime": 7,
-      "lastModified": "2026-01-24T19:10:05.355Z"
+      "lastModified": "2026-05-04T17:44:17.806Z"
     },
     {
       "slug": "The end of 2025",
@@ -37,9 +58,9 @@
         "2025年终总结"
       ],
       "draft": false,
-      "wordCount": 6280,
+      "wordCount": 6475,
       "readingTime": 7,
-      "lastModified": "2025-12-31T17:29:28.399Z"
+      "lastModified": "2026-05-04T17:44:17.812Z"
     },
     {
       "slug": "AAA",
@@ -61,9 +82,9 @@
         "无聊"
       ],
       "draft": false,
-      "wordCount": 3543,
+      "wordCount": 3604,
       "readingTime": 4,
-      "lastModified": "2025-11-24T18:33:09.264Z"
+      "lastModified": "2026-05-04T17:44:17.807Z"
     },
     {
       "slug": "菜谱小记",
@@ -82,9 +103,9 @@
         "美食"
       ],
       "draft": false,
-      "wordCount": 5259,
+      "wordCount": 5422,
       "readingTime": 6,
-      "lastModified": "2025-10-16T18:10:23.484Z"
+      "lastModified": "2026-05-04T17:44:17.824Z"
     },
     {
       "slug": "Rust标准库的path",
@@ -105,9 +126,9 @@
         "字符串"
       ],
       "draft": false,
-      "wordCount": 20649,
-      "readingTime": 21,
-      "lastModified": "2025-10-16T18:10:24.159Z"
+      "wordCount": 21204,
+      "readingTime": 22,
+      "lastModified": "2026-05-04T17:44:17.810Z"
     },
     {
       "slug": "语言能力的消失",
@@ -126,9 +147,9 @@
         "解构"
       ],
       "draft": false,
-      "wordCount": 855,
+      "wordCount": 869,
       "readingTime": 1,
-      "lastModified": "2025-08-01T19:39:45.855Z"
+      "lastModified": "2026-05-04T17:44:17.832Z"
     },
     {
       "slug": "Rust标准库的Prelude",
@@ -146,9 +167,9 @@
         "学习"
       ],
       "draft": false,
-      "wordCount": 4580,
+      "wordCount": 4749,
       "readingTime": 5,
-      "lastModified": "2025-10-16T18:10:24.200Z"
+      "lastModified": "2026-05-04T17:44:17.810Z"
     },
     {
       "slug": "解构之三",
@@ -167,9 +188,9 @@
         "无所事事"
       ],
       "draft": false,
-      "wordCount": 796,
+      "wordCount": 823,
       "readingTime": 1,
-      "lastModified": "2025-10-16T18:10:23.629Z"
+      "lastModified": "2026-05-04T17:44:17.827Z"
     },
     {
       "slug": "我赠予离别",
@@ -188,9 +209,9 @@
         "给朋友"
       ],
       "draft": false,
-      "wordCount": 836,
+      "wordCount": 852,
       "readingTime": 1,
-      "lastModified": "2025-10-16T18:10:23.775Z"
+      "lastModified": "2026-05-04T17:44:17.819Z"
     },
     {
       "slug": "孤独是一缕烟雾",
@@ -209,9 +230,9 @@
         "小诗"
       ],
       "draft": false,
-      "wordCount": 284,
+      "wordCount": 320,
       "readingTime": 1,
-      "lastModified": "2025-10-16T18:10:23.576Z"
+      "lastModified": "2026-05-04T17:44:17.818Z"
     },
     {
       "slug": "Android四大组件基础",
@@ -230,9 +251,9 @@
         "学习"
       ],
       "draft": false,
-      "wordCount": 26558,
-      "readingTime": 27,
-      "lastModified": "2025-10-16T18:10:23.972Z"
+      "wordCount": 27574,
+      "readingTime": 28,
+      "lastModified": "2026-05-04T17:44:17.807Z"
     },
     {
       "slug": "月夜",
@@ -251,9 +272,9 @@
         "小诗"
       ],
       "draft": false,
-      "wordCount": 327,
+      "wordCount": 363,
       "readingTime": 1,
-      "lastModified": "2025-10-16T18:10:23.871Z"
+      "lastModified": "2026-05-04T17:44:17.821Z"
     },
     {
       "slug": "某些洁癖",
@@ -271,9 +292,9 @@
         "小说类似体"
       ],
       "draft": false,
-      "wordCount": 1564,
+      "wordCount": 1606,
       "readingTime": 2,
-      "lastModified": "2025-10-16T18:10:23.742Z"
+      "lastModified": "2026-05-04T17:44:17.822Z"
     },
     {
       "slug": "解构之二",
@@ -292,9 +313,9 @@
         "无所事事"
       ],
       "draft": false,
-      "wordCount": 605,
+      "wordCount": 629,
       "readingTime": 1,
-      "lastModified": "2025-10-16T18:10:23.602Z"
+      "lastModified": "2026-05-04T17:44:17.828Z"
     },
     {
       "slug": "使用Tauri开发跨平台应用",
@@ -315,9 +336,9 @@
         "Tauri"
       ],
       "draft": true,
-      "wordCount": 20,
+      "wordCount": 22,
       "readingTime": 1,
-      "lastModified": "2025-10-16T18:10:23.755Z"
+      "lastModified": "2026-05-04T17:44:17.816Z"
     },
     {
       "slug": "Rust的函数式编程—-闭包",
@@ -335,9 +356,9 @@
         "函数式编程"
       ],
       "draft": false,
-      "wordCount": 5508,
+      "wordCount": 5768,
       "readingTime": 6,
-      "lastModified": "2025-10-16T18:10:24.259Z"
+      "lastModified": "2026-05-04T17:44:17.811Z"
     },
     {
       "slug": "冬至",
@@ -355,9 +376,9 @@
         "小说类似体"
       ],
       "draft": false,
-      "wordCount": 2512,
+      "wordCount": 2572,
       "readingTime": 3,
-      "lastModified": "2025-10-16T18:10:23.559Z"
+      "lastModified": "2026-05-04T17:44:17.817Z"
     },
     {
       "slug": "解构之一",
@@ -376,9 +397,9 @@
         "无所事事"
       ],
       "draft": false,
-      "wordCount": 690,
+      "wordCount": 703,
       "readingTime": 1,
-      "lastModified": "2025-07-11T08:28:36.257Z"
+      "lastModified": "2026-05-04T17:44:17.826Z"
     },
     {
       "slug": "草儿长满山丘",
@@ -397,9 +418,9 @@
         "小诗"
       ],
       "draft": false,
-      "wordCount": 402,
+      "wordCount": 456,
       "readingTime": 1,
-      "lastModified": "2025-10-16T18:10:23.503Z"
+      "lastModified": "2026-05-04T17:44:17.823Z"
     },
     {
       "slug": "进制转换",
@@ -420,9 +441,9 @@
         "学习"
       ],
       "draft": false,
-      "wordCount": 4055,
+      "wordCount": 4217,
       "readingTime": 5,
-      "lastModified": "2025-10-16T18:10:23.709Z"
+      "lastModified": "2026-05-04T17:44:17.833Z"
     },
     {
       "slug": "Clap的一些用法",
@@ -440,9 +461,9 @@
         "Rust"
       ],
       "draft": false,
-      "wordCount": 5957,
-      "readingTime": 6,
-      "lastModified": "2025-10-16T18:10:24.019Z"
+      "wordCount": 6226,
+      "readingTime": 7,
+      "lastModified": "2026-05-04T17:44:17.809Z"
     },
     {
       "slug": "再学一遍Git",
@@ -461,9 +482,9 @@
         "笔记"
       ],
       "draft": false,
-      "wordCount": 4977,
-      "readingTime": 5,
-      "lastModified": "2025-10-16T18:10:23.909Z"
+      "wordCount": 5269,
+      "readingTime": 6,
+      "lastModified": "2026-05-04T17:44:17.817Z"
     },
     {
       "slug": "许多日前的自由",
@@ -481,9 +502,9 @@
         "青春"
       ],
       "draft": false,
-      "wordCount": 380,
+      "wordCount": 389,
       "readingTime": 1,
-      "lastModified": "2025-10-16T18:10:23.822Z"
+      "lastModified": "2026-05-04T17:44:17.831Z"
     },
     {
       "slug": "许多日前的晚安",
@@ -500,9 +521,9 @@
         "散文诗类似体"
       ],
       "draft": false,
-      "wordCount": 493,
+      "wordCount": 515,
       "readingTime": 1,
-      "lastModified": "2025-10-16T18:10:23.797Z"
+      "lastModified": "2026-05-04T17:44:17.829Z"
     },
     {
       "slug": "hellooo-world",
@@ -517,19 +538,19 @@
         "Daily"
       ],
       "draft": false,
-      "wordCount": 92,
+      "wordCount": 96,
       "readingTime": 1,
-      "lastModified": "2025-07-11T08:28:36.261Z"
+      "lastModified": "2026-05-04T17:44:17.815Z"
     }
   ],
   "stats": {
-    "total": 25,
-    "published": 24,
+    "total": 26,
+    "published": 25,
     "draft": 1,
     "categories": [
       {
         "name": "Daily",
-        "count": 17
+        "count": 18
       },
       {
         "name": "Code",
@@ -586,11 +607,27 @@
         "count": 4
       },
       {
+        "name": "生活",
+        "count": 3
+      },
+      {
         "name": "小诗",
         "count": 3
       },
       {
-        "name": "生活",
+        "name": "厨房",
+        "count": 2
+      },
+      {
+        "name": "菜谱",
+        "count": 2
+      },
+      {
+        "name": "做饭",
+        "count": 2
+      },
+      {
+        "name": "美食",
         "count": 2
       },
       {
@@ -627,22 +664,6 @@
       },
       {
         "name": "无聊",
-        "count": 1
-      },
-      {
-        "name": "厨房",
-        "count": 1
-      },
-      {
-        "name": "菜谱",
-        "count": 1
-      },
-      {
-        "name": "做饭",
-        "count": 1
-      },
-      {
-        "name": "美食",
         "count": 1
       },
       {
@@ -741,16 +762,16 @@
     "years": [
       {
         "year": 2026,
-        "count": 1
+        "count": 2
       },
       {
         "year": 2025,
         "count": 24
       }
     ],
-    "totalWords": 103805,
+    "totalWords": 112701,
     "averageReadingTime": 5
   },
   "errors": [],
-  "generated": "2026-01-24T19:18:08.871Z"
+  "generated": "2026-05-04T18:19:21.456Z"
 }
