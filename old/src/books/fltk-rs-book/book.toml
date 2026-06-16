@@ -1,0 +1,9 @@
+[book]
+ref = "link"
+# ref 为 link 时应该指定 link 属性
+link = "https://fltk.flatig.vip"
+title = "FLTK-rs Book"
+description = "FLTK-rs 的中文文档"
+author = ["Flatig Lau", "Zhixia Lau"]
+
+# 无指定image时应该使用占位图片
