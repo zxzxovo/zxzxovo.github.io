@@ -1,7 +1,16 @@
 ---
-
+const saying = "“我们被我们塑造的东西所塑造着”";
+const github = "https://www.github.com/zxzxovo";
 ---
 
-<div>
-    <p>Footerrrrrrr!</p>
-</div>
+<footer class="flex flex-col items-center py-8">
+    <hr class="w-64 border-zinc-400 dark:border-zinc-600 mb-6" />
+    <p class="text-sm text-gray-500 dark:text-gray-500">{saying}</p>
+    <div class="text-xs text-gray-500 mt-3">
+        ©2025–2026 Zhixia · <a
+            class="hover:text-zinc-700 dark:hover:text-zinc-300 transition-colors"
+            href={github}
+            target="_blank">GitHub</a
+        >
+    </div>
+</footer>

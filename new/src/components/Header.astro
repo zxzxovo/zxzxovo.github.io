@@ -1,7 +1,49 @@
 ---
+interface NavItem {
+    name: string;
+    url: string;
+}
 
+const title = "Zhixia 的个人网站";
+
+const destinations: NavItem[] = [
+    {
+        name: "Home",
+        url: "/",
+    },
+    {
+        name: "Blog",
+        url: "/blog",
+    },
+    {
+        name: "Friend Link",
+        url: "/f-link",
+    },
+    {
+        name: "About",
+        url: "/about",
+    },
+];
 ---
 
-<div>
-    <p>Headerrrrrrr!</p>
-</div>
+<header class="flex justify-center px-16">
+    <!--Title-->
+    <h1 class="text-center self-center w-max">
+        {title}
+    </h1>
+    <!--Menu-->
+    <div class="flex grow justify-start ms-8 gap-4">
+        {
+            destinations.map((d) => (
+                <a class="self-center" href={d.url}>
+                    {d.name}
+                </a>
+            ))
+        }
+    </div>
+    <!--Button-->
+    <div class="flex gap-2 py-2">
+        <p>搜索</p>
+        <p>明暗</p>
+    </div>
+</header>
