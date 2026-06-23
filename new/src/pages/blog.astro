@@ -1,0 +1,17 @@
+---
+import App from "../layouts/App.astro";
+import { getCollection } from "astro:content";
+const posts = (await getCollection("posts")).filter((p) => !p.data.draft);
+---
+
+<App underlined="/blog">
+    <ul>
+        {
+            posts.map((post) => (
+                <li>
+                    <a href={`/blog/${post.id}`}>{post.data.title}</a>
+                </li>
+            ))
+        }
+    </ul>
+</App>

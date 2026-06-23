@@ -1,49 +1,68 @@
 ---
+import { Icon } from "astro-icon/components";
+const { underlined } = Astro.props;
 interface NavItem {
     name: string;
     url: string;
+    icon: string;
 }
 
 const title = "Zhixia 的个人网站";
 
 const destinations: NavItem[] = [
     {
-        name: "Home",
+        name: "Home ",
         url: "/",
+        icon: "mdi:home-outline",
     },
     {
-        name: "Blog",
+        name: "Blog ",
         url: "/blog",
+        icon: "mdi:pencil-box-outline",
     },
     {
-        name: "Friend Link",
+        name: "Friend Link ",
         url: "/f-link",
+        icon: "mdi:link-variant",
     },
     {
-        name: "About",
+        name: "About ",
         url: "/about",
+        icon: "mdi:about-circle-outline",
     },
 ];
 ---
 
-<header class="flex justify-center px-16">
+<header class="flex justify-center px-16 pt-2 pb-4">
     <!--Title-->
     <h1 class="text-center self-center w-max">
-        {title}
+        <a href="/"> {title} </a>
     </h1>
     <!--Menu-->
-    <div class="flex grow justify-start ms-8 gap-4">
+    <div class="flex grow justify-start ms-8 gap-8">
         {
             destinations.map((d) => (
-                <a class="self-center" href={d.url}>
-                    {d.name}
+                <a
+                    class:list={[
+                        "self-center flex flex-row justify-end gap-1 items-center",
+                        "border-b-2 border-transparent pb-1 pt-1",
+                        {
+                            "border-b-2 border-b-orange-300":
+                                underlined === d.url,
+                        },
+                    ]}
+                    href={d.url}
+                >
+                    <Icon name={d.icon} size="1.5rem" />
+                    <p class="pr-1.5 text-base">{d.name}</p>
                 </a>
             ))
         }
     </div>
+
     <!--Button-->
-    <div class="flex gap-2 py-2">
-        <p>搜索</p>
-        <p>明暗</p>
+    <div class="flex gap-4 py-2">
+        <Icon name="mdi:search" size="1.5rem" />
+        <Icon name="mdi:sun-moon-stars" size="1.5rem" />
     </div>
 </header>

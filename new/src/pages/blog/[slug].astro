@@ -1,0 +1,22 @@
+---
+import { getCollection, render } from "astro:content";
+import App from "../../layouts/App.astro";
+
+export async function getStaticPaths() {
+    const posts = await getCollection("posts"); // ← 放里面
+    return posts
+        .filter((p) => !p.data.draft)
+        .map((p) => ({
+            params: { slug: p.id }, // p.id 就是文件名
+            props: { post: p }, // ← 别忘了传 props
+        }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+
+<App underlined="/blog">
+    <h1>{post.data.title}</h1>
+    <Content />
+</App>
