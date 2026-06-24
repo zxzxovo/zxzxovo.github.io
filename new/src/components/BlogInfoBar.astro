@@ -1,0 +1,48 @@
+---
+import { Icon } from "astro-icon/components";
+
+interface Props {
+    date: Date;
+    categories?: string[];
+}
+
+const { date, categories = [] } = Astro.props;
+
+const formattedDate = new Intl.DateTimeFormat("zh-CN", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+}).format(date);
+
+const visibleCategories = categories.filter(Boolean);
+---
+
+<div
+    class="flex w-full flex-wrap items-center gap-x-3 gap-y-1 rounded border border-zinc-200 bg-zinc-50/70 px-2.5 py-1 text-xs leading-5 text-zinc-500 dark:border-zinc-800 dark:bg-zinc-900/50 dark:text-zinc-400"
+>
+    <span class="inline-flex shrink-0 items-center gap-1">
+        <Icon name="mdi:calendar-month-outline" size="0.9rem" />
+        <time datetime={date.toISOString()}>{formattedDate}</time>
+    </span>
+
+    {
+        visibleCategories.length > 0 && (
+            <div class="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1">
+                <Icon
+                    name="mdi:folder-outline"
+                    size="0.9rem"
+                    class="shrink-0"
+                />
+                {visibleCategories.map((category) => (
+                    <a
+                        class="border-b border-zinc-300 leading-4 transition-colors hover:border-zinc-600 hover:text-zinc-800 dark:border-zinc-600 dark:hover:border-zinc-300 dark:hover:text-zinc-200"
+                        href={`/blog/categories/${encodeURIComponent(category)}`}
+                        aria-label={`查看 ${category} 分类`}
+                    >
+                        {category}
+                    </a>
+                ))}
+            </div>
+        )
+    }
+</div>

@@ -1,0 +1,54 @@
+---
+import type { GetStaticPaths, Page } from "astro";
+import type { CollectionEntry } from "astro:content";
+import { getCollection } from "astro:content";
+import App from "../../layouts/App.astro";
+import BlogCard from "../../components/BlogCard.astro";
+
+export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
+    const PAGE_SIZE = 10;
+    const posts = await getCollection("posts");
+    const published = posts
+        .filter((p) => !p.data.draft)
+        .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+    return paginate(published, { pageSize: PAGE_SIZE });
+};
+
+// 为了去掉错误提示。。。
+interface Props {
+    page: Page<CollectionEntry<"posts">>;
+}
+
+const { page }: Props = Astro.props;
+// page.url.prev / page.url.next — 上一页/下一页的 URL
+// page.currentPage — 当前页码
+// page.lastPage — 最后一页
+// page.data — 当前页的文章数组
+---
+
+<App underlined="/blog">
+    <div class="flex flex-col items-center">
+        <div class="flex flex-wrap justify-center">
+            {page.data.map((post) => <BlogCard post={post} />)}
+        </div>
+
+        <nav class="mt-4 flex gap-4">
+            <a
+                href={page.url.prev}
+                class:list={[
+                    "pointer-events-auto",
+                    { "pointer-events-none": !page.url.prev },
+                ]}>上一页</a
+            >
+            <span>{page.currentPage} / {page.lastPage}</span>
+            <a
+                href={page.url.next}
+                class:list={[
+                    "pointer-events-auto",
+                    { "pointer-events-none": !page.url.next },
+                ]}>下一页</a
+            >
+        </nav>
+    </div>
+</App>

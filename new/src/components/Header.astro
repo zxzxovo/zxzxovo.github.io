@@ -1,5 +1,6 @@
 ---
 import { Icon } from "astro-icon/components";
+import ThemeToggle from "./ThemeToggle";
 const { underlined } = Astro.props;
 interface NavItem {
     name: string;
@@ -33,19 +34,24 @@ const destinations: NavItem[] = [
 ];
 ---
 
-<header class="flex justify-center px-16 pt-2 pb-4">
+<header
+    class="flex flex-wrap items-center justify-between gap-x-4 gap-y-3 px-2 pt-2 pb-4 sm:px-6 lg:flex-nowrap lg:px-16"
+>
     <!--Title-->
-    <h1 class="text-center self-center w-max">
+    <h1 class="min-w-0 text-base font-semibold sm:text-lg">
         <a href="/"> {title} </a>
     </h1>
     <!--Menu-->
-    <div class="flex grow justify-start ms-8 gap-8">
+    <nav
+        class="order-3 flex w-full gap-4 overflow-x-auto pb-1 lg:order-none lg:ms-8 lg:w-auto lg:grow lg:justify-start lg:gap-8 lg:overflow-visible lg:pb-0"
+        aria-label="主导航"
+    >
         {
             destinations.map((d) => (
                 <a
                     class:list={[
-                        "self-center flex flex-row justify-end gap-1 items-center",
-                        "border-b-2 border-transparent pb-1 pt-1",
+                        "flex shrink-0 flex-row items-center gap-1",
+                        "border-b-2 border-transparent pb-1 pt-1 text-sm sm:text-base",
                         {
                             "border-b-2 border-b-orange-300":
                                 underlined === d.url,
@@ -54,15 +60,15 @@ const destinations: NavItem[] = [
                     href={d.url}
                 >
                     <Icon name={d.icon} size="1.5rem" />
-                    <p class="pr-1.5 text-base">{d.name}</p>
+                    <span class="pr-1.5">{d.name}</span>
                 </a>
             ))
         }
-    </div>
+    </nav>
 
     <!--Button-->
-    <div class="flex gap-4 py-2">
+    <div class="flex shrink-0 gap-4 py-2">
         <Icon name="mdi:search" size="1.5rem" />
-        <Icon name="mdi:sun-moon-stars" size="1.5rem" />
+        <ThemeToggle client:load />
     </div>
 </header>

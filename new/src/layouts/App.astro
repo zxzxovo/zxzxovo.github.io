@@ -25,11 +25,27 @@ const {
         <title>{title}</title>
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <ClientRouter />
+        <script is:inline>
+            (function () {
+                const prefersDark = window.matchMedia(
+                    "(prefers-color-scheme: dark)",
+                ).matches;
+                function apply() {
+                    const current = localStorage.getItem("theme");
+                    document.documentElement.classList.toggle(
+                        "dark",
+                        current === "dark" || (!current && prefersDark),
+                    );
+                }
+                apply();
+                document.addEventListener("astro:after-swap", apply);
+            })();
+        </script>
     </head>
     <body>
-        <div class="px-4">
+        <div class="px-3 sm:px-4">
             <Header underlined={underlined} />
-            <div class="flex flex-col h-full px-8">
+            <div class="flex h-full flex-col px-0 sm:px-4 lg:px-8">
                 <main class="grow">
                     <slot />
                 </main>

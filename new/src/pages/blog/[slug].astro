@@ -17,6 +17,10 @@ const { Content } = await render(post);
 ---
 
 <App underlined="/blog">
-    <h1>{post.data.title}</h1>
-    <Content />
+    <div class="flex flex-col align-middle items-center">
+        <h1 class="">{post.data.title}</h1>
+        <article class="prose dark:prose-invert max-w-none">
+            <Content />
+        </article>
+    </div>
 </App>

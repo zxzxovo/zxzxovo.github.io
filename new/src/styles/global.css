@@ -1,1 +1,21 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@variant dark (&:where(.dark, .dark *));
+
+:root {
+    --color-bg: oklch(0.98 0 0);
+    --color-text: oklch(0.2 0.02 280);
+    --color-muted: oklch(0.5 0.02 280);
+}
+
+.dark {
+    --color-bg: oklch(0.15 0.01 280);
+    --color-text: oklch(0.85 0.02 280);
+    --color-muted: oklch(0.6 0.02 280);
+}
+
+body {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+}
