@@ -1,12 +1,23 @@
 ---
+import { render } from "astro:content";
 import { Icon } from "astro-icon/components";
+import ProjectCard from "../../components/projects/ProjectCard.astro";
 import { tools } from "../../data/tool-catalog";
 import App from "../../layouts/App.astro";
+import { getPublishedProjects } from "../../lib/projects";
+
+const projects = await getPublishedProjects();
+const renderedProjects = await Promise.all(
+    projects.map(async (project) => {
+        const { Content } = await render(project);
+        return { project, Content };
+    }),
+);
 ---
 
 <App
     title="工具"
-    description="几个简单、透明、只在浏览器里运行的小工具。"
+    description="几个简单、透明、只在浏览器里运行的小工具，以及偶尔完成的小项目。"
     underlined="/tools"
 >
     <div class="mx-auto max-w-5xl">
@@ -66,5 +77,39 @@ import App from "../../layouts/App.astro";
         <p class="mt-8 text-center text-xs text-zinc-400 dark:text-zinc-500">
             所有交互数据仅保留在当前页面，刷新后即会清空。
         </p>
+
+        {
+            renderedProjects.length > 0 && (
+                <section
+                    class="mt-20 border-t border-zinc-200 pt-14 dark:border-zinc-800"
+                    aria-labelledby="projects-heading"
+                >
+                    <header class="max-w-2xl">
+                        <p class="mb-3 text-xs font-semibold tracking-[0.2em] text-orange-600 uppercase dark:text-orange-400">
+                            Projects
+                        </p>
+                        <h2
+                            id="projects-heading"
+                            class="text-2xl font-bold tracking-tight text-zinc-950 sm:text-3xl dark:text-zinc-50"
+                        >
+                            藏在角落里的项目
+                        </h2>
+                        <p class="mt-4 text-sm leading-7 text-zinc-600 dark:text-zinc-300">
+                            偶尔也会做些不太像工具的小东西，它们会慢慢出现在这里。
+                        </p>
+                    </header>
+
+                    <ul class="mt-8 grid gap-4 md:grid-cols-2">
+                        {renderedProjects.map(({ project, Content }) => (
+                            <li>
+                                <ProjectCard project={project}>
+                                    <Content />
+                                </ProjectCard>
+                            </li>
+                        ))}
+                    </ul>
+                </section>
+            )
+        }
     </div>
 </App>

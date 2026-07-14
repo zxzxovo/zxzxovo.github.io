@@ -25,7 +25,7 @@ export default defineConfig({
     sitemap({
       filter: (page) =>
         !new URL(page, "https://hizhixia.site").pathname.match(
-          /^\/(?:404(?:\.html)?|f-link|fun(?:\/|$))/,
+          /^\/(?:404(?:\.html)?|f-link|fun(?:\/|$)|search(?:\/|$))/,
         ),
     }),
   ],

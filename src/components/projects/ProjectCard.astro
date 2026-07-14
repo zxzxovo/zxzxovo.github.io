@@ -1,0 +1,105 @@
+---
+import { Icon } from "astro-icon/components";
+
+import { getProjectAnchor, type ProjectEntry } from "../../lib/projects";
+
+interface Props {
+    project: ProjectEntry;
+}
+
+const { project } = Astro.props;
+const { data } = project;
+const hasBody = Boolean(project.body?.trim());
+---
+
+<article
+    id={getProjectAnchor(project)}
+    class="flex h-full flex-col overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-sm shadow-zinc-200/40 dark:border-zinc-800 dark:bg-zinc-900 dark:shadow-none"
+>
+    {
+        data.cover && (
+            <img
+                src={data.cover.src}
+                alt={data.cover.alt}
+                class="aspect-[16/7] w-full border-b border-zinc-200 object-cover dark:border-zinc-800"
+                loading="lazy"
+            />
+        )
+    }
+
+    <div class="flex h-full flex-col p-5 sm:p-6">
+        <div class="flex items-start justify-between gap-4">
+            <span
+                class="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-orange-50 text-orange-600 dark:bg-orange-950/50 dark:text-orange-400"
+                aria-hidden="true"
+            >
+                <Icon name={data.icon ?? "mdi:folder-outline"} size="1.4rem" />
+            </span>
+            {
+                data.status && (
+                    <span class="rounded-full border border-zinc-200 px-2.5 py-1 text-xs font-medium text-zinc-500 dark:border-zinc-700 dark:text-zinc-400">
+                        {data.status}
+                    </span>
+                )
+            }
+        </div>
+
+        <h3 class="mt-6 text-xl font-semibold tracking-tight text-zinc-950 dark:text-zinc-50">
+            {data.title}
+        </h3>
+
+        {
+            hasBody ? (
+                <div class="mt-3 text-sm leading-7 text-zinc-600 [&_a]:font-medium [&_a]:text-orange-600 [&_a]:underline [&_a]:underline-offset-4 [&_p+p]:mt-3 dark:text-zinc-300 dark:[&_a]:text-orange-400">
+                    <slot />
+                </div>
+            ) : (
+                <p class="mt-3 text-sm leading-7 text-zinc-600 dark:text-zinc-300">
+                    {data.description}
+                </p>
+            )
+        }
+
+        {
+            data.tags.length > 0 && (
+                <ul class="mt-5 flex flex-wrap gap-2" aria-label="项目标签">
+                    {data.tags.map((tag) => (
+                        <li class="rounded-md bg-zinc-100 px-2 py-1 text-xs text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400">
+                            {tag}
+                        </li>
+                    ))}
+                </ul>
+            )
+        }
+
+        <div class="mt-auto flex flex-wrap items-center gap-3 pt-7">
+            {
+                data.links.length > 0 ? (
+                    data.links.map((link) => {
+                        const external = /^https?:\/\//i.test(link.href);
+                        return (
+                            <a
+                                href={link.href}
+                                target={external ? "_blank" : undefined}
+                                rel={external ? "noreferrer" : undefined}
+                                class="inline-flex items-center gap-1.5 text-sm font-medium text-orange-600 transition-colors hover:text-orange-700 dark:text-orange-400 dark:hover:text-orange-300"
+                            >
+                                {link.label}
+                                <Icon
+                                    name={external ? "mdi:open-in-new" : "mdi:arrow-right"}
+                                    size="0.95rem"
+                                    aria-hidden="true"
+                                />
+                            </a>
+                        );
+                    })
+                ) : (
+                    <span class="inline-flex items-center gap-1.5 text-xs text-zinc-400 dark:text-zinc-500">
+                        <Icon name="mdi:eye-off-outline" size="1rem" aria-hidden="true" />
+                        暂无公开入口
+                    </span>
+                )
+            }
+        </div>
+    </div>
+</article>

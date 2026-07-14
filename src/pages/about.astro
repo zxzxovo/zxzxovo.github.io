@@ -4,19 +4,28 @@ import App from "../layouts/App.astro";
 
 const interests = [
     {
-        title: "编程与工具",
-        description: "记录正在学习的语言、框架，以及那些真正解决了问题的小工具。",
+        title: "软件开发",
+        description: "应用开发者，主要使用 Rust，也持续写 Android 与 Web。喜欢让代码保持清楚、可靠、容易维护。",
+        note: "Rust · Android · Vue.js",
         icon: "mdi:code-tags",
     },
     {
-        title: "生活与食物",
-        description: "收藏日常里值得记住的片段，也认真对待一顿饭和一张照片。",
-        icon: "mdi:coffee-outline",
+        title: "阅读",
+        description: "技术书和小说都读。不要丢掉人性，也不要忘记阅读。",
+        note: "《代码整洁之道》·《野草》·《终结的感觉》",
+        icon: "mdi:book-open-page-variant-outline",
     },
     {
-        title: "写作与思考",
-        description: "把还没有答案的问题写下来，让零散的念头有一个安静的去处。",
-        icon: "mdi:fountain-pen-tip",
+        title: "音乐",
+        description: "从摇滚、民谣到古典与流行；有些时候，音乐会替你说出情绪。",
+        note: "Leonard Cohen · 万能青年旅店 · U2",
+        icon: "mdi:music-note-outline",
+    },
+    {
+        title: "摄影",
+        description: "喜欢街拍和风景，也拍下生活里觉得有趣的瞬间。是记录，也是生活。",
+        note: "街头 · 风景 · 日常",
+        icon: "mdi:camera-outline",
     },
 ];
 
@@ -24,16 +33,17 @@ const contacts = [
     { label: "GitHub", href: "https://github.com/zxzxovo", icon: "mdi:github" },
     { label: "X", href: "https://x.com/zxzxovo", icon: "mdi:twitter" },
     { label: "Email", href: "mailto:zhixiaovo@gmail.com", icon: "mdi:email-outline" },
+    { label: "Telegram", href: "https://t.me/zhixiaovo", icon: "mdi:send-outline" },
 ];
 ---
 
 <App
     title="关于"
-    description="关于芷夏，以及这个博客所记录的编程、生活与思考。"
+    description="关于 zhixia_OvO（芷夏）：一名以 Rust 为主，也写 Android 与 Web 的应用开发者。"
     underlined="/about"
 >
     <div class="mx-auto max-w-4xl">
-        <section class="grid gap-10 border-b border-zinc-200 pb-12 md:grid-cols-[minmax(0,1.25fr)_minmax(15rem,0.75fr)] md:items-end dark:border-zinc-800">
+        <section class="grid gap-10 border-b border-zinc-200 pb-12 md:grid-cols-[minmax(0,1.3fr)_minmax(15rem,0.7fr)] md:items-center dark:border-zinc-800">
             <div>
                 <p
                     class="mb-4 text-xs font-semibold tracking-[0.2em] text-orange-600 uppercase dark:text-orange-400"
@@ -45,36 +55,54 @@ const contacts = [
                 >
                     你好，我是芷夏。
                 </h1>
+                <p class="mt-3 text-sm font-medium text-orange-600 dark:text-orange-400">
+                    zhixia_OvO · 应用开发者
+                </p>
                 <p
                     class="mt-6 max-w-2xl text-lg leading-8 text-zinc-600 dark:text-zinc-300"
                 >
-                    我喜欢把复杂的事情慢慢理清，也喜欢记录那些容易被时间带走的瞬间。这个博客是我的公开笔记本：有代码，有生活，也有一些尚未想明白的话。
+                    我主要使用 Rust，也写 Android 与 Web。喜欢把复杂的事情慢慢理清，再用简单、可靠的方式实现；这个博客则用来保存代码、生活，以及偶尔闪过的念头。
                 </p>
             </div>
 
-            <blockquote
-                class="border-l-2 border-orange-500 pl-5 text-sm leading-7 text-zinc-500 dark:text-zinc-400"
-            >
-                不急着把自己写成一份履历。持续学习，认真生活，偶尔停下来看看一路留下了什么。
-            </blockquote>
+            <figure class="mx-auto w-full max-w-xs md:mx-0">
+                <img
+                    src="/images/identity/about.webp"
+                    alt="芷夏的正脸头像"
+                    width="560"
+                    height="560"
+                    loading="eager"
+                    fetchpriority="high"
+                    class="aspect-square w-full rounded-xl border border-zinc-200 object-cover dark:border-zinc-800"
+                />
+                <blockquote
+                    class="mt-5 border-l-2 border-orange-500 pl-4 text-sm leading-6 text-zinc-500 dark:text-zinc-400"
+                >
+                    <p>长恨此身非我有，何时忘却营营？</p>
+                    <p>夜阑风静縠纹平。小舟从此逝，江海寄余生。</p>
+                    <footer class="mt-2 text-xs text-zinc-400 dark:text-zinc-500">
+                        <cite class="not-italic">—— 苏轼《临江仙·夜归临皋》</cite>
+                    </footer>
+                </blockquote>
+            </figure>
         </section>
 
         <section class="py-12" aria-labelledby="about-interests">
             <div class="mb-7 flex items-end justify-between gap-4">
                 <div>
                     <p class="text-sm font-medium text-orange-600 dark:text-orange-400">
-                        我在关注
+                        我喜欢的事
                     </p>
                     <h2
                         id="about-interests"
                         class="mt-1 text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100"
                     >
-                        写在这里的事情
+                        代码之外，也在认真生活
                     </h2>
                 </div>
             </div>
 
-            <div class="grid gap-4 md:grid-cols-3">
+            <div class="grid gap-4 sm:grid-cols-2">
                 {
                     interests.map((interest) => (
                         <article class="rounded-xl border border-zinc-200 bg-white p-5 transition-colors hover:border-orange-300 dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-orange-700">
@@ -87,6 +115,9 @@ const contacts = [
                             <p class="mt-2 text-sm leading-6 text-zinc-500 dark:text-zinc-400">
                                 {interest.description}
                             </p>
+                            <p class="mt-3 text-xs leading-5 text-zinc-400 dark:text-zinc-500">
+                                {interest.note}
+                            </p>
                         </article>
                     ))
                 }
@@ -94,35 +125,48 @@ const contacts = [
         </section>
 
         <section
-            class="rounded-xl border border-zinc-200 bg-zinc-100/70 p-6 sm:flex sm:items-center sm:justify-between sm:gap-8 sm:p-8 dark:border-zinc-800 dark:bg-zinc-900/60"
+            class="rounded-xl border border-zinc-200 bg-zinc-100/70 p-6 sm:p-8 dark:border-zinc-800 dark:bg-zinc-900/60"
             aria-labelledby="about-contact"
         >
-            <div>
-                <h2
-                    id="about-contact"
-                    class="text-xl font-semibold text-zinc-900 dark:text-zinc-100"
-                >
-                    保持联系
-                </h2>
-                <p class="mt-2 max-w-xl text-sm leading-6 text-zinc-500 dark:text-zinc-400">
-                    想聊聊技术、文章，或者只是打个招呼，都可以从下面找到我。
-                </p>
+            <div class="sm:flex sm:items-start sm:justify-between sm:gap-8">
+                <div>
+                    <h2
+                        id="about-contact"
+                        class="text-xl font-semibold text-zinc-900 dark:text-zinc-100"
+                    >
+                        保持联系
+                    </h2>
+                    <p class="mt-2 max-w-xl text-sm leading-6 text-zinc-500 dark:text-zinc-400">
+                        想聊聊技术、文章，或者只是打个招呼，都可以从下面找到我。
+                    </p>
+                </div>
+                <div class="mt-5 flex flex-wrap gap-2 sm:mt-0 sm:shrink-0">
+                    {
+                        contacts.map((contact) => (
+                            <a
+                                href={contact.href}
+                                target={contact.href.startsWith("http") ? "_blank" : undefined}
+                                rel={contact.href.startsWith("http") ? "noreferrer" : undefined}
+                                class="inline-flex min-h-10 items-center gap-2 rounded-lg border border-zinc-300 bg-white px-3.5 text-sm font-medium text-zinc-700 transition hover:border-orange-400 hover:text-orange-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-300 dark:hover:text-orange-300"
+                            >
+                                <Icon name={contact.icon} size="1.1rem" />
+                                {contact.label}
+                            </a>
+                        ))
+                    }
+                </div>
             </div>
-            <div class="mt-5 flex flex-wrap gap-2 sm:mt-0 sm:shrink-0">
-                {
-                    contacts.map((contact) => (
-                        <a
-                            href={contact.href}
-                            target={contact.href.startsWith("http") ? "_blank" : undefined}
-                            rel={contact.href.startsWith("http") ? "noreferrer" : undefined}
-                            class="inline-flex min-h-10 items-center gap-2 rounded-lg border border-zinc-300 bg-white px-3.5 text-sm font-medium text-zinc-700 transition hover:border-orange-400 hover:text-orange-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-300 dark:hover:text-orange-300"
-                        >
-                            <Icon name={contact.icon} size="1.1rem" />
-                            {contact.label}
-                        </a>
-                    ))
-                }
-            </div>
+
+            <dl class="mt-6 flex flex-wrap gap-x-6 gap-y-2 border-t border-zinc-200 pt-5 text-sm dark:border-zinc-800">
+                <div class="flex gap-2">
+                    <dt class="text-zinc-400 dark:text-zinc-500">QQ</dt>
+                    <dd class="font-medium text-zinc-700 dark:text-zinc-300">2244697793</dd>
+                </div>
+                <div class="flex gap-2">
+                    <dt class="text-zinc-400 dark:text-zinc-500">微信</dt>
+                    <dd class="font-medium text-zinc-700 dark:text-zinc-300">hizhixia</dd>
+                </div>
+            </dl>
         </section>
     </div>
 </App>

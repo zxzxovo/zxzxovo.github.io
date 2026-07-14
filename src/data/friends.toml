@@ -1,0 +1,13 @@
+# 友链添加规则：
+# 1. title、content、url 必填，avatar 可选；url 接受 HTTP(S)，avatar 只接受 HTTPS 地址。
+# 2. 请确认站点可正常访问，并以原创、长期维护的内容为主。
+# 3. 每个站点添加一个 [[friends]] 区块；标题和地址不得与现有条目重复。
+# 4. 提交 PR 时只修改这份文件，检查通过后即可进入友链列表。
+#
+# 复制下面的示例、去掉行首的“# ”并替换内容：
+#
+# [[friends]]
+# title = "站点名称"
+# content = "一句简短、准确的站点介绍"
+# url = "https://example.com/"
+# avatar = "https://example.com/avatar.png" # 可选

@@ -2,7 +2,9 @@
 import { render } from "astro:content";
 import TableOfContents from "../../components/TableOfContents.astro";
 import TagSmall from "../../components/TagSmall.astro";
+import GiscusComments from "../../components/comments/GiscusComments";
 import { CATEGORY_META } from "../../config/categories";
+import { GISCUS_CONFIG, getGiscusTerm } from "../../config/comments";
 import App from "../../layouts/App.astro";
 import {
     formatPostDate,
@@ -158,5 +160,11 @@ const articleSchema = {
                 )
             }
         </nav>
+
+        <GiscusComments
+            config={GISCUS_CONFIG}
+            term={getGiscusTerm(post.data.slug)}
+            client:load
+        />
     </div>
 </App>

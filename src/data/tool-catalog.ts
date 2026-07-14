@@ -4,6 +4,7 @@ export interface ToolDefinition {
     href: string;
     icon: string;
     badge: string;
+    keywords: string[];
 }
 
 export const tools = [
@@ -13,6 +14,7 @@ export const tools = [
         href: "/tools/unicode-emoji",
         icon: "mdi:emoticon-happy-outline",
         badge: "文本",
+        keywords: ["Emoji", "Unicode", "码点", "JavaScript", "转义", "复制", "字符"],
     },
     {
         title: "社保缴费计算器",
@@ -20,6 +22,21 @@ export const tools = [
         href: "/tools/social-insurance",
         icon: "mdi:calculator-variant-outline",
         badge: "计算",
+        keywords: [
+            "社保",
+            "养老保险",
+            "医疗保险",
+            "失业保险",
+            "工伤保险",
+            "生育保险",
+            "住房公积金",
+            "缴费基数",
+            "个人比例",
+            "单位比例",
+            "税前月薪",
+            "地区",
+            "参数来源",
+        ],
     },
     {
         title: "X 抽奖",
@@ -27,5 +44,6 @@ export const tools = [
         href: "/tools/x-lottery",
         icon: "mdi:dice-multiple-outline",
         badge: "随机",
+        keywords: ["X", "抽奖", "随机", "候选名单", "TXT", "CSV", "去重", "筛选", "排除", "随机种子"],
     },
 ] satisfies ToolDefinition[];

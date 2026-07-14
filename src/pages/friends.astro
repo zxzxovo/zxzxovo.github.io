@@ -2,11 +2,21 @@
 import { Icon } from "astro-icon/components";
 import { friends } from "../data/friends";
 import App from "../layouts/App.astro";
+
+const editUrl =
+    "https://github.com/zxzxovo/zxzxovo.github.io/edit/main/src/data/friends.toml";
+const pullRequestUrl =
+    "https://github.com/zxzxovo/zxzxovo.github.io/compare";
+const example = `[[friends]]
+title = "站点名称"
+content = "一句简短、准确的站点介绍"
+url = "https://example.com/"
+avatar = "https://example.com/avatar.png" # 可选`;
 ---
 
 <App
     title="友链"
-    description="芷夏的朋友们，以及交换友情链接的简短说明。"
+    description="芷夏的朋友们，以及通过 GitHub Pull Request 交换友情链接的说明。"
     underlined="/friends"
 >
     <div class="mx-auto max-w-4xl">
@@ -22,7 +32,7 @@ import App from "../layouts/App.astro";
                 互联网上的邻居
             </h1>
             <p class="mt-5 text-base leading-7 text-zinc-600 dark:text-zinc-300">
-                每一个长期写作的独立站点，都让互联网多了一点人的温度。这里会收集我常去拜访的朋友。
+                每一个长期写作的独立站点，都让互联网多了一点人的温度。这里收集我常去拜访的朋友，也欢迎你通过一个简单的 Pull Request 坐下来聊聊。
             </p>
         </header>
 
@@ -40,22 +50,26 @@ import App from "../layouts/App.astro";
                                 {friend.avatar ? (
                                     <img
                                         src={friend.avatar}
-                                        alt=""
+                                        alt={`${friend.title} 的头像`}
+                                        width="48"
+                                        height="48"
                                         loading="lazy"
+                                        decoding="async"
+                                        referrerpolicy="no-referrer"
                                         class="h-12 w-12 shrink-0 rounded-lg object-cover"
                                     />
                                 ) : (
                                     <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-orange-50 text-lg font-semibold text-orange-600 dark:bg-orange-950/50 dark:text-orange-400">
-                                        {friend.name.slice(0, 1)}
+                                        {friend.title.slice(0, 1)}
                                     </span>
                                 )}
                                 <span class="min-w-0">
                                     <span class="flex items-center gap-2 font-semibold text-zinc-900 group-hover:text-orange-600 dark:text-zinc-100 dark:group-hover:text-orange-400">
-                                        {friend.name}
+                                        {friend.title}
                                         <Icon name="mdi:arrow-top-right" size="1rem" />
                                     </span>
                                     <span class="mt-1.5 block text-sm leading-6 text-zinc-500 dark:text-zinc-400">
-                                        {friend.description}
+                                        {friend.content}
                                     </span>
                                 </span>
                             </a>
@@ -63,42 +77,101 @@ import App from "../layouts/App.astro";
                     ))}
                 </ul>
             ) : (
-                <section class="mt-10 rounded-xl border border-dashed border-zinc-300 bg-zinc-100/50 px-6 py-14 text-center dark:border-zinc-700 dark:bg-zinc-900/40">
+                <section class="mt-10 rounded-xl border border-dashed border-zinc-300 bg-zinc-100/50 px-6 py-12 text-center dark:border-zinc-700 dark:bg-zinc-900/40">
                     <span class="mx-auto flex h-11 w-11 items-center justify-center rounded-full bg-white text-zinc-500 dark:bg-zinc-900 dark:text-zinc-400">
                         <Icon name="mdi:link-variant" size="1.35rem" />
                     </span>
                     <h2 class="mt-4 font-semibold text-zinc-900 dark:text-zinc-100">
-                        友链正在慢慢整理
+                        第一张椅子还空着
                     </h2>
                     <p class="mx-auto mt-2 max-w-md text-sm leading-6 text-zinc-500 dark:text-zinc-400">
-                        这里暂时还是一张空桌子。如果你也在持续维护自己的独立站点，欢迎来信介绍你和你的作品。
+                        如果你也在持续维护自己的独立站点，可以按下方格式添加一条记录并提交 PR。
                     </p>
                 </section>
             )
         }
 
         <section
-            class="mt-8 flex flex-col gap-5 rounded-xl border border-zinc-200 bg-white p-6 sm:flex-row sm:items-center sm:justify-between dark:border-zinc-800 dark:bg-zinc-900"
+            class="mt-8 rounded-xl border border-zinc-200 bg-white p-6 sm:p-8 dark:border-zinc-800 dark:bg-zinc-900"
             aria-labelledby="friend-exchange"
         >
-            <div>
+            <div class="max-w-2xl">
+                <p
+                    class="text-xs font-semibold tracking-[0.16em] text-orange-600 uppercase dark:text-orange-400"
+                >
+                    Add your site
+                </p>
                 <h2
                     id="friend-exchange"
-                    class="font-semibold text-zinc-900 dark:text-zinc-100"
+                    class="mt-2 text-2xl font-bold tracking-tight text-zinc-950 dark:text-zinc-50"
                 >
-                    交换友链
+                    用一小段 TOML 交换友链
                 </h2>
-                <p class="mt-2 max-w-xl text-sm leading-6 text-zinc-500 dark:text-zinc-400">
-                    来信时请附上站点名称、地址和一句简短介绍。内容以原创为主、可以正常访问即可。
+                <p class="mt-3 text-sm leading-6 text-zinc-600 dark:text-zinc-300">
+                    友链由 <code>src/data/friends.toml</code> 统一维护。编辑文件、添加一个区块，再发起 Pull Request；构建会自动检查格式和重复项。
                 </p>
             </div>
-            <a
-                href="mailto:zhixiaovo@gmail.com?subject=%E4%BA%A4%E6%8D%A2%E5%8F%8B%E9%93%BE"
-                class="inline-flex min-h-10 shrink-0 items-center justify-center gap-2 rounded-lg bg-orange-600 px-4 text-sm font-semibold text-white transition hover:bg-orange-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500 dark:bg-orange-500 dark:hover:bg-orange-400"
-            >
-                <Icon name="mdi:email-outline" size="1.1rem" />
-                发送邮件
-            </a>
+
+            <div class="mt-7 grid gap-7 lg:grid-cols-[0.9fr_1.1fr]">
+                <div>
+                    <h3 class="font-semibold text-zinc-900 dark:text-zinc-100">
+                        简单规则
+                    </h3>
+                    <ul class="mt-3 space-y-3 text-sm leading-6 text-zinc-600 dark:text-zinc-300">
+                        <li class="flex gap-2.5">
+                            <Icon name="mdi:check-circle-outline" size="1.1rem" class="mt-1 shrink-0 text-orange-600 dark:text-orange-400" />
+                            <span><code>title</code>、<code>content</code>、<code>url</code> 必填，<code>avatar</code> 可选。</span>
+                        </li>
+                        <li class="flex gap-2.5">
+                            <Icon name="mdi:check-circle-outline" size="1.1rem" class="mt-1 shrink-0 text-orange-600 dark:text-orange-400" />
+                            <span>站点链接须为 HTTP(S)，头像须为 HTTPS；标题与站点地址不能重复。</span>
+                        </li>
+                        <li class="flex gap-2.5">
+                            <Icon name="mdi:check-circle-outline" size="1.1rem" class="mt-1 shrink-0 text-orange-600 dark:text-orange-400" />
+                            <span>站点应可正常访问，并以原创、长期维护的内容为主。</span>
+                        </li>
+                        <li class="flex gap-2.5">
+                            <Icon name="mdi:check-circle-outline" size="1.1rem" class="mt-1 shrink-0 text-orange-600 dark:text-orange-400" />
+                            <span>一次只需添加自己的记录，PR 中不要改动其他友链。</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="min-w-0">
+                    <h3 class="font-semibold text-zinc-900 dark:text-zinc-100">
+                        可复制的格式
+                    </h3>
+                    <pre class="mt-3 overflow-x-auto rounded-lg border border-zinc-200 bg-zinc-50 p-4 text-xs leading-6 text-zinc-700 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-300"><code>{example}</code></pre>
+                </div>
+            </div>
+
+            <div class="mt-7 flex flex-col gap-3 border-t border-zinc-200 pt-6 sm:flex-row dark:border-zinc-800">
+                <a
+                    href={editUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    class="inline-flex min-h-10 items-center justify-center gap-2 rounded-lg bg-orange-600 px-4 text-sm font-semibold text-white transition hover:bg-orange-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500 dark:bg-orange-500 dark:hover:bg-orange-400"
+                >
+                    <Icon name="mdi:file-edit-outline" size="1.1rem" />
+                    编辑友链文件
+                </a>
+                <a
+                    href={pullRequestUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    class="inline-flex min-h-10 items-center justify-center gap-2 rounded-lg border border-zinc-300 px-4 text-sm font-semibold text-zinc-700 transition hover:border-orange-300 hover:text-orange-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500 dark:border-zinc-700 dark:text-zinc-200 dark:hover:border-orange-700 dark:hover:text-orange-400"
+                >
+                    <Icon name="mdi:source-pull" size="1.1rem" />
+                    新建 Pull Request
+                </a>
+                <a
+                    href="mailto:zhixiaovo@gmail.com?subject=%E4%BA%A4%E6%8D%A2%E5%8F%8B%E9%93%BE"
+                    class="inline-flex min-h-10 items-center justify-center gap-2 px-2 text-sm font-medium text-zinc-500 transition hover:text-orange-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500 dark:text-zinc-400 dark:hover:text-orange-400"
+                >
+                    <Icon name="mdi:email-outline" size="1.1rem" />
+                    遇到问题？发邮件
+                </a>
+            </div>
         </section>
     </div>
 </App>

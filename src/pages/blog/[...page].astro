@@ -1,7 +1,6 @@
 ---
 import type { GetStaticPaths, Page } from "astro";
-import BlogCard from "../../components/BlogCard.astro";
-import Pagination from "../../components/Pagination.astro";
+import BlogArchive from "../../components/BlogArchive.astro";
 import App from "../../layouts/App.astro";
 import { getPublishedPosts, PAGE_SIZE, type PostEntry } from "../../lib/posts";
 
@@ -15,6 +14,7 @@ interface Props {
 }
 
 const { page } = Astro.props;
+const posts = await getPublishedPosts();
 const pageTitle = page.currentPage > 1 ? `博客 · 第 ${page.currentPage} 页` : "博客";
 ---
 
@@ -28,11 +28,8 @@ const pageTitle = page.currentPage > 1 ? `博客 · 第 ${page.currentPage} 页`
             </p>
         </header>
 
-        <div class="space-y-5">
-            {page.data.map((post) => <BlogCard post={post} />)}
-        </div>
-
-        <Pagination
+        <BlogArchive
+            posts={posts}
             currentPage={page.currentPage}
             lastPage={page.lastPage}
             previous={page.url.prev}

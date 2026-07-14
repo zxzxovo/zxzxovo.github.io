@@ -16,6 +16,18 @@ const slug = z
   .min(1, "slug 不能为空")
   .refine((value) => !/[\\/?#]/.test(value), "slug 不能包含路径或查询字符");
 
+const projectLink = z.object({
+  label: z.string().trim().min(1, "项目链接名称不能为空"),
+  href: z
+    .string()
+    .trim()
+    .min(1, "项目链接地址不能为空")
+    .refine(
+      (value) => /^(?:https?:\/\/|\/(?!\/)|#)/i.test(value),
+      "项目链接必须使用 http(s)、站内绝对路径或页面锚点",
+    ),
+});
+
 const posts = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./src/content/posts" }),
   schema: z
@@ -54,4 +66,27 @@ const posts = defineCollection({
     }),
 });
 
-export const collections = { posts };
+const projects = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/projects" }),
+  schema: z.object({
+    title: z.string().trim().min(1),
+    description: z.string().trim().min(1),
+    status: z.string().trim().min(1).optional(),
+    order: z.number().int().nonnegative().default(0),
+    tags: z
+      .array(z.string().trim().min(1))
+      .default([])
+      .refine((values) => new Set(values).size === values.length, "tags 不能重复"),
+    icon: z.string().trim().min(1).optional(),
+    cover: z
+      .object({
+        src: z.string().trim().min(1),
+        alt: z.string().trim().min(1),
+      })
+      .optional(),
+    links: z.array(projectLink).default([]),
+    draft: z.boolean(),
+  }),
+});
+
+export const collections = { posts, projects };

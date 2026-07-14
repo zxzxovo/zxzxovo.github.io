@@ -1,0 +1,117 @@
+---
+import SearchExplorer from "../components/SearchExplorer";
+import { CATEGORY_META } from "../config/categories";
+import { friends } from "../data/friends";
+import { tools } from "../data/tool-catalog";
+import App from "../layouts/App.astro";
+import { getPublishedPosts, getPostHref } from "../lib/posts";
+import { getProjectAnchor, getPublishedProjects } from "../lib/projects";
+import { markdownToSearchText, type SiteSearchEntry } from "../lib/search";
+
+const posts = await getPublishedPosts();
+const projects = await getPublishedProjects();
+
+const pageEntries: SiteSearchEntry[] = [
+    {
+        title: "首页",
+        description: "芷夏的个人博客首页，查看最近更新与文章分类。",
+        href: "/",
+        type: "page",
+        keywords: ["芷夏", "博客", "最近更新", "分类"],
+        content: "你好，我是芷夏。这里记录编程、生活，以及偶尔闪过的念头。GitHub X Email 从分类开始。",
+    },
+    {
+        title: "博客",
+        description: "浏览全部文章，并按分类和标签筛选。",
+        href: "/blog",
+        type: "page",
+        keywords: ["文章", "归档", "分类", "标签"],
+        content: "写下学到的事，也保存那些不愿忘记的片刻。按分类筛选，按标签筛选。",
+    },
+    {
+        title: "文章分类",
+        description: "从技术、生活、随笔和文字四个方向浏览文章。",
+        href: "/categories",
+        type: "page",
+        keywords: ["技术", "生活", "随笔", "文字"],
+        content: "编程、工具与学习笔记。日常、食物与生活片段。关于自我、经验与思考。诗、散文与虚构。",
+    },
+    {
+        title: "工具与项目",
+        description: "浏览只在本地运行的小工具，以及芷夏的小项目。",
+        href: "/tools",
+        type: "page",
+        keywords: ["工具", "项目", "本地"],
+        content: "轻巧的小工具，没有账号、没有上传，也没有藏在背后的服务。藏在角落里的项目。",
+    },
+    {
+        title: "友链",
+        description: "朋友们在网络上的小小住处。",
+        href: "/friends",
+        type: "page",
+        keywords: ["朋友", "友情链接", "交换友链", ...friends.map((friend) => friend.title)],
+        content: [
+            "互联网上的邻居。长期写作的独立站点，使用 TOML 编辑友链并提交 Pull Request。",
+            ...friends.flatMap((friend) => [friend.title, friend.content, friend.url]),
+        ].join(" "),
+    },
+    {
+        title: "关于芷夏",
+        description: "关于 zhixia_OvO（芷夏）：一名以 Rust 为主，也写 Android 与 Web 的应用开发者。",
+        href: "/about",
+        type: "page",
+        keywords: ["芷夏", "zhixia_OvO", "关于", "联系方式", "Rust", "Android", "Vue.js", "阅读", "音乐", "摄影"],
+        content: "应用开发者，主要使用 Rust，也写 Android 与 Web。喜欢让代码保持清楚、可靠、容易维护。阅读技术书和小说，喜欢摇滚、民谣、古典与流行，也喜欢街拍、风景和日常摄影。GitHub X Email Telegram QQ 微信。",
+    },
+];
+
+const articleEntries: SiteSearchEntry[] = posts.map((post) => ({
+    title: post.data.title,
+    description: post.data.description,
+    href: getPostHref(post),
+    type: "article",
+    keywords: [
+        ...post.data.tags,
+        ...post.data.categories.map((category) => CATEGORY_META[category].name),
+    ],
+    content: markdownToSearchText(post.body ?? ""),
+}));
+
+const toolEntries: SiteSearchEntry[] = tools.map((tool) => ({
+    title: tool.title,
+    description: tool.description,
+    href: tool.href,
+    type: "tool",
+    keywords: [tool.badge, "工具", ...tool.keywords],
+}));
+
+const projectEntries: SiteSearchEntry[] = projects.map((project) => ({
+    title: project.data.title,
+    description: project.data.description,
+    href: `/tools#${getProjectAnchor(project)}`,
+    type: "project",
+    keywords: [project.data.status ?? "", ...project.data.tags, "项目"].filter(Boolean),
+    content: markdownToSearchText(project.body ?? ""),
+}));
+
+const entries = [...articleEntries, ...toolEntries, ...projectEntries, ...pageEntries];
+---
+
+<App
+    title="搜索"
+    description="搜索芷夏博客中的文章、页面、工具与项目。"
+    underlined="/search"
+    noindex
+>
+    <div class="mx-auto max-w-3xl">
+        <header class="mb-8">
+            <p class="text-sm font-semibold tracking-[0.14em] text-orange-600 uppercase dark:text-orange-400">Search</p>
+            <h1 class="mt-2 text-3xl font-bold tracking-[-0.035em] text-zinc-950 sm:text-4xl dark:text-zinc-50">全站搜索</h1>
+            <p class="mt-3 max-w-2xl leading-7 text-zinc-600 dark:text-zinc-400">
+                标题、摘要、标签和文章正文都可以被找到。
+            </p>
+        </header>
+
+        <SearchExplorer entries={entries} client:load />
+    </div>
+</App>

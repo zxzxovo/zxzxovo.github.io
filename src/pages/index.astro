@@ -104,8 +104,8 @@ const homeSchema = [
                         </a>
                     </div>
 
-                    <article class="group grid overflow-hidden rounded-[0.625rem] border border-zinc-200 bg-white md:grid-cols-[minmax(0,1.1fr)_minmax(18rem,0.9fr)] dark:border-zinc-800 dark:bg-zinc-900">
-                        <div class="flex flex-col justify-center p-6 sm:p-8 lg:p-10">
+                    <article class="group grid overflow-hidden rounded-[0.625rem] border border-zinc-200 bg-white md:grid-cols-[minmax(0,1.25fr)_minmax(16rem,0.75fr)] dark:border-zinc-800 dark:bg-zinc-900">
+                        <div class="flex flex-col justify-center p-6 sm:p-7 lg:p-8">
                             <div class="flex flex-wrap items-center gap-2 text-xs font-medium text-zinc-500 dark:text-zinc-400">
                                 <time datetime={featured.data.date.toISOString()}>{formatPostDate(featured.data.date)}</time>
                                 <span class="text-zinc-300 dark:text-zinc-700" aria-hidden="true">/</span>
@@ -136,7 +136,7 @@ const homeSchema = [
                                     href={getPostHref(featured)}
                                     tabindex="-1"
                                     aria-label={`阅读《${featured.data.title}》`}
-                                    class="order-first block aspect-[16/10] overflow-hidden bg-zinc-100 md:order-none md:aspect-auto dark:bg-zinc-800"
+                                    class="order-first block aspect-[16/10] overflow-hidden bg-zinc-100 md:order-none md:aspect-[4/3] dark:bg-zinc-800"
                                 >
                                     <img
                                         src={featured.data.cover}
@@ -146,7 +146,7 @@ const homeSchema = [
                                     />
                                 </a>
                             ) : (
-                                <div class="order-first flex aspect-[16/10] items-center justify-center bg-zinc-100 p-8 text-center md:order-none md:aspect-auto dark:bg-zinc-800">
+                                <div class="order-first flex aspect-[16/10] items-center justify-center bg-zinc-100 p-8 text-center md:order-none md:aspect-[4/3] dark:bg-zinc-800">
                                     <span class="text-3xl font-bold tracking-[-0.03em] text-zinc-400 dark:text-zinc-500">
                                         {featured.data.title}
                                     </span>

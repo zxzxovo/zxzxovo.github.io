@@ -42,6 +42,48 @@ bun run post:drafts
 - `notes`：随笔
 - `writing`：文字
 
+## 添加项目
+
+工具页的项目来自 `src/content/projects/` 中的 Markdown。每个文件使用以下格式：
+
+```yaml
+---
+title: 项目名称
+description: 一句话简介
+status: 进行中
+order: 1
+tags:
+  - 示例
+icon: mdi:folder-outline
+links:
+  - label: 查看项目
+    href: https://example.com
+draft: false
+---
+
+这里可以继续使用 Markdown 编写项目介绍。
+```
+
+`status`、`icon`、`cover` 和 `links` 可以省略；没有链接时页面会显示“暂无公开入口”。草稿项目不会出现在工具页和全站搜索中。
+
+## 添加友链
+
+友链统一维护在 `src/data/friends.toml`。复制文件内的示例并添加一个 `[[friends]]` 区块：
+
+```toml
+[[friends]]
+title = "站点名称"
+content = "一句简短、准确的站点介绍"
+url = "https://example.com/"
+avatar = "https://example.com/avatar.png" # 可选
+```
+
+`title`、`content`、`url` 必填，`avatar` 可选；站点链接接受完整的 HTTP(S) 地址，头像只接受 HTTPS 地址。构建会拒绝未知字段、重复标题和重复站点地址。访客也可以从友链页面直接编辑这份文件并发起 Pull Request。
+
+## 评论
+
+文章评论使用 Giscus，并在读者滚动到文章底部附近时加载。默认公开配置位于 `src/config/comments.ts`；也可以同时提供 `PUBLIC_GISCUS_REPO`、`PUBLIC_GISCUS_REPO_ID`、`PUBLIC_GISCUS_CATEGORY` 与 `PUBLIC_GISCUS_CATEGORY_ID` 进行完整覆盖。
+
 ## 构建与部署
 
 `bun run build` 会先检查全部文章，再把静态站点输出到 `dist/`。推送到 `main` 后，GitHub Actions 会构建并发布到 GitHub Pages。
