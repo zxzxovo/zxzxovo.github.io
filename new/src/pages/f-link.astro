@@ -1,5 +1,19 @@
 ---
-import App from "../layouts/App.astro";
+const destination = "/friends";
+const canonical = new URL(destination, Astro.site ?? Astro.url).toString();
 ---
 
-<App underlined="/f-link"> Friendship Link Page </App>
+<!doctype html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta http-equiv="refresh" content={`0; url=${destination}`} />
+        <meta name="robots" content="noindex" />
+        <link rel="canonical" href={canonical} />
+        <title>正在前往友链</title>
+    </head>
+    <body>
+        <p>页面已移动到 <a href={destination}>友链</a>。</p>
+    </body>
+</html>

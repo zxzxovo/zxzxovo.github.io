@@ -1,14 +1,13 @@
 ---
 title: "Rust标准库的Prelude"
-date: 2025-07-24
+slug: "Rust标准库的Prelude"
+date: "2025-07-24T00:00:00+08:00"
 description: "Rust标准库中的预导入部分有哪些内容"
 cover: /images/nav/Rust标准库的Prelude.jpg
-categories: ["Code"]
+categories: ["tech"]
 tags: ["Rust", "Rust标准库", "Prelude", "学习"]
 draft: false
 ---
-
-# Rust标准库的Prelude
 
 ## Intro
 

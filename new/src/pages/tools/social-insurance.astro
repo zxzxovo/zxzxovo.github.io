@@ -1,0 +1,20 @@
+---
+import SocialInsuranceCalculator from "../../components/tools/SocialInsuranceCalculator";
+import ToolPageHeader from "../../components/tools/ToolPageHeader.astro";
+import App from "../../layouts/App.astro";
+---
+
+<App
+    title="社保缴费计算器"
+    description="根据自行确认的地区参数，估算个人与单位的社保缴费金额。"
+    underlined="/tools"
+>
+    <div class="mx-auto max-w-6xl">
+        <ToolPageHeader
+            eyebrow="Local calculator"
+            title="社保缴费计算器"
+            description="这是一个透明的自定义参数计算器：不预设地区政策，也不会把过时比例包装成实时数据。"
+        />
+        <SocialInsuranceCalculator client:visible />
+    </div>
+</App>

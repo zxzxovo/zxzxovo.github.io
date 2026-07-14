@@ -1,0 +1,32 @@
+---
+interface Props {
+    eyebrow: string;
+    title: string;
+    description: string;
+}
+
+const { eyebrow, title, description } = Astro.props;
+---
+
+<header class="mb-8 max-w-3xl">
+    <a
+        href="/tools"
+        class="mb-5 inline-flex items-center gap-2 text-sm text-zinc-500 transition-colors hover:text-orange-600 focus-visible:rounded focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-orange-500 dark:text-zinc-400 dark:hover:text-orange-400"
+    >
+        <span aria-hidden="true">←</span>
+        全部工具
+    </a>
+    <p
+        class="mb-3 text-xs font-semibold tracking-[0.2em] text-orange-600 uppercase dark:text-orange-400"
+    >
+        {eyebrow}
+    </p>
+    <h1
+        class="text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl dark:text-zinc-100"
+    >
+        {title}
+    </h1>
+    <p class="mt-4 text-base leading-7 text-zinc-600 dark:text-zinc-300">
+        {description}
+    </p>
+</header>

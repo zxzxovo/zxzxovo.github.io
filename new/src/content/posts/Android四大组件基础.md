@@ -1,14 +1,13 @@
 ---
 title: "Android四大组件基础"
-date: 2025-06-21
+slug: "Android四大组件基础"
+date: "2025-06-21T14:54:32+08:00"
 description: "Android应用开发中的四大组件"
 cover: /images/nav/Android四大组件基础.svg
-categories: ["Code", "Android"]
+categories: ["tech"]
 tags: ["Android", "Code", "Kotlin", "学习"]
 draft: false
 ---
-
-# Android应用开发四大组件详解
 
 Android应用开发中常使用系统提供的 **四大组件** ： _Activity, Service, Broadcast Receiver, Content Provider_。
 
@@ -36,11 +35,11 @@ Android系统采用分层架构：
 - **系统运行库层**：核心库和ART虚拟机
 - **Linux内核层**：驱动程序和系统服务
 
-# Activity
+## Activity
 
 `Activity` 是Android应用中 **最基本** 的组件，负责提供用户界面和处理用户交互。每个Activity都代表一个单独的屏幕页面。
 
-## Activity生命周期
+### Activity生命周期
 
 Activity拥有完整的生命周期：
 
@@ -92,9 +91,9 @@ class MainActivity : AppCompatActivity() {
 }
 ```
 
-## Activity创建和使用
+### Activity创建和使用
 
-### 1. 创建Activity类
+#### 1. 创建Activity类
 
 ```kotlin
 class SecondActivity : AppCompatActivity() {
@@ -125,7 +124,7 @@ class SecondActivity : AppCompatActivity() {
 }
 ```
 
-### 2. 在AndroidManifest.xml中注册
+#### 2. 在AndroidManifest.xml中注册
 
 ```xml
 <activity
@@ -134,7 +133,7 @@ class SecondActivity : AppCompatActivity() {
     android:theme="@style/AppTheme" />
 ```
 
-### 3. Activity间跳转和数据传递
+#### 3. Activity间跳转和数据传递
 
 **显式Intent启动：**
 
@@ -194,7 +193,7 @@ private fun implicitIntents() {
 }
 ```
 
-### 4. 处理Activity返回结果
+#### 4. 处理Activity返回结果
 
 **传统方式：**
 
@@ -236,7 +235,7 @@ class MainActivity : AppCompatActivity() {
 }
 ```
 
-## Activity启动模式
+### Activity启动模式
 
 在AndroidManifest.xml中可以设置Activity的启动模式：
 
@@ -251,13 +250,13 @@ class MainActivity : AppCompatActivity() {
 - **singleTask**：栈内只保留一个实例
 - **singleInstance**：单独占用一个任务栈
 
-# Service
+## Service
 
 `Service` 是Android中用于执行 **后台任务** 的组件，即应用程序界面并没有显示时，Service仍可以在后台持续运行(Android 8.0之后对后台的限制进一步加强，可以使用Jetpack Workmanager进行管理)。
 需要注意的是Service默认还是 _在主线程_ 执行的。
 Srvice主要有两种启动方式：
 
-## 启动式Service (Started Service)
+### 启动式Service (Started Service)
 
 通过`startService()`启动，适用于执行单一操作且不需要返回结果的场景。
 
@@ -317,7 +316,7 @@ class MainActivity : AppCompatActivity() {
 }
 ```
 
-## 绑定式Service (Bound Service)
+### 绑定式Service (Bound Service)
 
 通过`bindService()`启动，适用于需要与Activity进行交互的场景。
 
@@ -391,7 +390,7 @@ class MainActivity : AppCompatActivity() {
 }
 ```
 
-## 前台Service（Foreground Service）
+### 前台Service（Foreground Service）
 
 用于执行用户可感知的任务，需要显示持续通知：
 
@@ -453,19 +452,19 @@ class ForegroundService : Service() {
 }
 ```
 
-# Broadcast Receiver
+## Broadcast Receiver
 
 `Broadcast Receiver`用于接收来自系统或其他应用的 **广播消息**，是Android中实现组件间通信的重要方式。
 
-## 广播类型
+### 广播类型
 
 - **标准广播**：异步执行，所有接收器几乎同时收到
 - **有序广播**：同步执行，按优先级依次传递，可被拦截
 - **本地广播**：仅在应用内部传播，更安全高效
 
-## 注册方式
+### 注册方式
 
-### 静态注册
+#### 静态注册
 
 在AndroidManifest.xml中注册，应用未启动也能接收广播：
 
@@ -501,7 +500,7 @@ class MyBroadcastReceiver : BroadcastReceiver() {
 }
 ```
 
-### 动态注册
+#### 动态注册
 
 在代码中注册，生命周期与注册组件相同：
 
@@ -545,7 +544,7 @@ class MainActivity : AppCompatActivity() {
 }
 ```
 
-## 发送广播
+### 发送广播
 
 ```kotlin
 class BroadcastSender : AppCompatActivity() {
@@ -579,7 +578,7 @@ class BroadcastSender : AppCompatActivity() {
 }
 ```
 
-## 有序广播处理
+### 有序广播处理
 
 ```kotlin
 class OrderedBroadcastReceiver : BroadcastReceiver() {
@@ -604,20 +603,20 @@ class OrderedBroadcastReceiver : BroadcastReceiver() {
 }
 ```
 
-# Content Provider
+## Content Provider
 
 `Content Provider`是Android中实现 **跨应用数据共享** 的标准方式，当你想访问其他应用程序提供的数据(如通讯录中的联系人)时，就需要使用该组件。
 
-## 主要特点
+### 主要特点
 
 - 提供统一的数据访问接口
 - 支持增删改查(CRUD)操作
 - 使用URI来标识数据
 - 自动处理跨进程通信
 
-## 基本使用
+### 基本使用
 
-### 创建Content Provider
+#### 创建Content Provider
 
 ```kotlin
 class MyContentProvider : ContentProvider() {
@@ -734,7 +733,7 @@ class MyContentProvider : ContentProvider() {
 }
 ```
 
-### 数据库帮助类
+#### 数据库帮助类
 
 ```kotlin
 class MyDatabaseHelper(
@@ -766,7 +765,7 @@ class MyDatabaseHelper(
 }
 ```
 
-### 在AndroidManifest.xml中注册
+#### 在AndroidManifest.xml中注册
 
 ```xml
 <provider
@@ -775,7 +774,7 @@ class MyDatabaseHelper(
     android:exported="true" />
 ```
 
-### 访问Content Provider
+#### 访问Content Provider
 
 ```kotlin
 class ContentProviderClient : AppCompatActivity() {
@@ -869,7 +868,7 @@ class ContentProviderClient : AppCompatActivity() {
 }
 ```
 
-## 访问系统Content Provider
+### 访问系统Content Provider
 
 ```kotlin
 class SystemContentProviderExample : AppCompatActivity() {
@@ -916,7 +915,7 @@ class SystemContentProviderExample : AppCompatActivity() {
 }
 ```
 
-# 总结
+## 总结
 
 Android四大组件构成了Android应用的核心架构：
 
@@ -925,7 +924,7 @@ Android四大组件构成了Android应用的核心架构：
 - **Broadcast Receiver**：实现组件间的消息通信，监听系统和应用事件
 - **Content Provider**：提供跨应用的数据共享机制，统一数据访问接口
 
-## 组件间协作示例
+### 组件间协作示例
 
 在实际开发中，四大组件经常需要协同工作：
 

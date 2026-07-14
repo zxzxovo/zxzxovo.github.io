@@ -1,26 +1,162 @@
 ---
-import { getCollection, render } from "astro:content";
+import { render } from "astro:content";
+import TableOfContents from "../../components/TableOfContents.astro";
+import TagSmall from "../../components/TagSmall.astro";
+import { CATEGORY_META } from "../../config/categories";
 import App from "../../layouts/App.astro";
+import {
+    formatPostDate,
+    getAdjacentPosts,
+    getCategoryHref,
+    getPostHref,
+    getPublishedPosts,
+    type PostEntry,
+} from "../../lib/posts";
 
 export async function getStaticPaths() {
-    const posts = await getCollection("posts"); // ← 放里面
-    return posts
-        .filter((p) => !p.data.draft)
-        .map((p) => ({
-            params: { slug: p.id }, // p.id 就是文件名
-            props: { post: p }, // ← 别忘了传 props
-        }));
+    const posts = await getPublishedPosts();
+    return posts.map((post) => ({
+        params: { slug: post.data.slug },
+        props: { post },
+    }));
+}
+
+interface Props {
+    post: PostEntry;
 }
 
 const { post } = Astro.props;
-const { Content } = await render(post);
+const posts = await getPublishedPosts();
+const { Content, headings } = await render(post);
+const tocHeadings = headings.filter((heading) => heading.depth === 2 || heading.depth === 3);
+const showToc = tocHeadings.length >= 3;
+const { newer, older } = getAdjacentPosts(posts, post.data.slug);
+const primaryCategory = post.data.categories[0];
+const articleUrl = new URL(`${getPostHref(post)}/`, Astro.site ?? Astro.url.origin).toString();
+const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.data.title,
+    description: post.data.description,
+    datePublished: post.data.date.toISOString(),
+    dateModified: (post.data.updated ?? post.data.date).toISOString(),
+    inLanguage: "zh-CN",
+    mainEntityOfPage: articleUrl,
+    ...(post.data.cover && {
+        image: new URL(post.data.cover, Astro.site ?? Astro.url.origin).toString(),
+    }),
+    author: {
+        "@type": "Person",
+        name: "芷夏",
+        url: new URL("/about", Astro.site ?? Astro.url.origin).toString(),
+    },
+};
 ---
 
-<App underlined="/blog">
-    <div class="flex flex-col align-middle items-center">
-        <h1 class="">{post.data.title}</h1>
-        <article class="prose dark:prose-invert max-w-none">
-            <Content />
-        </article>
+<App
+    title={post.data.title}
+    description={post.data.description}
+    underlined="/blog"
+    image={post.data.cover}
+    type="article"
+    article={{
+        publishedTime: post.data.date,
+        modifiedTime: post.data.updated,
+        tags: [...new Set([
+            ...post.data.categories.map((key) => CATEGORY_META[key].name),
+            ...post.data.tags,
+        ])],
+    }}
+    structuredData={articleSchema}
+>
+    <div class="mx-auto max-w-6xl">
+        <header class="mx-auto max-w-3xl">
+            <div class="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm font-medium text-zinc-500 dark:text-zinc-400">
+                <a
+                    href={getCategoryHref(primaryCategory)}
+                    class="text-orange-600 transition-colors duration-200 hover:text-orange-700 dark:text-orange-400 dark:hover:text-orange-300"
+                >
+                    {CATEGORY_META[primaryCategory].name}
+                </a>
+                <span class="text-zinc-300 dark:text-zinc-700" aria-hidden="true">/</span>
+                <time datetime={post.data.date.toISOString()}>{formatPostDate(post.data.date)}</time>
+                {
+                    post.data.updated && (
+                        <>
+                            <span class="text-zinc-300 dark:text-zinc-700" aria-hidden="true">/</span>
+                            <span>更新于 <time datetime={post.data.updated.toISOString()}>{formatPostDate(post.data.updated)}</time></span>
+                        </>
+                    )
+                }
+            </div>
+
+            <h1 class="mt-5 text-3xl font-bold leading-tight tracking-[-0.04em] text-zinc-950 sm:text-5xl dark:text-zinc-50">
+                {post.data.title}
+            </h1>
+            <p class="mt-5 text-lg leading-8 text-zinc-600 dark:text-zinc-400">{post.data.description}</p>
+            <div class="mt-6">
+                <TagSmall tags={post.data.tags} />
+            </div>
+        </header>
+
+        {
+            post.data.cover && (
+                <figure class="mx-auto mt-10 max-w-4xl overflow-hidden rounded-[0.625rem] border border-zinc-200 bg-zinc-100 dark:border-zinc-800 dark:bg-zinc-900">
+                    <img
+                        src={post.data.cover}
+                        alt=""
+                        class="max-h-[30rem] w-full object-cover"
+                        decoding="async"
+                    />
+                </figure>
+            )
+        }
+
+        <div
+            class:list={[
+                "mx-auto mt-12",
+                showToc
+                    ? "max-w-5xl lg:grid lg:grid-cols-[minmax(0,46rem)_13rem] lg:items-start lg:gap-12"
+                    : "max-w-3xl",
+            ]}
+        >
+            {showToc && <TableOfContents headings={tocHeadings} />}
+            <article class:list={["article-prose prose prose-zinc w-full dark:prose-invert", showToc && "lg:col-start-1 lg:row-start-1"]}>
+                <Content />
+            </article>
+        </div>
+
+        <nav class="mx-auto mt-16 grid max-w-3xl gap-3 border-t border-zinc-200 pt-8 sm:grid-cols-2 dark:border-zinc-800" aria-label="相邻文章">
+            {
+                newer ? (
+                    <a
+                        href={getPostHref(newer)}
+                        rel="prev"
+                        class="group rounded-[0.625rem] border border-zinc-200 bg-white p-4 transition-colors duration-200 hover:border-orange-300 dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-orange-700"
+                    >
+                        <span class="text-xs text-zinc-500 dark:text-zinc-400">← 较新一篇</span>
+                        <span class="mt-1.5 block font-semibold leading-6 text-zinc-900 transition-colors duration-200 group-hover:text-orange-600 dark:text-zinc-100 dark:group-hover:text-orange-400">
+                            {newer.data.title}
+                        </span>
+                    </a>
+                ) : (
+                    <span class="hidden sm:block" aria-hidden="true" />
+                )
+            }
+            {
+                older && (
+                    <a
+                        href={getPostHref(older)}
+                        rel="next"
+                        class="group rounded-[0.625rem] border border-zinc-200 bg-white p-4 text-right transition-colors duration-200 hover:border-orange-300 dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-orange-700"
+                    >
+                        <span class="text-xs text-zinc-500 dark:text-zinc-400">较早一篇 →</span>
+                        <span class="mt-1.5 block font-semibold leading-6 text-zinc-900 transition-colors duration-200 group-hover:text-orange-600 dark:text-zinc-100 dark:group-hover:text-orange-400">
+                            {older.data.title}
+                        </span>
+                    </a>
+                )
+            }
+        </nav>
     </div>
 </App>

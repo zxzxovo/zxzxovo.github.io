@@ -1,5 +1,225 @@
 ---
+import { Icon } from "astro-icon/components";
+import { CATEGORY_KEYS, CATEGORY_META } from "../config/categories";
 import App from "../layouts/App.astro";
+import { formatPostDate, getPostHref, getPublishedPosts } from "../lib/posts";
+
+const posts = await getPublishedPosts();
+const featured = posts[0];
+const recentPosts = posts.slice(1, 5);
+
+const categoryCounts = Object.fromEntries(
+    CATEGORY_KEYS.map((key) => [
+        key,
+        posts.filter((post) => post.data.categories.includes(key)).length,
+    ]),
+) as Record<(typeof CATEGORY_KEYS)[number], number>;
+
+const socialLinks = [
+    {
+        name: "GitHub",
+        href: "https://github.com/zxzxovo",
+        icon: "mdi:github",
+        external: true,
+    },
+    {
+        name: "X",
+        href: "https://x.com/zxzxovo",
+        icon: "mdi:twitter",
+        external: true,
+    },
+    {
+        name: "Email",
+        href: "mailto:zhixiaovo@gmail.com",
+        icon: "mdi:email-outline",
+        external: false,
+    },
+];
+
+const siteUrl = Astro.site ?? new URL("https://hizhixia.site");
+const homeSchema = [
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        name: "芷夏",
+        url: siteUrl.toString(),
+        description: "记录编程、生活，以及偶尔闪过的念头。",
+        inLanguage: "zh-CN",
+    },
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        name: "芷夏",
+        url: siteUrl.toString(),
+        sameAs: ["https://github.com/zxzxovo", "https://x.com/zxzxovo"],
+    },
+];
 ---
 
-<App underlined="/"> 首页 </App>
+<App underlined="/" structuredData={homeSchema}>
+    <div class="mx-auto max-w-6xl">
+        <section class="max-w-3xl py-4 sm:py-8" aria-labelledby="intro-title">
+            <p class="mb-3 text-sm font-semibold tracking-[0.16em] text-orange-600 uppercase dark:text-orange-400">
+                Hello
+            </p>
+            <h1 id="intro-title" class="text-3xl font-bold tracking-[-0.035em] text-zinc-950 sm:text-5xl dark:text-zinc-50">
+                你好，我是芷夏。
+            </h1>
+            <p class="mt-5 max-w-2xl text-lg leading-8 text-zinc-600 sm:text-xl dark:text-zinc-400">
+                这里记录编程、生活，以及偶尔闪过的念头。
+            </p>
+            <ul class="mt-7 flex items-center gap-2" aria-label="联系芷夏">
+                {
+                    socialLinks.map((link) => (
+                        <li>
+                            <a
+                                href={link.href}
+                                target={link.external ? "_blank" : undefined}
+                                rel={link.external ? "noreferrer" : undefined}
+                                aria-label={link.name}
+                                title={link.name}
+                                class="inline-flex size-10 items-center justify-center rounded-md border border-zinc-200 bg-white text-zinc-600 transition-colors duration-200 hover:border-orange-300 hover:text-orange-600 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-400 dark:hover:border-orange-700 dark:hover:text-orange-400"
+                            >
+                                <Icon name={link.icon} size="1.2rem" />
+                            </a>
+                        </li>
+                    ))
+                }
+            </ul>
+        </section>
+
+        {
+            featured && (
+                <section class="mt-12" aria-labelledby="latest-title">
+                    <div class="mb-5 flex items-end justify-between gap-4">
+                        <h2 id="latest-title" class="text-xl font-bold tracking-[-0.02em] text-zinc-950 dark:text-zinc-50">
+                            最近更新
+                        </h2>
+                        <a
+                            href="/blog"
+                            class="inline-flex items-center gap-1 text-sm font-medium text-zinc-500 transition-colors duration-200 hover:text-orange-600 dark:text-zinc-400 dark:hover:text-orange-400"
+                        >
+                            查看全部文章
+                            <Icon name="mdi:arrow-right" size="1rem" />
+                        </a>
+                    </div>
+
+                    <article class="group grid overflow-hidden rounded-[0.625rem] border border-zinc-200 bg-white md:grid-cols-[minmax(0,1.1fr)_minmax(18rem,0.9fr)] dark:border-zinc-800 dark:bg-zinc-900">
+                        <div class="flex flex-col justify-center p-6 sm:p-8 lg:p-10">
+                            <div class="flex flex-wrap items-center gap-2 text-xs font-medium text-zinc-500 dark:text-zinc-400">
+                                <time datetime={featured.data.date.toISOString()}>{formatPostDate(featured.data.date)}</time>
+                                <span class="text-zinc-300 dark:text-zinc-700" aria-hidden="true">/</span>
+                                <span>{CATEGORY_META[featured.data.categories[0]].name}</span>
+                            </div>
+                            <h3 class="mt-4 text-2xl font-bold leading-tight tracking-[-0.03em] text-zinc-950 sm:text-3xl dark:text-zinc-50">
+                                <a
+                                    href={getPostHref(featured)}
+                                    class="transition-colors duration-200 group-hover:text-orange-600 dark:group-hover:text-orange-400"
+                                >
+                                    {featured.data.title}
+                                </a>
+                            </h3>
+                            <p class="mt-4 line-clamp-3 leading-7 text-zinc-600 dark:text-zinc-400">
+                                {featured.data.description}
+                            </p>
+                            <a
+                                href={getPostHref(featured)}
+                                class="mt-6 inline-flex w-fit items-center gap-1.5 text-sm font-semibold text-orange-600 dark:text-orange-400"
+                            >
+                                阅读文章
+                                <Icon name="mdi:arrow-right" size="1rem" />
+                            </a>
+                        </div>
+                        {
+                            featured.data.cover ? (
+                                <a
+                                    href={getPostHref(featured)}
+                                    tabindex="-1"
+                                    aria-label={`阅读《${featured.data.title}》`}
+                                    class="order-first block aspect-[16/10] overflow-hidden bg-zinc-100 md:order-none md:aspect-auto dark:bg-zinc-800"
+                                >
+                                    <img
+                                        src={featured.data.cover}
+                                        alt=""
+                                        class="h-full w-full object-cover transition-transform duration-200 group-hover:scale-[1.02]"
+                                        decoding="async"
+                                    />
+                                </a>
+                            ) : (
+                                <div class="order-first flex aspect-[16/10] items-center justify-center bg-zinc-100 p-8 text-center md:order-none md:aspect-auto dark:bg-zinc-800">
+                                    <span class="text-3xl font-bold tracking-[-0.03em] text-zinc-400 dark:text-zinc-500">
+                                        {featured.data.title}
+                                    </span>
+                                </div>
+                            )
+                        }
+                    </article>
+
+                    {
+                        recentPosts.length > 0 && (
+                            <ol class="mt-4 divide-y divide-zinc-200 border-y border-zinc-200 dark:divide-zinc-800 dark:border-zinc-800">
+                                {recentPosts.map((post) => (
+                                    <li>
+                                        <a
+                                            href={getPostHref(post)}
+                                            class="group/item grid gap-2 py-4 transition-colors duration-200 sm:grid-cols-[7rem_minmax(0,1fr)_auto] sm:items-center sm:gap-5"
+                                        >
+                                            <time
+                                                datetime={post.data.date.toISOString()}
+                                                class="text-xs tabular-nums text-zinc-500 dark:text-zinc-400"
+                                            >
+                                                {formatPostDate(post.data.date)}
+                                            </time>
+                                            <span class="font-semibold text-zinc-900 transition-colors duration-200 group-hover/item:text-orange-600 dark:text-zinc-100 dark:group-hover/item:text-orange-400">
+                                                {post.data.title}
+                                            </span>
+                                            <span class="hidden text-xs text-zinc-500 sm:block dark:text-zinc-400">
+                                                {CATEGORY_META[post.data.categories[0]].name}
+                                            </span>
+                                        </a>
+                                    </li>
+                                ))}
+                            </ol>
+                        )
+                    }
+                </section>
+            )
+        }
+
+        <section class="mt-20" aria-labelledby="categories-title">
+            <div class="mb-5 flex items-end justify-between gap-4">
+                <div>
+                    <h2 id="categories-title" class="text-xl font-bold tracking-[-0.02em] text-zinc-950 dark:text-zinc-50">
+                        从分类开始
+                    </h2>
+                    <p class="mt-1 text-sm text-zinc-500 dark:text-zinc-400">循着感兴趣的方向，随意逛逛。</p>
+                </div>
+                <a
+                    href="/categories"
+                    class="text-sm font-medium text-zinc-500 transition-colors duration-200 hover:text-orange-600 dark:text-zinc-400 dark:hover:text-orange-400"
+                >全部分类</a>
+            </div>
+            <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                {
+                    CATEGORY_KEYS.map((key) => {
+                        const category = CATEGORY_META[key];
+                        return (
+                            <a
+                                href={category.href}
+                                class="group rounded-[0.625rem] border border-zinc-200 bg-white p-5 transition-[border-color,transform] duration-200 hover:-translate-y-0.5 hover:border-orange-300 dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-orange-700"
+                            >
+                                <div class="flex items-baseline justify-between gap-3">
+                                    <h3 class="font-bold text-zinc-900 transition-colors duration-200 group-hover:text-orange-600 dark:text-zinc-100 dark:group-hover:text-orange-400">
+                                        {category.name}
+                                    </h3>
+                                    <span class="text-xs tabular-nums text-zinc-400 dark:text-zinc-500">{categoryCounts[key]}</span>
+                                </div>
+                                <p class="mt-2 text-sm leading-6 text-zinc-500 dark:text-zinc-400">{category.description}</p>
+                            </a>
+                        );
+                    })
+                }
+            </div>
+        </section>
+    </div>
+</App>

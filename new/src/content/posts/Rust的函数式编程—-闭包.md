@@ -1,9 +1,10 @@
 ---
 title: "Rust的函数式编程— 闭包"
-date: 2025-04-01
+slug: "Rust的函数式编程—-闭包"
+date: "2025-04-01T13:38:17+08:00"
 description: "关于Rust中的闭包"
 cover: /images/nav/Rust的函数式编程—-闭包.jpg
-categories: ["Code"]
+categories: ["tech"]
 tags: ["Rust", "Code", "闭包", "函数式编程"]
 draft: false
 ---

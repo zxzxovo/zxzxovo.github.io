@@ -2,19 +2,56 @@ import { defineCollection } from "astro:content";
 import { glob } from "astro/loaders";
 import { z } from "astro/zod";
 
+import { CATEGORY_KEYS } from "./config/categories";
+import { ISO_DATE_TIME_PATTERN } from "./config/content";
+
+const isoDateTime = z
+  .string()
+  .regex(ISO_DATE_TIME_PATTERN, "必须使用带时区的 ISO 8601 日期时间")
+  .transform((value) => new Date(value));
+
+const slug = z
+  .string()
+  .trim()
+  .min(1, "slug 不能为空")
+  .refine((value) => !/[\\/?#]/.test(value), "slug 不能包含路径或查询字符");
+
 const posts = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./src/content/posts" }),
-  schema: z.object({
-    title: z.string(),
-    slug: z.string().optional(),
-    date: z.coerce.date(),
-    updated: z.coerce.date().optional(),
-    tags: z.array(z.string()).default([]),
-    categories: z.array(z.string()).default([]),
-    description: z.string().optional(),
-    draft: z.boolean().default(false),
-    cover: z.string().optional(),
-  }),
+  schema: z
+    .object({
+      title: z.string().trim().min(1),
+      slug,
+      date: isoDateTime,
+      updated: isoDateTime.optional(),
+      description: z.string(),
+      cover: z.string().trim().min(1).optional(),
+      categories: z.array(z.enum(CATEGORY_KEYS)).refine(
+        (values) => new Set(values).size === values.length,
+        "categories 不能重复",
+      ),
+      tags: z.array(z.string().trim().min(1)),
+      draft: z.boolean(),
+    })
+    .superRefine((data, context) => {
+      if (data.draft) return;
+
+      if (!data.description.trim()) {
+        context.addIssue({
+          code: "custom",
+          path: ["description"],
+          message: "已发布文章必须提供摘要",
+        });
+      }
+
+      if (data.categories.length === 0) {
+        context.addIssue({
+          code: "custom",
+          path: ["categories"],
+          message: "已发布文章必须至少属于一个分类",
+        });
+      }
+    }),
 });
 
 export const collections = { posts };

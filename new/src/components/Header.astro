@@ -1,74 +1,58 @@
 ---
-import { Icon } from "astro-icon/components";
 import ThemeToggle from "./ThemeToggle";
-const { underlined } = Astro.props;
-interface NavItem {
-    name: string;
-    url: string;
-    icon: string;
+
+interface Props {
+    underlined?: string;
 }
 
-const title = "Zhixia 的个人网站";
-
-const destinations: NavItem[] = [
-    {
-        name: "Home ",
-        url: "/",
-        icon: "mdi:home-outline",
-    },
-    {
-        name: "Blog ",
-        url: "/blog",
-        icon: "mdi:pencil-box-outline",
-    },
-    {
-        name: "Friend Link ",
-        url: "/f-link",
-        icon: "mdi:link-variant",
-    },
-    {
-        name: "About ",
-        url: "/about",
-        icon: "mdi:about-circle-outline",
-    },
+const { underlined } = Astro.props;
+const destinations = [
+    { name: "首页", url: "/" as const },
+    { name: "博客", url: "/blog" as const },
+    { name: "分类", url: "/categories" as const },
+    { name: "工具", url: "/tools" as const },
+    { name: "友链", url: "/friends" as const },
+    { name: "关于", url: "/about" as const },
 ];
 ---
 
-<header
-    class="flex flex-wrap items-center justify-between gap-x-4 gap-y-3 px-2 pt-2 pb-4 sm:px-6 lg:flex-nowrap lg:px-16"
->
-    <!--Title-->
-    <h1 class="min-w-0 text-base font-semibold sm:text-lg">
-        <a href="/"> {title} </a>
-    </h1>
-    <!--Menu-->
-    <nav
-        class="order-3 flex w-full gap-4 overflow-x-auto pb-1 lg:order-none lg:ms-8 lg:w-auto lg:grow lg:justify-start lg:gap-8 lg:overflow-visible lg:pb-0"
-        aria-label="主导航"
-    >
-        {
-            destinations.map((d) => (
-                <a
-                    class:list={[
-                        "flex shrink-0 flex-row items-center gap-1",
-                        "border-b-2 border-transparent pb-1 pt-1 text-sm sm:text-base",
-                        {
-                            "border-b-2 border-b-orange-300":
-                                underlined === d.url,
-                        },
-                    ]}
-                    href={d.url}
-                >
-                    <Icon name={d.icon} size="1.5rem" />
-                    <span class="pr-1.5">{d.name}</span>
-                </a>
-            ))
-        }
-    </nav>
+<header class="sticky top-0 z-40 border-b border-zinc-200 bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-950">
+    <div class="mx-auto flex h-[4.5rem] max-w-6xl items-center gap-5 px-4 sm:px-6 lg:px-8">
+        <a
+            href="/"
+            class="shrink-0 text-lg font-bold tracking-[-0.025em] text-zinc-950 transition-colors duration-200 hover:text-orange-600 dark:text-zinc-50 dark:hover:text-orange-400"
+            aria-label="芷夏，返回首页"
+        >
+            芷夏
+        </a>
 
-    <!--Button-->
-    <div class="flex shrink-0 gap-4 py-2">
-        <Icon name="mdi:search" size="1.5rem" />
+        <nav class="site-nav-scroll ml-auto min-w-0 flex-1 overflow-x-auto" aria-label="主导航">
+            <ul class="ml-auto flex w-max items-center gap-1 sm:gap-2">
+                {
+                    destinations.map((destination) => {
+                        const active = underlined === destination.url;
+                        return (
+                            <li>
+                                <a
+                                    href={destination.url}
+                                    aria-current={active ? "page" : undefined}
+                                    class:list={[
+                                        "inline-flex min-h-10 items-center rounded-md px-2.5 text-sm font-medium transition-colors duration-200 sm:px-3",
+                                        active
+                                            ? "bg-orange-50 text-orange-600 dark:bg-orange-950/40 dark:text-orange-400"
+                                            : "text-zinc-600 hover:bg-zinc-100 hover:text-zinc-950 dark:text-zinc-400 dark:hover:bg-zinc-900 dark:hover:text-zinc-50",
+                                    ]}
+                                >
+                                    {destination.name}
+                                </a>
+                            </li>
+                        );
+                    })
+                }
+            </ul>
+        </nav>
+
+        <div class="h-5 w-px bg-zinc-200 dark:bg-zinc-800" aria-hidden="true"></div>
         <ThemeToggle client:load />
     </div>
 </header>

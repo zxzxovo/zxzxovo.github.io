@@ -1,10 +1,12 @@
 ---
 title: "Rust标准库中的path"
-date: 2025-08-07
+slug: "Rust标准库的path"
+date: "2025-08-07T00:00:00+08:00"
 description: "关于Rust标准库中路径处理的跨平台抽象模块 path 以及它的一些细节"
 cover: /images/nav/Rust标准库的path.jpg
-categories: ["Code"]
+categories: ["tech"]
 tags: ["Rust", "Rust标准库", "path", "学习", "路径", "跨平台", "字符串"]
+draft: false
 ---
 
 ## Intro

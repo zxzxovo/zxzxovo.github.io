@@ -1,0 +1,17 @@
+{
+  "name": "芷夏的博客",
+  "short_name": "芷夏",
+  "description": "记录编程、生活，以及偶尔闪过的念头。",
+  "lang": "zh-CN",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fafafa",
+  "theme_color": "#fafafa",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

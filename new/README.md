@@ -1,46 +1,47 @@
-# Astro Starter Kit: Basics
+# 芷夏的博客
 
-```sh
-bun create astro@latest -- --template basics
+一个使用 Astro、Solid.js 与 Tailwind CSS 构建的静态个人博客。
+
+## 开发
+
+需要 Bun 1.3+ 与 Node.js 22.12+。
+
+```bash
+bun install --frozen-lockfile
+bun run dev
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+常用检查：
 
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
+```bash
+bun run post:check
+bun run check
+bun run test
+bun run build
+bun run site:check
+bun run preview
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+## 创建文章
 
-## 🧞 Commands
+```bash
+bun run post:new "文章标题"
+bun run post:new "文章标题" --slug custom-slug
+bun run post:new "文章标题" --categories tech,notes
+bun run post:drafts
+```
 
-All commands are run from the root of the project, from a terminal:
+新文章默认是草稿。填写摘要、分类和正文后，将 `draft` 明确改为 `false` 才会发布。
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `bun install`             | Installs dependencies                            |
-| `bun dev`             | Starts local dev server at `localhost:4321`      |
-| `bun build`           | Build your production site to `./dist/`          |
-| `bun preview`         | Preview your build locally, before deploying     |
-| `bun astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `bun astro -- --help` | Get help using the Astro CLI                     |
+文章位于 `src/content/posts/`，封面位于 `public/images/nav/`。永久地址由 Frontmatter 中的 `slug` 决定；已发布文章不得随意修改它。
 
-## 👀 Want to learn more?
+分类 key：
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+- `tech`：技术
+- `life`：生活
+- `notes`：随笔
+- `writing`：文字
+
+## 构建与部署
+
+`bun run build` 会先检查全部文章，再把静态站点输出到 `dist/`。推送到 `main` 后，GitHub Actions 会构建并发布到 GitHub Pages。

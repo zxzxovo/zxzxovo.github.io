@@ -1,0 +1,20 @@
+---
+import ToolPageHeader from "../../components/tools/ToolPageHeader.astro";
+import XLottery from "../../components/tools/XLottery";
+import App from "../../layouts/App.astro";
+---
+
+<App
+    title="X 抽奖"
+    description="从本地候选名单中筛选、去重，并使用可复现随机种子进行抽取。"
+    underlined="/tools"
+>
+    <div class="mx-auto max-w-6xl">
+        <ToolPageHeader
+            eyebrow="Local randomizer"
+            title="X 抽奖"
+            description="粘贴文本或导入 CSV，在本地整理候选池。工具不连接 X，也不需要账号凭据。"
+        />
+        <XLottery client:visible />
+    </div>
+</App>

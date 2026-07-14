@@ -1,7 +1,128 @@
 ---
+import { Icon } from "astro-icon/components";
 import App from "../layouts/App.astro";
+
+const interests = [
+    {
+        title: "编程与工具",
+        description: "记录正在学习的语言、框架，以及那些真正解决了问题的小工具。",
+        icon: "mdi:code-tags",
+    },
+    {
+        title: "生活与食物",
+        description: "收藏日常里值得记住的片段，也认真对待一顿饭和一张照片。",
+        icon: "mdi:coffee-outline",
+    },
+    {
+        title: "写作与思考",
+        description: "把还没有答案的问题写下来，让零散的念头有一个安静的去处。",
+        icon: "mdi:fountain-pen-tip",
+    },
+];
+
+const contacts = [
+    { label: "GitHub", href: "https://github.com/zxzxovo", icon: "mdi:github" },
+    { label: "X", href: "https://x.com/zxzxovo", icon: "mdi:twitter" },
+    { label: "Email", href: "mailto:zhixiaovo@gmail.com", icon: "mdi:email-outline" },
+];
 ---
 
-<App underlined="/about">
-    <p>About</p>
+<App
+    title="关于"
+    description="关于芷夏，以及这个博客所记录的编程、生活与思考。"
+    underlined="/about"
+>
+    <div class="mx-auto max-w-4xl">
+        <section class="grid gap-10 border-b border-zinc-200 pb-12 md:grid-cols-[minmax(0,1.25fr)_minmax(15rem,0.75fr)] md:items-end dark:border-zinc-800">
+            <div>
+                <p
+                    class="mb-4 text-xs font-semibold tracking-[0.2em] text-orange-600 uppercase dark:text-orange-400"
+                >
+                    About
+                </p>
+                <h1
+                    class="max-w-2xl text-4xl font-bold tracking-tight text-zinc-950 sm:text-5xl dark:text-zinc-50"
+                >
+                    你好，我是芷夏。
+                </h1>
+                <p
+                    class="mt-6 max-w-2xl text-lg leading-8 text-zinc-600 dark:text-zinc-300"
+                >
+                    我喜欢把复杂的事情慢慢理清，也喜欢记录那些容易被时间带走的瞬间。这个博客是我的公开笔记本：有代码，有生活，也有一些尚未想明白的话。
+                </p>
+            </div>
+
+            <blockquote
+                class="border-l-2 border-orange-500 pl-5 text-sm leading-7 text-zinc-500 dark:text-zinc-400"
+            >
+                不急着把自己写成一份履历。持续学习，认真生活，偶尔停下来看看一路留下了什么。
+            </blockquote>
+        </section>
+
+        <section class="py-12" aria-labelledby="about-interests">
+            <div class="mb-7 flex items-end justify-between gap-4">
+                <div>
+                    <p class="text-sm font-medium text-orange-600 dark:text-orange-400">
+                        我在关注
+                    </p>
+                    <h2
+                        id="about-interests"
+                        class="mt-1 text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100"
+                    >
+                        写在这里的事情
+                    </h2>
+                </div>
+            </div>
+
+            <div class="grid gap-4 md:grid-cols-3">
+                {
+                    interests.map((interest) => (
+                        <article class="rounded-xl border border-zinc-200 bg-white p-5 transition-colors hover:border-orange-300 dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-orange-700">
+                            <span class="flex h-10 w-10 items-center justify-center rounded-lg bg-orange-50 text-orange-600 dark:bg-orange-950/50 dark:text-orange-400">
+                                <Icon name={interest.icon} size="1.35rem" />
+                            </span>
+                            <h3 class="mt-5 font-semibold text-zinc-900 dark:text-zinc-100">
+                                {interest.title}
+                            </h3>
+                            <p class="mt-2 text-sm leading-6 text-zinc-500 dark:text-zinc-400">
+                                {interest.description}
+                            </p>
+                        </article>
+                    ))
+                }
+            </div>
+        </section>
+
+        <section
+            class="rounded-xl border border-zinc-200 bg-zinc-100/70 p-6 sm:flex sm:items-center sm:justify-between sm:gap-8 sm:p-8 dark:border-zinc-800 dark:bg-zinc-900/60"
+            aria-labelledby="about-contact"
+        >
+            <div>
+                <h2
+                    id="about-contact"
+                    class="text-xl font-semibold text-zinc-900 dark:text-zinc-100"
+                >
+                    保持联系
+                </h2>
+                <p class="mt-2 max-w-xl text-sm leading-6 text-zinc-500 dark:text-zinc-400">
+                    想聊聊技术、文章，或者只是打个招呼，都可以从下面找到我。
+                </p>
+            </div>
+            <div class="mt-5 flex flex-wrap gap-2 sm:mt-0 sm:shrink-0">
+                {
+                    contacts.map((contact) => (
+                        <a
+                            href={contact.href}
+                            target={contact.href.startsWith("http") ? "_blank" : undefined}
+                            rel={contact.href.startsWith("http") ? "noreferrer" : undefined}
+                            class="inline-flex min-h-10 items-center gap-2 rounded-lg border border-zinc-300 bg-white px-3.5 text-sm font-medium text-zinc-700 transition hover:border-orange-400 hover:text-orange-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-300 dark:hover:text-orange-300"
+                        >
+                            <Icon name={contact.icon} size="1.1rem" />
+                            {contact.label}
+                        </a>
+                    ))
+                }
+            </div>
+        </section>
+    </div>
 </App>

@@ -1,16 +1,19 @@
 ---
-const saying = "“我们被我们塑造的东西所塑造着”";
-const github = "https://www.github.com/zxzxovo";
+const year = new Date().getFullYear();
 ---
 
-<footer class="flex flex-col items-center py-8">
-    <hr class="w-64 border-zinc-400 dark:border-zinc-600 mb-6" />
-    <p class="text-sm text-gray-500 dark:text-gray-500">{saying}</p>
-    <div class="text-xs text-gray-500 mt-3">
-        ©2025–2026 Zhixia · <a
-            class="hover:text-zinc-700 dark:hover:text-zinc-300 transition-colors"
-            href={github}
-            target="_blank">GitHub</a
-        >
+<footer class="border-t border-zinc-200 dark:border-zinc-800">
+    <div class="mx-auto flex max-w-6xl flex-col gap-3 px-4 py-8 text-sm text-zinc-500 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8 dark:text-zinc-400">
+        <p>“我们被我们塑造的东西所塑造着。”</p>
+        <p>
+            © 2025–{year} 芷夏
+            <span class="mx-1.5 text-zinc-300 dark:text-zinc-700" aria-hidden="true">·</span>
+            <a
+                class="transition-colors duration-200 hover:text-orange-600 dark:hover:text-orange-400"
+                href="https://github.com/zxzxovo"
+                target="_blank"
+                rel="noreferrer"
+            >GitHub</a>
+        </p>
     </div>
 </footer>

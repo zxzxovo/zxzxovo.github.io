@@ -1,0 +1,20 @@
+---
+import EmojiExplorer from "../../components/tools/EmojiExplorer";
+import ToolPageHeader from "../../components/tools/ToolPageHeader.astro";
+import App from "../../layouts/App.astro";
+---
+
+<App
+    title="Unicode Emoji"
+    description="搜索常用 Emoji，并复制字符、Unicode 码点或 JavaScript 转义序列。"
+    underlined="/tools"
+>
+    <div class="mx-auto max-w-6xl">
+        <ToolPageHeader
+            eyebrow="Text tool"
+            title="Unicode Emoji"
+            description="按中文名称、关键词或码点查找常用 Emoji。选择复制格式，再点击任意表情即可。"
+        />
+        <EmojiExplorer client:visible />
+    </div>
+</App>

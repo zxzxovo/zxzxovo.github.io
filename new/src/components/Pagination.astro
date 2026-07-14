@@ -1,0 +1,34 @@
+---
+interface Props {
+    currentPage: number;
+    lastPage: number;
+    previous?: string;
+    next?: string;
+}
+
+const { currentPage, lastPage, previous, next } = Astro.props;
+const controlClass =
+    "inline-flex min-h-10 items-center rounded-md border border-zinc-200 bg-white px-4 text-sm font-medium text-zinc-700 transition-colors duration-200 hover:border-orange-300 hover:text-orange-600 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:border-orange-700 dark:hover:text-orange-400";
+const disabledClass =
+    "inline-flex min-h-10 cursor-not-allowed items-center rounded-md border border-zinc-200 px-4 text-sm text-zinc-400 dark:border-zinc-800 dark:text-zinc-600";
+---
+
+<nav class="mt-10 flex items-center justify-between gap-4" aria-label="文章分页">
+    {
+        previous ? (
+            <a href={previous} rel="prev" class={controlClass}>上一页</a>
+        ) : (
+            <span class={disabledClass} aria-disabled="true">上一页</span>
+        )
+    }
+    <span class="text-sm tabular-nums text-zinc-500 dark:text-zinc-400">
+        <span class="sr-only">当前第</span>{currentPage}<span class="mx-1" aria-hidden="true">/</span><span class="sr-only">共</span>{lastPage}<span class="sr-only">页</span>
+    </span>
+    {
+        next ? (
+            <a href={next} rel="next" class={controlClass}>下一页</a>
+        ) : (
+            <span class={disabledClass} aria-disabled="true">下一页</span>
+        )
+    }
+</nav>

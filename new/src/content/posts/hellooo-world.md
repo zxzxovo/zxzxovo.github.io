@@ -1,14 +1,13 @@
 ---
 title: "Hello Wrold"
-date: 2025-01-30
+slug: "hellooo-world"
+date: "2025-01-30T13:30:00+08:00"
 description: "The first blog flag"
 cover: /images/nav/hellooo-world.jpg
-categories: ["Daily"]
+categories: ["life"]
 tags: ["Daily"]
 draft: false
 ---
-
-# Hello World
 
 Welcome to my **Blog** !!!
 
