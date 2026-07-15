@@ -99,10 +99,6 @@ summary:focus-visible {
     color: var(--site-text);
 }
 
-.article-prose :where(h2, h3, h4) {
-    scroll-margin-top: calc(var(--site-header-height) + 1.5rem);
-}
-
 .article-prose :where(h2, h3) {
     letter-spacing: -0.015em;
 }
