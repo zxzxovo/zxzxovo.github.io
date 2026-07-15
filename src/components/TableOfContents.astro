@@ -29,7 +29,7 @@ const { headings } = Astro.props;
     </ol>
 </details>
 
-<aside data-toc-root class="sticky top-24 hidden self-start lg:col-start-2 lg:row-start-1 lg:block" aria-label="本文目录">
+<aside data-toc-root class="sticky top-24 hidden max-h-[calc(100vh-7rem)] self-start overflow-y-auto pr-2 lg:col-start-2 lg:row-start-1 lg:block" aria-label="本文目录">
     <p class="text-sm font-semibold text-zinc-900 dark:text-zinc-100">本文目录</p>
     <ol class="mt-3 space-y-1.5 border-l border-zinc-200 pl-3 dark:border-zinc-800">
         {

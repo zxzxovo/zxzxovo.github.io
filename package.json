@@ -14,6 +14,7 @@
     "check": "bun run post:check && astro check",
     "test": "bun test",
     "site:check": "bun scripts/site-check.ts",
+    "cover:astro-migration": "bun scripts/generate-astro-migration-cover.ts",
     "post:new": "bun scripts/post-new.ts",
     "post:check": "bun scripts/post-check.ts",
     "post:drafts": "bun scripts/post-drafts.ts"
@@ -42,6 +43,7 @@
     "@tailwindcss/typography": "^0.5.20",
     "@types/bun": "^1.3.5",
     "@types/node": "^24.10.2",
+    "sharp": "0.34.5",
     "typescript": "^5.9.3"
   }
 }

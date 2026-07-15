@@ -175,19 +175,22 @@ describe("文章工具", () => {
 });
 
 describe("迁移后的文章内容", () => {
-  test("26 篇永久地址和完整发布时间与迁移基线一致", async () => {
+  test("26 篇历史文章的永久地址和完整发布时间与迁移基线一致", async () => {
     const posts = await readPosts();
-    expect(posts).toHaveLength(26);
-    expect(new Set(posts.map((post) => post.slug)).size).toBe(26);
-    expect(Object.fromEntries(posts.map((post) => [post.slug, post.date]))).toEqual(
-      expectedDates,
-    );
+    const migratedSlugs = new Set<string>(Object.keys(expectedDates));
+    const migratedPosts = posts.filter((post) => migratedSlugs.has(post.slug));
+
+    expect(migratedPosts).toHaveLength(26);
+    expect(new Set(posts.map((post) => post.slug)).size).toBe(posts.length);
+    expect(
+      Object.fromEntries(migratedPosts.map((post) => [post.slug, post.date])),
+    ).toEqual(expectedDates);
   });
 
   test("草稿、必填字段和分类映射有效", async () => {
     const posts = await readPosts();
     const published = posts.filter((post) => !post.draft);
-    expect(published).toHaveLength(25);
+    expect(published).toHaveLength(posts.length - 1);
     expect(posts.filter((post) => post.draft).map((post) => post.slug)).toEqual([
       "使用Tauri开发跨平台应用",
     ]);
@@ -197,13 +200,20 @@ describe("迁移后的文章内容", () => {
       expect(post.categories.length, post.fileName).toBeGreaterThan(0);
     }
 
-    const categoryCounts = Object.fromEntries(
+    const migratedSlugs = new Set<string>(Object.keys(expectedDates));
+    const migratedPosts = posts.filter((post) => migratedSlugs.has(post.slug));
+    const migratedCategoryCounts = Object.fromEntries(
       CATEGORY_KEYS.map((key) => [
         key,
-        posts.filter((post) => post.categories.includes(key)).length,
+        migratedPosts.filter((post) => post.categories.includes(key)).length,
       ]),
     );
-    expect(categoryCounts).toEqual({ tech: 8, life: 18, notes: 6, writing: 7 });
+    expect(migratedCategoryCounts).toEqual({
+      tech: 8,
+      life: 18,
+      notes: 6,
+      writing: 7,
+    });
   });
 
   test("除进制转换外的文章封面均存在", async () => {
