@@ -85,7 +85,22 @@ const articleSchema = {
     structuredData={articleSchema}
 >
     <div class="mx-auto max-w-6xl">
-        <header class="mx-auto max-w-3xl">
+        {
+            post.data.cover && (
+                <figure class="mx-auto max-w-4xl overflow-hidden rounded-[0.625rem] border border-zinc-200 bg-zinc-100 dark:border-zinc-800 dark:bg-zinc-900">
+                    <PostCover
+                        src={post.data.cover}
+                        alt=""
+                        widths={[640, 960, 1280, 1600]}
+                        sizes="(max-width: 64rem) calc(100vw - 2rem), 56rem"
+                        priority
+                        class="h-40 w-full object-cover sm:h-52 lg:h-64"
+                    />
+                </figure>
+            )
+        }
+
+        <header class:list={["mx-auto max-w-3xl", post.data.cover && "mt-10"]}>
             <div class="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm font-medium text-zinc-500 dark:text-zinc-400">
                 <a
                     href={getCategoryHref(primaryCategory)}
@@ -114,24 +129,9 @@ const articleSchema = {
             </div>
         </header>
 
-        {
-            post.data.cover && (
-                <figure class="mx-auto mt-10 max-w-4xl overflow-hidden rounded-[0.625rem] border border-zinc-200 bg-zinc-100 dark:border-zinc-800 dark:bg-zinc-900">
-                    <PostCover
-                        src={post.data.cover}
-                        alt=""
-                        widths={[640, 960, 1280, 1600]}
-                        sizes="(max-width: 64rem) calc(100vw - 2rem), 56rem"
-                        priority
-                        class="max-h-[30rem] w-full object-cover"
-                    />
-                </figure>
-            )
-        }
-
         <div
             class:list={[
-                "mx-auto mt-12",
+                "mx-auto mt-10",
                 showToc
                     ? "max-w-5xl lg:grid lg:grid-cols-[minmax(0,46rem)_13rem] lg:items-start lg:gap-12"
                     : "max-w-3xl",

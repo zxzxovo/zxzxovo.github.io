@@ -194,6 +194,16 @@ const jsonLd = structuredData
             loadBlogArchive();
             document.addEventListener("astro:page-load", loadBlogArchive);
 
+            const loadTableOfContents = () => {
+                if (document.querySelector("[data-toc-root]")) {
+                    void import("../scripts/table-of-contents")
+                        .then(({ initTableOfContents }) => initTableOfContents());
+                }
+            };
+
+            loadTableOfContents();
+            document.addEventListener("astro:page-load", loadTableOfContents);
+
             const loadArticleWidgets = () => {
                 if (document.querySelector("birthday-cake-widget, fireworks-widget")) {
                     void import("../scripts/article-widgets");

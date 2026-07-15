@@ -19,7 +19,7 @@ const { headings } = Astro.props;
                     <a
                         data-toc-link
                         href={`#${heading.slug}`}
-                        class="block py-0.5 text-sm leading-5 text-zinc-500 transition-colors duration-200 hover:text-orange-600 data-[current]:font-medium data-[current]:text-orange-600 dark:text-zinc-400 dark:hover:text-orange-400 dark:data-[current]:text-orange-400"
+                        class="relative block py-0.5 text-sm leading-5 text-zinc-500 transition-colors duration-200 before:absolute before:inset-y-0 before:-left-[13px] before:w-0.5 before:rounded-full before:bg-transparent before:transition-colors before:duration-200 hover:text-orange-600 data-[current]:font-semibold data-[current]:text-orange-600 data-[current]:before:bg-orange-500 dark:text-zinc-400 dark:hover:text-orange-400 dark:data-[current]:text-orange-400 dark:data-[current]:before:bg-orange-400"
                     >
                         {heading.text}
                     </a>
@@ -38,7 +38,7 @@ const { headings } = Astro.props;
                     <a
                         data-toc-link
                         href={`#${heading.slug}`}
-                        class="block py-0.5 text-sm leading-5 text-zinc-500 transition-colors duration-200 hover:text-orange-600 data-[current]:font-medium data-[current]:text-orange-600 dark:text-zinc-400 dark:hover:text-orange-400 dark:data-[current]:text-orange-400"
+                        class="relative block py-0.5 text-sm leading-5 text-zinc-500 transition-colors duration-200 before:absolute before:inset-y-0 before:-left-[13px] before:w-0.5 before:rounded-full before:bg-transparent before:transition-colors before:duration-200 hover:text-orange-600 data-[current]:font-semibold data-[current]:text-orange-600 data-[current]:before:bg-orange-500 dark:text-zinc-400 dark:hover:text-orange-400 dark:data-[current]:text-orange-400 dark:data-[current]:before:bg-orange-400"
                     >
                         {heading.text}
                     </a>
@@ -47,57 +47,3 @@ const { headings } = Astro.props;
         }
     </ol>
 </aside>
-
-<script>
-    let disposeToc: (() => void) | undefined;
-
-    function setupToc() {
-        disposeToc?.();
-
-        const links = Array.from(
-            document.querySelectorAll<HTMLAnchorElement>("[data-toc-link]"),
-        );
-        if (links.length === 0) return;
-
-        const headings = links
-            .map((link) => {
-                const id = decodeURIComponent(link.hash.slice(1));
-                return document.getElementById(id);
-            })
-            .filter((heading): heading is HTMLElement => Boolean(heading));
-
-        let frame = 0;
-        const update = () => {
-            frame = 0;
-            let current = headings[0];
-            for (const heading of headings) {
-                if (heading.getBoundingClientRect().top <= 150) current = heading;
-                else break;
-            }
-
-            for (const link of links) {
-                const active = decodeURIComponent(link.hash.slice(1)) === current?.id;
-                link.toggleAttribute("data-current", active);
-                if (active) link.setAttribute("aria-current", "location");
-                else link.removeAttribute("aria-current");
-            }
-        };
-
-        const onScroll = () => {
-            if (!frame) frame = requestAnimationFrame(update);
-        };
-
-        window.addEventListener("scroll", onScroll, { passive: true });
-        update();
-
-        disposeToc = () => {
-            window.removeEventListener("scroll", onScroll);
-            if (frame) cancelAnimationFrame(frame);
-            disposeToc = undefined;
-        };
-    }
-
-    setupToc();
-    document.addEventListener("astro:page-load", setupToc);
-    document.addEventListener("astro:before-swap", () => disposeToc?.());
-</script>
