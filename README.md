@@ -33,7 +33,7 @@ bun run post:drafts
 
 新文章默认是草稿。填写摘要、分类和正文后，将 `draft` 明确改为 `false` 才会发布。
 
-文章位于 `src/content/posts/`，封面位于 `public/images/nav/`。永久地址由 Frontmatter 中的 `slug` 决定；已发布文章不得随意修改它。
+文章位于 `src/content/posts/`，封面位于 `src/assets/images/posts/`。Frontmatter 使用相对路径引用封面，Astro 会在构建时生成 WebP 与响应式尺寸。永久地址由 Frontmatter 中的 `slug` 决定；已发布文章不得随意修改它。
 
 分类 key：
 
@@ -86,4 +86,4 @@ avatar = "https://example.com/avatar.png" # 可选
 
 ## 构建与部署
 
-`bun run build` 会先检查全部文章，再把静态站点输出到 `dist/`。推送到 `main` 后，GitHub Actions 会构建并发布到 GitHub Pages。
+`bun run build` 会先检查全部文章、生成静态站点，再由 Pagefind 为 `dist/` 建立分块搜索索引。推送到 `main` 后，GitHub Actions 会构建并发布到 GitHub Pages。

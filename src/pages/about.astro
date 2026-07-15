@@ -1,5 +1,7 @@
 ---
 import { Icon } from "astro-icon/components";
+import { Image } from "astro:assets";
+import aboutImage from "../assets/images/identity/about.webp";
 import App from "../layouts/App.astro";
 
 const interests = [
@@ -66,13 +68,14 @@ const contacts = [
             </div>
 
             <figure class="mx-auto w-full max-w-xs md:mx-0">
-                <img
-                    src="/images/identity/about.webp"
+                <Image
+                    src={aboutImage}
                     alt="芷夏的正脸头像"
-                    width="560"
-                    height="560"
-                    loading="eager"
-                    fetchpriority="high"
+                    widths={[280, 560]}
+                    sizes="(max-width: 767px) min(100vw - 2rem, 20rem), 20rem"
+                    format="webp"
+                    quality={84}
+                    priority
                     class="aspect-square w-full rounded-xl border border-zinc-200 object-cover dark:border-zinc-800"
                 />
                 <blockquote

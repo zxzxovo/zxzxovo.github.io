@@ -166,13 +166,15 @@ export async function validatePosts(posts: ParsedPost[]): Promise<ValidationIssu
     }
 
     if (data.cover !== undefined) {
-      if (!isNonEmptyString(data.cover) || !data.cover.startsWith("/")) {
-        issues.push({ file, message: "cover 必须是以 / 开头的 public 路径" });
+      if (!isNonEmptyString(data.cover)) {
+        issues.push({ file, message: "cover 必须是非空路径" });
       } else {
-        const coverPath = resolve(PUBLIC_DIR, `.${data.cover}`);
-        const pathFromPublic = relative(PUBLIC_DIR, coverPath);
-        if (isAbsolute(pathFromPublic) || pathFromPublic.startsWith("..")) {
-          issues.push({ file, message: "cover 不能逃逸 public 目录" });
+        const coverPath = data.cover.startsWith("/")
+          ? resolve(PUBLIC_DIR, `.${data.cover}`)
+          : resolve(dirname(join(POSTS_DIR, file)), data.cover);
+        const pathFromProject = relative(PROJECT_ROOT, coverPath);
+        if (isAbsolute(pathFromProject) || pathFromProject.startsWith("..")) {
+          issues.push({ file, message: "cover 不能逃逸项目目录" });
         } else if (!(await Bun.file(coverPath).exists())) {
           issues.push({ file, message: `cover 文件不存在：${data.cover}` });
         }

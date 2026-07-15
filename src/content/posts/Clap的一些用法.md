@@ -3,7 +3,7 @@ title: "Clap的一些用法"
 slug: "Clap的一些用法"
 date: "2025-02-12T20:40:22+08:00"
 description: "用Clap快速编写命令行程序"
-cover: /images/nav/Clap的一些用法.svg
+cover: ../../assets/images/posts/Clap的一些用法.svg
 categories: ["tech"]
 tags: ["Clap", "Code", "Tools", "Rust"]
 draft: false

@@ -3,7 +3,7 @@ title: "再学一遍Git"
 slug: "再学一遍Git"
 date: "2025-02-08T20:25:00+08:00"
 description: "Git命令快查册或备忘录或半个指南"
-cover: /images/nav/再学一遍Git.png
+cover: ../../assets/images/posts/再学一遍Git.png
 categories: ["tech"]
 tags: ["Git", "Code", "Tools", "学习", "笔记"]
 draft: false

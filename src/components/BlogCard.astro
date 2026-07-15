@@ -2,6 +2,7 @@
 import type { PostEntry } from "../lib/posts";
 import { getPostHref } from "../lib/posts";
 import BlogInfoBar from "./BlogInfoBar.astro";
+import PostCover from "./PostCover.astro";
 import TagSmall from "./TagSmall.astro";
 
 interface Props {
@@ -23,11 +24,11 @@ const href = getPostHref(post);
                     aria-label={`阅读《${title}》`}
                     tabindex="-1"
                 >
-                    <img
+                    <PostCover
                         src={cover}
                         alt=""
-                        loading="lazy"
-                        decoding="async"
+                        widths={[320, 480, 720]}
+                        sizes="(max-width: 639px) calc(100vw - 2rem), 15rem"
                         class="h-full w-full object-cover transition-transform duration-200 group-hover:scale-[1.025]"
                     />
                 </a>

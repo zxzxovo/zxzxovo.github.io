@@ -1,5 +1,7 @@
 ---
 import { render } from "astro:content";
+import { getImage } from "astro:assets";
+import PostCover from "../../components/PostCover.astro";
 import TableOfContents from "../../components/TableOfContents.astro";
 import TagSmall from "../../components/TagSmall.astro";
 import GiscusComments from "../../components/comments/GiscusComments";
@@ -35,6 +37,16 @@ const showToc = tocHeadings.length >= 3;
 const { newer, older } = getAdjacentPosts(posts, post.data.slug);
 const primaryCategory = post.data.categories[0];
 const articleUrl = new URL(`${getPostHref(post)}/`, Astro.site ?? Astro.url.origin).toString();
+const socialCover = post.data.cover
+    ? post.data.cover.format === "svg"
+        ? post.data.cover.src
+        : (await getImage({
+            src: post.data.cover,
+            width: Math.min(1200, post.data.cover.width),
+            format: "webp",
+            quality: 82,
+        })).src
+    : undefined;
 const articleSchema = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
@@ -44,13 +56,13 @@ const articleSchema = {
     dateModified: (post.data.updated ?? post.data.date).toISOString(),
     inLanguage: "zh-CN",
     mainEntityOfPage: articleUrl,
-    ...(post.data.cover && {
-        image: new URL(post.data.cover, Astro.site ?? Astro.url.origin).toString(),
+    ...(socialCover && {
+        image: new URL(socialCover, Astro.site ?? Astro.url.origin).toString(),
     }),
     author: {
         "@type": "Person",
         name: "芷夏",
-        url: new URL("/about", Astro.site ?? Astro.url.origin).toString(),
+        url: new URL("/about/", Astro.site ?? Astro.url.origin).toString(),
     },
 };
 ---
@@ -59,11 +71,12 @@ const articleSchema = {
     title={post.data.title}
     description={post.data.description}
     underlined="/blog"
-    image={post.data.cover}
+    image={socialCover}
     type="article"
     article={{
         publishedTime: post.data.date,
         modifiedTime: post.data.updated,
+        section: CATEGORY_META[primaryCategory].name,
         tags: [...new Set([
             ...post.data.categories.map((key) => CATEGORY_META[key].name),
             ...post.data.tags,
@@ -104,11 +117,13 @@ const articleSchema = {
         {
             post.data.cover && (
                 <figure class="mx-auto mt-10 max-w-4xl overflow-hidden rounded-[0.625rem] border border-zinc-200 bg-zinc-100 dark:border-zinc-800 dark:bg-zinc-900">
-                    <img
+                    <PostCover
                         src={post.data.cover}
                         alt=""
+                        widths={[640, 960, 1280, 1600]}
+                        sizes="(max-width: 64rem) calc(100vw - 2rem), 56rem"
+                        priority
                         class="max-h-[30rem] w-full object-cover"
-                        decoding="async"
                     />
                 </figure>
             )
@@ -164,7 +179,7 @@ const articleSchema = {
         <GiscusComments
             config={GISCUS_CONFIG}
             term={getGiscusTerm(post.data.slug)}
-            client:load
+            client:visible={{ rootMargin: "600px" }}
         />
     </div>
 </App>

@@ -1,6 +1,7 @@
 ---
 import { Icon } from "astro-icon/components";
-import ThemeToggle from "./ThemeToggle";
+import { Image } from "astro:assets";
+import logoImage from "../assets/images/identity/logo.webp";
 
 interface Props {
     underlined?: string;
@@ -24,11 +25,15 @@ const destinations = [
             class="flex shrink-0 items-center gap-2.5 text-lg font-bold tracking-[-0.025em] text-zinc-950 transition-colors duration-200 hover:text-orange-600 dark:text-zinc-50 dark:hover:text-orange-400"
             aria-label="芷夏，返回首页"
         >
-            <img
-                src="/images/identity/logo.webp"
+            <Image
+                src={logoImage}
                 alt=""
                 width="32"
                 height="32"
+                densities={[2]}
+                format="webp"
+                quality={82}
+                priority
                 class="size-8 rounded-full border border-zinc-200 object-cover dark:border-zinc-700"
             />
             <span>芷夏</span>
@@ -80,7 +85,16 @@ const destinations = [
         </a>
 
         <div class="h-5 w-px bg-zinc-200 dark:bg-zinc-800" aria-hidden="true"></div>
-        <ThemeToggle client:load />
+        <button
+            type="button"
+            data-theme-toggle
+            aria-label="切换为深色主题"
+            title="切换为深色主题"
+            class="inline-flex size-10 shrink-0 items-center justify-center rounded-md text-zinc-600 transition-colors duration-200 hover:bg-zinc-100 hover:text-zinc-950 dark:text-zinc-400 dark:hover:bg-zinc-900 dark:hover:text-zinc-50"
+        >
+            <span data-theme-icon="light" aria-hidden="true"><Icon name="mdi:moon-waning-crescent" size="1.25rem" /></span>
+            <span data-theme-icon="dark" aria-hidden="true"><Icon name="mdi:white-balance-sunny" size="1.25rem" /></span>
+        </button>
     </div>
 </header>
 

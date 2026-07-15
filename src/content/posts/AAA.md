@@ -3,7 +3,7 @@ title: "9月写到11月"
 slug: "AAA"
 date: "2025-11-25T00:00:00+08:00"
 description: "两个月内随意掉落的一些文字。内容包括：好想要爱，不公平啊，不想孤独，做个专业人士，有时想刺激，30天推歌挑战。"
-cover: /images/nav/AAA.jpg
+cover: ../../assets/images/posts/AAA.jpg
 categories: ["life", "notes"]
 tags: ["Daily", "呓语", "解构", "无所事事", "生活", "音乐", "无聊"]
 draft: false

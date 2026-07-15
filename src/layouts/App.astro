@@ -14,8 +14,10 @@ export interface Props {
         publishedTime: Date;
         modifiedTime?: Date;
         tags?: string[];
+        section?: string;
     };
     noindex?: boolean;
+    pagefindIgnore?: boolean;
     structuredData?: Record<string, unknown> | Record<string, unknown>[];
 }
 
@@ -27,11 +29,17 @@ const {
     type = "website",
     article,
     noindex = false,
+    pagefindIgnore = noindex,
     structuredData,
 } = Astro.props;
 
 const documentTitle = title ? `${title} · 芷夏` : "芷夏";
-const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin);
+const canonicalPath = Astro.url.pathname === "/"
+    || Astro.url.pathname.endsWith("/")
+    || Astro.url.pathname.includes(".")
+    ? Astro.url.pathname
+    : `${Astro.url.pathname}/`;
+const canonical = new URL(canonicalPath, Astro.site ?? Astro.url.origin);
 const socialImage = image ? new URL(image, canonical).toString() : undefined;
 const jsonLd = structuredData
     ? JSON.stringify(structuredData).replaceAll("<", "\\u003c")
@@ -44,6 +52,7 @@ const jsonLd = structuredData
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="description" content={description} />
+        <meta name="author" content="芷夏" />
         <meta name="color-scheme" content="light dark" />
         {noindex && <meta name="robots" content="noindex, nofollow" />}
         <title>{documentTitle}</title>
@@ -52,6 +61,7 @@ const jsonLd = structuredData
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="manifest" href="/site.webmanifest" />
         <link rel="alternate" type="application/rss+xml" title="芷夏的博客" href="/rss.xml" />
+        <link rel="sitemap" href="/sitemap-index.xml" />
         <meta name="theme-color" content="#fafafa" />
         <meta property="og:locale" content="zh_CN" />
         <meta property="og:site_name" content="芷夏" />
@@ -60,14 +70,45 @@ const jsonLd = structuredData
         <meta property="og:description" content={description} />
         <meta property="og:url" content={canonical} />
         {socialImage && <meta property="og:image" content={socialImage} />}
+        {socialImage && <meta property="og:image:alt" content={`${title ?? "芷夏"}封面`} />}
         <meta name="twitter:card" content={socialImage ? "summary_large_image" : "summary"} />
         <meta name="twitter:title" content={documentTitle} />
         <meta name="twitter:description" content={description} />
         {socialImage && <meta name="twitter:image" content={socialImage} />}
+        {socialImage && <meta name="twitter:image:alt" content={`${title ?? "芷夏"}封面`} />}
         {article && <meta property="article:published_time" content={article.publishedTime.toISOString()} />}
         {article?.modifiedTime && <meta property="article:modified_time" content={article.modifiedTime.toISOString()} />}
+        {article?.section && <meta property="article:section" content={article.section} />}
         {article?.tags?.map((tag) => <meta property="article:tag" content={tag} />)}
         {jsonLd && <script is:inline type="application/ld+json" set:html={jsonLd} />}
+        <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-9M0NHS6D5Y"></script>
+        <script is:inline>
+            window.dataLayer = window.dataLayer || [];
+            window.gtag = window.gtag || function gtag() { window.dataLayer.push(arguments); };
+            window.hizhixiaGaState = window.hizhixiaGaState || { initialized: false, bound: false, lastPage: "" };
+
+            if (!window.hizhixiaGaState.initialized) {
+                window.gtag("js", new Date());
+                window.gtag("config", "G-9M0NHS6D5Y", { send_page_view: false });
+                window.hizhixiaGaState.initialized = true;
+            }
+
+            const sendPageView = () => {
+                const pagePath = window.location.pathname + window.location.search + window.location.hash;
+                if (window.hizhixiaGaState.lastPage === pagePath) return;
+                window.hizhixiaGaState.lastPage = pagePath;
+                window.gtag("event", "page_view", {
+                    page_path: pagePath,
+                    page_title: document.title,
+                });
+            };
+
+            sendPageView();
+            if (!window.hizhixiaGaState.bound) {
+                document.addEventListener("astro:page-load", sendPageView);
+                window.hizhixiaGaState.bound = true;
+            }
+        </script>
         <script is:inline>
             (() => {
                 const resolveDark = () => {
@@ -99,12 +140,60 @@ const jsonLd = structuredData
     <body>
         <div class="flex min-h-dvh flex-col">
             <Header underlined={underlined} />
-            <main class="w-full flex-1 px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
+            <main
+                class="w-full flex-1 px-4 py-10 sm:px-6 sm:py-14 lg:px-8"
+                data-pagefind-body={pagefindIgnore ? undefined : ""}
+                data-pagefind-ignore={pagefindIgnore ? "all" : undefined}
+            >
                 <slot />
             </main>
             <Footer />
         </div>
         <script>
+            const syncThemeToggle = () => {
+                const dark = document.documentElement.classList.contains("dark");
+
+                document.querySelectorAll<HTMLElement>("[data-theme-toggle]")
+                    .forEach((button) => {
+                        button.setAttribute("aria-label", dark ? "切换为浅色主题" : "切换为深色主题");
+                        button.setAttribute("title", dark ? "切换为浅色主题" : "切换为深色主题");
+                    });
+            };
+
+            if (!document.documentElement.dataset.themeToggleReady) {
+                document.documentElement.dataset.themeToggleReady = "true";
+                document.addEventListener("click", (event) => {
+                    const target = event.target;
+                    if (!(target instanceof Element)) return;
+
+                    const button = target.closest<HTMLElement>("[data-theme-toggle]");
+                    if (!button) return;
+
+                    const dark = !document.documentElement.classList.contains("dark");
+                    document.documentElement.classList.toggle("dark", dark);
+                    document.querySelector('meta[name="theme-color"]')
+                        ?.setAttribute("content", dark ? "#09090b" : "#fafafa");
+                    try {
+                        localStorage.setItem("theme", dark ? "dark" : "light");
+                    } catch {}
+                    syncThemeToggle();
+                });
+                document.addEventListener("astro:after-swap", syncThemeToggle);
+                document.addEventListener("astro:page-load", syncThemeToggle);
+            }
+
+            syncThemeToggle();
+
+            const loadBlogArchive = () => {
+                if (document.querySelector("blog-archive")) {
+                    void import("../scripts/blog-archive")
+                        .then(({ initBlogArchives }) => initBlogArchives());
+                }
+            };
+
+            loadBlogArchive();
+            document.addEventListener("astro:page-load", loadBlogArchive);
+
             const loadArticleWidgets = () => {
                 if (document.querySelector("birthday-cake-widget, fireworks-widget")) {
                     void import("../scripts/article-widgets");

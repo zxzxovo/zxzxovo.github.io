@@ -76,6 +76,7 @@ export default function GiscusComments(props: Props) {
     <section
       ref={commentsRoot}
       id="comments"
+      data-pagefind-ignore=""
       class="mx-auto mt-14 max-w-3xl border-t border-zinc-200 pt-10 dark:border-zinc-800"
       aria-labelledby="comments-title"
     >

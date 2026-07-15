@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test";
 import { readdir } from "node:fs/promises";
 import { existsSync, readFileSync } from "node:fs";
-import { join } from "node:path";
+import { dirname, join, resolve } from "node:path";
 
 import {
   CATEGORY_KEYS,
@@ -10,9 +10,11 @@ import {
 } from "../src/config/categories";
 import {
   PAGE_SIZE,
+  countPostCharacters,
   formatPostDate,
   getAdjacentPosts,
   getCategoryHref,
+  getPostStats,
   getPostHref,
   sortPosts,
   type PostEntry,
@@ -96,10 +98,11 @@ async function readPosts(): Promise<ParsedPost[]> {
   });
 }
 
-function makePost(slug: string, date: string): PostEntry {
+function makePost(slug: string, date: string, body = ""): PostEntry {
   return {
     id: `${slug}.md`,
     collection: "posts",
+    body,
     data: { slug, date: new Date(date) },
   } as unknown as PostEntry;
 }
@@ -144,6 +147,16 @@ describe("文章工具", () => {
 
   test("按上海时区格式化日期", () => {
     expect(formatPostDate(new Date("2025-02-08T16:30:00Z"))).toBe("2025/02/09");
+  });
+
+  test("统计文章数量和去除空白后的字符数", () => {
+    const posts = [
+      makePost("one", "2025-01-01T00:00:00+08:00", "你好 Astro"),
+      makePost("two", "2025-01-02T00:00:00+08:00", "\n第二篇\n"),
+    ];
+
+    expect(getPostStats(posts)).toEqual({ count: 2, characters: 10 });
+    expect(countPostCharacters("## 标题\n[链接](https://example.com) 与 **强调**")).toBe(7);
   });
 
   test("找到较新与较旧的相邻文章", () => {
@@ -223,11 +236,9 @@ describe("迁移后的文章内容", () => {
     ]);
 
     for (const post of posts.filter((item) => item.cover)) {
-      const coverPath = join(
-        projectRoot,
-        "public",
-        post.cover!.replace(/^\/+/, ""),
-      );
+      const coverPath = post.cover!.startsWith("/")
+        ? join(projectRoot, "public", post.cover!.replace(/^\/+/, ""))
+        : resolve(dirname(join(postsDirectory, post.fileName)), post.cover!);
       expect(existsSync(coverPath), `${post.fileName}: ${post.cover}`).toBeTrue();
     }
   });

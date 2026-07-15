@@ -4,7 +4,7 @@ import path from "node:path";
 import sharp from "sharp";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const output = path.join(root, "public", "images", "posts", "astro-migration.webp");
+const output = path.join(root, "src", "assets", "images", "posts", "astro-migration.webp");
 
 const seed = 0x41535452;
 let state = seed;

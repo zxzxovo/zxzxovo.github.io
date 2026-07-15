@@ -45,8 +45,8 @@ export default defineConfig({
   },
 
   prefetch: {
-    prefetchAll: false,
-    defaultStrategy: "viewport",
+    prefetchAll: true,
+    defaultStrategy: "hover",
   },
 
   vite: {

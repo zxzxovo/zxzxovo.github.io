@@ -6,6 +6,11 @@ export type PostEntry = CollectionEntry<"posts">;
 
 export const PAGE_SIZE = 10;
 
+export interface PostStats {
+  count: number;
+  characters: number;
+}
+
 const postDateFormatter = new Intl.DateTimeFormat("zh-CN", {
   timeZone: "Asia/Shanghai",
   year: "numeric",
@@ -24,6 +29,29 @@ export async function getPublishedPosts(): Promise<PostEntry[]> {
   const { getCollection } = await import("astro:content");
   const posts = await getCollection("posts", ({ data }) => !data.draft);
   return sortPosts(posts);
+}
+
+export function countPostCharacters(markdown: string): number {
+  const text = markdown
+    .replace(/```[^\n]*\n([\s\S]*?)```/gu, "$1")
+    .replace(/`([^`]+)`/gu, "$1")
+    .replace(/!\[([^\]]*)\]\([^)]*\)/gu, "$1")
+    .replace(/\[([^\]]+)\]\([^)]*\)/gu, "$1")
+    .replace(/<[^>]+>/gu, " ")
+    .replace(/^[#>*+-]+\s*/gmu, " ")
+    .replace(/[*_~$]/gu, "")
+    .replace(/\s+/gu, "");
+  return [...text].length;
+}
+
+export function getPostStats(posts: readonly PostEntry[]): PostStats {
+  return {
+    count: posts.length,
+    characters: posts.reduce(
+      (total, post) => total + countPostCharacters(post.body ?? ""),
+      0,
+    ),
+  };
 }
 
 export function getPostHref(post: PostEntry | string): string {

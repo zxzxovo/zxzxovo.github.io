@@ -81,6 +81,18 @@ summary:focus-visible {
     display: none;
 }
 
+[data-theme-icon="dark"] {
+    display: none;
+}
+
+.dark [data-theme-icon="light"] {
+    display: none;
+}
+
+.dark [data-theme-icon="dark"] {
+    display: inline-flex;
+}
+
 .article-prose {
     max-width: 70ch;
     overflow-wrap: anywhere;

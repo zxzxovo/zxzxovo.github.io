@@ -3,7 +3,7 @@ title: "Android四大组件基础"
 slug: "Android四大组件基础"
 date: "2025-06-21T14:54:32+08:00"
 description: "Android应用开发中的四大组件"
-cover: /images/nav/Android四大组件基础.svg
+cover: ../../assets/images/posts/Android四大组件基础.svg
 categories: ["tech"]
 tags: ["Android", "Code", "Kotlin", "学习"]
 draft: false

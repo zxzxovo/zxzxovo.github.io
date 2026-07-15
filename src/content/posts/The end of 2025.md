@@ -3,7 +3,7 @@ title: "再见啦,2025"
 slug: "The end of 2025"
 date: "2025-12-31T00:00:00+08:00"
 description: "5个问题进行我的2025年终总结"
-cover: /images/nav/The end of 2025.jpg
+cover: ../../assets/images/posts/The end of 2025.jpg
 categories: ["life", "notes"]
 tags: ["新年快乐", "Daily", "呓语", "2025年终总结"]
 draft: false

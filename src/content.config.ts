@@ -30,14 +30,14 @@ const projectLink = z.object({
 
 const posts = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./src/content/posts" }),
-  schema: z
+  schema: ({ image }) => z
     .object({
       title: z.string().trim().min(1),
       slug,
       date: isoDateTime,
       updated: isoDateTime.optional(),
       description: z.string(),
-      cover: z.string().trim().min(1).optional(),
+      cover: image().optional(),
       categories: z.array(z.enum(CATEGORY_KEYS)).refine(
         (values) => new Set(values).size === values.length,
         "categories 不能重复",
