@@ -5,6 +5,9 @@ dist-ssr/
 # generated types
 .astro/
 
+# local Obelisk project memory and query files
+.obelisk/
+
 # dependencies
 node_modules/
 
