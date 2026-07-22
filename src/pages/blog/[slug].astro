@@ -94,21 +94,20 @@ const articleSchema = {
                         widths={[640, 960, 1280, 1600]}
                         sizes="(max-width: 64rem) calc(100vw - 2rem), 56rem"
                         priority
-                        class="h-40 w-full object-cover sm:h-52 lg:h-64"
+                        class="aspect-[16/7] w-full object-cover sm:aspect-[16/6]"
                     />
                 </figure>
             )
         }
 
         <header class:list={["mx-auto max-w-3xl", post.data.cover && "mt-10"]}>
-            <div class="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm font-medium text-zinc-500 dark:text-zinc-400">
+            <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm font-medium text-zinc-500 dark:text-zinc-400">
                 <a
                     href={getCategoryHref(primaryCategory)}
-                    class="text-orange-600 transition-colors duration-200 hover:text-orange-700 dark:text-orange-400 dark:hover:text-orange-300"
+                    class="nav-pill-active inline-flex items-center rounded-md px-2 py-0.5 text-xs font-semibold transition-colors duration-200 hover:opacity-80"
                 >
                     {CATEGORY_META[primaryCategory].name}
                 </a>
-                <span class="text-zinc-300 dark:text-zinc-700" aria-hidden="true">/</span>
                 <time datetime={post.data.date.toISOString()}>{formatPostDate(post.data.date)}</time>
                 {
                     post.data.updated && (

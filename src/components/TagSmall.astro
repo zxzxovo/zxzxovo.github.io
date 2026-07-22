@@ -13,7 +13,7 @@ const visibleTags = typeof limit === "number" ? tags.slice(0, limit) : tags;
         <ul class="flex flex-wrap gap-1.5" aria-label="文章标签">
             {visibleTags.map((tag) => (
                 <li>
-                    <span class="inline-flex rounded-md bg-zinc-100 px-2 py-1 text-xs leading-none text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300">
+                    <span class="tag-pill">
                         #{tag}
                     </span>
                 </li>

@@ -103,7 +103,7 @@ export default function SearchExplorer() {
         action="/search"
         method="get"
         onSubmit={(event) => event.preventDefault()}
-        class="rounded-xl border border-zinc-200 bg-white p-4 sm:p-5 dark:border-zinc-800 dark:bg-zinc-900"
+        class="card p-4 sm:p-5"
       >
         <label
           for="site-search-input"
@@ -182,7 +182,7 @@ export default function SearchExplorer() {
                       href={entry.url}
                       class="group grid gap-2 py-5 sm:grid-cols-[5rem_minmax(0,1fr)_auto] sm:items-start sm:gap-4"
                     >
-                      <span class="mt-0.5 w-fit rounded-md bg-zinc-100 px-2 py-1 text-xs font-medium text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400">
+                      <span class="tag-pill mt-0.5 w-fit font-medium">
                         {resultType(entry.url)}
                       </span>
                       <div class="min-w-0">

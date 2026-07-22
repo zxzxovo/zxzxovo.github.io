@@ -14,7 +14,7 @@ const { title, date, description, tags, cover, categories } = post.data;
 const href = getPostHref(post);
 ---
 
-<article class="group overflow-hidden rounded-[0.625rem] border border-zinc-200 bg-white transition-[border-color,transform] duration-200 hover:-translate-y-0.5 hover:border-orange-300 dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-orange-700">
+<article class="card card-interactive group overflow-hidden">
     <div class="flex flex-col sm:min-h-44 sm:flex-row">
         {
             cover ? (

@@ -45,7 +45,7 @@ avatar = "https://example.com/avatar.png" # 可选`;
                                 href={friend.url}
                                 target="_blank"
                                 rel="noreferrer"
-                                class="group flex h-full items-start gap-4 rounded-xl border border-zinc-200 bg-white p-5 transition hover:-translate-y-0.5 hover:border-orange-300 hover:shadow-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500 dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-orange-700"
+                                class="card card-interactive group flex h-full items-start gap-4 p-5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500"
                             >
                                 {friend.avatar ? (
                                     <img
@@ -59,7 +59,7 @@ avatar = "https://example.com/avatar.png" # 可选`;
                                         class="h-12 w-12 shrink-0 rounded-lg object-cover"
                                     />
                                 ) : (
-                                    <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-orange-50 text-lg font-semibold text-orange-600 dark:bg-orange-950/50 dark:text-orange-400">
+                                    <span class="icon-chip shrink-0 text-lg font-semibold">
                                         {friend.title.slice(0, 1)}
                                     </span>
                                 )}
@@ -92,7 +92,7 @@ avatar = "https://example.com/avatar.png" # 可选`;
         }
 
         <section
-            class="mt-8 rounded-xl border border-zinc-200 bg-white p-6 sm:p-8 dark:border-zinc-800 dark:bg-zinc-900"
+            class="card mt-8 p-6 sm:p-8"
             aria-labelledby="friend-exchange"
         >
             <div class="max-w-2xl">
@@ -150,7 +150,7 @@ avatar = "https://example.com/avatar.png" # 可选`;
                     href={editUrl}
                     target="_blank"
                     rel="noreferrer"
-                    class="inline-flex min-h-10 items-center justify-center gap-2 rounded-lg bg-orange-600 px-4 text-sm font-semibold text-white transition hover:bg-orange-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500 dark:bg-orange-500 dark:hover:bg-orange-400"
+                    class="btn-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500"
                 >
                     <Icon name="mdi:file-edit-outline" size="1.1rem" />
                     编辑友链文件
@@ -159,7 +159,7 @@ avatar = "https://example.com/avatar.png" # 可选`;
                     href={pullRequestUrl}
                     target="_blank"
                     rel="noreferrer"
-                    class="inline-flex min-h-10 items-center justify-center gap-2 rounded-lg border border-zinc-300 px-4 text-sm font-semibold text-zinc-700 transition hover:border-orange-300 hover:text-orange-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500 dark:border-zinc-700 dark:text-zinc-200 dark:hover:border-orange-700 dark:hover:text-orange-400"
+                    class="btn-secondary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500"
                 >
                     <Icon name="mdi:source-pull" size="1.1rem" />
                     新建 Pull Request

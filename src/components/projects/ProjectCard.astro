@@ -14,7 +14,7 @@ const hasBody = Boolean(project.body?.trim());
 
 <article
     id={getProjectAnchor(project)}
-    class="flex h-full flex-col overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-sm shadow-zinc-200/40 dark:border-zinc-800 dark:bg-zinc-900 dark:shadow-none"
+    class="card card-interactive flex h-full flex-col overflow-hidden"
 >
     {
         data.cover && (
@@ -30,7 +30,7 @@ const hasBody = Boolean(project.body?.trim());
     <div class="flex h-full flex-col p-5 sm:p-6">
         <div class="flex items-start justify-between gap-4">
             <span
-                class="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-orange-50 text-orange-600 dark:bg-orange-950/50 dark:text-orange-400"
+                class="icon-chip shrink-0"
                 aria-hidden="true"
             >
                 <Icon name={data.icon ?? "mdi:folder-outline"} size="1.4rem" />
@@ -64,7 +64,7 @@ const hasBody = Boolean(project.body?.trim());
             data.tags.length > 0 && (
                 <ul class="mt-5 flex flex-wrap gap-2" aria-label="项目标签">
                     {data.tags.map((tag) => (
-                        <li class="rounded-md bg-zinc-100 px-2 py-1 text-xs text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400">
+                        <li class="tag-pill">
                             {tag}
                         </li>
                     ))}

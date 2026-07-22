@@ -3,79 +3,18 @@ import App from "../layouts/App.astro";
 ---
 
 <App title="页面未找到" description="你访问的页面不存在或已经移动。" noindex>
-  <section class="page-state" aria-labelledby="not-found-title">
-    <p class="page-state__eyebrow">404</p>
-    <h1 id="not-found-title">这里没有你要找的页面</h1>
-    <p>它可能已经移动，也可能从来没有存在过。</p>
-    <div class="page-state__actions">
-      <a class="button button--primary" href="/">返回首页</a>
-      <a class="button" href="/blog">浏览文章</a>
+  <section
+    class="mx-auto grid min-h-[min(34rem,65vh)] max-w-2xl place-content-center justify-items-start gap-3"
+    aria-labelledby="not-found-title"
+  >
+    <p class="text-xs font-semibold tracking-[0.14em] text-orange-600 uppercase dark:text-orange-400">404</p>
+    <h1 id="not-found-title" class="text-4xl font-bold tracking-[-0.04em] text-zinc-950 sm:text-6xl dark:text-zinc-50">
+      这里没有你要找的页面
+    </h1>
+    <p class="leading-8 text-zinc-500 dark:text-zinc-400">它可能已经移动，也可能从来没有存在过。</p>
+    <div class="mt-3 flex flex-wrap gap-3">
+      <a class="btn-primary" href="/">返回首页</a>
+      <a class="btn-secondary" href="/blog">浏览文章</a>
     </div>
   </section>
 </App>
-
-<style>
-  .page-state {
-    display: grid;
-    min-height: min(34rem, 65vh);
-    place-content: center;
-    justify-items: start;
-    gap: 0.85rem;
-    max-width: 42rem;
-    margin-inline: auto;
-  }
-
-  .page-state__eyebrow {
-    color: var(--site-accent);
-    font-size: 0.8rem;
-    font-weight: 700;
-    letter-spacing: 0.14em;
-  }
-
-  .page-state h1 {
-    font-size: clamp(2rem, 7vw, 3.75rem);
-    letter-spacing: -0.04em;
-  }
-
-  .page-state > p:not(.page-state__eyebrow) {
-    color: var(--site-muted);
-    line-height: 1.8;
-  }
-
-  .page-state__actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-    margin-top: 0.75rem;
-  }
-
-  .button {
-    display: inline-flex;
-    min-height: 2.5rem;
-    align-items: center;
-    border: 1px solid var(--site-border);
-    border-radius: 0.5rem;
-    background: var(--site-surface);
-    padding-inline: 1rem;
-    color: var(--site-text);
-    font-size: 0.875rem;
-    font-weight: 600;
-    transition: border-color 180ms, color 180ms, background-color 180ms;
-  }
-
-  .button:hover {
-    border-color: var(--site-accent);
-    color: var(--site-accent);
-  }
-
-  .button--primary {
-    border-color: var(--site-accent);
-    background: var(--site-accent);
-    color: white;
-  }
-
-  .button--primary:hover {
-    background: #c2410c;
-    color: white;
-  }
-</style>
