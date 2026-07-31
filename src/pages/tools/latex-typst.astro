@@ -1,0 +1,20 @@
+---
+import FormulaConverter from "../../components/tools/FormulaConverter";
+import ToolPageHeader from "../../components/tools/ToolPageHeader.astro";
+import App from "../../layouts/App.astro";
+---
+
+<App
+    title="LaTeX / Typst 公式转换"
+    description="在浏览器中双向转换 LaTeX 与 Typst 数学公式，并即时预览和复制结果。"
+    underlined="/tools"
+>
+    <div class="mx-auto max-w-6xl">
+        <ToolPageHeader
+            eyebrow="Math tool"
+            title="LaTeX / Typst 公式转换"
+            description="选择输入格式，另一种格式的源码和公式预览会同步更新。适合快速迁移单个数学公式。"
+        />
+        <FormulaConverter client:load />
+    </div>
+</App>

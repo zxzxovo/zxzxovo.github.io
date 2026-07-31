@@ -19,7 +19,7 @@ const destinations = [
 ---
 
 <header class="sticky top-0 z-40 border-b border-zinc-200 bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-950">
-    <div class="mx-auto flex h-[4.5rem] max-w-6xl items-center gap-5 px-4 sm:px-6 lg:px-8">
+    <div class="mx-auto flex h-[4.5rem] max-w-6xl items-center gap-2 px-4 sm:gap-5 sm:px-6 lg:px-8">
         <a
             href="/"
             class="flex shrink-0 items-center gap-2.5 text-lg font-bold tracking-[-0.025em] text-zinc-950 transition-colors duration-200 hover:text-orange-600 dark:text-zinc-50 dark:hover:text-orange-400"
@@ -75,25 +75,25 @@ const destinations = [
             title="全站搜索"
             aria-current={underlined === "/search" ? "page" : undefined}
             class:list={[
-                "inline-flex size-10 shrink-0 items-center justify-center rounded-md transition-colors duration-200",
+                "inline-flex h-10 w-8 shrink-0 items-center justify-center rounded-md transition-colors duration-200 sm:size-10",
                 underlined === "/search"
                     ? "nav-pill-active"
                     : "text-zinc-600 hover:bg-zinc-100 hover:text-zinc-950 dark:text-zinc-400 dark:hover:bg-zinc-900 dark:hover:text-zinc-50",
             ]}
         >
-            <Icon name="mdi:magnify" size="1.25rem" />
+            <Icon name="mdi:magnify" class="size-[1.125rem] sm:size-5" />
         </a>
 
-        <div class="h-5 w-px bg-zinc-200 dark:bg-zinc-800" aria-hidden="true"></div>
+        <div class="h-4 w-px bg-zinc-200 sm:h-5 dark:bg-zinc-800" aria-hidden="true"></div>
         <button
             type="button"
             data-theme-toggle
             aria-label="切换为深色主题"
             title="切换为深色主题"
-            class="inline-flex size-10 shrink-0 items-center justify-center rounded-md text-zinc-600 transition-colors duration-200 hover:bg-zinc-100 hover:text-zinc-950 dark:text-zinc-400 dark:hover:bg-zinc-900 dark:hover:text-zinc-50"
+            class="inline-flex h-10 w-8 shrink-0 items-center justify-center rounded-md text-zinc-600 transition-colors duration-200 hover:bg-zinc-100 hover:text-zinc-950 sm:size-10 dark:text-zinc-400 dark:hover:bg-zinc-900 dark:hover:text-zinc-50"
         >
-            <span data-theme-icon="light" aria-hidden="true"><Icon name="mdi:moon-waning-crescent" size="1.25rem" /></span>
-            <span data-theme-icon="dark" aria-hidden="true"><Icon name="mdi:white-balance-sunny" size="1.25rem" /></span>
+            <span data-theme-icon="light" aria-hidden="true"><Icon name="mdi:moon-waning-crescent" class="size-[1.125rem] sm:size-5" /></span>
+            <span data-theme-icon="dark" aria-hidden="true"><Icon name="mdi:white-balance-sunny" class="size-[1.125rem] sm:size-5" /></span>
         </button>
     </div>
 </header>

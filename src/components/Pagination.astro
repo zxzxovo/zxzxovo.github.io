@@ -2,33 +2,94 @@
 interface Props {
     currentPage: number;
     lastPage: number;
+    basePath: string;
     previous?: string;
     next?: string;
 }
 
-const { currentPage, lastPage, previous, next } = Astro.props;
+const { currentPage, lastPage, basePath, previous, next } = Astro.props;
 const controlClass =
     "inline-flex min-h-10 items-center rounded-md border border-zinc-200 bg-white px-4 text-sm font-medium text-zinc-700 transition-colors duration-200 hover:border-orange-300 hover:text-orange-600 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:border-orange-700 dark:hover:text-orange-400";
 const disabledClass =
     "inline-flex min-h-10 cursor-not-allowed items-center rounded-md border border-zinc-200 px-4 text-sm text-zinc-400 dark:border-zinc-800 dark:text-zinc-600";
 ---
 
-<nav class="mt-10 flex items-center justify-between gap-4" aria-label="文章分页">
+<nav class="mt-10 space-y-4" aria-label="文章分页">
+    <div class="flex items-center justify-between gap-4">
+        {
+            previous ? (
+                <a href={previous} rel="prev" class={controlClass}>上一页</a>
+            ) : (
+                <span class={disabledClass} aria-disabled="true">上一页</span>
+            )
+        }
+        <span class="text-sm tabular-nums text-zinc-500 dark:text-zinc-400">
+            <span class="sr-only">当前第</span>{currentPage}<span class="mx-1" aria-hidden="true">/</span><span class="sr-only">共</span>{lastPage}<span class="sr-only">页</span>
+        </span>
+        {
+            next ? (
+                <a href={next} rel="next" class={controlClass}>下一页</a>
+            ) : (
+                <span class={disabledClass} aria-disabled="true">下一页</span>
+            )
+        }
+    </div>
+
     {
-        previous ? (
-            <a href={previous} rel="prev" class={controlClass}>上一页</a>
-        ) : (
-            <span class={disabledClass} aria-disabled="true">上一页</span>
-        )
-    }
-    <span class="text-sm tabular-nums text-zinc-500 dark:text-zinc-400">
-        <span class="sr-only">当前第</span>{currentPage}<span class="mx-1" aria-hidden="true">/</span><span class="sr-only">共</span>{lastPage}<span class="sr-only">页</span>
-    </span>
-    {
-        next ? (
-            <a href={next} rel="next" class={controlClass}>下一页</a>
-        ) : (
-            <span class={disabledClass} aria-disabled="true">下一页</span>
+        lastPage > 1 && (
+            <page-jump>
+                <form
+                    class="flex items-center justify-center gap-2 text-sm text-zinc-500 dark:text-zinc-400"
+                    data-page-jump-form
+                    data-base-path={basePath}
+                >
+                    <label for={`page-jump-${basePath.replaceAll("/", "-")}`}>
+                        跳至
+                    </label>
+                    <input
+                        id={`page-jump-${basePath.replaceAll("/", "-")}`}
+                        name="page"
+                        type="number"
+                        inputmode="numeric"
+                        min="1"
+                        max={lastPage}
+                        value={currentPage}
+                        aria-label={`输入 1 到 ${lastPage} 之间的页码`}
+                        class="h-10 w-16 rounded-md border border-zinc-300 bg-white px-2 text-center text-sm tabular-nums text-zinc-900 outline-none transition focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100"
+                    />
+                    <span>页</span>
+                    <button
+                        type="submit"
+                        class="inline-flex h-10 items-center rounded-md border border-zinc-300 bg-white px-3 font-medium text-zinc-700 transition hover:border-orange-300 hover:text-orange-600 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:border-orange-700 dark:hover:text-orange-400"
+                    >
+                        跳转
+                    </button>
+                </form>
+            </page-jump>
         )
     }
 </nav>
+
+<script>
+    class PageJumpElement extends HTMLElement {
+        connectedCallback() {
+            const form = this.querySelector<HTMLFormElement>("[data-page-jump-form]");
+            const input = form?.elements.namedItem("page");
+            if (!form || !(input instanceof HTMLInputElement) || form.dataset.ready) return;
+
+            form.dataset.ready = "true";
+            form.addEventListener("submit", (event) => {
+                event.preventDefault();
+                if (!input.reportValidity()) return;
+
+                const page = Number.parseInt(input.value, 10);
+                const basePath = (form.dataset.basePath ?? "/blog").replace(/\/$/, "");
+                window.location.assign(page === 1 ? basePath : `${basePath}/${page}`);
+            });
+        }
+    }
+
+    if (!customElements.get("page-jump")) {
+        customElements.define("page-jump", PageJumpElement);
+    }
+</script>

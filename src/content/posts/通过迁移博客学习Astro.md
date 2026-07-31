@@ -749,7 +749,7 @@ checkout
 | `src/layouts/App.astro` | 全站 HTML、SEO、主题、ClientRouter、Header、Footer。 |
 | `Header.astro` / `Footer.astro` | 全站导航与页脚。 |
 | `BlogCard.astro` / `BlogInfoBar.astro` / `TagSmall.astro` | 文章列表的静态展示。 |
-| `Pagination.astro` | 博客与分类分页。 |
+| `Pagination.astro` | 博客与分类分页、指定页码跳转。 |
 | `BlogArchive.astro` | 全文章卡片、分类/标签筛选和 URL 状态。 |
 | `PostCover.astro` | 响应式 WebP、SVG fallback 和图片加载优先级。 |
 | `TableOfContents.astro` | H2/H3 目录和滚动高亮。 |
@@ -758,7 +758,7 @@ checkout
 | `projects/ProjectCard.astro` | 项目元数据与 Markdown slot。 |
 | `tools/ToolPageHeader.astro` | 工具详情共用标题。 |
 | `tools/EmojiExplorer.tsx` | Emoji 搜索与复制。 |
-| `tools/SocialInsuranceCalculator.tsx` | 本地参数社保估算。 |
+| `tools/FormulaConverter.tsx` | LaTeX / Typst 双向公式转换与 KaTeX 预览。 |
 | `tools/XLottery.tsx` | 本地候选名单与可复现随机抽取。 |
 
 ### 路由
@@ -772,7 +772,7 @@ checkout
 | `pages/categories/[category]/[...page].astro` | 分类静态分页。 |
 | `pages/search.astro` | 挂载 Pagefind 搜索 Island，不再序列化正文。 |
 | `pages/tools/index.astro` | 工具目录和 Markdown 项目。 |
-| `pages/tools/*.astro` | 三个工具详情与 Island 挂载点。 |
+| `pages/tools/*.astro` | 工具详情与 Island 挂载点。 |
 | `pages/about.astro` / `friends.astro` | 关于与 TOML 友链。 |
 | `pages/404.astro` | 静态 404。 |
 | `pages/f-link.astro` | 旧友链地址的兼容跳转。 |

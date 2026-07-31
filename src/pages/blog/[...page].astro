@@ -32,6 +32,7 @@ const pageTitle = page.currentPage > 1 ? `博客 · 第 ${page.currentPage} 页`
             posts={posts}
             currentPage={page.currentPage}
             lastPage={page.lastPage}
+            basePath="/blog"
             previous={page.url.prev}
             next={page.url.next}
         />

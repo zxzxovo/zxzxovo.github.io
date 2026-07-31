@@ -8,11 +8,12 @@ interface Props {
     posts: PostEntry[];
     currentPage: number;
     lastPage: number;
+    basePath: string;
     previous?: string;
     next?: string;
 }
 
-const { posts, currentPage, lastPage, previous, next } = Astro.props;
+const { posts, currentPage, lastPage, basePath, previous, next } = Astro.props;
 const tagCounts = new Map<string, number>();
 
 for (const post of posts) {
@@ -106,6 +107,7 @@ const tags = [...tagCounts]
         <Pagination
             currentPage={currentPage}
             lastPage={lastPage}
+            basePath={basePath}
             previous={previous}
             next={next}
         />

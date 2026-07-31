@@ -16,8 +16,9 @@ export default defineConfig({
   redirects: {
     "/fun": "/tools",
     "/fun/unicode-emoji": "/tools/unicode-emoji",
-    "/fun/social-insurance": "/tools/social-insurance",
+    "/fun/social-insurance": "/tools",
     "/fun/x-lottery": "/tools/x-lottery",
+    "/tools/social-insurance": "/tools",
   },
   integrations: [
     solidJs(),

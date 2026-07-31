@@ -56,6 +56,7 @@ const pageTitle = page.currentPage > 1
         <Pagination
             currentPage={page.currentPage}
             lastPage={page.lastPage}
+            basePath={`/categories/${category}`}
             previous={page.url.prev}
             next={page.url.next}
         />
